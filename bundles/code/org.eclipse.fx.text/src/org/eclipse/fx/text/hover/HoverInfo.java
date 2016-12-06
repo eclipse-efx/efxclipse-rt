@@ -8,12 +8,24 @@ public class HoverInfo {
 	private final IRegion region;
 	private final String hoverText;
 	private final Object hoverModel;
+	
+	private final CharSequence hoverContent;
 
+	@Deprecated
 	public HoverInfo(HoverInfoType type, IRegion region, String hoverText, Object hoverModel) {
 		this.type = type;
 		this.region = region;
 		this.hoverText = hoverText;
 		this.hoverModel = hoverModel;
+		this.hoverContent = hoverText;
+	}
+	
+	public HoverInfo(HoverInfoType type, IRegion region, CharSequence hoverContent, Object hoverModel) {
+		this.type = type;
+		this.region = region;
+		this.hoverText = hoverContent.toString();
+		this.hoverModel = hoverModel;
+		this.hoverContent = hoverContent;
 	}
 
 	public HoverInfoType getType() {
@@ -26,6 +38,10 @@ public class HoverInfo {
 
 	public String getHoverText() {
 		return hoverText;
+	}
+	
+	public CharSequence getHoverContent() {
+		return hoverContent;
 	}
 
 	public Object getHoverModel() {

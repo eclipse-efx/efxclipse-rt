@@ -178,6 +178,8 @@ public enum Text_rendering implements Enumerator {
 	 * Returns the '<em><b>Text rendering</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Text_rendering get(String literal) {
@@ -194,6 +196,8 @@ public enum Text_rendering implements Enumerator {
 	 * Returns the '<em><b>Text rendering</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Text_rendering getByName(String name) {
@@ -210,6 +214,8 @@ public enum Text_rendering implements Enumerator {
 	 * Returns the '<em><b>Text rendering</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Text_rendering get(int value) {

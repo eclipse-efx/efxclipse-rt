@@ -18,6 +18,7 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgEllipseElement#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgEllipseElement#getStyle <em>Style</em>}</li>
@@ -28,7 +29,6 @@ package org.eclipse.fx.formats.svg.svg;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgEllipseElement#getRx <em>Rx</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgEllipseElement#getRy <em>Ry</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgEllipseElement()
  * @model

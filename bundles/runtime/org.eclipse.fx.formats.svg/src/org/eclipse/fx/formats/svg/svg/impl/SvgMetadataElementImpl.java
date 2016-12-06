@@ -27,13 +27,13 @@ import org.eclipse.fx.formats.svg.svg.SvgPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMetadataElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMetadataElementImpl#getXml__base <em>Xml base</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMetadataElementImpl#getXml__lang <em>Xml lang</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMetadataElementImpl#getXml__space <em>Xml space</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

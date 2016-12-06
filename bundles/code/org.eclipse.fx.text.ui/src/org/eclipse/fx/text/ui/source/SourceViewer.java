@@ -59,6 +59,33 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 
 	private void initSourceViewerActionMapping() {
 		this.actionMapping.map("Ctrl+Space", SourceTextEditActions.PROPOSAL_REQUEST); //$NON-NLS-1$
+
+		this.actionMapping.map("Ctrl+Plus", SourceTextEditActions.FONT_ZOOM_IN);
+		this.actionMapping.map("Ctrl+Minus", SourceTextEditActions.FONT_ZOOM_OUT);
+		this.actionMapping.map("Ctrl+0", SourceTextEditActions.FONT_ZOOM_RESET);
+
+		this.actionMapping.map("Ctrl+Add", SourceTextEditActions.FONT_ZOOM_IN);
+		this.actionMapping.map("Ctrl+Subtract", SourceTextEditActions.FONT_ZOOM_OUT);
+//		this.actionMapping.map("Ctrl+NUMPAD0", SourceTextEditActions.FONT_ZOOM_RESET);
+
+
+		subscribeAction((action, context) -> {
+			if (action == SourceTextEditActions.FONT_ZOOM_IN) {
+				getTextWidget().setFontZoomFactor(getTextWidget().getFontZoomFactor() + 0.1);
+				return true;
+			}
+			else if (action == SourceTextEditActions.FONT_ZOOM_OUT) {
+				getTextWidget().setFontZoomFactor(Math.max(0.1, getTextWidget().getFontZoomFactor() - 0.1));
+				return true;
+			}
+			else if (action == SourceTextEditActions.FONT_ZOOM_RESET) {
+				getTextWidget().setFontZoomFactor(1.0);
+				return true;
+			}
+
+			return false;
+		});
+
 		super.getActionMapping().setOverride(actionMapping);
 	}
 
@@ -152,6 +179,8 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		getTextWidget().setQuickLinkCallback(configuration.getQuicklinkCallback());
 
 		this.assistant = configuration.getContentAssist();
+
+		configureHoverSize(configuration::getHoverWindowSize, configuration::storeHoverWindowSize);
 	}
 
 	@Override

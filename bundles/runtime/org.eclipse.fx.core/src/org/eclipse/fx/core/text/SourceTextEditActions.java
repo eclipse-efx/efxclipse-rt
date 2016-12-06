@@ -11,7 +11,21 @@ public enum SourceTextEditActions implements TextEditAction {
 	/**
 	 * Action triggered on autocomplete
 	 */
-	PROPOSAL_REQUEST(true);
+	PROPOSAL_REQUEST(true),
+
+	/**
+	 * Action to increase font zoom
+	 */
+	FONT_ZOOM_IN(false),
+	/**
+	 * Action to decrease font zoom
+	 */
+	FONT_ZOOM_OUT(false),
+	/**
+	 * Action to reset font zoom
+	 */
+	FONT_ZOOM_RESET(false);
+
 
 	private boolean modification;
 

@@ -18,6 +18,7 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgPolygonElement#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgPolygonElement#getStyle <em>Style</em>}</li>
@@ -25,7 +26,6 @@ package org.eclipse.fx.formats.svg.svg;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgPolygonElement#getTransform <em>Transform</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgPolygonElement#getPoints <em>Points</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgPolygonElement()
  * @model

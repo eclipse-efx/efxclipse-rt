@@ -71,8 +71,22 @@ public interface DnDService {
 	 * @param element
 	 *            the element
 	 * @return <code>true</code> if a reparent is allowed
+	 * @deprecated
 	 */
-	public boolean repartentAllowed(@NonNull MUIElement element);
+	public default boolean repartentAllowed(@NonNull MUIElement element) {
+		return true;
+	}
+
+	/**
+	 * Check if we can reparent the element
+	 *
+	 * @param element
+	 *            the element
+	 * @return <code>true</code> if a reparent is allowed
+	 */
+	public default boolean reparentAllowed(@NonNull MUIElement element, @NonNull MUIElement reference) {
+		return repartentAllowed(element);
+	}
 
 	/**
 	 * Handle the detaching of an element

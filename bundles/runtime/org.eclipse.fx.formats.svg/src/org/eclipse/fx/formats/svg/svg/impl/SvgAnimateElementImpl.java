@@ -21,8 +21,6 @@ import org.eclipse.fx.formats.svg.svg.SvgPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Animate Element</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

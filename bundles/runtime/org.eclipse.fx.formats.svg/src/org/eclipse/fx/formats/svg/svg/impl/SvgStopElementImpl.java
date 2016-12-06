@@ -63,6 +63,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgStopElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgStopElementImpl#getXml__base <em>Xml base</em>}</li>
@@ -132,7 +133,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgStopElementImpl#getStyle <em>Style</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgStopElementImpl#getOffset <em>Offset</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

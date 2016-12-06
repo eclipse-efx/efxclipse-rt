@@ -36,6 +36,7 @@ import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.TransferMode;
 
 /**
@@ -58,7 +59,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 
 	/**
 	 * Create new instance
-	 * 
+	 *
 	 * @param efxModelService
 	 *            efx model service
 	 *
@@ -90,6 +91,17 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		cleanup();
 	}
 
+	/**
+	 * Handle exiting of the drag
+	 *
+	 * @param e
+	 * 			the event
+	 */
+	@SuppressWarnings("static-method")
+	public void handleDragExit(MouseDragEvent e) {
+		cleanup();
+	}
+
 	private @Nullable MUIElement findElement(String objectId) {
 		@Nullable
 		M domElement = this.widget.getDomElement();
@@ -104,7 +116,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 
 	/**
 	 * Handle the drag over
-	 * 
+	 *
 	 * @param e
 	 *            the event
 	 */
@@ -114,7 +126,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 
 	/**
 	 * Handle the drag over
-	 * 
+	 *
 	 * @param e
 	 *            the event
 	 */
@@ -124,7 +136,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 
 	/**
 	 * Handle the drop
-	 * 
+	 *
 	 * @param e
 	 *            the event
 	 */
@@ -134,7 +146,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 
 	/**
 	 * Handle the drop
-	 * 
+	 *
 	 * @param e
 	 *            the event
 	 */

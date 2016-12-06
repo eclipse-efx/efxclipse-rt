@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.model;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
@@ -49,4 +50,6 @@ public interface LineRulerAnnotationPresenter extends AnnotationPresenter {
 	}
 
 	default void initialize(LineRuler lineRuler) {}
+
+	default Optional<String> getStyleClass() { return Optional.empty(); }
 }

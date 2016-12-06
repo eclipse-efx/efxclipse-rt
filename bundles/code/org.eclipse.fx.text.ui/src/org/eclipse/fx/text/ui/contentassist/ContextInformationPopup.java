@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.text.ui.contentassist;
 
-import java.util.Stack;
-
+import org.eclipse.fx.text.hover.HtmlString;
 import org.eclipse.fx.text.ui.ITextViewer;
+import org.eclipse.fx.text.ui.internal.SimpleHtmlViewer;
 import org.eclipse.fx.ui.controls.Util;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
@@ -21,10 +21,14 @@ import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.PopupWindow;
 
 
@@ -92,8 +96,8 @@ class ContextInformationPopup implements IContentAssistListener {
 
 	private PopupWindow fContextInfoPopup;
 	private BorderPane fRoot;
-	private Label fContent;
 
+	private Node fContent;
 
 //	/**
 //	 * The last removed context frame is remembered in order to not re-query the
@@ -119,8 +123,10 @@ class ContextInformationPopup implements IContentAssistListener {
 
 		this.fContextInfoPopup = new PopupWindow() {
 		};
+
 		this.fContextInfoPopup.setAutoFix(false);
-		this.fContextInfoPopup.setAutoHide(true);
+		// we set autohide to false, because it prevents click events on the parent window
+		this.fContextInfoPopup.setAutoHide(false);
 		viewer.getTextWidget().sceneProperty().addListener( e -> {
 			if( viewer.getTextWidget().getScene() != null ) {
 				this.fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
@@ -130,23 +136,43 @@ class ContextInformationPopup implements IContentAssistListener {
 			this.fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
 		}
 		this.fRoot = new BorderPane();
-		this.fRoot.getStyleClass().add("styled-text-hover");
-		this.fContent = new Label();
-		this.fRoot.setCenter(this.fContent);
-		this.fContent.getStyleClass().add("context-info");
+		this.fRoot.getStyleClass().add("styled-text-hover"); //$NON-NLS-1$
+
 		this.fContextInfoPopup.getScene().setRoot(this.fRoot);
 
 		this.fContextInfoPopup.setOnShowing(this::subscribe);
 		this.fContextInfoPopup.setOnHidden(this::unsubscribe);
+		
 	}
 
+	// we manually hide whenever a mouse pressed somewhere outside of the editor control occurs
+	private EventHandler<MouseEvent> mousePressed = me -> {
+		Bounds b = this.fViewer.getTextWidget().getBoundsInLocal();
+		Bounds bScreen = this.fViewer.getTextWidget().localToScreen(b);
+		if (bScreen.contains(me.getScreenX(), me.getScreenY())) {
+			// click within text widget -> no hide
+		}
+		else {
+			this.fContextInfoPopup.hide();
+		}
+	};
+	
+	// we manually hide whenever the stage loses its focus
+	private ChangeListener<Boolean> stageFocusChanged = (x, o, n) -> {
+		if (!n) {
+			this.fContextInfoPopup.hide();
+		}
+	};
+	
 	private void subscribe(Event e) {
 		this.fViewer.getTextWidget().caretOffsetProperty().addListener(this.selectionChange);
-//		this.viewer.getTextWidget().caretOffsetProperty().addListener(this.selectionChange);
-//		this.viewer.getTextWidget().getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, this.mouseEvent);
+		this.fViewer.getTextWidget().getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, this.mousePressed);
+		this.fViewer.getTextWidget().getScene().getWindow().focusedProperty().addListener(this.stageFocusChanged);
 	}
 	private void unsubscribe(Event e) {
 		this.fViewer.getTextWidget().caretOffsetProperty().removeListener(this.selectionChange);
+		this.fViewer.getTextWidget().getScene().removeEventFilter(MouseEvent.MOUSE_PRESSED, this.mousePressed);
+		this.fViewer.getTextWidget().getScene().getWindow().focusedProperty().removeListener(this.stageFocusChanged);
 	}
 
 	private void onSelectionChange(Observable x, Number oldSelection, Number newSelection) {
@@ -177,11 +203,27 @@ class ContextInformationPopup implements IContentAssistListener {
 
 	private void updateInfoText(CharSequence infoText) {
 		if( infoText instanceof StyledString ) {
-			this.fContent.setText(""); //$NON-NLS-1$
-			this.fContent.setGraphic(Util.toNode((StyledString) infoText));
+			StackPane wrap = new StackPane();
+			wrap.getStyleClass().add("context-info"); //$NON-NLS-1$
+			Node content = Util.toNode((StyledString) infoText);
+			wrap.getChildren().add(content);
+			this.fRoot.setCenter(wrap);
+			this.fContent = wrap;
+		} else if ( infoText instanceof HtmlString) {
+			StackPane wrap = new StackPane();
+			wrap.getStyleClass().add("context-info"); //$NON-NLS-1$
+			wrap.setPrefHeight(this.fViewer.getTextWidget().getLineHeight(0) + 4);
+			SimpleHtmlViewer content = new SimpleHtmlViewer(true, true);
+			content.setContent((HtmlString) infoText);
+			wrap.getChildren().add(content);
+			this.fRoot.setCenter(wrap);
+			this.fContent = wrap;
 		} else {
-			this.fContent.setText(infoText.toString());
-			this.fContent.setGraphic(null);
+			Label content = new Label();
+			content.getStyleClass().add("context-info"); //$NON-NLS-1$
+			content.setText(infoText.toString());
+			this.fRoot.setCenter(content);
+			this.fContent = content;
 		}
 	}
 
@@ -205,6 +247,7 @@ class ContextInformationPopup implements IContentAssistListener {
 					this.fContent.applyCss();
 					double y = locationAtOffset.getY() - this.fContent.prefHeight(-1);
 					this.fContextInfoPopup.show(this.fViewer.getTextWidget().getScene().getWindow(), locationAtOffset.getX(), y);
+					this.fContextInfoPopup.sizeToScene();
 				}
 			}
 			else {

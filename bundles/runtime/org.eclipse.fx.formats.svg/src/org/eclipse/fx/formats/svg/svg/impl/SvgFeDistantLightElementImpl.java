@@ -38,6 +38,7 @@ import org.eclipse.fx.formats.svg.svg.SvgPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeDistantLightElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeDistantLightElementImpl#getXml__base <em>Xml base</em>}</li>
@@ -47,7 +48,6 @@ import org.eclipse.fx.formats.svg.svg.SvgPackage;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeDistantLightElementImpl#getAzimuth <em>Azimuth</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeDistantLightElementImpl#getElevation <em>Elevation</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

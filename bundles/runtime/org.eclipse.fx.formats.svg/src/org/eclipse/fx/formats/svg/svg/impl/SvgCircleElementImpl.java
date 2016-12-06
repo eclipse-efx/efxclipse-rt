@@ -68,6 +68,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgCircleElementImpl#getRequiredFeatures <em>Required Features</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgCircleElementImpl#getRequiredExtensions <em>Required Extensions</em>}</li>
@@ -154,7 +155,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgCircleElementImpl#getCy <em>Cy</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgCircleElementImpl#getR <em>R</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

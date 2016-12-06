@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.DocumentEventAttributes#getOnunload <em>Onunload</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.DocumentEventAttributes#getOnabort <em>Onabort</em>}</li>
@@ -27,7 +28,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.DocumentEventAttributes#getOnscroll <em>Onscroll</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.DocumentEventAttributes#getOnzoom <em>Onzoom</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getDocumentEventAttributes()
  * @model interface="true" abstract="true"

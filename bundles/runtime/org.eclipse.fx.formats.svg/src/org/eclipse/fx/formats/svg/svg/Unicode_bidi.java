@@ -152,6 +152,8 @@ public enum Unicode_bidi implements Enumerator {
 	 * Returns the '<em><b>Unicode bidi</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Unicode_bidi get(String literal) {
@@ -168,6 +170,8 @@ public enum Unicode_bidi implements Enumerator {
 	 * Returns the '<em><b>Unicode bidi</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Unicode_bidi getByName(String name) {
@@ -184,6 +188,8 @@ public enum Unicode_bidi implements Enumerator {
 	 * Returns the '<em><b>Unicode bidi</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Unicode_bidi get(int value) {

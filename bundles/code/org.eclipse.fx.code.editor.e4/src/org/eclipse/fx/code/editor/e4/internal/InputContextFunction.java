@@ -50,9 +50,11 @@ public class InputContextFunction extends TypeProviderContextFunction<String,Inp
 				context.set(Constants.DOCUMENT_URL, owner.getPersistedState().get(Constants.DOCUMENT_URL));
 				context.set(Constants.VCS_URL, owner.getPersistedState().get(Constants.VCS_URL));
 			}
-		} else {
-			throw new IllegalStateException("Unable to detect element with " + Constants.DOCUMENT_URL);
 		}
+//FIXME Bug in EclipseContext-reparenting where ContextFunctions are reevaluated inappropriately		
+//		else {
+//			throw new IllegalStateException("Unable to detect element with " + Constants.DOCUMENT_URL);
+//		}
 	}
 
 	@Override

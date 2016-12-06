@@ -65,6 +65,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMaskElementImpl#getRequiredFeatures <em>Required Features</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMaskElementImpl#getRequiredExtensions <em>Required Extensions</em>}</li>
@@ -143,7 +144,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMaskElementImpl#getMaskUnits <em>Mask Units</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMaskElementImpl#getMaskContentUnits <em>Mask Content Units</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

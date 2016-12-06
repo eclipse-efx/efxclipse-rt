@@ -14,6 +14,7 @@ package org.eclipse.fx.ui.controls.styledtext.internal;
 import com.google.common.collect.Range;
 
 import javafx.beans.Observable;
+import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -32,7 +33,7 @@ public class Scroller {
 	public DoubleProperty lineHeightProperty() {
 		return this.lineHeight;
 	}
-
+	
 	private DoubleProperty lineCount = new SimpleDoubleProperty(this, "lineCount", 0); //$NON-NLS-1$
 	public DoubleProperty lineCountProperty() {
 		return this.lineCount;
@@ -40,6 +41,8 @@ public class Scroller {
 
 	private IntegerProperty visibleLineCount = new SimpleIntegerProperty(this, "visibleLineCount", 0); //$NON-NLS-1$
 
+	private DoubleBinding pageHeight = this.lineHeight.multiply(this.visibleLineCount.add(-1));
+	
 	private DoubleProperty contentHeight = new SimpleDoubleProperty(this, "contentHeight", 0); //$NON-NLS-1$
 	public ReadOnlyDoubleProperty contentHeightProperty() {
 		return this.contentHeight;
@@ -126,6 +129,9 @@ public class Scroller {
 
 		bar.valueProperty().bindBidirectional(this.offset);
 
+		bar.unitIncrementProperty().bind(this.lineHeight);
+		bar.blockIncrementProperty().bind(this.pageHeight);
+		
 		recomputeAll();
 	}
 

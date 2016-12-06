@@ -64,6 +64,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMarkerElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMarkerElementImpl#getXml__base <em>Xml base</em>}</li>
@@ -141,7 +142,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMarkerElementImpl#getMarkerHeight <em>Marker Height</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgMarkerElementImpl#getOrient <em>Orient</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -18,6 +18,7 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgTextPathElement#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgTextPathElement#getStyle <em>Style</em>}</li>
@@ -26,7 +27,6 @@ package org.eclipse.fx.formats.svg.svg;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgTextPathElement#getMethod <em>Method</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgTextPathElement#getSpacing <em>Spacing</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgTextPathElement()
  * @model

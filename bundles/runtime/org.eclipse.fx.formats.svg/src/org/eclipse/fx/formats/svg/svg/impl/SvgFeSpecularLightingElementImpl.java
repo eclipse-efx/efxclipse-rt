@@ -64,6 +64,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeSpecularLightingElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeSpecularLightingElementImpl#getXml__base <em>Xml base</em>}</li>
@@ -142,7 +143,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeSpecularLightingElementImpl#getSpecularExponent <em>Specular Exponent</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeSpecularLightingElementImpl#getKernelUnitLength <em>Kernel Unit Length</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

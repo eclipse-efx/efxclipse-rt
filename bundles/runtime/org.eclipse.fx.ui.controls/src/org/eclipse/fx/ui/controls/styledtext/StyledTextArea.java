@@ -22,7 +22,6 @@ import java.util.function.Function;
 import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
-import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
@@ -39,6 +38,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.SetProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleSetProperty;
@@ -113,6 +113,18 @@ public class StyledTextArea extends Control {
 		}
 	};
 
+	@NonNull
+	private final DoubleProperty fontZoomFactor = new SimpleDoubleProperty(this, "fontZoomFactor", 1.0); //$NON-NLS-1$
+	public DoubleProperty fontZoomFactorProperty() {
+		return this.fontZoomFactor;
+	}
+	public void setFontZoomFactor(double factor) {
+		this.fontZoomFactor.set(factor);
+	}
+	public double getFontZoomFactor() {
+		return this.fontZoomFactor.get();
+	}
+	
 	@NonNull
 	private final StyledTextRenderer renderer = new StyledTextRenderer();
 
@@ -260,8 +272,9 @@ public class StyledTextArea extends Control {
 		setFocusTraversable(true);
 
 		//FIXME This rules out the CSS-Setting!
-		DoubleBinding lineHeight = org.eclipse.fx.ui.controls.Util.createTextHeightBinding("Pj", fontProperty());
-		fixedLineHeightProperty().bind(lineHeight.add(4));
+		// we cannot change remove it because the dynamic zoom depends on it -.-
+		DoubleBinding lineHeight = org.eclipse.fx.ui.controls.Util.createTextHeightBinding("Pj", fontProperty(), this.fontZoomFactor); //$NON-NLS-1$
+		fixedLineHeightProperty().bind(lineHeight.multiply(1.3));
 	}
 
 	static final CssMetaData<StyledTextArea, Number> FIXED_LINE_HEIGHT = new CssMetaData<StyledTextArea, Number>("-fx-fixed-line-height", //$NON-NLS-1$
@@ -1730,11 +1743,20 @@ public class StyledTextArea extends Control {
 	public void paste() {
 		final Clipboard clipboard = Clipboard.getSystemClipboard();
 		if (clipboard.hasString()) {
-			final String text = clipboard.getString();
+			final String text = fix0TerminatedString(clipboard.getString());
 			if (text != null) {
 				insert(text);
 			}
 		}
+	}
+	
+	private static String fix0TerminatedString(String text) {
+		String result = text;
+		int nullIdx = text.indexOf(0); 
+		if(nullIdx>0) {
+			result = text.substring(0, nullIdx); 
+		}
+		return result;
 	}
 
 	/**
@@ -1891,6 +1913,6 @@ public class StyledTextArea extends Control {
 	 * @param action the action
 	 */
 	public void triggerAction(TextEditAction action) {
-		((StyledTextBehavior)((StyledTextSkin)getSkin()).getBehavior()).triggerAction(action);
+		((StyledTextSkin)getSkin()).getBehavior().triggerAction(action);
 	}
 }

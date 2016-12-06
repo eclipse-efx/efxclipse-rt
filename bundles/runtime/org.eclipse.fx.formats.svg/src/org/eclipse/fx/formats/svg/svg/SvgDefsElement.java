@@ -18,13 +18,13 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgDefsElement#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgDefsElement#getStyle <em>Style</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgDefsElement#getExternalResourcesRequired <em>External Resources Required</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgDefsElement#getTransform <em>Transform</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgDefsElement()
  * @model

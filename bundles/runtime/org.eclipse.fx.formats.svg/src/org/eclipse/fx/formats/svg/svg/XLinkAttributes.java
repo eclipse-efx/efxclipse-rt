@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.XLinkAttributes#getXlink__href <em>Xlink href</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.XLinkAttributes#getXlink__show <em>Xlink show</em>}</li>
@@ -29,7 +30,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.XLinkAttributes#getXlink__title <em>Xlink title</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.XLinkAttributes#getResolvedInstance <em>Resolved Instance</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getXLinkAttributes()
  * @model interface="true" abstract="true"

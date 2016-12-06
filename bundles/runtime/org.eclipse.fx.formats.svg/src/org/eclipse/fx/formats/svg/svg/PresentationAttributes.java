@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.PresentationAttributes#getAlignment_baseline <em>Alignment baseline</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.PresentationAttributes#getBaseline_shift <em>Baseline shift</em>}</li>
@@ -80,7 +81,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.PresentationAttributes#getWord_spacing <em>Word spacing</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.PresentationAttributes#getWriting_mode <em>Writing mode</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getPresentationAttributes()
  * @model interface="true" abstract="true"

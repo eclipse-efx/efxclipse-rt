@@ -18,13 +18,13 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeImageElement#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeImageElement#getStyle <em>Style</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeImageElement#getExternalResourcesRequired <em>External Resources Required</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeImageElement#getPreserveAspectRatio <em>Preserve Aspect Ratio</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgFeImageElement()
  * @model

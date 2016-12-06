@@ -900,6 +900,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" eType="#//ListOfLengths"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="rotate" eType="#//ListOfNumbers"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="textLength" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="textContent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eGenericSuperTypes eClassifier="#//SvgElement"/>
     <eGenericSuperTypes eClassifier="#//GraphicsElement"/>
     <eGenericSuperTypes eClassifier="#//TextContentElement"/>

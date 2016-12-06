@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.GraphicalEventAttributes#getOnfocusin <em>Onfocusin</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.GraphicalEventAttributes#getOnfocusout <em>Onfocusout</em>}</li>
@@ -31,7 +32,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.GraphicalEventAttributes#getOnmouseout <em>Onmouseout</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.GraphicalEventAttributes#getOnload <em>Onload</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getGraphicalEventAttributes()
  * @model interface="true" abstract="true"

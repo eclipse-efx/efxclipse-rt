@@ -193,7 +193,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				s.setFeedbackConsumer(dnd::handleFeedback);
 				s.setDragFinishedConsumer(dnd::handleFinished);
 				s.setClipboardDataFunction(dnd::clipboardDataFunction);
-			});
+			},DnDSupport.DETACHABLE_DRAG);
 
 			String location = this.domainElement.getPersistedState().get(WStack.STATE_KEY_TABS_LOCATION);
 			if( location != null ) {
@@ -295,7 +295,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 										}
 									});
 								} else {
-									StackWidgetImpl.this.logger.info("An endless activation update has been blocked!"); //$NON-NLS-1$
+									StackWidgetImpl.this.logger.debug("An endless activation update has been blocked!"); //$NON-NLS-1$
 								}
 							} else {
 								// We are in the init phase

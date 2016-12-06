@@ -26,6 +26,7 @@ import org.eclipse.fx.code.editor.services.HoverInformationProvider;
 import org.eclipse.fx.code.editor.services.NavigationProvider;
 import org.eclipse.fx.code.editor.services.ProposalComputer;
 import org.eclipse.fx.code.editor.services.SearchProvider;
+import org.eclipse.fx.core.AppMemento;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.fx.core.preferences.Preference;
@@ -64,10 +65,12 @@ import com.google.common.collect.Range;
 import javafx.beans.property.SetProperty;
 import javafx.beans.property.SimpleSetProperty;
 import javafx.collections.FXCollections;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
 @SuppressWarnings("restriction")
 public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration {
+	private final Input<?> input;
 	private final PresentationReconciler reconciler;
 	private final ProposalComputer proposalComputer;
 	private final IAnnotationModel annotationModel;
@@ -81,18 +84,25 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 
 	@Inject private EventBus eventBus;
 
-
-
 	private ContentAssistant contentAssistant;
 	private SetProperty<Feature> featureSet = new SimpleSetProperty<Feature>(this, "featureSet", FXCollections.observableSet());
 
 	private final ThreadSynchronize threadSynchronize;
 	private final IContextInformationValidator contextInformationValidator;
 
+	private final AppMemento appMemento;
+	
+	private final static String KEY_HOVER_WINDOW_WIDTH = DefaultSourceViewerConfiguration.class.getName() + ".hoverWindowWidth";
+	private final static String KEY_HOVER_WINDOW_HEIGHT = DefaultSourceViewerConfiguration.class.getName() + ".hoverWindowHeight";
+	private final static String KEY_PROPOSAL_WINDOW_WIDTH = DefaultSourceViewerConfiguration.class.getName() + ".proposalWindowWidth";
+	private final static String KEY_PROPOSAL_WINDOW_HEIGHT = DefaultSourceViewerConfiguration.class.getName() + ".proposalWindowHeight";
+	
 	@Inject
 	public DefaultSourceViewerConfiguration(
 			ThreadSynchronize threadSynchronize,
+			Input<?> input,
 			PresentationReconciler reconciler,
+			AppMemento appMemento,
 			@Optional ProposalComputer proposalComputer,
 			@Optional IAnnotationModel annotationModel,
 			@Optional AnnotationPresenter annotationPresenter,
@@ -106,6 +116,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			) {
 		this.threadSynchronize = threadSynchronize;
 		this.contextInformationValidator = contextInformationValidator;
+		this.input = input;
 		this.hoverInformationProvider = hoverInformationProvider;
 		this.reconciler = reconciler;
 		this.proposalComputer = proposalComputer;
@@ -117,6 +128,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		this.navigationProvider = navigationProvider;
 		this.editorOpener = editorOpener;
 		this.behaviorContributor = behaviorContributor;
+		this.appMemento = appMemento;
 	}
 
 	@Inject
@@ -214,6 +226,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		if( proposalComputer != null ) {
 			if( contentAssistant == null ) {
 				contentAssistant = new ContentAssistant(this.contextInformationValidator, this.threadSynchronize, this::computeProposals);
+				contentAssistant.configureWindowSize(this::getProposalWindowSize, this::storeProposalWindowSize);
 			}
 
 			return contentAssistant;
@@ -409,4 +422,35 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		return super.getOverrideMapping();
 	}
 
+	@Override
+	public Point2D getHoverWindowSize() {
+		if (appMemento == null) return super.getHoverWindowSize();
+		double width = appMemento.get(KEY_HOVER_WINDOW_WIDTH, 600d);
+		double height = appMemento.get(KEY_HOVER_WINDOW_HEIGHT, 400d);
+		return new Point2D(width, height);
+	}
+	
+	@Override
+	public void storeHoverWindowSize(Point2D size) {
+		if (appMemento != null) {
+			appMemento.put(KEY_HOVER_WINDOW_WIDTH, size.getX());
+			appMemento.put(KEY_HOVER_WINDOW_HEIGHT, size.getY());
+		}
+	}
+	
+	@Override
+	public Point2D getProposalWindowSize() {
+		if (appMemento == null) return super.getProposalWindowSize();
+		double width = appMemento.get(KEY_PROPOSAL_WINDOW_WIDTH, 600d);
+		double height = appMemento.get(KEY_PROPOSAL_WINDOW_HEIGHT, 400d);
+		return new Point2D(width, height);
+	}
+	
+	@Override
+	public void storeProposalWindowSize(Point2D size) {
+		if (appMemento != null) {
+			appMemento.put(KEY_PROPOSAL_WINDOW_WIDTH, size.getX());
+			appMemento.put(KEY_PROPOSAL_WINDOW_HEIGHT, size.getY());
+		}
+	}
 }

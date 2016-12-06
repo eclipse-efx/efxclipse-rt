@@ -13447,13 +13447,22 @@ public interface SvgPackage extends EPackage {
 	int SVG_TEXT_ELEMENT__TEXT_LENGTH = SVG_ELEMENT_FEATURE_COUNT + 87;
 
 	/**
+	 * The feature id for the '<em><b>Text Content</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SVG_TEXT_ELEMENT__TEXT_CONTENT = SVG_ELEMENT_FEATURE_COUNT + 88;
+
+	/**
 	 * The number of structural features of the '<em>Text Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SVG_TEXT_ELEMENT_FEATURE_COUNT = SVG_ELEMENT_FEATURE_COUNT + 88;
+	int SVG_TEXT_ELEMENT_FEATURE_COUNT = SVG_ELEMENT_FEATURE_COUNT + 89;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.fx.formats.svg.svg.impl.SvgTspanElementImpl <em>Tspan Element</em>}' class.
@@ -41813,6 +41822,17 @@ public interface SvgPackage extends EPackage {
 	EAttribute getSvgTextElement_TextLength();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.fx.formats.svg.svg.SvgTextElement#getTextContent <em>Text Content</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Text Content</em>'.
+	 * @see org.eclipse.fx.formats.svg.svg.SvgTextElement#getTextContent()
+	 * @see #getSvgTextElement()
+	 * @generated
+	 */
+	EAttribute getSvgTextElement_TextContent();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.fx.formats.svg.svg.SvgTspanElement <em>Tspan Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -47602,6 +47622,14 @@ public interface SvgPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SVG_TEXT_ELEMENT__TEXT_LENGTH = eINSTANCE.getSvgTextElement_TextLength();
+
+		/**
+		 * The meta object literal for the '<em><b>Text Content</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SVG_TEXT_ELEMENT__TEXT_CONTENT = eINSTANCE.getSvgTextElement_TextContent();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.fx.formats.svg.svg.impl.SvgTspanElementImpl <em>Tspan Element</em>}' class.

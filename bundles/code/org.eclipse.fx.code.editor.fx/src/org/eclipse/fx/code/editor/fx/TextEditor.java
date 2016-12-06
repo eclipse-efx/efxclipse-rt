@@ -10,6 +10,8 @@
 *******************************************************************************/
 package org.eclipse.fx.code.editor.fx;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
@@ -76,17 +78,26 @@ public class TextEditor {
 
 	private EditorContextMenuProvider contextMenuProvider;
 
-	@Inject
+	private List<Subscription> toDispose = new ArrayList<>();
+	
+	private <T> void installListener(Property<T> property, ChangeListener<? super T> listener) {
+		property.addListener(listener);
+		toDispose.add(() -> property.removeListener(listener));
+	}
+	
+	private void disposeListeners() {
+		toDispose.forEach(s -> s.dispose());
+		toDispose.clear();
+	}
+	
 	public void setContextMenuProvider(EditorContextMenuProvider contextMenuProvider) {
 		this.contextMenuProvider = contextMenuProvider;
 	}
 
-	@Inject
 	public void setContextInformationPresenter(ContextInformationPresenter contextInformationPresenter) {
 		this.contextInformationPresenter = contextInformationPresenter;
 	}
 
-	@Inject
 	public void setEditingContext(EditingContext editingContext) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The EditingContext has to be set before the editor is initialized");
@@ -94,7 +105,6 @@ public class TextEditor {
 		this.editingContext = editingContext;
 	}
 
-	@Inject
 	public void setDocument(IDocument document) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The document has to be set before the editor is initialized");
@@ -102,7 +112,6 @@ public class TextEditor {
 		this.document = document;
 	}
 
-	@Inject
 	public void setSourceViewerConfiguration(SourceViewerConfiguration configuration) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The configuration has to be set before the editor is initialized");
@@ -110,7 +119,6 @@ public class TextEditor {
 		this.configuration = configuration;
 	}
 
-	@Inject
 	public void setPartitioner(IDocumentPartitioner partitioner) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The partitioner has to be set before the editor is initialized");
@@ -139,6 +147,12 @@ public class TextEditor {
 	}
 
 	@Inject
+	public void setZoomFactor(@Preference(nodePath=Constants.PREFERENCE_NODE_PATH, key=Constants.PREFERENCE_ZOOMFACTOR, defaultValue="1.0") double zoomFactor) {
+		if( viewer != null ) {
+			viewer.getTextWidget().setFontZoomFactor(zoomFactor);
+		}
+	}
+
 	public void setInput(Input<?> input) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The input has to be set before the editor is initialized");
@@ -147,14 +161,31 @@ public class TextEditor {
 		this.input = input;
 	}
 
-	@Inject
-	@Optional
 	public void setActiveInputTracker(@ContextValue("activeInput") Property<Input<?>> activeInput) {
 		this.activeInput = activeInput;
 	}
 
 	@PostConstruct
-	public void initUI(BorderPane pane, EventBus eventBus) {
+	public void initUI(BorderPane pane,
+			EventBus eventBus,
+			EditorContextMenuProvider contextMenuProvider,
+			ContextInformationPresenter contextInformationPresenter,
+			EditingContext editingContext,
+			IDocument document,
+			SourceViewerConfiguration configuration,
+			IDocumentPartitioner partitioner,
+			Input<?> input,
+			@Optional @ContextValue("activeInput") Property<Input<?>> activeInput,
+			@Preference(nodePath=Constants.PREFERENCE_NODE_PATH, key=Constants.PREFERENCE_ZOOMFACTOR, defaultValue="1.0") Property<Double> zoomFactor) {
+		setContextMenuProvider(contextMenuProvider);
+		setContextInformationPresenter(contextInformationPresenter);
+		setEditingContext(editingContext);
+		setDocument(document);
+		setSourceViewerConfiguration(configuration);
+		setPartitioner(partitioner);
+		setInput(input);
+		setActiveInputTracker(activeInput);
+
 		viewer = createSourceViewer();
 		if( tabAdvance != null ) {
 			viewer.getTextWidget().setTabAdvance(tabAdvance.intValue());
@@ -176,9 +207,16 @@ public class TextEditor {
 		if( activeInput != null ) {
 			activeInput.setValue(input);
 		}
-
-		eventBus.subscribe(Constants.TOPIC_SELECT_SOURCE, EventBus.data(this::onSourceSelect));
-
+		viewer.getTextWidget().setFontZoomFactor(zoomFactor.getValue() != null ? zoomFactor.getValue() : 1.0);
+		
+		installListener(viewer.getTextWidget().fontZoomFactorProperty(), (o,ol,ne) -> {
+			zoomFactor.setValue(ne.doubleValue());
+		});
+		
+		toDispose.add(
+				eventBus.subscribe(Constants.TOPIC_SELECT_SOURCE, EventBus.data(this::onSourceSelect))
+		);
+		
 		if (editingContext instanceof DelegatingEditingContext) {
 			DelegatingEditingContext c = (DelegatingEditingContext) editingContext;
 			c.setDelegate(new EditingContext() {
@@ -310,5 +348,15 @@ public class TextEditor {
 			activeInput.setValue(null);
 		}
 		this.input = null;
+		
+		if (editingContext instanceof DelegatingEditingContext) {
+			// cleanup delegate
+			DelegatingEditingContext c = (DelegatingEditingContext) editingContext;
+			c.dispose();
+		}
+		
+		disposeListeners();
+		
+		viewer.dispose();
 	}
 }

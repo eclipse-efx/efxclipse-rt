@@ -68,6 +68,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgLineElementImpl#getRequiredFeatures <em>Required Features</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgLineElementImpl#getRequiredExtensions <em>Required Extensions</em>}</li>
@@ -155,7 +156,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgLineElementImpl#getX2 <em>X2</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgLineElementImpl#getY2 <em>Y2</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -18,13 +18,13 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeBlendElement#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeBlendElement#getStyle <em>Style</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeBlendElement#getIn2 <em>In2</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeBlendElement#getMode <em>Mode</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgFeBlendElement()
  * @model

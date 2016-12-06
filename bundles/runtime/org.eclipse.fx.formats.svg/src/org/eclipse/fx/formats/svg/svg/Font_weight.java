@@ -412,6 +412,8 @@ public enum Font_weight implements Enumerator {
 	 * Returns the '<em><b>Font weight</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Font_weight get(String literal) {
@@ -428,6 +430,8 @@ public enum Font_weight implements Enumerator {
 	 * Returns the '<em><b>Font weight</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Font_weight getByName(String name) {
@@ -444,6 +448,8 @@ public enum Font_weight implements Enumerator {
 	 * Returns the '<em><b>Font weight</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Font_weight get(int value) {

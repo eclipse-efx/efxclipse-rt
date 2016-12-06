@@ -18,6 +18,7 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgTextElement#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgTextElement#getStyle <em>Style</em>}</li>
@@ -30,8 +31,8 @@ package org.eclipse.fx.formats.svg.svg;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgTextElement#getDy <em>Dy</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgTextElement#getRotate <em>Rotate</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgTextElement#getTextLength <em>Text Length</em>}</li>
+ *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgTextElement#getTextContent <em>Text Content</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgTextElement()
  * @model
@@ -327,5 +328,31 @@ public interface SvgTextElement extends SvgElement, GraphicsElement, TextContent
 	 * @generated
 	 */
 	void setTextLength(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Text Content</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Text Content</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Text Content</em>' attribute.
+	 * @see #setTextContent(String)
+	 * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgTextElement_TextContent()
+	 * @model
+	 * @generated
+	 */
+	String getTextContent();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.fx.formats.svg.svg.SvgTextElement#getTextContent <em>Text Content</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Text Content</em>' attribute.
+	 * @see #getTextContent()
+	 * @generated
+	 */
+	void setTextContent(String value);
 
 } // SvgTextElement

@@ -35,7 +35,7 @@ public class SvgFactoryImpl extends EFactoryImpl implements SvgFactory {
 	 */
 	public static SvgFactory init() {
 		try {
-			SvgFactory theSvgFactory = (SvgFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.w3.org/2000/svg"); 
+			SvgFactory theSvgFactory = (SvgFactory)EPackage.Registry.INSTANCE.getEFactory(SvgPackage.eNS_URI);
 			if (theSvgFactory != null) {
 				return theSvgFactory;
 			}

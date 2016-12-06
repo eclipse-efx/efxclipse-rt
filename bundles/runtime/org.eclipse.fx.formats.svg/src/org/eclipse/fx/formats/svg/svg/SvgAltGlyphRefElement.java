@@ -18,6 +18,7 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgAltGlyphRefElement#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgAltGlyphRefElement#getStyle <em>Style</em>}</li>
@@ -28,7 +29,6 @@ package org.eclipse.fx.formats.svg.svg;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgAltGlyphRefElement#getGlyphRef <em>Glyph Ref</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgAltGlyphRefElement#getFormat <em>Format</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgAltGlyphRefElement()
  * @model

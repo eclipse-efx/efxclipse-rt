@@ -70,6 +70,7 @@ import org.eclipse.fx.formats.svg.svg.XLinkAttributes;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTextPathElementImpl#getRequiredFeatures <em>Required Features</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTextPathElementImpl#getRequiredExtensions <em>Required Extensions</em>}</li>
@@ -163,7 +164,6 @@ import org.eclipse.fx.formats.svg.svg.XLinkAttributes;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTextPathElementImpl#getMethod <em>Method</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTextPathElementImpl#getSpacing <em>Spacing</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

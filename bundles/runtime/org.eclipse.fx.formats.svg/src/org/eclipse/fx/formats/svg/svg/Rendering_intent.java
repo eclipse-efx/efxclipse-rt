@@ -178,6 +178,8 @@ public enum Rendering_intent implements Enumerator {
 	 * Returns the '<em><b>Rendering intent</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Rendering_intent get(String literal) {
@@ -194,6 +196,8 @@ public enum Rendering_intent implements Enumerator {
 	 * Returns the '<em><b>Rendering intent</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Rendering_intent getByName(String name) {
@@ -210,6 +214,8 @@ public enum Rendering_intent implements Enumerator {
 	 * Returns the '<em><b>Rendering intent</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Rendering_intent get(int value) {

@@ -39,6 +39,7 @@ import org.eclipse.fx.formats.svg.svg.SvgTitleElement;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTitleElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTitleElementImpl#getXml__base <em>Xml base</em>}</li>
@@ -48,7 +49,6 @@ import org.eclipse.fx.formats.svg.svg.SvgTitleElement;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTitleElementImpl#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTitleElementImpl#getStyle <em>Style</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

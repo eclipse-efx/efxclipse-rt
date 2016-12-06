@@ -28,6 +28,7 @@ import org.eclipse.fx.text.ui.ITextViewerExtension5;
 import org.eclipse.fx.text.ui.TextPresentation;
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Position;
@@ -343,7 +344,7 @@ public class AnnotationPainter implements IAnnotationModelListener, IAnnotationM
 		for (int layer= 0, maxLayer= 1;	layer < maxLayer; layer++) {
 
 			for (Iterator<?> iter= decorations.iterator(); iter.hasNext();) {
-				Map.Entry entry= (Map.Entry)iter.next();
+				Map.@NonNull Entry entry= (Map.@NonNull Entry)iter.next();
 
 				Annotation a= (Annotation)entry.getKey();
 				if (a.isMarkedDeleted())

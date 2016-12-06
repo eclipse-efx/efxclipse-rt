@@ -37,6 +37,7 @@ import org.eclipse.jface.text.IRegion;
  * @see org.eclipse.jface.text.ITextHoverExtension2
  * @see org.eclipse.jface.text.ITextViewer
  */
+@Deprecated
 public interface ITextHover {
 
 	/**

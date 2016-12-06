@@ -88,6 +88,7 @@ import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -513,6 +514,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if( ! Util.isMacOS() && org.eclipse.fx.ui.controls.Util.MNEMONICS_FIX ) {
 				s.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
 					if( e.isAltDown() && e.isControlDown() ) {
+						e.consume();
+					} else if( e.isAltDown() && e.getCode() == KeyCode.TAB ) {
 						e.consume();
 					}
 				});
@@ -1215,11 +1218,14 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			}
 
 			Runnable finisher = () -> {
+				staticLayoutNode.getChildren().stream().forEach( n -> n.setVisible(false));
+				maximizationContainer.setVisible(true);
 				maximizationContainer.getChildren().clear();
 				maximizationContainer.getChildren().add((Region) childWidget.getWidgetNode());
 				greyPane.setOpacity(1.0);
 				this.maximizationContainer = maximizationContainer;
 				this.greyPane = greyPane;
+
 			};
 
 			if(this.maximizationTransition != null) {
@@ -1246,6 +1252,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					staticLayoutNode.getChildren().remove(greyPane);
 					staticLayoutNode.getChildren().remove(maximizationContainer);
 					childStaticNode.getChildren().add(childPane);
+					staticLayoutNode.getChildren().stream().forEach( n -> n.setVisible(true));
 				};
 
 				if(this.maximizationTransition != null) {

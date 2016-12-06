@@ -12,33 +12,37 @@ package org.eclipse.fx.ui.workbench.renderers.fx.widget;
 
 import java.util.List;
 
-import javafx.scene.Node;
-import javafx.scene.input.DragEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.controls.dnd.EFXDragEvent;
-import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
+import org.eclipse.fx.ui.panes.LazyStackPane;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
+import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupport;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.SplitDnDSupport;
 import org.eclipse.fx.ui.workbench.services.ModelService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import javafx.scene.Node;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.layout.Pane;
+
 /**
  * Base implementation for all {@link WLayoutedWidget} implementations
- * 
+ *
  * @param <N>
  *            the business control
  * @param <NN>
@@ -52,6 +56,8 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	private double weight = 10;
 	private WCallback<@NonNull DropData, @Nullable Void> dropCallback;
 
+	private static final boolean OPTIMIZED_STACK_LAYOUT = Boolean.getBoolean("efxclipse.experimental.optstack"); //$NON-NLS-1$
+
 	@Inject
 	@NonNull
 	DnDFeedbackService feedbackService;
@@ -59,7 +65,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@Inject
 	@NonNull
 	EModelService modelService;
-	
+
 	@Inject
 	@Optional
 	@Nullable
@@ -68,7 +74,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@Inject
 	@NonNull
 	ModelService efxModelService;
-	
+
 	/**
 	 * @return the widget node
 	 */
@@ -96,7 +102,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 
 	/**
 	 * Create the static layout node
-	 * 
+	 *
 	 * @return the layout node
 	 */
 	@NonNull
@@ -114,7 +120,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 
 	/**
 	 * Initialize drag and drop
-	 * 
+	 *
 	 * @param staticLayoutGroup
 	 *            the static group we attach the DnD to
 	 */
@@ -123,10 +129,13 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_OVER, dndSupport::handleDragOver);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_EXITED, dndSupport::handleDragExit);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);
-		
+
 		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_OVER, dndSupport::handleDragOver);
 //		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_EXITED, dndSupport::handleDragExit);
 		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);
+		if( DnDSupport.DETACHABLE_DRAG ) {
+			staticLayoutGroup.addEventHandler(MouseDragEvent.MOUSE_DRAG_EXITED, dndSupport::handleDragExit);
+		}
 	}
 
 	@Override
@@ -139,15 +148,35 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 		return this.dropCallback;
 	}
 
+	private boolean stateCheck(LazyStackPane.CheckType type) {
+		if( ! OPTIMIZED_STACK_LAYOUT ) {
+			return true;
+		}
+
+		if( getDomElement() instanceof MPart ) {
+			MPart p = (MPart) getDomElement();
+			if( p != null && ((MUIElement)p.getParent()) instanceof MPartStack ) {
+				if( p.getParent().getSelectedElement() == p ) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+
 	/**
 	 * Create the static layout pane
-	 * 
+	 *
 	 * @return the layout pane
 	 */
-	@SuppressWarnings("static-method")
 	@NonNull
 	protected Pane createStaticPane() {
-		return new StackPane();
+		return new LazyStackPane(this::stateCheck);
 	}
 
 	@Override

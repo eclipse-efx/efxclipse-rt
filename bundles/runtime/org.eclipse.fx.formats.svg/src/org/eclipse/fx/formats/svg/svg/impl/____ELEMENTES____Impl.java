@@ -21,8 +21,6 @@ import org.eclipse.fx.formats.svg.svg.____ELEMENTES____;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>ELEMENTES </b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.fx.core.Subscription;
@@ -37,6 +39,7 @@ import org.eclipse.fx.ui.controls.styledtext.events.UndoHintEvent;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
+import org.eclipse.jface.text.ConfigurableLineTracker;
 import org.eclipse.jface.text.DefaultPositionUpdater;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.DocumentRewriteSessionEvent;
@@ -61,6 +64,7 @@ import javafx.beans.property.SetProperty;
 import javafx.beans.property.SimpleSetProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.SetChangeListener;
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
@@ -121,6 +125,12 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 
 		initActionMapping();
 	}
+	
+	public void dispose() {
+		if (this.fUndoManager != null) {
+			this.fUndoManager.disconnect();
+		}
+	}
 
 	protected TriggerActionMapping getActionMapping() {
 		return actionMapping;
@@ -142,7 +152,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 	private void bindFeatures() {
 		this.features.addListener((SetChangeListener<Feature>)change->{
 			if (change.wasAdded()) {
-				Feature feature = change.getElementAdded();
+				@NonNull Feature feature = change.getElementAdded();
 				IFeature iFeature = feature.getFeatureFactory().get();
 				Subscription put = this.activeFeatures.put(feature, iFeature.install(getTextWidget()));
 				if (put != null) {
@@ -1115,11 +1125,16 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 				&& !fTextHovers.isEmpty() /* && fHoverControlCreator != null */ && fTextHoverManager == null) {
 			fTextHoverManager = createTextHovermanager();
 			fTextHoverManager.install(this.getTextWidget());
+			
 			// fTextHoverManager.setSizeConstraints(TEXT_HOVER_WIDTH_CHARS,
 			// TEXT_HOVER_HEIGHT_CHARS, false, true);
 			// fTextHoverManager.setInformationControlReplacer(new
 			// StickyHoverManager(this));
 		}
+	}
+	
+	protected void configureHoverSize(Supplier<Point2D> windowSizeRetriever, Consumer<Point2D> windowSizePersister) {
+		fTextHoverManager.configureWindowSize(windowSizeRetriever, windowSizePersister);
 	}
 
 	protected TextViewerHoverManager createTextHovermanager() {

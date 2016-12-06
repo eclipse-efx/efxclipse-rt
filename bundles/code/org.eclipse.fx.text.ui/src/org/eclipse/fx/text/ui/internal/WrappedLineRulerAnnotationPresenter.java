@@ -1,5 +1,6 @@
 package org.eclipse.fx.text.ui.internal;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
@@ -23,12 +24,12 @@ public class WrappedLineRulerAnnotationPresenter implements LineRulerAnnotationP
 
 	@Override
 	public LayoutHint getLayoutHint() {
-		return LayoutHint.valueOf(wrapped.getLayoutHint().toString());
+		return LayoutHint.valueOf(this.wrapped.getLayoutHint().toString());
 	}
 
 	@Override
 	public int getOrder() {
-		return wrapped.getOrder();
+		return this.wrapped.getOrder();
 	}
 
 	private org.eclipse.jface.text.source.Annotation unwrap(Annotation annotation) {
@@ -42,14 +43,14 @@ public class WrappedLineRulerAnnotationPresenter implements LineRulerAnnotationP
 	@Override
 	public boolean isApplicable(Annotation annotation) {
 		if (annotation instanceof WrappedAnnotation) {
-			return wrapped.isApplicable(unwrap(annotation));
+			return this.wrapped.isApplicable(unwrap(annotation));
 		}
 		return false;
 	}
 
 	@Override
 	public Node createNode() {
-		return wrapped.createNode();
+		return this.wrapped.createNode();
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class WrappedLineRulerAnnotationPresenter implements LineRulerAnnotationP
 
 	@Override
 	public void updateNode(Node node, Set<Annotation> annotation) {
-		wrapped.updateNode(node, unwrap(annotation));
+		this.wrapped.updateNode(node, unwrap(annotation));
 	}
 
 	@Override
@@ -84,10 +85,15 @@ public class WrappedLineRulerAnnotationPresenter implements LineRulerAnnotationP
 			}
 		});
 	}
+	
+	@Override
+	public Optional<String> getStyleClass() {
+		return this.wrapped.getStyleClass();
+	}
 
 	@Override
 	public String toString() {
-		return "WAP("+wrapped+")@" + hashCode(); //$NON-NLS-2$
+		return "WAP("+this.wrapped+")@" + hashCode(); //$NON-NLS-2$
 	}
 
 }

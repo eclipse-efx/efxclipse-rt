@@ -68,6 +68,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTspanElementImpl#getRequiredFeatures <em>Required Features</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTspanElementImpl#getRequiredExtensions <em>Required Extensions</em>}</li>
@@ -157,7 +158,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTspanElementImpl#getTextLength <em>Text Length</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTspanElementImpl#getLengthAdjust <em>Length Adjust</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

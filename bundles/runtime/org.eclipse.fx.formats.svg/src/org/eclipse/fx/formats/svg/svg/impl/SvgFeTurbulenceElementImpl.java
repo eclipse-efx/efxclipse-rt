@@ -66,6 +66,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeTurbulenceElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeTurbulenceElementImpl#getXml__base <em>Xml base</em>}</li>
@@ -145,7 +146,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeTurbulenceElementImpl#getStitchTiles <em>Stitch Tiles</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeTurbulenceElementImpl#getType <em>Type</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

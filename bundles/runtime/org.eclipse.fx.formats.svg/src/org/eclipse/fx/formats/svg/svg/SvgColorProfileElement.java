@@ -18,12 +18,12 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgColorProfileElement#getLocal <em>Local</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgColorProfileElement#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgColorProfileElement#getRendering_intent <em>Rendering intent</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgColorProfileElement()
  * @model

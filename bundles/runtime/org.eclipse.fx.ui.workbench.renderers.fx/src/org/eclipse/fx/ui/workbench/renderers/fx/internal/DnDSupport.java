@@ -54,6 +54,11 @@ public class DnDSupport extends BaseDnDSupport {
 	private final ModelService modelService;
 
 	/**
+	 * Support detach drag and drop
+	 */
+	public final static boolean DETACHABLE_DRAG = Boolean.getBoolean("detachdrag.enabled"); //$NON-NLS-1$
+
+	/**
 	 * Create a new dnd support instance
 	 *
 	 * @param dragStartCallbackProvider
@@ -145,14 +150,14 @@ public class DnDSupport extends BaseDnDSupport {
 				if (domElement != null) {
 					call.call(new DropData(data.x, data.y, null, domElement, org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.DETACH));
 				}
-			} else {
+			} else if( data.targetTab != null ) {
 				MStackElement reference = ((WStackItem<?, ?>) data.targetTab.getUserData()).getDomElement();
 				MStackElement sourceReference = ((WStackItem<?, ?>) data.draggedTab.getUserData()).getDomElement();
 
 				MElementContainer<MUIElement> parentRef = reference != null ? reference.getParent() : null;
 				MElementContainer<MUIElement> parentSource = sourceReference != null ? sourceReference.getParent() : null;
 
-				if (parentRef != parentSource && sourceReference != null && this.dndService != null && !this.dndService.repartentAllowed(sourceReference)) {
+				if (parentRef != parentSource && parentRef != null && sourceReference != null && this.dndService != null && !this.dndService.reparentAllowed(sourceReference, parentRef)) {
 					cleanup();
 					return;
 				}
@@ -186,7 +191,7 @@ public class DnDSupport extends BaseDnDSupport {
 		MElementContainer<MUIElement> parentRef = reference != null ? reference.getParent() : null;
 		MElementContainer<MUIElement> parentSource = sourceReference != null ? sourceReference.getParent() : null;
 
-		if (parentRef != parentSource && sourceReference != null && this.dndService != null && !this.dndService.repartentAllowed(sourceReference)) {
+		if (parentRef != parentSource && parentRef != null && sourceReference != null && this.dndService != null && !this.dndService.reparentAllowed(sourceReference,parentRef)) {
 			cleanup();
 			return;
 		}

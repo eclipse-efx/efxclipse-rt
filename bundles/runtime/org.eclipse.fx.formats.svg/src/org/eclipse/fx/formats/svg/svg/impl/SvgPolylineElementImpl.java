@@ -68,6 +68,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgPolylineElementImpl#getRequiredFeatures <em>Required Features</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgPolylineElementImpl#getRequiredExtensions <em>Required Extensions</em>}</li>
@@ -152,7 +153,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgPolylineElementImpl#getTransform <em>Transform</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgPolylineElementImpl#getPoints <em>Points</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

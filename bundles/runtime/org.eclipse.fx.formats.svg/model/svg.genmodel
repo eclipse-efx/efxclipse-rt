@@ -1,257 +1,384 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.fx.formats.svg/src" modelPluginID="org.eclipse.fx.formats.svg"
-    modelName="Svg" importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0"
+    modelName="Svg" importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0"
     copyrightFields="false">
   <foreignModel>svg.ecore</foreignModel>
   <genPackages prefix="Svg" basePackage="org.eclipse.fx.formats.svg" disposableProviderFactory="true"
       ecorePackage="svg.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//alignment_baseline">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/auto"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/baseline"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/before_edge"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/text_before_edge"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/middle"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/central"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/after_edge"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/text_after_edge"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/ideographic"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/alphabetic"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/hanging"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/mathematical"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//alignment_baseline/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Alignment_baseline">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/auto"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/baseline"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/before_edge"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/text_before_edge"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/middle"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/central"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/after_edge"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/text_after_edge"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/ideographic"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/alphabetic"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/hanging"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/mathematical"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Alignment_baseline/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//clip_rule">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//clip_rule/nonzero"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//clip_rule/evenodd"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//clip_rule/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Clip_rule">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Clip_rule/nonzero"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Clip_rule/evenodd"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Clip_rule/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//color_interpolation">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_interpolation/sRGB"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_interpolation/auto"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_interpolation/linearRGB"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_interpolation/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Color_interpolation">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_interpolation/sRGB"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_interpolation/auto"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_interpolation/linearRGB"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_interpolation/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//color_interpolation_filters">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_interpolation_filters/auto"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_interpolation_filters/sRGB"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_interpolation_filters/linearRGB"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_interpolation_filters/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Color_interpolation_filters">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_interpolation_filters/auto"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_interpolation_filters/sRGB"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_interpolation_filters/linearRGB"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_interpolation_filters/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//color_rendering">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_rendering/auto"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_rendering/optimizeSpeed"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_rendering/optimizeQuality"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//color_rendering/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Color_rendering">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_rendering/auto"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_rendering/optimizeSpeed"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_rendering/optimizeQuality"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Color_rendering/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//direction">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//direction/ltr"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//direction/rtl"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//direction/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Direction">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Direction/ltr"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Direction/rtl"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Direction/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//display">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/inline"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/block"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/list_item"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/run_in"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/compact"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/marker"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/table"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/inline_table"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/table_row_group"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/table_header_group"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/table_footer_group"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/table_row"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/table_column_group"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/table_column"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/table_cell"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/table_caption"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/none"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//display/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Display">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/inline"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/block"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/list_item"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/run_in"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/compact"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/marker"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/table"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/inline_table"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/table_row_group"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/table_header_group"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/table_footer_group"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/table_row"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/table_column_group"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/table_column"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/table_cell"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/table_caption"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/none"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Display/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//dominant_baseline">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/auto"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/use_script"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/no_change"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/reset_size"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/ideographic"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/alphabetic"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/hanging"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/mathematical"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/central"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/middle"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/text_after_edge"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/text_before_edge"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//dominant_baseline/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Dominant_baseline">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/auto"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/use_script"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/no_change"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/reset_size"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/ideographic"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/alphabetic"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/hanging"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/mathematical"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/central"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/middle"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/text_after_edge"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/text_before_edge"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Dominant_baseline/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//fill_rule">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//fill_rule/nonzero"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//fill_rule/evenodd"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//fill_rule/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Fill_rule">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Fill_rule/nonzero"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Fill_rule/evenodd"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Fill_rule/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//font_stretch">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/normal"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/wider"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/narrower"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/ultra_condensed"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/extra_condensed"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/condensed"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/semi_condensed"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/semi_expanded"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/expanded"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/extra_expanded"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/ultra_expanded"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_stretch/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Font_stretch">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/normal"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/wider"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/narrower"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/ultra_condensed"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/extra_condensed"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/condensed"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/semi_condensed"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/semi_expanded"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/expanded"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/extra_expanded"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/ultra_expanded"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_stretch/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//font_style">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_style/normal"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_style/italic"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_style/oblique"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_style/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Font_style">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_style/normal"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_style/italic"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_style/oblique"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_style/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//font_variant">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_variant/normal"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_variant/small_caps"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_variant/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Font_variant">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_variant/normal"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_variant/small_caps"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_variant/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//font_weight">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/normal"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/bold"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/bolder"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/lighter"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/em100"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/em200"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/em300"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/em400"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/em500"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/em600"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/em700"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/em800"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/em900"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//font_weight/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Font_weight">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/normal"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/bold"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/bolder"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/lighter"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/em100"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/em200"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/em300"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/em400"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/em500"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/em600"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/em700"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/em800"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/em900"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Font_weight/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//image_rendering">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//image_rendering/auto"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//image_rendering/optimizeSpeed"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//image_rendering/optimizeQuality"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//image_rendering/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Image_rendering">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Image_rendering/auto"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Image_rendering/optimizeSpeed"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Image_rendering/optimizeQuality"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Image_rendering/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//overflow">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//overflow/visible"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//overflow/hidden"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//overflow/scroll"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//overflow/auto"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//overflow/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Overflow">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Overflow/visible"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Overflow/hidden"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Overflow/scroll"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Overflow/auto"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Overflow/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//pointer_events">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//pointer_events/visiblePainted"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//pointer_events/visibleFill"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//pointer_events/visibleStroke"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//pointer_events/visible"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//pointer_events/painted"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//pointer_events/fill"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//pointer_events/stroke"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//pointer_events/all"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//pointer_events/none"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//pointer_events/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Pointer_events">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Pointer_events/visiblePainted"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Pointer_events/visibleFill"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Pointer_events/visibleStroke"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Pointer_events/visible"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Pointer_events/painted"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Pointer_events/fill"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Pointer_events/stroke"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Pointer_events/all"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Pointer_events/none"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Pointer_events/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//shape_rendering">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//shape_rendering/auto"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//shape_rendering/optimizeSpeed"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//shape_rendering/crispEdges"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//shape_rendering/geometricPrecision"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//shape_rendering/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Shape_rendering">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Shape_rendering/auto"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Shape_rendering/optimizeSpeed"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Shape_rendering/crispEdges"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Shape_rendering/geometricPrecision"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Shape_rendering/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//stroke_linecap">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//stroke_linecap/butt"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//stroke_linecap/round"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//stroke_linecap/square"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//stroke_linecap/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Stroke_linecap">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Stroke_linecap/butt"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Stroke_linecap/round"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Stroke_linecap/square"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Stroke_linecap/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//stroke_linejoin">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//stroke_linejoin/miter"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//stroke_linejoin/round"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//stroke_linejoin/bevel"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//stroke_linejoin/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Stroke_linejoin">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Stroke_linejoin/miter"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Stroke_linejoin/round"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Stroke_linejoin/bevel"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Stroke_linejoin/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//text_anchor">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//text_anchor/start"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//text_anchor/middle"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//text_anchor/end"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//text_anchor/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Text_anchor">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Text_anchor/start"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Text_anchor/middle"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Text_anchor/end"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Text_anchor/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//text_rendering">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//text_rendering/auto"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//text_rendering/optimizeSpeed"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//text_rendering/optimizeLegibility"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//text_rendering/geometricPrecision"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//text_rendering/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Text_rendering">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Text_rendering/auto"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Text_rendering/optimizeSpeed"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Text_rendering/optimizeLegibility"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Text_rendering/geometricPrecision"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Text_rendering/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//unicode_bidi">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//unicode_bidi/normal"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//unicode_bidi/embed"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//unicode_bidi/bidi_override"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//unicode_bidi/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Unicode_bidi">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Unicode_bidi/normal"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Unicode_bidi/embed"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Unicode_bidi/bidi_override"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Unicode_bidi/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//visibility">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//visibility/visible"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//visibility/hidden"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//visibility/collapse"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//visibility/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Visibility">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Visibility/visible"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Visibility/hidden"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Visibility/collapse"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Visibility/inherit"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//writing_mode">
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//writing_mode/lr_tb"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//writing_mode/rl_tb"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//writing_mode/tb_rl"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//writing_mode/lr"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//writing_mode/rl"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//writing_mode/tb"/>
-      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//writing_mode/inherit"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Writing_mode">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Writing_mode/lr_tb"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Writing_mode/rl_tb"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Writing_mode/tb_rl"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Writing_mode/lr"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Writing_mode/rl"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Writing_mode/tb"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Writing_mode/inherit"/>
     </genEnums>
-    <genDataTypes ecoreDataType="svg.ecore#//length"/>
-    <genDataTypes ecoreDataType="svg.ecore#//angle"/>
-    <genDataTypes ecoreDataType="svg.ecore#//percentage"/>
-    <genDataTypes ecoreDataType="svg.ecore#//shape"/>
-    <genDataTypes ecoreDataType="svg.ecore#//funciri"/>
-    <genDataTypes ecoreDataType="svg.ecore#//color"/>
-    <genDataTypes ecoreDataType="svg.ecore#//paint"/>
-    <genDataTypes ecoreDataType="svg.ecore#//opacity_value"/>
-    <genDataTypes ecoreDataType="svg.ecore#//baseline_shift"/>
-    <genDataTypes ecoreDataType="svg.ecore#//clip"/>
-    <genDataTypes ecoreDataType="svg.ecore#//clip_path"/>
-    <genDataTypes ecoreDataType="svg.ecore#//color_profile"/>
-    <genDataTypes ecoreDataType="svg.ecore#//cursor"/>
-    <genDataTypes ecoreDataType="svg.ecore#//enable_background"/>
-    <genDataTypes ecoreDataType="svg.ecore#//fill"/>
-    <genDataTypes ecoreDataType="svg.ecore#//fill_opacity"/>
-    <genDataTypes ecoreDataType="svg.ecore#//filter"/>
-    <genDataTypes ecoreDataType="svg.ecore#//flood_color"/>
-    <genDataTypes ecoreDataType="svg.ecore#//flood_opacity"/>
-    <genDataTypes ecoreDataType="svg.ecore#//font_family"/>
-    <genDataTypes ecoreDataType="svg.ecore#//font_size"/>
-    <genDataTypes ecoreDataType="svg.ecore#//font_size_adjust"/>
-    <genDataTypes ecoreDataType="svg.ecore#//glyph_orientation_horizontal"/>
-    <genDataTypes ecoreDataType="svg.ecore#//glyph_orientation_vertical"/>
-    <genDataTypes ecoreDataType="svg.ecore#//kerning"/>
-    <genDataTypes ecoreDataType="svg.ecore#//letter_spacing"/>
-    <genDataTypes ecoreDataType="svg.ecore#//lighting_color"/>
-    <genDataTypes ecoreDataType="svg.ecore#//marker_end"/>
-    <genDataTypes ecoreDataType="svg.ecore#//marker_mid"/>
-    <genDataTypes ecoreDataType="svg.ecore#//marker_start"/>
-    <genDataTypes ecoreDataType="svg.ecore#//masks"/>
-    <genDataTypes ecoreDataType="svg.ecore#//opacity"/>
-    <genDataTypes ecoreDataType="svg.ecore#//stop_color"/>
-    <genDataTypes ecoreDataType="svg.ecore#//stop_opacity"/>
-    <genDataTypes ecoreDataType="svg.ecore#//stroke"/>
-    <genDataTypes ecoreDataType="svg.ecore#//stroke_dasharray"/>
-    <genDataTypes ecoreDataType="svg.ecore#//stroke_dashoffset"/>
-    <genDataTypes ecoreDataType="svg.ecore#//stroke_miterlimit"/>
-    <genDataTypes ecoreDataType="svg.ecore#//stroke_opacity"/>
-    <genDataTypes ecoreDataType="svg.ecore#//stroke_width"/>
-    <genDataTypes ecoreDataType="svg.ecore#//text_decoration"/>
-    <genDataTypes ecoreDataType="svg.ecore#//word_spacing"/>
-    <genClasses ecoreClass="svg.ecore#//ContainerElement"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//ZoomAndPan">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ZoomAndPan/disable"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ZoomAndPan/magnify"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//LengthAdjust">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//LengthAdjust/spacing"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//LengthAdjust/spacingAndGlyphs"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Method">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Method/align"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Method/stretch"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Spacing">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Spacing/auto"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Spacing/exact"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//MarkerUnits">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//MarkerUnits/strokeWidth"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//MarkerUnits/userSpaceOnUse"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//Rendering_intent">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Rendering_intent/auto"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Rendering_intent/perceptual"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Rendering_intent/relative_colorimetric"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Rendering_intent/saturation"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//Rendering_intent/absolute_colorimetric"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//GradientUnits">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//GradientUnits/userSpaceOnUse"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//GradientUnits/objectBoundingBox"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//SpreadMethod">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//SpreadMethod/pad"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//SpreadMethod/reflect"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//SpreadMethod/repeat"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//PatternUnits">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//PatternUnits/userSpaceOnUse"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//PatternUnits/objectBoundingBox"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//ClipPathUnits">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ClipPathUnits/userSpaceOnUse"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ClipPathUnits/objectBoundingBox"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//MaskUnits">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//MaskUnits/userSpaceOnUse"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//MaskUnits/objectBoundingBox"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//FilterUnits">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//FilterUnits/userSpaceOnUse"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//FilterUnits/objectBoundingBox"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//BlendMode">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//BlendMode/normal"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//BlendMode/lighten"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//BlendMode/multiply"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//BlendMode/screen"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//BlendMode/darken"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//ColorMatrixType">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ColorMatrixType/matrix"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ColorMatrixType/saturate"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ColorMatrixType/hueRotate"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ColorMatrixType/luminanceToAlpha"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//CompositeOperator">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//CompositeOperator/over"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//CompositeOperator/in"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//CompositeOperator/out"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//CompositeOperator/atop"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//CompositeOperator/xor"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//CompositeOperator/arithmetic"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//ConvolveMatrixEdgeMode">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ConvolveMatrixEdgeMode/duplicate"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ConvolveMatrixEdgeMode/wrap"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ConvolveMatrixEdgeMode/none"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//ChannelSelector">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ChannelSelector/R"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ChannelSelector/G"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ChannelSelector/B"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//ChannelSelector/A"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//MorphologyOperator">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//MorphologyOperator/erode"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//MorphologyOperator/dilate"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//StitchTiles">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//StitchTiles/stitch"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//StitchTiles/noStitch"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="svg.ecore#//TurbulenceType">
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//TurbulenceType/fractalNoise"/>
+      <genEnumLiterals ecoreEnumLiteral="svg.ecore#//TurbulenceType/turbulence"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="svg.ecore#//Length"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Angle"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Percentage"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Shape"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Funciri"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Color"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Paint"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Opacity_value"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Baseline_shift"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Clip"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Clip_path"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Color_profile"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Cursor"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Enable_background"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Fill"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Fill_opacity"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Filter"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Flood_color"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Flood_opacity"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Font_family"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Font_size"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Font_size_adjust"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Glyph_orientation_horizontal"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Glyph_orientation_vertical"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Kerning"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Letter_spacing"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Lighting_color"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Marker_end"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Marker_mid"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Marker_start"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Masks"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Opacity"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Stop_color"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Stop_opacity"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Stroke"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Stroke_dasharray"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Stroke_dashoffset"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Stroke_miterlimit"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Stroke_opacity"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Stroke_width"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Text_decoration"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Word_spacing"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Coordinate"/>
+    <genDataTypes ecoreDataType="svg.ecore#//ViewBox"/>
+    <genDataTypes ecoreDataType="svg.ecore#//PreserveAspectRatio"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Number"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Transform"/>
+    <genDataTypes ecoreDataType="svg.ecore#//PathData"/>
+    <genDataTypes ecoreDataType="svg.ecore#//ListOfPoints"/>
+    <genDataTypes ecoreDataType="svg.ecore#//ListOfLengths"/>
+    <genDataTypes ecoreDataType="svg.ecore#//ListOfNumbers"/>
+    <genDataTypes ecoreDataType="svg.ecore#//ListOfCoordinates"/>
+    <genDataTypes ecoreDataType="svg.ecore#//Name"/>
+    <genDataTypes ecoreDataType="svg.ecore#//NumberOptionalNumber"/>
+    <genDataTypes ecoreDataType="svg.ecore#//TransformList"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//ContentElement">
+      <genTypeParameters ecoreTypeParameter="svg.ecore#//ContentElement/T"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference svg.ecore#//ContentElement/children"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//ContainerElement">
+      <genTypeParameters ecoreTypeParameter="svg.ecore#//ContainerElement/T"/>
+    </genClasses>
     <genClasses ecoreClass="svg.ecore#//StructuralElement"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//SvgElement"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//DescriptiveElement"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//GraphicsElement"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//GraphicsReferencingElement"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//ShapeElement"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//BasicShapeElement"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//TextContentElement"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//TextContentChildElement"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//GradientElement"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//LightSourceElement"/>
+    <genClasses image="false" ecoreClass="svg.ecore#//FilterPrimitiveElement"/>
+    <genClasses ecoreClass="svg.ecore#//AnimationElement"/>
     <genClasses ecoreClass="svg.ecore#//____ENUMS____"/>
     <genClasses ecoreClass="svg.ecore#//____DATATYPES____"/>
     <genClasses ecoreClass="svg.ecore#//____ATTRIBUTES____"/>
@@ -347,5 +474,447 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//PresentationAttributes/word_spacing"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//PresentationAttributes/writing_mode"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="svg.ecore#//XLinkAttributes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//XLinkAttributes/xlink__href"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//XLinkAttributes/xlink__show"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//XLinkAttributes/xlink__actuate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//XLinkAttributes/xlink__type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//XLinkAttributes/xlink__role"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//XLinkAttributes/xlink__arcrole"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//XLinkAttributes/xlink__title"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference svg.ecore#//XLinkAttributes/resolvedInstance"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="svg.ecore#//FilterPrimitiveAttributes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//FilterPrimitiveAttributes/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//FilterPrimitiveAttributes/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//FilterPrimitiveAttributes/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//FilterPrimitiveAttributes/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//FilterPrimitiveAttributes/result"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//FilterPrimitiveAttributes/in"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//____ELEMENTES____"/>
+    <genClasses ecoreClass="svg.ecore#//SvgSvgElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/viewBox"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/preserveAspectRatio"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/zoomAndPan"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/baseProfile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/contentScriptType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/contentStyleType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSvgElement/styleSheet"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgGElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgGElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgGElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgGElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgGElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgGElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgGElement/y"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgDefsElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgDefsElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgDefsElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgDefsElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgDefsElement/transform"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgDescElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgDescElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgDescElement/style"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgTitleElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTitleElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTitleElement/style"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgSymbolElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSymbolElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSymbolElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSymbolElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSymbolElement/viewBox"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSymbolElement/preserveAspectRatio"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgUseElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgUseElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgUseElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgUseElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgUseElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgUseElement/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgUseElement/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgUseElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgUseElement/y"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgImageElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgImageElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgImageElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgImageElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgImageElement/preserveAspectRatio"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgImageElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgImageElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgImageElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgImageElement/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgImageElement/height"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgSwitchElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSwitchElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSwitchElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSwitchElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgSwitchElement/transform"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgPathElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPathElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPathElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPathElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPathElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPathElement/d"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPathElement/pathLength"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgRectElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRectElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRectElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRectElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRectElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRectElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRectElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRectElement/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRectElement/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRectElement/rx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRectElement/ry"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgCircleElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgCircleElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgCircleElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgCircleElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgCircleElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgCircleElement/cx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgCircleElement/cy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgCircleElement/r"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgEllipseElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgEllipseElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgEllipseElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgEllipseElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgEllipseElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgEllipseElement/cx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgEllipseElement/cy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgEllipseElement/rx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgEllipseElement/ry"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgLineElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLineElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLineElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLineElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLineElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLineElement/x1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLineElement/y1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLineElement/x2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLineElement/y2"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgPolylineElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPolylineElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPolylineElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPolylineElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPolylineElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPolylineElement/points"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgPolygonElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPolygonElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPolygonElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPolygonElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPolygonElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPolygonElement/points"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgTextElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextElement/lengthAdjust"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextElement/dx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextElement/dy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextElement/rotate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextElement/textLength"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgTspanElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTspanElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTspanElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTspanElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTspanElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTspanElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTspanElement/dx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTspanElement/dy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTspanElement/rotate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTspanElement/textLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTspanElement/lengthAdjust"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTspanElement/textContent"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgTrefElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTrefElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTrefElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTrefElement/externalResourcesRequired"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgTextPathElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextPathElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextPathElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextPathElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextPathElement/startOffset"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextPathElement/method"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgTextPathElement/spacing"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgAltGlyphElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphElement/dx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphElement/dy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphElement/glyphRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphElement/format"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphElement/rotate"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgAltGlyphDefElement"/>
+    <genClasses ecoreClass="svg.ecore#//SvgAltGlyphItemElement"/>
+    <genClasses ecoreClass="svg.ecore#//SvgAltGlyphRefElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphRefElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphRefElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphRefElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphRefElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphRefElement/dx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphRefElement/dy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphRefElement/glyphRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgAltGlyphRefElement/format"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgMarkerElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMarkerElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMarkerElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMarkerElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMarkerElement/viewBox"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMarkerElement/preserveAspectRatio"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMarkerElement/refX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMarkerElement/refY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMarkerElement/markerUnits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMarkerElement/markerWidth"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMarkerElement/markerHeight"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMarkerElement/orient"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgColorProfileElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgColorProfileElement/local"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgColorProfileElement/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgColorProfileElement/rendering_intent"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgLinearGradientElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLinearGradientElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLinearGradientElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLinearGradientElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLinearGradientElement/x1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLinearGradientElement/y1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLinearGradientElement/x2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLinearGradientElement/y2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLinearGradientElement/gradientUnits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLinearGradientElement/spreadMethod"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgLinearGradientElement/gradientTransform"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgRadialGradientElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRadialGradientElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRadialGradientElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRadialGradientElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRadialGradientElement/cx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRadialGradientElement/cy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRadialGradientElement/r"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRadialGradientElement/fx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRadialGradientElement/fy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRadialGradientElement/spreadMethod"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRadialGradientElement/gradientUnits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgRadialGradientElement/gradientTransform"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgStopElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgStopElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgStopElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgStopElement/offset"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgPatternElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/viewBox"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/preserveAspectRatio"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/patternUnits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/patternContentUnits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgPatternElement/patternTransform"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgClipPathElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgClipPathElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgClipPathElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgClipPathElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgClipPathElement/transform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgClipPathElement/clipPathUnits"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgMaskElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMaskElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMaskElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMaskElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMaskElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMaskElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMaskElement/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMaskElement/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMaskElement/maskUnits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgMaskElement/maskContentUnits"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFilterElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFilterElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFilterElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFilterElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFilterElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFilterElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFilterElement/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFilterElement/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFilterElement/filterRes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFilterElement/filterUnits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFilterElement/primitiveUnits"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeDistantLightElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDistantLightElement/azimuth"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDistantLightElement/elevation"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFePointLightElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFePointLightElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFePointLightElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFePointLightElement/z"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeSpotLightElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpotLightElement/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpotLightElement/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpotLightElement/z"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpotLightElement/pointsAtX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpotLightElement/pointsAtY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpotLightElement/pointsAtZ"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpotLightElement/specularExponent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpotLightElement/limitingConeAngle"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeBlendElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeBlendElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeBlendElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeBlendElement/in2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeBlendElement/mode"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeColorMatrixElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeColorMatrixElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeColorMatrixElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeColorMatrixElement/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeColorMatrixElement/values"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeComponentTransferElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeComponentTransferElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeComponentTransferElement/style"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeFuncRElement"/>
+    <genClasses ecoreClass="svg.ecore#//SvgFeFuncGElement"/>
+    <genClasses ecoreClass="svg.ecore#//SvgFeFuncBElement"/>
+    <genClasses ecoreClass="svg.ecore#//SvgFeFuncAElement"/>
+    <genClasses ecoreClass="svg.ecore#//SvgFeCompositeElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeCompositeElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeCompositeElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeCompositeElement/in2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeCompositeElement/operator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeCompositeElement/k1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeCompositeElement/k2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeCompositeElement/k3"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeCompositeElement/k4"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeConvolveMatrixElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeConvolveMatrixElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeConvolveMatrixElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeConvolveMatrixElement/order"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeConvolveMatrixElement/kernelMatrix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeConvolveMatrixElement/divisor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeConvolveMatrixElement/bias"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeConvolveMatrixElement/targetX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeConvolveMatrixElement/targetY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeConvolveMatrixElement/edgeMode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeConvolveMatrixElement/kernelUnitLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeConvolveMatrixElement/preserveAlpha"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeDiffuseLightingElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDiffuseLightingElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDiffuseLightingElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDiffuseLightingElement/surfaceScale"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDiffuseLightingElement/diffuseConstant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDiffuseLightingElement/kernelUnitLength"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeDisplacementMapElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDisplacementMapElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDisplacementMapElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDisplacementMapElement/in2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDisplacementMapElement/scale"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDisplacementMapElement/xChannelSelector"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeDisplacementMapElement/yChannelSelector"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeFloodElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeFloodElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeFloodElement/style"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeGaussianBlurElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeGaussianBlurElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeGaussianBlurElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeGaussianBlurElement/stdDeviation"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeImageElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeImageElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeImageElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeImageElement/externalResourcesRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeImageElement/preserveAspectRatio"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeMergeElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeMergeElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeMergeElement/style"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeMergeNodeElement"/>
+    <genClasses ecoreClass="svg.ecore#//SvgFeMorphologyElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeMorphologyElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeMorphologyElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeMorphologyElement/operator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeMorphologyElement/radius"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeOffsetElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeOffsetElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeOffsetElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeOffsetElement/dx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeOffsetElement/dy"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeSpecularLightingElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpecularLightingElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpecularLightingElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpecularLightingElement/surfaceScale"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpecularLightingElement/specularConstant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpecularLightingElement/specularExponent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeSpecularLightingElement/kernelUnitLength"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeTileElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeTileElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeTileElement/style"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgFeTurbulenceElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeTurbulenceElement/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeTurbulenceElement/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeTurbulenceElement/baseFrequency"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeTurbulenceElement/numOctaves"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeTurbulenceElement/seed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeTurbulenceElement/stitchTiles"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute svg.ecore#//SvgFeTurbulenceElement/type"/>
+    </genClasses>
+    <genClasses ecoreClass="svg.ecore#//SvgAnimateElement"/>
+    <genClasses ecoreClass="svg.ecore#//SvgMetadataElement"/>
   </genPackages>
 </genmodel:GenModel>

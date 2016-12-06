@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.FilterPrimitiveAttributes#getX <em>X</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.FilterPrimitiveAttributes#getY <em>Y</em>}</li>
@@ -27,7 +28,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.FilterPrimitiveAttributes#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.FilterPrimitiveAttributes#getIn <em>In</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getFilterPrimitiveAttributes()
  * @model interface="true" abstract="true"

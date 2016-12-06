@@ -1,105 +1,13 @@
-/*******************************************************************************
- * Copyright (c) 2012 BestSolution.at and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
- *******************************************************************************/
+/**
+ */
 package org.eclipse.fx.formats.svg.svg.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.fx.formats.svg.svg.AnimationElement;
-import org.eclipse.fx.formats.svg.svg.BasicShapeElement;
-import org.eclipse.fx.formats.svg.svg.ConditionalProcessingAttributes;
-import org.eclipse.fx.formats.svg.svg.ContainerElement;
-import org.eclipse.fx.formats.svg.svg.ContentElement;
-import org.eclipse.fx.formats.svg.svg.CoreAttributes;
-import org.eclipse.fx.formats.svg.svg.DescriptiveElement;
-import org.eclipse.fx.formats.svg.svg.DocumentEventAttributes;
-import org.eclipse.fx.formats.svg.svg.FilterPrimitiveAttributes;
-import org.eclipse.fx.formats.svg.svg.FilterPrimitiveElement;
-import org.eclipse.fx.formats.svg.svg.GradientElement;
-import org.eclipse.fx.formats.svg.svg.GraphicalEventAttributes;
-import org.eclipse.fx.formats.svg.svg.GraphicsElement;
-import org.eclipse.fx.formats.svg.svg.GraphicsReferencingElement;
-import org.eclipse.fx.formats.svg.svg.LightSourceElement;
-import org.eclipse.fx.formats.svg.svg.PresentationAttributes;
-import org.eclipse.fx.formats.svg.svg.ShapeElement;
-import org.eclipse.fx.formats.svg.svg.StructuralElement;
-import org.eclipse.fx.formats.svg.svg.SvgAltGlyphDefElement;
-import org.eclipse.fx.formats.svg.svg.SvgAltGlyphElement;
-import org.eclipse.fx.formats.svg.svg.SvgAltGlyphItemElement;
-import org.eclipse.fx.formats.svg.svg.SvgAltGlyphRefElement;
-import org.eclipse.fx.formats.svg.svg.SvgAnimateElement;
-import org.eclipse.fx.formats.svg.svg.SvgCircleElement;
-import org.eclipse.fx.formats.svg.svg.SvgClipPathElement;
-import org.eclipse.fx.formats.svg.svg.SvgColorProfileElement;
-import org.eclipse.fx.formats.svg.svg.SvgDefsElement;
-import org.eclipse.fx.formats.svg.svg.SvgDescElement;
-import org.eclipse.fx.formats.svg.svg.SvgElement;
-import org.eclipse.fx.formats.svg.svg.SvgEllipseElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeBlendElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeColorMatrixElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeComponentTransferElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeCompositeElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeConvolveMatrixElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeDiffuseLightingElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeDisplacementMapElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeDistantLightElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeFloodElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeFuncAElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeFuncBElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeFuncGElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeFuncRElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeGaussianBlurElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeImageElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeMergeElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeMergeNodeElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeMorphologyElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeOffsetElement;
-import org.eclipse.fx.formats.svg.svg.SvgFePointLightElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeSpecularLightingElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeSpotLightElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeTileElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeTurbulenceElement;
-import org.eclipse.fx.formats.svg.svg.SvgFilterElement;
-import org.eclipse.fx.formats.svg.svg.SvgGElement;
-import org.eclipse.fx.formats.svg.svg.SvgImageElement;
-import org.eclipse.fx.formats.svg.svg.SvgLineElement;
-import org.eclipse.fx.formats.svg.svg.SvgLinearGradientElement;
-import org.eclipse.fx.formats.svg.svg.SvgMarkerElement;
-import org.eclipse.fx.formats.svg.svg.SvgMaskElement;
-import org.eclipse.fx.formats.svg.svg.SvgMetadataElement;
-import org.eclipse.fx.formats.svg.svg.SvgPackage;
-import org.eclipse.fx.formats.svg.svg.SvgPathElement;
-import org.eclipse.fx.formats.svg.svg.SvgPatternElement;
-import org.eclipse.fx.formats.svg.svg.SvgPolygonElement;
-import org.eclipse.fx.formats.svg.svg.SvgPolylineElement;
-import org.eclipse.fx.formats.svg.svg.SvgRadialGradientElement;
-import org.eclipse.fx.formats.svg.svg.SvgRectElement;
-import org.eclipse.fx.formats.svg.svg.SvgStopElement;
-import org.eclipse.fx.formats.svg.svg.SvgSvgElement;
-import org.eclipse.fx.formats.svg.svg.SvgSwitchElement;
-import org.eclipse.fx.formats.svg.svg.SvgSymbolElement;
-import org.eclipse.fx.formats.svg.svg.SvgTextElement;
-import org.eclipse.fx.formats.svg.svg.SvgTextPathElement;
-import org.eclipse.fx.formats.svg.svg.SvgTitleElement;
-import org.eclipse.fx.formats.svg.svg.SvgTrefElement;
-import org.eclipse.fx.formats.svg.svg.SvgTspanElement;
-import org.eclipse.fx.formats.svg.svg.SvgUseElement;
-import org.eclipse.fx.formats.svg.svg.TextContentChildElement;
-import org.eclipse.fx.formats.svg.svg.TextContentElement;
-import org.eclipse.fx.formats.svg.svg.XLinkAttributes;
-import org.eclipse.fx.formats.svg.svg.____ATTRIBUTES____;
-import org.eclipse.fx.formats.svg.svg.____DATATYPES____;
-import org.eclipse.fx.formats.svg.svg.____ELEMENTES____;
-import org.eclipse.fx.formats.svg.svg.____ENUMS____;
-import org.eclipse.jdt.annotation.Nullable;
+
+import org.eclipse.fx.formats.svg.svg.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -114,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage
  * @generated
  */
-public class SvgSwitch<@Nullable T1> extends Switch<T1> {
+public class SvgSwitch<T1> extends Switch<T1> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -139,7 +47,7 @@ public class SvgSwitch<@Nullable T1> extends Switch<T1> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */

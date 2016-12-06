@@ -68,6 +68,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTextElementImpl#getRequiredFeatures <em>Required Features</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTextElementImpl#getRequiredExtensions <em>Required Extensions</em>}</li>
@@ -157,8 +158,8 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTextElementImpl#getDy <em>Dy</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTextElementImpl#getRotate <em>Rotate</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTextElementImpl#getTextLength <em>Text Length</em>}</li>
+ *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgTextElementImpl#getTextContent <em>Text Content</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -1912,6 +1913,26 @@ public class SvgTextElementImpl extends EObjectImpl implements SvgTextElement {
 	 * @ordered
 	 */
 	protected String textLength = TEXT_LENGTH_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getTextContent() <em>Text Content</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTextContent()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TEXT_CONTENT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getTextContent() <em>Text Content</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTextContent()
+	 * @generated
+	 * @ordered
+	 */
+	protected String textContent = TEXT_CONTENT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -3776,6 +3797,27 @@ public class SvgTextElementImpl extends EObjectImpl implements SvgTextElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getTextContent() {
+		return textContent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTextContent(String newTextContent) {
+		String oldTextContent = textContent;
+		textContent = newTextContent;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SvgPackage.SVG_TEXT_ELEMENT__TEXT_CONTENT, oldTextContent, textContent));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -3969,6 +4011,8 @@ public class SvgTextElementImpl extends EObjectImpl implements SvgTextElement {
 				return getRotate();
 			case SvgPackage.SVG_TEXT_ELEMENT__TEXT_LENGTH:
 				return getTextLength();
+			case SvgPackage.SVG_TEXT_ELEMENT__TEXT_CONTENT:
+				return getTextContent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -4247,6 +4291,9 @@ public class SvgTextElementImpl extends EObjectImpl implements SvgTextElement {
 			case SvgPackage.SVG_TEXT_ELEMENT__TEXT_LENGTH:
 				setTextLength((String)newValue);
 				return;
+			case SvgPackage.SVG_TEXT_ELEMENT__TEXT_CONTENT:
+				setTextContent((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -4523,6 +4570,9 @@ public class SvgTextElementImpl extends EObjectImpl implements SvgTextElement {
 			case SvgPackage.SVG_TEXT_ELEMENT__TEXT_LENGTH:
 				setTextLength(TEXT_LENGTH_EDEFAULT);
 				return;
+			case SvgPackage.SVG_TEXT_ELEMENT__TEXT_CONTENT:
+				setTextContent(TEXT_CONTENT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -4711,6 +4761,8 @@ public class SvgTextElementImpl extends EObjectImpl implements SvgTextElement {
 				return ROTATE_EDEFAULT == null ? rotate != null : !ROTATE_EDEFAULT.equals(rotate);
 			case SvgPackage.SVG_TEXT_ELEMENT__TEXT_LENGTH:
 				return TEXT_LENGTH_EDEFAULT == null ? textLength != null : !TEXT_LENGTH_EDEFAULT.equals(textLength);
+			case SvgPackage.SVG_TEXT_ELEMENT__TEXT_CONTENT:
+				return TEXT_CONTENT_EDEFAULT == null ? textContent != null : !TEXT_CONTENT_EDEFAULT.equals(textContent);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -5143,6 +5195,8 @@ public class SvgTextElementImpl extends EObjectImpl implements SvgTextElement {
 		result.append(rotate);
 		result.append(", textLength: ");
 		result.append(textLength);
+		result.append(", textContent: ");
+		result.append(textContent);
 		result.append(')');
 		return result.toString();
 	}

@@ -69,6 +69,7 @@ import org.eclipse.fx.formats.svg.svg.ZoomAndPan;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgSvgElementImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgSvgElementImpl#getRequiredFeatures <em>Required Features</em>}</li>
@@ -169,7 +170,6 @@ import org.eclipse.fx.formats.svg.svg.ZoomAndPan;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgSvgElementImpl#getContentStyleType <em>Content Style Type</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgSvgElementImpl#getStyleSheet <em>Style Sheet</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -65,6 +65,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgClipPathElementImpl#getRequiredFeatures <em>Required Features</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgClipPathElementImpl#getRequiredExtensions <em>Required Extensions</em>}</li>
@@ -139,7 +140,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgClipPathElementImpl#getTransform <em>Transform</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgClipPathElementImpl#getClipPathUnits <em>Clip Path Units</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

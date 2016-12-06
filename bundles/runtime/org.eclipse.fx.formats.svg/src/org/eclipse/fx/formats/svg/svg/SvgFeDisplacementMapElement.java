@@ -18,6 +18,7 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeDisplacementMapElement#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeDisplacementMapElement#getStyle <em>Style</em>}</li>
@@ -26,7 +27,6 @@ package org.eclipse.fx.formats.svg.svg;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeDisplacementMapElement#getXChannelSelector <em>XChannel Selector</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeDisplacementMapElement#getYChannelSelector <em>YChannel Selector</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgFeDisplacementMapElement()
  * @model

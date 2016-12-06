@@ -64,6 +64,7 @@ import org.eclipse.fx.formats.svg.svg.XLinkAttributes;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgAltGlyphRefElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgAltGlyphRefElementImpl#getXml__base <em>Xml base</em>}</li>
@@ -146,7 +147,6 @@ import org.eclipse.fx.formats.svg.svg.XLinkAttributes;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgAltGlyphRefElementImpl#getGlyphRef <em>Glyph Ref</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgAltGlyphRefElementImpl#getFormat <em>Format</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

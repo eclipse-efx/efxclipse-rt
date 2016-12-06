@@ -43,17 +43,34 @@ public class DelegatingEditingContext implements EditingContext {
 	private List<Consumer<IRegion>> todoSelectionListeners = new ArrayList<>();
 	private Map<Consumer<IRegion>, DelegateSubscription> todoSelectionSubscriptions = new HashMap<>();
 
+	public void dispose() {
+		this.delegate = null;
+		for (Consumer<Integer> listener : todoCaretListeners) {
+			Subscription s = todoCaretSubscriptions.remove(listener);
+			if (s != null) {
+				s.dispose();
+			}
+		}
+		for (Consumer<IRegion> listener : todoSelectionListeners) {
+			Subscription s = todoSelectionSubscriptions.remove(listener);
+			if (s != null) {
+				s.dispose();
+			}
+		}
+	}
 
 	public void setDelegate(EditingContext delegate) {
 		this.delegate = delegate;
 		// register early listeners
-		for (Consumer<Integer> listener : todoCaretListeners) {
-			Subscription s = this.delegate.registerOnCaretOffsetChanged(listener);
-			todoCaretSubscriptions.get(listener).setDelegate(()->s.dispose());
-		}
-		for (Consumer<IRegion> listener : todoSelectionListeners) {
-			Subscription s = this.delegate.registerOnSelectionChanged(listener);
-			todoSelectionSubscriptions.get(listener).setDelegate(()->s.dispose());
+		if (this.delegate != null) {
+			for (Consumer<Integer> listener : todoCaretListeners) {
+				Subscription s = this.delegate.registerOnCaretOffsetChanged(listener);
+				todoCaretSubscriptions.get(listener).setDelegate(()->s.dispose());
+			}
+			for (Consumer<IRegion> listener : todoSelectionListeners) {
+				Subscription s = this.delegate.registerOnSelectionChanged(listener);
+				todoSelectionSubscriptions.get(listener).setDelegate(()->s.dispose());
+			}
 		}
 	}
 

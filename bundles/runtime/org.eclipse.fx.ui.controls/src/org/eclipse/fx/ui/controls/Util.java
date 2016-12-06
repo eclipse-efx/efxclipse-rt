@@ -13,8 +13,11 @@ package org.eclipse.fx.ui.controls;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -48,6 +51,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.PopupWindow;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
@@ -140,20 +145,56 @@ public class Util {
 	 * @return the node or <code>null</code>
 	 */
 	@SuppressWarnings("deprecation")
-	public static Node findNode(Window w, double screenX, double screenY) {
-		// First check the owner
-		if (new BoundingBox(w.getX(), w.getY(), w.getWidth(), w.getHeight()).contains(screenX, screenY)) {
+	public static Node findNode(@Nullable Window w, double screenX, double screenY) {
+		if (w != null && new BoundingBox(w.getX(), w.getY(), w.getWidth(), w.getHeight()).contains(screenX, screenY)) {
 			return findNode(w.getScene().getRoot(), screenX, screenY);
 		}
 
-		// FIXME If multiple match take the closest
 		Iterator<Window> impl_getWindows = Window.impl_getWindows();
-		while (impl_getWindows.hasNext()) {
+
+		List<Window> sortedWindows = new ArrayList<>();
+		Map<Window,List<Window>> parentChildRelation = new HashMap<>();
+
+		while( impl_getWindows.hasNext() ) {
 			Window window = impl_getWindows.next();
+			Window owner;
+			if( window instanceof Stage ) {
+				owner = ((Stage)window).getOwner();
+			} else if( window instanceof PopupWindow ) {
+				owner = ((PopupWindow)window).getOwnerWindow();
+			} else {
+				owner = null;
+			}
+
+			if( owner == null ) {
+				sortedWindows.add(window);
+			} else {
+				List<Window> list = parentChildRelation.get(owner);
+				if( list == null ) {
+					list = new ArrayList<>();
+					parentChildRelation.put(owner, list);
+				}
+				list.add(window);
+			}
+		}
+
+		while( ! parentChildRelation.isEmpty() ) {
+			for( Window rw : sortedWindows.toArray(new Window[0]) ) {
+				List<Window> list = parentChildRelation.remove(rw);
+				if( list != null ) {
+					sortedWindows.addAll(list);
+				}
+			}
+		}
+
+		Collections.reverse(sortedWindows);
+
+		for( Window window : sortedWindows ) {
 			if (!FIND_NODE_EXCLUDE.equals(window.getUserData()) && new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
 				return findNode(window.getScene().getRoot(), screenX, screenY);
 			}
 		}
+
 		return null;
 	}
 
@@ -175,10 +216,13 @@ public class Util {
 			return rv;
 		}
 		Point2D b = n.screenToLocal(screenX, screenY);
-		if (n.getBoundsInLocal().contains(b)) {
+		if (n.getBoundsInLocal().contains(b) && ! FIND_NODE_EXCLUDE.equals(n.getUserData())) {
 			rv = n;
 			if (n instanceof Parent) {
-				for (Node c : ((Parent) n).getChildrenUnmodifiable()) {
+				List<Node> cList = ((Parent) n).getChildrenUnmodifiable()
+						.stream().filter( no -> no.isVisible()).collect(Collectors.toList());
+
+				for (Node c : cList) {
 					Node cn = findNode(c, screenX, screenY);
 					if (cn != null) {
 						rv = cn;
@@ -422,9 +466,9 @@ public class Util {
 	 * @return the width
 	 * @since 2.3.0
 	 */
-	public static double getTextWidth(String text, Font font) {
+	public static double getTextWidth(String text, Font font, double fontZoomFactor) {
 		Text t = new Text(text);
-		t.setFont(font);
+		t.setFont(Font.font(font.getName(), font.getSize() * fontZoomFactor));
 		return t.getLayoutBounds().getWidth();
 	}
 
@@ -434,28 +478,28 @@ public class Util {
 	 * @param font
 	 * @return
 	 */
-	public static DoubleBinding createTextWidthBinding(ObservableValue<String> text, ObservableValue<Font> font) {
+	public static DoubleBinding createTextWidthBinding(ObservableValue<String> text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
 		return Bindings.createDoubleBinding(()->{
-			return getTextWidth(text.getValue(), font.getValue());
-		}, text, font);
+			return getTextWidth(text.getValue(), font.getValue(), fontZoomFactor.getValue().doubleValue());
+		}, text, font, fontZoomFactor);
 	}
 
-	public static DoubleBinding createTextWidthBinding(String text, ObservableValue<Font> font) {
+	public static DoubleBinding createTextWidthBinding(String text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
 		return Bindings.createDoubleBinding(()->{
-			return getTextWidth(text, font.getValue());
-		}, font);
+			return getTextWidth(text, font.getValue(), fontZoomFactor.getValue().doubleValue());
+		}, font, fontZoomFactor);
 	}
 
-	public static double getTextHeight(String text, Font font) {
+	public static double getTextHeight(String text, Font font, double fontZoomFactor) {
 		Text t = new Text(text);
-		t.setFont(font);
+		t.setFont(Font.font(font.getName(), font.getSize() * fontZoomFactor));
 		return t.getLayoutBounds().getHeight();
 	}
 
-	public static DoubleBinding createTextHeightBinding(String text, ObservableValue<Font> font) {
+	public static DoubleBinding createTextHeightBinding(String text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
 		return Bindings.createDoubleBinding(()->{
-			return getTextHeight(text, font.getValue());
-		}, font);
+			return getTextHeight(text, font.getValue(), fontZoomFactor.getValue().doubleValue());
+		}, font, fontZoomFactor);
 	}
 
 	public static boolean isCopyEvent(MouseEvent event) {

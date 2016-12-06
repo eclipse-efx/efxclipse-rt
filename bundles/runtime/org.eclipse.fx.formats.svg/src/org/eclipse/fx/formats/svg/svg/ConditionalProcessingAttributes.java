@@ -19,12 +19,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.ConditionalProcessingAttributes#getRequiredFeatures <em>Required Features</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.ConditionalProcessingAttributes#getRequiredExtensions <em>Required Extensions</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.ConditionalProcessingAttributes#getSystemLanguage <em>System Language</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getConditionalProcessingAttributes()
  * @model interface="true" abstract="true"

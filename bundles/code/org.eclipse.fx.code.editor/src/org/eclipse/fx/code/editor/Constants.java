@@ -38,5 +38,5 @@ public class Constants {
 	public static final String PREFERENCE_KEY_EDITOR_FEATURE = "editorFeatures";
 	public static final String PREFERENCE_TAB_ADVANCE = "tabAdvance";
 	public static final String PREFERENCE_SPACES_FOR_TAB = "spacesForTab";
-
+	public static final String PREFERENCE_ZOOMFACTOR = "zoomFactor";
 }

@@ -18,13 +18,13 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeMorphologyElement#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeMorphologyElement#getStyle <em>Style</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeMorphologyElement#getOperator <em>Operator</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeMorphologyElement#getRadius <em>Radius</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgFeMorphologyElement()
  * @model

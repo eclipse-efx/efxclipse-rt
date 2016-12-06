@@ -68,6 +68,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgEllipseElementImpl#getRequiredFeatures <em>Required Features</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgEllipseElementImpl#getRequiredExtensions <em>Required Extensions</em>}</li>
@@ -155,7 +156,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgEllipseElementImpl#getRx <em>Rx</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgEllipseElementImpl#getRy <em>Ry</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

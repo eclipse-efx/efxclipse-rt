@@ -28,6 +28,7 @@ import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
+import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
 import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
 import org.eclipse.fx.ui.controls.styledtext.internal.FXBindUtil;
@@ -47,6 +48,9 @@ import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.StringExpression;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -61,10 +65,14 @@ import javafx.scene.Node;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
 
 /**
  * Styled text skin
@@ -89,6 +97,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 	private LineHelper lineHelper;
 
+	private static final String CSS_CLASS_LINE_RULER_AREA = "line-ruler-area"; //$NON-NLS-1$
 	private static final String CSS_CLASS_LINE_RULER = "line-ruler"; //$NON-NLS-1$
 	private static final String CSS_CLASS_SPACER = "spacer"; //$NON-NLS-1$
 	private static final String CSS_LIST_VIEW = "list-view"; //$NON-NLS-1$
@@ -123,6 +132,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		this.rootContainer.setSpacing(0);
 
 		this.lineRulerArea = new HBox();
+		this.lineRulerArea.getStyleClass().setAll(CSS_CLASS_LINE_RULER_AREA);
 		// Align with ContentView insets!
 		this.lineRulerArea.setPadding(new Insets(0,0,0,0));
 		this.rootContainer.getChildren().add(this.lineRulerArea);
@@ -138,7 +148,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		});
 
 		Region spacer = new Region();
-		spacer.getStyleClass().addAll(CSS_CLASS_LINE_RULER, CSS_CLASS_SPACER);
+		spacer.getStyleClass().addAll(CSS_CLASS_SPACER);
 		spacer.setMinWidth(2);
 		spacer.setMaxWidth(2);
 		this.rootContainer.getChildren().add(spacer);
@@ -146,6 +156,29 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		this.lineHelper = new LineHelper(getSkinnable());
 		this.content = new ContentView(this.lineHelper, styledText);
 		this.content.lineHeightProperty().bind(styledText.fixedLineHeightProperty());
+
+		final DoubleBinding origFontSize = new DoubleBinding() {
+			{
+				bind(getSkinnable().fontProperty());
+			}
+			@Override
+			protected double computeValue() {
+				Font original = getSkinnable().fontProperty().get();
+				if (original == null) {
+					return 12;
+				}
+				return original.getSize();
+			}
+		};
+		final DoubleBinding zoomedFontSize = origFontSize.multiply(getSkinnable().fontZoomFactorProperty());
+		final StringExpression zoomedFontStyle = Bindings.concat("-fx-font-size: ", zoomedFontSize, ";");  //$NON-NLS-1$//$NON-NLS-2$
+
+		this.content.styleProperty().bind(zoomedFontStyle);
+		this.lineRulerArea.styleProperty().bind(zoomedFontStyle);
+
+		getSkinnable().fontZoomFactorProperty().addListener((x, o, n)->{
+			this.sortedLineRulerFlows.forEach(LineRuler::requestLayout);
+		});
 
 		this.contentArea = new ScrollbarPane<>();
 
@@ -195,7 +228,12 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		// scroll support
 		this.content.setOnScroll((e) -> {
-			this.scroller.scrollBy(Math.round(-e.getDeltaY()));
+			if (e.getDeltaY() < 0) {
+				this.scroller.scrollBy(1);
+			}
+			else {
+				this.scroller.scrollBy(-1);
+			}
 		});
 
 		// HBox.setHgrow(this.contentView, Priority.ALWAYS);
@@ -285,6 +323,11 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			BiConsumer<Node, Set<Annotation>> populator = ap::updateNode;
 
 			LineRuler flow = new LineRuler(ap.getLayoutHint(), converter, needsPresentation, nodeFactory, populator);
+
+			flow.getStyleClass().setAll(CSS_CLASS_LINE_RULER);
+			// add the styleclass from the provider
+			ap.getStyleClass().ifPresent(flow.getStyleClass()::add);
+
 			// VerticalLineFlow<Integer, Annotation> flow = new
 			// VerticalLineFlow<Integer, Annotation>(converter,
 			// needsPresentation, nodeFactory, populator);
@@ -334,11 +377,6 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		};
 
 		this.sortedLineRulerFlows = FXCollections.observableArrayList();
-		this.sortedLineRulerFlows.addListener((ListChangeListener<LineRuler>) (c) -> {
-			for (LineRuler flow : this.sortedLineRulerFlows) {
-				flow.getStyleClass().setAll(CSS_CLASS_LINE_RULER);
-			}
-		});
 		FXBindUtil.uniMapBindList(this.sortedLineRulerPresenters, this.sortedLineRulerFlows, map);
 		FXBindUtil.uniMapBindList(this.sortedLineRulerFlows, this.lineRulerArea.getChildren(), (flow) -> (Node) flow);
 		this.sortedLineRulerFlows.addListener((ListChangeListener<? super LineRuler>) (c) -> {
@@ -395,6 +433,51 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			scrollOffsetIntoView(getSkinnable().getCaretOffset(), 10, 12);
 		});
 
+		this.content.lineHeightProperty().bind(getSkinnable().fixedLineHeightProperty());
+
+		this.content.setOnDragExited(e -> {
+			updateInsertionMarkerIndex(-1);
+			e.consume();
+		});
+
+		this.content.setOnDragOver(e -> {
+			Point2D coords = new Point2D(e.getX(), e.getY());
+			Optional<Integer> lineIndex = this.content.getLineIndex(coords);
+
+			if (lineIndex.isPresent()) {
+				if (lineIndex.get() != -1) {
+					Dragboard db = e.getDragboard();
+					if (db.hasString()) {
+						e.acceptTransferModes(TransferMode.COPY);
+						updateInsertionMarkerIndex(lineIndex.get());
+					}
+				}
+			}
+			else {
+				updateInsertionMarkerIndex(-1);
+			}
+
+			e.consume();
+		});
+
+		this.content.setOnDragDropped(e -> {
+
+			if (e.getDragboard().hasContent(DataFormat.PLAIN_TEXT)) {
+
+				String insert = e.getDragboard().getString();
+
+				Point2D coords = new Point2D(e.getX(), e.getY());
+				Optional<Integer> lineIndex = this.content.getLineIndex(coords);
+				if (lineIndex.isPresent() && lineIndex.get() != -1) {
+					getSkinnable().getContent().replaceTextRange(lineIndex.get(), 0, insert);
+					getSkinnable().setCaretOffset(lineIndex.get() + insert.length());
+					getSkinnable().setSelection(new TextSelection(lineIndex.get(), insert.length()));
+					updateInsertionMarkerIndex(-1);
+					e.setDropCompleted(true);
+				}
+			}
+			e.consume();
+		});
 	}
 
 	public Optional<TextNode> findTextNode(Point2D screenLocation) {
@@ -562,10 +645,10 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	}
 
 	public int getVisibleLineCount() {
-		return scroller.visibleLineCountProperty().get();
+		return this.scroller.visibleLineCountProperty().get();
 	}
 
 	public Bounds getContentBounds() {
-		return content.getLayoutBounds();
+		return this.content.getLayoutBounds();
 	}
 }

@@ -39,6 +39,7 @@ import org.eclipse.fx.formats.svg.svg.SvgPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFePointLightElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFePointLightElementImpl#getXml__base <em>Xml base</em>}</li>
@@ -49,7 +50,6 @@ import org.eclipse.fx.formats.svg.svg.SvgPackage;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFePointLightElementImpl#getY <em>Y</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFePointLightElementImpl#getZ <em>Z</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

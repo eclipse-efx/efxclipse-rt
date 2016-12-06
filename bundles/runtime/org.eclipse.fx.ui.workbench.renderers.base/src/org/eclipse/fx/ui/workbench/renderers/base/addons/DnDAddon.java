@@ -129,7 +129,7 @@ public class DnDAddon {
 			}
 		} else if( d.dropType.isDetach() ) {
 			if( this.dndService == null || (this.dndService.detachAllowed(sourceElement) && ! this.dndService.handleDetach(d.x, d.y, sourceElement)) ) {
-				handleDetach(sourceElement);
+				handleDetach(d.x, d.y,sourceElement);
 			}
 		} else if( d.dropType.isInsert() ) {
 			if (reference != null) {
@@ -148,8 +148,8 @@ public class DnDAddon {
 		return null;
 	}
 
-	private void handleDetach(@NonNull MUIElement sourceElement) {
-		this.modelService.detach((MPartSashContainerElement) sourceElement, 0, 0, 800, 600);
+	private void handleDetach(double x, double y, @NonNull MUIElement sourceElement) {
+		this.modelService.detach((MPartSashContainerElement) sourceElement, (int)x, (int)y, 800, 600);
 	}
 
 	private static void handleInsert(@NonNull MUIElement reference, @NonNull MUIElement sourceElement) {

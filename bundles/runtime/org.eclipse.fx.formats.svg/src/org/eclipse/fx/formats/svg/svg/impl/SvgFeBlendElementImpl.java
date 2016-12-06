@@ -65,6 +65,7 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeBlendElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeBlendElementImpl#getXml__base <em>Xml base</em>}</li>
@@ -141,7 +142,6 @@ import org.eclipse.fx.formats.svg.svg.Writing_mode;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeBlendElementImpl#getIn2 <em>In2</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgFeBlendElementImpl#getMode <em>Mode</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

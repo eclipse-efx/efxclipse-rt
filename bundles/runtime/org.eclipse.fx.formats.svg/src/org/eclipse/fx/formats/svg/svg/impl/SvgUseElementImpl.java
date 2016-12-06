@@ -69,6 +69,7 @@ import org.eclipse.fx.formats.svg.svg.XLinkAttributes;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgUseElementImpl#getRequiredFeatures <em>Required Features</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgUseElementImpl#getRequiredExtensions <em>Required Extensions</em>}</li>
@@ -164,7 +165,6 @@ import org.eclipse.fx.formats.svg.svg.XLinkAttributes;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgUseElementImpl#getX <em>X</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgUseElementImpl#getY <em>Y</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -67,6 +67,7 @@ import org.eclipse.fx.formats.svg.svg.XLinkAttributes;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgLinearGradientElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgLinearGradientElementImpl#getXml__base <em>Xml base</em>}</li>
@@ -151,7 +152,6 @@ import org.eclipse.fx.formats.svg.svg.XLinkAttributes;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgLinearGradientElementImpl#getSpreadMethod <em>Spread Method</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.impl.SvgLinearGradientElementImpl#getGradientTransform <em>Gradient Transform</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

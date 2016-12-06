@@ -18,6 +18,7 @@ package org.eclipse.fx.formats.svg.svg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeSpecularLightingElement#getClass_ <em>Class</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeSpecularLightingElement#getStyle <em>Style</em>}</li>
@@ -26,7 +27,6 @@ package org.eclipse.fx.formats.svg.svg;
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeSpecularLightingElement#getSpecularExponent <em>Specular Exponent</em>}</li>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.SvgFeSpecularLightingElement#getKernelUnitLength <em>Kernel Unit Length</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getSvgFeSpecularLightingElement()
  * @model

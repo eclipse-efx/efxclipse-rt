@@ -21,10 +21,10 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.formats.svg.svg.ContentElement#getChildren <em>Children</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage#getContentElement()
  * @model interface="true" abstract="true"
@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.EObject;
 public interface ContentElement<T extends SvgElement> extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' containment reference list.
-	 * The list contents are of type {@link T}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Children</em>' containment reference list isn't clear,
