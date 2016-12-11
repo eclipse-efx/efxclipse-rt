@@ -511,6 +511,13 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.equinox.p2.discovery.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.equinox.p2.discovery.compatibility"
          download-size="0"
          install-size="0"
