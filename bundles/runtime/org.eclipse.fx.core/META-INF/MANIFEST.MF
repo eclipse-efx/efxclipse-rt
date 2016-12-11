@@ -24,17 +24,6 @@ Export-Package: org.eclipse.fx.core;version="3.0.0",
  org.eclipse.fx.core.update;version="3.0.0"
 Bundle-Vendor: %Bundle-Vendor
 Service-Component: OSGI-INF/services/org.eclipse.fx.core.internal.JAXBObjectSerializer.xml,
- OSGI-INF/services/org.eclipse.fx.core.internal.JUtilLoggerFactory.xml,
- OSGI-INF/services/org.eclipse.fx.core.adapter.internal.AdapterServiceImpl.xml,
- OSGI-INF/services/org.eclipse.fx.core.internal.FileSystemServiceImpl.xml,
- OSGI-INF/services/org.eclipse.fx.core.internal.DefaultValueSerializer.xml,
- OSGI-INF/services/org.eclipse.fx.core.internal.DynamicDataStreamHandler.xml,
- OSGI-INF/services/org.eclipse.fx.core.internal.TplURLDynamicDataStreamHandler.xml,
- OSGI-INF/services/org.eclipse.fx.core.internal.OSGiEventBusImpl.xml
-Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
- com.google.guava;bundle-version="15.0.0"
-Service-Component: OSGI-INF/services/org.eclipse.fx.core.internal.JAXBObjectSerializer.xml,
  OSGI-INF/services/org.eclipse.fx.core.adapter.internal.AdapterServiceImpl.xml,
  OSGI-INF/services/org.eclipse.fx.core.internal.JUtilLoggerFactory.xml,
  OSGI-INF/services/org.eclipse.fx.core.internal.OSGiEventBusImpl.xml,
@@ -43,3 +32,5 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.core.internal.JAXBObjectSeri
  OSGI-INF/services/org.eclipse.fx.core.internal.FileSystemServiceImpl.xml,
  OSGI-INF/services/org.eclipse.fx.core.internal.DynamicDataStreamHandler.xml
 Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
+ com.google.guava;bundle-version="15.0.0"
