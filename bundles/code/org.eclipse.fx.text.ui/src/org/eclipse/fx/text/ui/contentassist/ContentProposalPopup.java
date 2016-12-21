@@ -240,9 +240,10 @@ public class ContentProposalPopup implements IContentAssistListener {
 				
 				SplitPane splitty = new SplitPane(this.proposalList, docArea);
 				splitty.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-				SplitPane.setResizableWithParent(this.proposalList, Boolean.FALSE);
+				//SplitPane.setResizableWithParent(this.proposalList, Boolean.FALSE);
 				p.setCenter(splitty);
 				
+				splitty.prefWidthProperty().bind(p.widthProperty());
 				return s;
 			});
 			
