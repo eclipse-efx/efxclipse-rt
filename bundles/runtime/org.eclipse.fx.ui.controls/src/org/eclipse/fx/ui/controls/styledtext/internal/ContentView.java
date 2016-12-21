@@ -754,6 +754,12 @@ public class ContentView  extends Pane {
 		bar.maxProperty().bind(this.contentBody.widthProperty().divide(factor));
 		bar.visibleAmountProperty().bind(widthProperty().divide(factor));
 		this.offsetX.bind(bar.valueProperty());
+
+		this.widthProperty().addListener((x, o, n) -> {
+			if (!Double.isNaN(bar.getMax()) && !Double.isNaN(bar.getValue())) {
+				bar.setValue(Math.max(0, Math.min(bar.getMax(), bar.getValue())));
+			}
+		});
 	}
 
 	public DoubleProperty offsetYProperty() {
