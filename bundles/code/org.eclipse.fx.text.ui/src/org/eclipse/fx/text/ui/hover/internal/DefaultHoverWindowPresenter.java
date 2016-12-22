@@ -59,12 +59,17 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 	public DefaultHoverWindowPresenter(StyledTextArea parent) {
 		this.parent = parent;
 		this.root = new VBox();
-		this.popup = new ResizeablePopupWindow(root);
+		this.popup = new ResizeablePopupWindow(this.root);
 		this.popup.setAutoFix(false);
 		this.popup.setAutoHide(false);
 		parent.sceneProperty().addListener( e -> {
 			if( parent.getScene() != null ) {
-				popup.getScene().getStylesheets().setAll(parent.getScene().getStylesheets());
+				this.popup.getScene().getStylesheets().setAll(parent.getScene().getStylesheets());
+				this.parent.getScene().getWindow().focusedProperty().addListener((x, o, n) -> {
+					if (!n) {
+						DefaultHoverWindowPresenter.this.popup.hide();
+					}
+				});
 			}
 			else {
 				this.popup.getScene().getStylesheets().clear();
@@ -171,7 +176,7 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 	public void show(Point2D screenAnchor, Bounds screenBounds, List<HoverInfo> hover) {
 		cancelScheduledHide();
 		populate(hover);
-		this.popup.show(this.parent.getScene().getWindow(), screenAnchor.getX(), screenAnchor.getY(), parent.getFixedLineHeight());
+		this.popup.show(this.parent.getScene().getWindow(), screenAnchor.getX(), screenAnchor.getY(), this.parent.getFixedLineHeight());
 	}
 
 	@Override

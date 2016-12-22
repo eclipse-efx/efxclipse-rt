@@ -249,6 +249,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 //		this.content.lineHeightProperty().set(16);
 		this.content.bindHorizontalScrollbar(this.contentArea.horizontal);
+		this.content.bindVerticalScrollbar(this.contentArea.vertical);
 
 		// getSkinnable().lineCountProperty().addListener((x, o, n)-> {/* for
 		// the quantum! */});

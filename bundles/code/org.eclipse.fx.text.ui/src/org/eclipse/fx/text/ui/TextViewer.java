@@ -125,7 +125,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 
 		initActionMapping();
 	}
-	
+
 	public void dispose() {
 		if (this.fUndoManager != null) {
 			this.fUndoManager.disconnect();
@@ -1125,16 +1125,18 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 				&& !fTextHovers.isEmpty() /* && fHoverControlCreator != null */ && fTextHoverManager == null) {
 			fTextHoverManager = createTextHovermanager();
 			fTextHoverManager.install(this.getTextWidget());
-			
+
 			// fTextHoverManager.setSizeConstraints(TEXT_HOVER_WIDTH_CHARS,
 			// TEXT_HOVER_HEIGHT_CHARS, false, true);
 			// fTextHoverManager.setInformationControlReplacer(new
 			// StickyHoverManager(this));
 		}
 	}
-	
+
 	protected void configureHoverSize(Supplier<Point2D> windowSizeRetriever, Consumer<Point2D> windowSizePersister) {
-		fTextHoverManager.configureWindowSize(windowSizeRetriever, windowSizePersister);
+		if( fTextHoverManager != null ) {
+			fTextHoverManager.configureWindowSize(windowSizeRetriever, windowSizePersister);
+		}
 	}
 
 	protected TextViewerHoverManager createTextHovermanager() {

@@ -56,6 +56,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Side;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.Tab;
@@ -458,6 +459,14 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			if (this.initCallback != null) {
 				this.tab.setContent(this.initCallback.call(this));
 				this.initCallback = null;
+			}
+
+			if( WLayoutedWidgetImpl.OPTIMIZED_STACK_LAYOUT ) {
+				if( this.tab.getContent() instanceof Parent ) {
+					((Parent)this.tab.getContent()).requestLayout();
+				} else {
+					this.tab.getTabPane().requestLayout();
+				}
 			}
 		}
 

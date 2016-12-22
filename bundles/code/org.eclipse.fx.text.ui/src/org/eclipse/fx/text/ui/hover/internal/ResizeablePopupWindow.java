@@ -3,22 +3,12 @@ package org.eclipse.fx.text.ui.hover.internal;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import com.sun.javafx.scene.SceneHelper;
-
-import javafx.application.Application;
 import javafx.beans.Observable;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.stage.PopupBuilder;
 import javafx.stage.PopupWindow;
 import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 public class ResizeablePopupWindow extends PopupWindow {
@@ -72,14 +62,26 @@ public class ResizeablePopupWindow extends PopupWindow {
 	
 	@Override
 	protected void show() {
+		
+		// sizing
 		if (this.windowSizeRetriever != null) {
 			Point2D size = this.windowSizeRetriever.get();
-			this.root.setMinWidth(size.getX());
-			this.root.setMaxWidth(size.getX());
-			this.root.setPrefWidth(size.getX());
-			this.root.setMinHeight(size.getY());
-			this.root.setMaxHeight(size.getY());
-			this.root.setPrefHeight(size.getY());
+			
+			double w = size.getX();
+			double h = size.getY();
+			
+			this.root.layout();
+			this.root.applyCss();
+			
+			w = Math.max(w, this.root.computeMinWidth(-1) + 30);
+			h = Math.max(h, this.root.computeMinHeight(-1) + 20);
+			
+			this.root.setMinWidth(w);
+			this.root.setMaxWidth(w);
+			this.root.setPrefWidth(w);
+			this.root.setMinHeight(h);
+			this.root.setMaxHeight(h);
+			this.root.setPrefHeight(h);
 		}
 		
 		//positioning
@@ -96,7 +98,7 @@ public class ResizeablePopupWindow extends PopupWindow {
 			
 			// reposition above
 			if (popupArea.getMaxY() > screen.getVisualBounds().getMaxY()) {
-				y -= popupArea.getHeight() + lineHeight;
+				y -= popupArea.getHeight() + this.lineHeight;
 			}
 		}
 		

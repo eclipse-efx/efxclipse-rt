@@ -364,7 +364,7 @@ public class LineNode extends StackPane {
 			this.getChildren().add(this.caret);
 
 			this.caretAnimation = createCaretAnimation(this.caret);
-			
+
 			this.sceneProperty().addListener((x, o, n)->{
 				if (n == null) {
 					if (this.caretAnimation != null) {
@@ -753,10 +753,12 @@ public class LineNode extends StackPane {
 
 	public void update(Set<TextAnnotationPresenter> presenters) {
 		requestLayout();
-		updateContent(this.lineHelper.getSegments(this.index));
-		updateSelection(this.lineHelper.getSelection(this.index), this.lineHelper.isValidLineIndex(this.index+1) ? this.lineHelper.getSelection(this.index+1) : null  );
-		updateCaret(this.lineHelper.getCaret(this.index));
-		updateAnnotations(this.lineHelper.getTextAnnotations(this.index), presenters);
+		// Workaround for sick/efxclipse/issues/39
+		int idx = this.index;
+		updateContent(this.lineHelper.getSegments(idx));
+		updateSelection(this.lineHelper.getSelection(idx), this.lineHelper.isValidLineIndex(idx+1) ? this.lineHelper.getSelection(idx+1) : null  );
+		updateCaret(this.lineHelper.getCaret(idx));
+		updateAnnotations(this.lineHelper.getTextAnnotations(idx), presenters);
 	}
 
 	public void updateInsertionMarkerIndex(int globalOffset) {

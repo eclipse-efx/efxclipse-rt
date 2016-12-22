@@ -83,29 +83,19 @@
 }
 
 .styled-text-hover .errors {
-	-fx-background-color: darkred;
-	-fx-padding: 10;
-	-fx-background-radius: 5;
+	-fx-background-color: firebrick;
 }
 .styled-text-hover .warnings {
-	-fx-background-color: darkorange;
-	-fx-padding: 10;
-	-fx-background-radius: 5;
+	-fx-background-color: tomato;
 }
 .styled-text-hover .infos {
-	-fx-background-color: blanchediamond;
-	-fx-padding: 10;
-	-fx-background-radius: 5;
+	-fx-background-color: dimgrey;
 }
 .styled-text-hover .docs {
-	-fx-background-color: darkblue;
-	-fx-padding: 10;
-	-fx-background-radius: 5;
+	-fx-background-color: lightblue;
 }
 .styled-text-hover .others {
-	-fx-background-color: gray;
-	-fx-padding: 10;
-	-fx-background-radius: 5;
+	-fx-background-color: palegreen;
 }
 
 .styled-text-hover .context-info {
@@ -118,10 +108,8 @@
 	-fx-text-fill: #b8c4d1;
 }
 
-.styled-text-hover {
-/*	-fx-background-color: #2b5696;
-	-fx-background-radius: 5;
-	-fx-padding: 10;
-	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 10, 0.0 , 0 , 3 );
-*/
+.resize-popup-pane {
+	-fx-background-color: rgba(230,230,230,0.7); 
+	-fx-background-radius: 5px;
+	-efx-resize-handle-size: 5px;
 }
