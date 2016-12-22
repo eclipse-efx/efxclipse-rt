@@ -139,7 +139,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		styledText.caretOffsetProperty().addListener((obs, ol, ne) -> {
 			int lineIdx = styledText.getContent().getLineAtOffset(ne.intValue());
 			int colIdx = ne.intValue() - styledText.getContent().getOffsetAtLine(lineIdx);
-			
+
 			// fix colIdx with tabs
 			String line = styledText.getContent().getLine(lineIdx).substring(0, colIdx);
 			int tabCount = (int)line.chars().filter(c -> c == '\t').count();
@@ -175,7 +175,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		this.content.styleProperty().bind(zoomedFontStyle);
 		this.lineRulerArea.styleProperty().bind(zoomedFontStyle);
-		
+
 		getSkinnable().fontZoomFactorProperty().addListener((x, o, n)->{
 			this.sortedLineRulerFlows.forEach(LineRuler::requestLayout);
 		});
@@ -247,6 +247,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 //		this.content.lineHeightProperty().set(16);
 		this.content.bindHorizontalScrollbar(this.contentArea.horizontal);
+		this.content.bindVerticalScrollbar(this.contentArea.vertical);
 
 		// getSkinnable().lineCountProperty().addListener((x, o, n)-> {/* for
 		// the quantum! */});
@@ -321,11 +322,11 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			BiConsumer<Node, Set<Annotation>> populator = ap::updateNode;
 
 			LineRuler flow = new LineRuler(ap.getLayoutHint(), converter, needsPresentation, nodeFactory, populator);
-			
+
 			flow.getStyleClass().setAll(CSS_CLASS_LINE_RULER);
 			// add the styleclass from the provider
 			ap.getStyleClass().ifPresent(flow.getStyleClass()::add);
-			
+
 			// VerticalLineFlow<Integer, Annotation> flow = new
 			// VerticalLineFlow<Integer, Annotation>(converter,
 			// needsPresentation, nodeFactory, populator);
@@ -437,7 +438,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			updateInsertionMarkerIndex(-1);
 			e.consume();
 		});
-		
+
 		this.content.setOnDragOver(e -> {
 			Point2D coords = new Point2D(e.getX(), e.getY());
 			Optional<Integer> lineIndex = this.content.getLineIndex(coords);
