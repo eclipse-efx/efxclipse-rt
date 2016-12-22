@@ -56,7 +56,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	private double weight = 10;
 	private WCallback<@NonNull DropData, @Nullable Void> dropCallback;
 
-	private static final boolean OPTIMIZED_STACK_LAYOUT = Boolean.getBoolean("efxclipse.experimental.optstack"); //$NON-NLS-1$
+	public static final boolean OPTIMIZED_STACK_LAYOUT = Boolean.getBoolean("efxclipse.experimental.optstack"); //$NON-NLS-1$
 
 	@Inject
 	@NonNull
