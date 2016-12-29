@@ -25,7 +25,7 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 @Qualifier
 @Documented
-@Target({ElementType.FIELD, ElementType.PARAMETER})
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ContextValue {
 	/**
@@ -33,4 +33,9 @@ public @interface ContextValue {
 	 */
 	@NonNull
 	String value();
+
+	/**
+	 * @return <code>true</code> to publish only to the local context
+	 */
+	boolean local() default false;
 }

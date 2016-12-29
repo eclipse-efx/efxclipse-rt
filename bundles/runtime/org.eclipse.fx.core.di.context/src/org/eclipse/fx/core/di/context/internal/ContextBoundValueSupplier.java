@@ -42,7 +42,7 @@ public class ContextBoundValueSupplier extends ExtendedObjectSupplier {
 
 		Requestor<?> r = (Requestor<?>) requestor;
 		EclipseContextBoundValue<?> c = r.getInjector().make(EclipseContextBoundValue.class, r.getPrimarySupplier());
-		c.setContextKey(qualifier.value());
+		c.setContextKey(qualifier.value(), qualifier.local());
 
 		if( desiredClass == ContextBoundValue.class) {
 			return c;

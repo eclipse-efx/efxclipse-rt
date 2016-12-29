@@ -59,6 +59,8 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	@Log
 	private Logger logger;
 
+	private boolean local;
+
 	/**
 	 * Create a new bound value
 	 *
@@ -79,8 +81,9 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	 * @param contextKey
 	 *            the key
 	 */
-	public void setContextKey(@NonNull final String contextKey) {
+	public void setContextKey(@NonNull final String contextKey, final boolean local) {
 		this.contextKey = contextKey;
+		this.local = local;
 		this.context.runAndTrack(new RunAndTrack() {
 
 			@Override
@@ -118,7 +121,12 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 
 	@Override
 	public void publish(@Nullable T value) {
-		this.context.modify(this.contextKey, value);
+		if( this.local ) {
+			this.context.set(this.contextKey, value);
+		} else {
+			this.context.modify(this.contextKey, value);
+		}
+
 		if( this.eventBroker != null ) {
 			this.eventBroker.send(ScopedObjectFactory.KEYMODIFED_TOPIC, Collections.singletonMap(this.contextKey, value));
 		}
