@@ -10,32 +10,31 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.base.restart;
 
+import java.util.function.Consumer;
+
 import javax.inject.Inject;
 
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.e4.core.di.extensions.Preference;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
-import org.osgi.service.prefs.BackingStoreException;
+import org.eclipse.fx.core.preferences.Preference;
 
 /**
  * Extended service for internal purposes
  */
-@SuppressWarnings("restriction")
 @Creatable
 public class RestartPreferenceUtil {
 
 	static final String CLEAR_STATE_AFTER_RESTART = "CLEAR_STATE_AFTER_RESTART"; //$NON-NLS-1$
 
 	@Inject
-	@Preference
-	private IEclipsePreferences node;
+	@Preference(key=CLEAR_STATE_AFTER_RESTART)
+	private Consumer<Boolean> preferenceValue;
 
 	@Inject
 	@Optional
-	@Preference(value = CLEAR_STATE_AFTER_RESTART)
+	@Preference(key = CLEAR_STATE_AFTER_RESTART)
 	private boolean clearPersistedStateAfterRestart;
 
 	@Inject
@@ -44,18 +43,12 @@ public class RestartPreferenceUtil {
 
 	/**
 	 * Set the CLEAR_STATE_AFTER_RESTART Flag in the Preferences
-	 * 
+	 *
 	 * @param value
 	 *            Value to set as Preference
 	 */
 	public void setClearPersistedStateOnRestart(boolean value) {
-		this.node.putBoolean(CLEAR_STATE_AFTER_RESTART, value);
-		// Preferences speichern
-		try {
-			this.node.flush();
-		} catch (BackingStoreException e) {
-			this.logger.error("Error while writing preferences", e); //$NON-NLS-1$
-		}
+		this.preferenceValue.accept(Boolean.valueOf(value));
 	}
 
 	/**

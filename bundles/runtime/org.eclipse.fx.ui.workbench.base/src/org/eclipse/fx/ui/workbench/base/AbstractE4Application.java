@@ -26,7 +26,6 @@ import java.util.stream.Stream;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
@@ -74,6 +73,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.fx.core.app.ApplicationContext;
+import org.eclipse.fx.core.app.ApplicationLocation;
 import org.eclipse.fx.core.app.ExitStatus;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.services.Constants;
@@ -82,7 +82,6 @@ import org.eclipse.fx.ui.services.restart.RestartService;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultProgressState;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
-import org.eclipse.fx.ui.workbench.base.internal.Activator;
 import org.eclipse.fx.ui.workbench.base.internal.CommandEventDispatcher;
 import org.eclipse.fx.ui.workbench.base.internal.LoggerProviderImpl;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
@@ -91,7 +90,6 @@ import org.eclipse.fx.ui.workbench.base.restart.RestartServiceImpl;
 import org.eclipse.fx.ui.workbench.services.EModelStylingService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.osgi.service.datalocation.Location;
 
 /**
  * Basic implementation of the e4 bootstrap
@@ -377,14 +375,12 @@ public abstract class AbstractE4Application {
 	private MApplication loadApplicationModel(ApplicationContext appContext, IEclipseContext eclipseContext) {
 		MApplication theApp = null;
 
-		Location instanceLocation = Activator.getDefault().getInstanceLocation();
-
 		String appModelPath = getArgValue(IWorkbench.XMI_URI_ARG, appContext, false, eclipseContext);
 		Assert.isNotNull(appModelPath, IWorkbench.XMI_URI_ARG + " argument missing"); //$NON-NLS-1$
 		final URI initialWorkbenchDefinitionInstance = URI.createPlatformPluginURI(appModelPath, true);
 
 		eclipseContext.set(E4Workbench.INITIAL_WORKBENCH_MODEL_URI, initialWorkbenchDefinitionInstance);
-		eclipseContext.set(E4Workbench.INSTANCE_LOCATION, instanceLocation);
+		eclipseContext.set(E4Workbench.INSTANCE_LOCATION, appContext.getInstanceLocation().orElse(null));
 
 		// Save and restore
 		boolean saveAndRestore;
@@ -631,7 +627,7 @@ public abstract class AbstractE4Application {
 	 * @return <code>true</code> if the location is fine
 	 */
 	@SuppressWarnings("static-method")
-	public boolean checkInstanceLocation(@Nullable Location instanceLocation, @NonNull IEclipseContext context) {
+	public boolean checkInstanceLocation(@Nullable ApplicationLocation instanceLocation, @NonNull IEclipseContext context) {
 		// Eclipse has been run with -data @none or -data @noDefault options so
 		// we don't need to validate the location
 		if (instanceLocation == null && Boolean.FALSE.equals(context.get(IWorkbench.PERSIST_STATE))) {
@@ -648,7 +644,7 @@ public abstract class AbstractE4Application {
 		}
 
 		// -data "/valid/path", workspace already set
-		if (instanceLocation.isSet()) {
+//		if (instanceLocation.isSet()) {
 			// make sure the meta data version is compatible (or the user has
 			// chosen to overwrite it).
 			if (!checkValidWorkspace(instanceLocation.getURL())) {
@@ -659,7 +655,7 @@ public abstract class AbstractE4Application {
 			// metadata version information if successful
 			try {
 				if (instanceLocation.lock()) {
-					writeWorkspaceVersion();
+					writeWorkspaceVersion(instanceLocation);
 					return true;
 				}
 
@@ -687,9 +683,9 @@ public abstract class AbstractE4Application {
 				// WorkbenchSWTMessages.InternalError, e.getMessage());
 			}
 			return false;
-		}
-
-		return false;
+//		}
+//
+//		return false;
 	}
 
 	private static boolean checkValidWorkspace(URL url) {
@@ -779,8 +775,7 @@ public abstract class AbstractE4Application {
 		}
 	}
 
-	private static void writeWorkspaceVersion() {
-		Location instanceLoc = Platform.getInstanceLocation();
+	private static void writeWorkspaceVersion(ApplicationLocation instanceLoc) {
 		if (instanceLoc == null || instanceLoc.isReadOnly()) {
 			return;
 		}

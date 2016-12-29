@@ -10,7 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.fx;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -33,6 +38,7 @@ import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.app.ApplicationContext;
 import org.eclipse.fx.core.app.ApplicationContext.Splash;
 import org.eclipse.fx.core.app.ApplicationInstance;
+import org.eclipse.fx.core.app.ApplicationLocation;
 import org.eclipse.fx.core.app.ExitStatus;
 import org.eclipse.fx.core.databinding.JFXRealm;
 import org.eclipse.fx.core.log.LoggerCreator;
@@ -52,6 +58,7 @@ import org.eclipse.osgi.service.datalocation.Location;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
@@ -72,7 +79,7 @@ public class E4Application extends AbstractE4Application implements IApplication
 	static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(E4Application.class);
 
 	E4Workbench workbench;
-	Location instanceLocation;
+	ApplicationLocation instanceLocation;
 	IEclipseContext workbenchContext;
 
 	private static final String PRIMARY_STAGE_KEY = "primaryStage"; //$NON-NLS-1$
@@ -219,7 +226,7 @@ public class E4Application extends AbstractE4Application implements IApplication
 
 				UISynchronize uiSync = workbench.getContext().get(UISynchronize.class);
 				uiSync.syncExec(() -> {
-					E4Application.this.instanceLocation = (Location) wbContext.get(E4Workbench.INSTANCE_LOCATION);
+					E4Application.this.instanceLocation = (ApplicationLocation) wbContext.get(E4Workbench.INSTANCE_LOCATION);
 					try {
 						if (!checkInstanceLocation(E4Application.this.instanceLocation, wbContext)) {
 							updateStartupState(DefaultProgressState.LOCATION_CHECK_FAILED);
@@ -473,6 +480,112 @@ public class E4Application extends AbstractE4Application implements IApplication
 		@Override
 		public Object getApplicationProperty(String key) {
 			return this.application.getBrandingProperty(key);
+		}
+
+		@Override
+		public Optional<ApplicationLocation> getInstanceLocation() {
+			BundleContext context = FrameworkUtil.getBundle(getClass()).getBundleContext();
+			try {
+				Collection<ServiceReference<@NonNull Location>> references = context.getServiceReferences(Location.class, Location.INSTANCE_FILTER);
+				if( ! references.isEmpty() ) {
+					Location location = context.getService(references.iterator().next());
+					if( location.isSet() ) {
+						return Optional.of(new ApplicationLocationImpl(location));
+					}
+				}
+			} catch (InvalidSyntaxException e) {
+				LoggerCreator.createLogger(getClass()).error("Failed to create a filter '"+Location.INSTANCE_FILTER+"'", e);  //$NON-NLS-1$//$NON-NLS-2$
+			}
+			return Optional.empty();
+		}
+	}
+
+	static class ApplicationLocationImpl implements ApplicationLocation, Location {
+		private final Location location;
+
+		public ApplicationLocationImpl(Location location) {
+			this.location = location;
+		}
+
+		@Override
+		public boolean lock() throws IOException {
+			return this.location.lock();
+		}
+
+		@Override
+		public void release() {
+			this.location.release();
+		}
+
+		@Override
+		public Path getPath() {
+			URL url = this.location.getURL();
+			try {
+				return Paths.get(url.toURI());
+			} catch (URISyntaxException e) {
+				LoggerCreator.createLogger(getClass()).error("Failed to get the path for '"+url+"'", e);  //$NON-NLS-1$//$NON-NLS-2$
+			}
+			return null;
+		}
+
+		@Override
+		public URL getURL() {
+			return this.location.getURL();
+		}
+
+		@Override
+		public boolean isReadOnly() {
+			return this.location.isReadOnly();
+		}
+
+		@Override
+		public boolean allowsDefault() {
+			return this.location.allowsDefault();
+		}
+
+		@Override
+		public URL getDefault() {
+			return this.location.getDefault();
+		}
+
+		@Override
+		public Location getParentLocation() {
+			return this.location.getParentLocation();
+		}
+
+		@Override
+		public boolean isSet() {
+			return this.location.isSet();
+		}
+
+		@Override
+		public boolean setURL(URL value, boolean lock) throws IllegalStateException {
+			return this.location.setURL(value, lock);
+		}
+
+		@Override
+		public boolean set(URL value, boolean lock) throws IllegalStateException, IOException {
+			return this.location.set(value, lock);
+		}
+
+		@Override
+		public boolean set(URL value, boolean lock, String lockFilePath) throws IllegalStateException, IOException {
+			return this.location.set(value, lock, lockFilePath);
+		}
+
+		@Override
+		public boolean isLocked() throws IOException {
+			return this.location.isLocked();
+		}
+
+		@Override
+		public Location createLocation(Location parent, URL defaultValue, boolean readonly) {
+			return this.location.createLocation(parent, defaultValue, readonly);
+		}
+
+		@Override
+		public URL getDataArea(String path) throws IOException {
+			return this.location.getDataArea(path);
 		}
 	}
 

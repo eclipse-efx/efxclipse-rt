@@ -17,6 +17,7 @@ package org.eclipse.fx.core.app;
  *
  * @since 3.0
  * @noimplement
+ * @noreference
  */
 public interface Application {
 	/**

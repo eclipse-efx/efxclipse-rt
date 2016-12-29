@@ -17,8 +17,11 @@ import javafx.geometry.Point2D;
 
 /**
  * Context associated with the application
+ * <p>This provisional API and subject to change</p>
  *
  * @since 3.0
+ * @noimplement
+ * @noreference
  */
 public interface ApplicationContext {
 	/**
@@ -46,6 +49,8 @@ public interface ApplicationContext {
 	 * @return the value
 	 */
 	Object getApplicationProperty(String key);
+
+	Optional<ApplicationLocation> getInstanceLocation();
 
 	/**
 	 * Informations about the splash screen
