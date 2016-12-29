@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.fx;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -25,6 +29,11 @@ import org.eclipse.e4.ui.workbench.lifecycle.PreSave;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.fx.core.SystemUtils;
+import org.eclipse.fx.core.app.ApplicationContext;
+import org.eclipse.fx.core.app.ApplicationContext.Splash;
+import org.eclipse.fx.core.app.ApplicationInstance;
+import org.eclipse.fx.core.app.ExitStatus;
 import org.eclipse.fx.core.databinding.JFXRealm;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.osgi.util.AbstractJFXApplication;
@@ -49,14 +58,16 @@ import org.osgi.service.event.EventAdmin;
 import org.osgi.service.prefs.BackingStoreException;
 
 import javafx.application.Application;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
  * default e4 application
  */
 @SuppressWarnings("restriction")
-public class E4Application extends AbstractE4Application {
+public class E4Application extends AbstractE4Application implements IApplication, ApplicationInstance {
 
 	static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(E4Application.class);
 
@@ -69,8 +80,8 @@ public class E4Application extends AbstractE4Application {
 
 	static E4Application SELF;
 
-	IApplicationContext applicationContext;
-	Object returnValue;
+	ApplicationContext applicationContext;
+	ExitStatus returnValue;
 	protected EventAdmin eventAdmin;
 
 	StartupProgressTrackerService startupService;
@@ -92,7 +103,7 @@ public class E4Application extends AbstractE4Application {
 	}
 
 	@Override
-	public Object start(IApplicationContext context) throws Exception {
+	public CompletableFuture<ExitStatus> launch(ApplicationContext context) {
 		SELF = this;
 		this.applicationContext = context;
 
@@ -106,7 +117,49 @@ public class E4Application extends AbstractE4Application {
 		ServiceReference<StartupProgressTrackerService> serviceReference = bundleContext.getServiceReference(StartupProgressTrackerService.class);
 		if( serviceReference != null ) {
 			this.startupService = bundleContext.getService(serviceReference);
-			this.startupService.osgiApplicationLaunched(this.applicationContext);
+			this.startupService.applicationLaunched(this.applicationContext);
+		} else {
+			// if the service is not available we make sure to bring the splash down
+			this.applicationContext.applicationRunning();
+		}
+
+		CompletableFuture<ExitStatus> rv = CompletableFuture.supplyAsync( () -> {
+			try {
+				launchE4JavaFxApplication();
+			} catch (Exception e) {
+				if( e instanceof RuntimeException ) {
+					throw (RuntimeException)e;
+				} else {
+					throw new RuntimeException(e);
+				}
+			}
+
+			try {
+				return this.returnValue == null ? ExitStatus.OK : this.returnValue;
+			} finally {
+				this.returnValue = null;
+			}
+		},Executors.newSingleThreadExecutor());
+
+		return rv;
+	}
+
+	@Override
+	public Object start(IApplicationContext context) throws Exception {
+		SELF = this;
+		this.applicationContext = new ApplicationContextImpl(context);
+
+		Bundle b = FrameworkUtil.getBundle(AbstractJFXApplication.class);
+		BundleContext bundleContext = b.getBundleContext();
+		ServiceReference<EventAdmin> ref = bundleContext.getServiceReference(EventAdmin.class);
+		if (ref != null) {
+			this.eventAdmin = bundleContext.getService(ref);
+		}
+
+		ServiceReference<StartupProgressTrackerService> serviceReference = bundleContext.getServiceReference(StartupProgressTrackerService.class);
+		if( serviceReference != null ) {
+			this.startupService = bundleContext.getService(serviceReference);
+			this.startupService.applicationLaunched(this.applicationContext);
 		} else {
 			// if the service is not available we make sure to bring the splash down
 			this.applicationContext.applicationRunning();
@@ -114,10 +167,14 @@ public class E4Application extends AbstractE4Application {
 
 		launchE4JavaFxApplication();
 
-		try {
-			return this.returnValue == null ? IApplication.EXIT_OK : this.returnValue;
-		} finally {
-			this.returnValue = null;
+		if( this.returnValue == null ) {
+			return IApplication.EXIT_OK;
+		} else {
+			if( this.returnValue == ExitStatus.OK ) {
+				return IApplication.EXIT_OK;
+			} else {
+				return IApplication.EXIT_RESTART;
+			}
 		}
 	}
 
@@ -137,7 +194,7 @@ public class E4Application extends AbstractE4Application {
 	 *            the primary stage associated with the given
 	 *            {@link Application}.
 	 */
-	public void jfxStart(IApplicationContext context, Application jfxApplication, Stage primaryStage) {
+	public void jfxStart(ApplicationContext context, Application jfxApplication, Stage primaryStage) {
 		updateStartupState(DefaultProgressState.JAVAFX_INITIALIZED);
 
 		Runnable startRunnable = new Runnable() {
@@ -231,12 +288,19 @@ public class E4Application extends AbstractE4Application {
 		if (this.workbenchContext != null) {
 			result = this.workbenchContext.get(EXIT_CODE);
 			if (result == null && this.workbench != null && this.workbench.isRestart()) {
-				result = IApplication.EXIT_RESTART;
+				result = ExitStatus.RESTART;
 			}
 		}
-		if (result != null) {
-			this.returnValue = result;
+		if (result != null && result instanceof ExitStatus) {
+			this.returnValue = (ExitStatus) result;
+		} else if( this.returnValue == null ) {
+			this.returnValue = ExitStatus.OK;
 		}
+	}
+
+	@Override
+	public void stop(ExitStatus status) {
+		this.returnValue = status;
 	}
 
 	@Override
@@ -262,7 +326,7 @@ public class E4Application extends AbstractE4Application {
 	 *            the primary stage.
 	 * @return <code>true</code> if the workbench was initialized successfully
 	 */
-	public boolean initE4Workbench(final IApplicationContext context, Application jfxApplication, final Stage primaryStage) {
+	public boolean initE4Workbench(final ApplicationContext context, Application jfxApplication, final Stage primaryStage) {
 		this.workbenchContext = createApplicationContext();
 
 		// It is the very first time when the javaFX Application appears. It
@@ -271,7 +335,7 @@ public class E4Application extends AbstractE4Application {
 		// life-cycle manager and
 		// @PostContextCreate implementations.
 		this.workbenchContext.set(Application.class, jfxApplication);
-		this.workbenchContext.set(IApplicationContext.class, context);
+		this.workbenchContext.set(ApplicationContext.class, context);
 		this.workbenchContext.set(PRIMARY_STAGE_KEY, primaryStage);
 		this.workbench = createE4Workbench(context, this.workbenchContext);
 		return this.workbench != null;
@@ -280,7 +344,7 @@ public class E4Application extends AbstractE4Application {
 	/**
 	 * @return the {@link IApplicationContext}.
 	 */
-	public IApplicationContext getApplicationContext() {
+	public ApplicationContext getApplicationContext() {
 		return this.applicationContext;
 	}
 
@@ -320,7 +384,7 @@ public class E4Application extends AbstractE4Application {
 	 * @param context
 	 *            the {@link IApplicationContext}.
 	 */
-	protected void postJfxStarted(final IApplicationContext context) {
+	protected void postJfxStarted(final ApplicationContext context) {
 		final Map<String, Object> map = new HashMap<String, Object>();
 		sendEvent(Constants.APPLICATION_LAUNCHED, map);
 		updateStartupState(DefaultProgressState.WORKBENCH_GUI_SHOWING);
@@ -373,6 +437,67 @@ public class E4Application extends AbstractE4Application {
 			this.eventAdmin.sendEvent(new Event(topic, map));
 		} else {
 			LOGGER.warningf("Could not send the %s event. EventAdmin is missing.", topic); //$NON-NLS-1$
+		}
+	}
+
+	static class ApplicationContextImpl implements ApplicationContext {
+		private final IApplicationContext application;
+
+		public ApplicationContextImpl(IApplicationContext application) {
+			this.application = application;
+		}
+
+		@Override
+		public void applicationRunning() {
+			this.application.applicationRunning();
+		}
+
+		@Override
+		public Optional<Splash> getSplashImage() {
+			Bundle bundle = this.application.getBrandingBundle();
+			if( bundle != null ) {
+				URL url = bundle.getResource("splash.bmp"); //$NON-NLS-1$
+				if( url != null ) {
+					return Optional.of(new SplashImpl(url));
+				}
+			}
+
+			return Optional.empty();
+		}
+
+		@Override
+		public String[] getApplicationArguments() {
+			return (String[]) this.application.getArguments().get(IApplicationContext.APPLICATION_ARGS);
+		}
+
+		@Override
+		public Object getApplicationProperty(String key) {
+			return this.application.getBrandingProperty(key);
+		}
+	}
+
+	static class SplashImpl implements Splash {
+		private final URL url;
+		private Point2D location;
+
+		public SplashImpl(URL url) {
+			this.url = url;
+		}
+
+		@Override
+		public URL getUrl() {
+			return this.url;
+		}
+
+		@Override
+		public Point2D getLocation() {
+			if( this.location == null ) {
+				Image img = new Image(getUrl().toExternalForm());
+				double x = SystemUtils.isMacOS() ? Screen.getPrimary().getVisualBounds().getWidth() / 2 - img.getWidth() / 2 - 1 : Screen.getPrimary().getBounds().getWidth() / 2 - img.getWidth() / 2 - 1;
+				double y = SystemUtils.isMacOS() ? 227 : Screen.getPrimary().getBounds().getHeight() / 2 - img.getHeight() / 2;
+				this.location = new Point2D(x, y);
+			}
+			return this.location;
 		}
 	}
 }

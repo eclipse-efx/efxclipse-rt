@@ -12,6 +12,9 @@ package org.eclipse.fx.ui.services.startup;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.fx.core.app.Application;
+import org.eclipse.fx.core.app.ApplicationContext;
+import org.eclipse.fx.core.app.ApplicationInstance;
 
 /**
  * Service to track startup progress eg to update the splash screen
@@ -108,13 +111,13 @@ public interface StartupProgressTrackerService {
 	/**
 	 * Invoked when the OSGi-Framework has been launched. This method is
 	 * guaranteed to be called on the thread
-	 * {@link IApplication#start(IApplicationContext)} has been invoked
+	 * {@link ApplicationInstance#launch(ApplicationContext)} has been invoked
 	 *
 	 * @param applicationContext
 	 *            the application context
 	 * @return information how to proceed
 	 */
-	public OSGiRV osgiApplicationLaunched(IApplicationContext applicationContext);
+	public OSGiRV applicationLaunched(ApplicationContext applicationContext);
 
 	/**
 	 * Method called when a certain state has been reached

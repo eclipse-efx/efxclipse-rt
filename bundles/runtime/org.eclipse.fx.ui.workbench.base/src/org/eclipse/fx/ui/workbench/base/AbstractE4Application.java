@@ -73,8 +73,8 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.equinox.app.IApplication;
-import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.fx.core.app.ApplicationContext;
+import org.eclipse.fx.core.app.ExitStatus;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.restart.LifecycleRV;
@@ -97,7 +97,7 @@ import org.eclipse.osgi.service.datalocation.Location;
  * Basic implementation of the e4 bootstrap
  */
 @SuppressWarnings("restriction")
-public abstract class AbstractE4Application implements IApplication {
+public abstract class AbstractE4Application {
 	/**
 	 * Context-Key name for the theme-id slot
 	 */
@@ -151,8 +151,8 @@ public abstract class AbstractE4Application implements IApplication {
 	 *            the application context
 	 * @return arguments
 	 */
-	protected static String[] getApplicationArguments(IApplicationContext applicationContext) {
-		return (String[]) applicationContext.getArguments().get(IApplicationContext.APPLICATION_ARGS);
+	protected static String[] getApplicationArguments(ApplicationContext applicationContext) {
+		return applicationContext.getApplicationArguments();
 	}
 
 	/**
@@ -166,11 +166,11 @@ public abstract class AbstractE4Application implements IApplication {
 	 */
 	@SuppressWarnings("null")
 	@Nullable
-	public E4Workbench createE4Workbench(IApplicationContext applicationContext, final IEclipseContext appContext) {
+	public E4Workbench createE4Workbench(ApplicationContext applicationContext, final IEclipseContext appContext) {
 		ContextInjectionFactory.setDefault(appContext);
 
 		appContext.set(Realm.class, createRealm(appContext));
-		appContext.set(IApplicationContext.class, applicationContext);
+		appContext.set(ApplicationContext.class, applicationContext);
 		appContext.set(EModelStylingService.class, new EModelStylingService() {
 			private static final String PREFIX = "efx_styleclass:"; //$NON-NLS-1$
 			@Override
@@ -245,7 +245,7 @@ public abstract class AbstractE4Application implements IApplication {
 			RestartPreferenceUtil prefUtil = ContextInjectionFactory.make(RestartPreferenceUtil.class, appContext);
 			prefUtil.setClearPersistedStateOnRestart(true);
 		case RESTART:
-			appContext.set(EXIT_CODE, IApplication.EXIT_RESTART);
+			appContext.set(EXIT_CODE, ExitStatus.RESTART);
 		case SHUTDOWN:
 			return null;
 		case CONTINUE:
@@ -374,7 +374,7 @@ public abstract class AbstractE4Application implements IApplication {
 		// Nothing by default
 	}
 
-	private MApplication loadApplicationModel(IApplicationContext appContext, IEclipseContext eclipseContext) {
+	private MApplication loadApplicationModel(ApplicationContext appContext, IEclipseContext eclipseContext) {
 		MApplication theApp = null;
 
 		Location instanceLocation = Activator.getDefault().getInstanceLocation();
@@ -433,7 +433,7 @@ public abstract class AbstractE4Application implements IApplication {
 		return theApp;
 	}
 
-	private static String getArgValue(String argName, IApplicationContext applicationContext, boolean singledCmdArgValue, IEclipseContext eclipseContext) {
+	private static String getArgValue(String argName, ApplicationContext applicationContext, boolean singledCmdArgValue, IEclipseContext eclipseContext) {
 		Object value = eclipseContext.get(argName);
 		if (value != null) {
 			return value.toString();
@@ -599,7 +599,7 @@ public abstract class AbstractE4Application implements IApplication {
 	 *            <code>true</code> if the argument is single valued
 	 * @return the value or <code>null</code>
 	 */
-	protected static @Nullable String getArgValue(String argName, IApplicationContext applicationContext, boolean singledCmdArgValue) {
+	protected static @Nullable String getArgValue(String argName, ApplicationContext applicationContext, boolean singledCmdArgValue) {
 		// Is it in the arg list ?
 		if (argName == null || argName.length() == 0)
 			return null;
@@ -617,7 +617,7 @@ public abstract class AbstractE4Application implements IApplication {
 			}
 		}
 
-		final String brandingProperty = applicationContext.getBrandingProperty(argName);
+		final String brandingProperty = (String)applicationContext.getApplicationProperty(argName);
 		return brandingProperty == null ? System.getProperty(argName) : brandingProperty;
 	}
 

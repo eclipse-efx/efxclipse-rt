@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.ui.workbench.fx.E4ApplicationComponent">
+   <service>
+      <provide interface="org.eclipse.fx.core.app.Application"/>
+   </service>
+   <implementation class="org.eclipse.fx.ui.workbench.fx.E4ApplicationComponent"/>
+</scr:component>
