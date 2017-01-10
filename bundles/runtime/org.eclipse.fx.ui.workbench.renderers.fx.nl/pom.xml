@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<name>e(fx)clipse - Runtime - Renders FX NL</name>
-	<groupId>org.eclipse.fx.ui.workbench.renderers.fx.nl</groupId>
-	<artifactId>org.eclipse.fx.ui.controls.nl</artifactId>
+	<groupId>org.eclipse.fx.runtime</groupId>
+	<artifactId>org.eclipse.fx.ui.workbench.renderers.fx.nl</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
 	<parent>
