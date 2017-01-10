@@ -47,8 +47,10 @@
 		<module>../../bundles/runtime/org.eclipse.fx.ui.animation</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.panes</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.controls</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.controls.nl</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.services</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.dialogs</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.dialogs.nl</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.mobile</module>
 		<!-- EMF -->
 		<module>../../bundles/runtime/org.eclipse.fx.emf.edit.ui</module>
@@ -64,6 +66,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.ui.theme</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.fx</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.fx</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.fx.nl</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.services</module>
 
 		<!-- Format Conversion -->
