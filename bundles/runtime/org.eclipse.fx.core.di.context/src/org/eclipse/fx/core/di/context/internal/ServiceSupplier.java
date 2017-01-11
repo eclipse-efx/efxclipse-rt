@@ -102,19 +102,20 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
 		Type desiredType = descriptor.getDesiredType();
 		Bundle b = FrameworkUtil.getBundle(requestor.getRequestingObjectClass());
+		Service qualifier = descriptor.getQualifier(Service.class);
 
 		if (desiredType instanceof ParameterizedType) {
 			ParameterizedType t = (ParameterizedType) desiredType;
 			if (t.getRawType() == Collections.class || t.getRawType() == List.class) {
 
-				return handleCollection(b, t.getActualTypeArguments()[0], requestor, track && descriptor.getQualifier(Service.class).dynamic());
+				return handleCollection(b, t.getActualTypeArguments()[0], requestor, track && qualifier.dynamic(), qualifier);
 			}
 		}
 
-		return handleSingle(b, desiredType, requestor, descriptor, track && descriptor.getQualifier(Service.class).dynamic());
+		return handleSingle(b, desiredType, requestor, descriptor, track && qualifier.dynamic(), qualifier);
 	}
 
-	private Object handleSingle(Bundle bundle, Type t, IRequestor requestor, IObjectDescriptor descriptor, boolean track) {
+	private Object handleSingle(Bundle bundle, Type t, IRequestor requestor, IObjectDescriptor descriptor, boolean track, Service qualifier) {
 		BundleContext context = bundle.getBundleContext();
 		if (context == null) {
 			context = FrameworkUtil.getBundle(getClass()).getBundleContext();
@@ -124,7 +125,9 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 		Class<Object> cl = t instanceof ParameterizedType ? (Class<Object>) ((ParameterizedType) t).getRawType() : (Class<Object>) t;
 		try {
 			{
-				ServiceReference<?>[] serviceReferences = context.getServiceReferences(cl.getName(), null);
+				String filter = qualifier.filterExpression() != null && ! qualifier.filterExpression().isEmpty() ? qualifier.filterExpression() : null;
+
+				ServiceReference<?>[] serviceReferences = context.getServiceReferences(cl.getName(), filter);
 				if( serviceReferences != null ) {
 					Arrays.sort(serviceReferences);
 
@@ -136,19 +139,6 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 					}
 				}
 			}
-//FIXME This code looks strange
-//			Requestor<?> rr = (Requestor<?>) requestor;
-//			ContextObjectSupplier cp = (ContextObjectSupplier) rr.getPrimarySupplier();
-//
-//			Collection<ServiceReference<IContextFunction>> serviceReferences = context.getServiceReferences(IContextFunction.class, null);
-//			List<ServiceReference<IContextFunction>> l = new ArrayList<>(serviceReferences);
-//			Collections.sort(l);
-//			for( ServiceReference<IContextFunction> r : l ) {
-//				if( cl.getName().equals(r.getProperty(SERVICE_CONTEXT_KEY)) ) {
-//					Named qualifier = descriptor.getQualifier(Named.class);
-//					return context.getService(r).compute(cp.getContext(), qualifier == null ? cl.getName() : qualifier.value());
-//				}
-//			}
 		} catch (InvalidSyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,7 +147,7 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 		return IInjector.NOT_A_VALUE;
 	}
 
-	private List<Object> handleCollection(Bundle bundle, Type t, IRequestor requestor, boolean track) {
+	private List<Object> handleCollection(Bundle bundle, Type t, IRequestor requestor, boolean track, Service qualifier) {
 		List<Object> rv = new ArrayList<>();
 
 		BundleContext context = bundle.getBundleContext();
@@ -168,7 +158,9 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 		@SuppressWarnings("unchecked")
 		Class<Object> cl = t instanceof ParameterizedType ? (Class<Object>) ((ParameterizedType) t).getRawType() : (Class<Object>) t;
 		try {
-			ServiceReference<?>[] serviceReferences = context.getServiceReferences(cl.getName(), null);
+			String filter = qualifier.filterExpression() != null && ! qualifier.filterExpression().isEmpty() ? qualifier.filterExpression() : null;
+
+			ServiceReference<?>[] serviceReferences = context.getServiceReferences(cl.getName(), filter);
 			if( serviceReferences != null ) {
 				Arrays.sort(serviceReferences);
 

@@ -18,6 +18,8 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import org.eclipse.fx.core.observable.ValueObservable.StringObservable;
+
 /**
  * Annotation to use with DI to support dynamics and multiple services
  *
@@ -33,4 +35,16 @@ public @interface Service {
 	 *         can come and go
 	 */
 	boolean dynamic() default true;
+
+	/**
+	 * @return ldap filter expression
+	 * @since 3.0.0
+	 */
+	String filterExpression() default "";
+
+	/**
+	 * @return class providing a dynamic filter expression
+	 * @since 3.0.0
+	 */
+	Class<StringObservable> dynamicFilterExpression() default StringObservable.class;
 }

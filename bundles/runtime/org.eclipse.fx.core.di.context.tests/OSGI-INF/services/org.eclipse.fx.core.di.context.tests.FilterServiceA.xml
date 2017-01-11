@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.core.di.context.tests.FilterServiceA">
+   <property name="filtervalue" value="Test"/>
+   <property name="service.ranking" value="1"/>
+   <service>
+      <provide interface="org.eclipse.fx.core.di.context.tests.TestService"/>
+   </service>
+   <implementation class="org.eclipse.fx.core.di.context.tests.FilterServiceA"/>
+</scr:component>
