@@ -17,6 +17,7 @@ import org.eclipse.fx.core.Subscription;
  *
  * @param <T>
  *            the type
+ * @since 3.0.0
  */
 public interface ValueObservable<T> {
 	/**
@@ -63,6 +64,8 @@ public interface ValueObservable<T> {
 
 	/**
 	 * Observable for a {@link String} value
+	 *
+	 * @since 3.0.0
 	 */
 	public interface StringObservable extends ValueObservable<String> {
 		// empty by default
