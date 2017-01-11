@@ -36,6 +36,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
@@ -460,6 +461,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 			if( WLayoutedWidgetImpl.OPTIMIZED_STACK_LAYOUT ) {
 				if( this.tab.getContent() instanceof Parent ) {
+					this.domElement.getParent().setSelectedElement(this.domElement);
 					((Parent)this.tab.getContent()).requestLayout();
 				} else {
 					this.tab.getTabPane().requestLayout();
