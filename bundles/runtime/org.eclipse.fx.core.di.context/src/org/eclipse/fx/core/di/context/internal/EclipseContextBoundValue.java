@@ -26,7 +26,9 @@ import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.adapter.AdapterService;
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
 import org.eclipse.fx.core.di.ContextBoundValue;
+import org.eclipse.fx.core.di.ContextScope;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
+import org.eclipse.fx.core.di.context.ScopeCalculator;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.jdt.annotation.NonNull;
@@ -59,7 +61,10 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	@Log
 	private Logger logger;
 
-	private boolean local;
+	private ContextScope scope;
+
+	@NonNull
+	private final ScopeCalculator scopeCalculator;
 
 	/**
 	 * Create a new bound value
@@ -68,11 +73,15 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	 *            the context
 	 * @param adapterService
 	 *            the adapter service
+	 * @param scopeCalculator
+	 *            service to calculate a scope
 	 */
 	@Inject
-	public EclipseContextBoundValue(@NonNull IEclipseContext context, @NonNull AdapterService adapterService) {
+	public EclipseContextBoundValue(@NonNull IEclipseContext context, @NonNull AdapterService adapterService,
+			@NonNull ScopeCalculator scopeCalculator) {
 		this.context = context;
 		this.adapterService = adapterService;
+		this.scopeCalculator = scopeCalculator;
 	}
 
 	/**
@@ -81,9 +90,9 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	 * @param contextKey
 	 *            the key
 	 */
-	public void setContextKey(@NonNull final String contextKey, final boolean local) {
+	public void setContextKey(@NonNull final String contextKey, final ContextScope scope) {
 		this.contextKey = contextKey;
-		this.local = local;
+		this.scope = scope;
 		this.context.runAndTrack(new RunAndTrack() {
 
 			@Override
@@ -95,12 +104,12 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	void notifySubscriptions(@Nullable T newValue){
+	void notifySubscriptions(@Nullable T newValue) {
 		if (this.callbacks != null) {
 			for (Callback<?> c : this.callbacks.toArray(new Callback<?>[0])) {
 				try {
 					((Callback<T>) c).call(newValue);
-				} catch(Throwable t) {
+				} catch (Throwable t) {
 					this.logger.error("Failed while executing callback", t); //$NON-NLS-1$
 				}
 			}
@@ -113,7 +122,8 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	public T getValue() {
 		if (this.contextKey == null) {
 			// If no contextKey has been set, the value is always null.
-			// This needs to be done in order to be conform to the ContextBoundValue interface
+			// This needs to be done in order to be conform to the
+			// ContextBoundValue interface
 			return null;
 		}
 		return (T) this.context.get(this.contextKey);
@@ -121,14 +131,17 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 
 	@Override
 	public void publish(@Nullable T value) {
-		if( this.local ) {
+		if (this.scope == ContextScope.LOCAL) {
 			this.context.set(this.contextKey, value);
+		} else if (this.scope == ContextScope.APPLICATION) {
+			this.scopeCalculator.getContext(this.context, this.scope).orElse(this.context).set(this.contextKey, value);
 		} else {
 			this.context.modify(this.contextKey, value);
 		}
 
-		if( this.eventBroker != null ) {
-			this.eventBroker.send(ScopedObjectFactory.KEYMODIFED_TOPIC, Collections.singletonMap(this.contextKey, value));
+		if (this.eventBroker != null) {
+			this.eventBroker.send(ScopedObjectFactory.KEYMODIFED_TOPIC,
+					Collections.singletonMap(this.contextKey, value));
 		}
 	}
 
@@ -192,7 +205,7 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 			for (Callback<?> callback : disposalCallbacks.toArray(new Callback<?>[0])) {
 				try {
 					callback.call(null);
-				} catch(Throwable t) {
+				} catch (Throwable t) {
 					this.logger.error("Failure while executing clean up callback", t); //$NON-NLS-1$
 				}
 

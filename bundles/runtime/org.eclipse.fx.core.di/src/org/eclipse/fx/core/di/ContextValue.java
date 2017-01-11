@@ -35,7 +35,7 @@ public @interface ContextValue {
 	String value();
 
 	/**
-	 * @return <code>true</code> to publish only to the local context
+	 * @return context where the value is published
 	 */
-	boolean local() default false;
+	ContextScope scope() default ContextScope.DYNAMIC;
 }
