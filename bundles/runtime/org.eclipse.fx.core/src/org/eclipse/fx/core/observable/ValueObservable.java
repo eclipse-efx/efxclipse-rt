@@ -11,6 +11,7 @@
 package org.eclipse.fx.core.observable;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * An observable value
@@ -60,6 +61,42 @@ public interface ValueObservable<T> {
 		 *            the newValue
 		 */
 		public void handle(ValueObservable<T> owner, T oldValue, T newValue);
+	}
+
+	/**
+	 * @return an object observable
+	 */
+	public static <@Nullable T> ValueObservable<T> createObservableObject() {
+		return new BaseValueObservable.NullBaseValueObservable<>();
+	}
+
+	/**
+	 * Create an object observable
+	 *
+	 * @param value
+	 *            initial value
+	 * @return an object observable
+	 */
+	public static <T> ValueObservable<T> createObservableObject(T value) {
+		return new BaseValueObservable<>(value);
+	}
+
+	/**
+	 * @return a string observable
+	 */
+	public static StringValueObservable createObservableString() {
+		return new StringValueObservable();
+	}
+
+	/**
+	 * Create a string observable
+	 *
+	 * @param value
+	 *            initial value
+	 * @return a string observable
+	 */
+	public static StringValueObservable createObservableString(String value) {
+		return new StringValueObservable(value);
 	}
 
 	/**
