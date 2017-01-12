@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
+import java.util.Optional;
+
+import org.eclipse.fx.core.log.LoggerCreator;
+
 /**
  * System utilities
  *
@@ -73,5 +77,24 @@ public class SystemUtils {
 	 */
 	public static boolean isWindows() {
 		return System.getProperty("os.name").toLowerCase().contains("windows"); //$NON-NLS-1$//$NON-NLS-2$
+	}
+
+	/**
+	 * @return get the version of current java runtime
+	 * @since 3.0.0
+	 */
+	public static Optional<Version> getJavaVersion() {
+		String version = System.getProperty("java.runtime.version"); //$NON-NLS-1$
+		// pre java 9
+		if (version.startsWith("1.")) { //$NON-NLS-1$
+			String v = version.substring(2).replaceFirst("_", "."); //$NON-NLS-1$//$NON-NLS-2$
+			try {
+				return Optional.of(Version.createVersion(v));
+			} catch (Throwable t) {
+				LoggerCreator.createLogger(Util.class).error("Failed to create version from " + version, t); //$NON-NLS-1$
+				return Optional.empty();
+			}
+		}
+		return Optional.empty();
 	}
 }
