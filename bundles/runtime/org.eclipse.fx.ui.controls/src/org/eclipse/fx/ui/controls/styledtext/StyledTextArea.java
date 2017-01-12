@@ -1969,7 +1969,7 @@ public class StyledTextArea extends Control {
 		TextWriter plainTextWriter = new TextWriter(start, length);
 		String delimitedText = getPlatformDelimitedText(plainTextWriter);
 		if( needClipboardFix ) {
-			delimitedText.replaceAll("\r\n", "\n");  //$NON-NLS-1$//$NON-NLS-2$
+			delimitedText = delimitedText.replaceAll("\r\n", "\n");  //$NON-NLS-1$//$NON-NLS-2$
 		}
 		c.putString(delimitedText);
 		return c;
