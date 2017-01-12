@@ -55,7 +55,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.input.Clipboard;
-import javafx.scene.input.DataFormat;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -115,16 +115,19 @@ public class StyledTextArea extends Control {
 
 	@NonNull
 	private final DoubleProperty fontZoomFactor = new SimpleDoubleProperty(this, "fontZoomFactor", 1.0); //$NON-NLS-1$
+
 	public DoubleProperty fontZoomFactorProperty() {
 		return this.fontZoomFactor;
 	}
+
 	public void setFontZoomFactor(double factor) {
 		this.fontZoomFactor.set(factor);
 	}
+
 	public double getFontZoomFactor() {
 		return this.fontZoomFactor.get();
 	}
-	
+
 	@NonNull
 	private final StyledTextRenderer renderer = new StyledTextRenderer();
 
@@ -185,8 +188,11 @@ public class StyledTextArea extends Control {
 		}
 	}
 
+	private static final String PlatformLineDelimiter = System.getProperty("line.separator"); //$NON-NLS-1$
+	private static final boolean needClipboardFix = Util.isWindows();
+
 	@NonNull
-	private final ObjectProperty<@NonNull LineSeparator> lineSeparator = new SimpleObjectProperty<>(this, "lineSeparator", "\n".equals(System.getProperty("line.separator")) ? LineSeparator.NEW_LINE : LineSeparator.CARRIAGE_RETURN_NEW_LINE); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final ObjectProperty<@NonNull LineSeparator> lineSeparator = new SimpleObjectProperty<>(this, "lineSeparator", "\n".equals(PlatformLineDelimiter) ? LineSeparator.NEW_LINE : LineSeparator.CARRIAGE_RETURN_NEW_LINE); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private SetProperty<AnnotationPresenter> annotationPresenter = new SimpleSetProperty<>(this, "annotationPresenter", FXCollections.observableSet()); //$NON-NLS-1$
 
@@ -271,7 +277,7 @@ public class StyledTextArea extends Control {
 		this.contentProperty = new ContentProperty(this, "content", new DefaultContent()); //$NON-NLS-1$
 		setFocusTraversable(true);
 
-		//FIXME This rules out the CSS-Setting!
+		// FIXME This rules out the CSS-Setting!
 		// we cannot change remove it because the dynamic zoom depends on it -.-
 		DoubleBinding lineHeight = org.eclipse.fx.ui.controls.Util.createTextHeightBinding("Pj", fontProperty(), this.fontZoomFactor); //$NON-NLS-1$
 		fixedLineHeightProperty().bind(lineHeight.multiply(1.3));
@@ -770,8 +776,8 @@ public class StyledTextArea extends Control {
 			this.renderer.setStyleRanges(ranges, styles);
 		}
 
-		if( getSkin() instanceof StyledTextSkin ) {
-			((StyledTextSkin)getSkin()).refreshStyles(start, length);
+		if (getSkin() instanceof StyledTextSkin) {
+			((StyledTextSkin) getSkin()).refreshStyles(start, length);
 		}
 
 		// if (getSkin() instanceof StyledTextSkin) {
@@ -1713,7 +1719,7 @@ public class StyledTextArea extends Control {
 		}
 
 		String content = text.toString();
-		if( isInsertSpacesForTab() ) {
+		if (isInsertSpacesForTab()) {
 			content = content.replaceAll("\t", Util.createRepeatedString(' ', this.tabAdvance.get())); //$NON-NLS-1$
 		}
 
@@ -1745,28 +1751,66 @@ public class StyledTextArea extends Control {
 		if (clipboard.hasString()) {
 			final String text = fix0TerminatedString(clipboard.getString());
 			if (text != null) {
-				insert(text);
+				insert(getModelDelimitedText(text));
 			}
 		}
 	}
-	
+
 	private static String fix0TerminatedString(String text) {
 		String result = text;
-		int nullIdx = text.indexOf(0); 
-		if(nullIdx>0) {
-			result = text.substring(0, nullIdx); 
+		int nullIdx = text.indexOf(0);
+		if (nullIdx > 0) {
+			result = text.substring(0, nullIdx);
 		}
 		return result;
+	}
+
+	private String getModelDelimitedText(String text) {
+		int length = text.length();
+		if (length == 0) {
+			return text;
+		}
+		int crIndex = 0;
+		int lfIndex = 0;
+		int i = 0;
+		StringBuffer convertedText = new StringBuffer(length);
+		String delimiter = this.lineSeparator.get().value;
+		while (i < length) {
+			if (crIndex != -1) {
+				crIndex = text.indexOf('\r', i);
+			}
+			if (lfIndex != -1) {
+				lfIndex = text.indexOf('\n', i);
+			}
+			if (lfIndex == -1 && crIndex == -1) {	// no more line breaks?
+				break;
+			} else if ((crIndex < lfIndex && crIndex != -1) || lfIndex == -1) {
+				convertedText.append(text.substring(i, crIndex));
+				if (lfIndex == crIndex + 1) {		// CR/LF combination?
+					i = lfIndex + 1;
+				} else {
+					i = crIndex + 1;
+				}
+			} else {									// LF occurs before CR!
+				convertedText.append(text.substring(i, lfIndex));
+				i = lfIndex + 1;
+			}
+
+			convertedText.append(delimiter);
+		}
+		if (i < length ) {
+			convertedText.append(text.substring(i));
+		}
+		return convertedText.toString();
 	}
 
 	/**
 	 * Copy the current selection into the clipboard
 	 */
-	@SuppressWarnings("null")
 	public void copy() {
 		if (getSelection().length > 0) {
 			final Clipboard clipboard = Clipboard.getSystemClipboard();
-			clipboard.setContent(Collections.singletonMap(DataFormat.PLAIN_TEXT, getContent().getTextRange(getSelection().offset, getSelection().length)));
+			clipboard.setContent(createClipboardContent(getSelection().offset, getSelection().length));
 		}
 	}
 
@@ -1777,10 +1821,11 @@ public class StyledTextArea extends Control {
 		TextSelection selection = getSelection();
 		if (selection.length > 0) {
 			final Clipboard clipboard = Clipboard.getSystemClipboard();
+			clipboard.setContent(createClipboardContent(getSelection().offset, getSelection().length));
+
 			String content = getContent().getTextRange(selection.offset, selection.length);
 			setCaretOffset(selection.offset);
 			getContent().replaceTextRange(selection.offset, content.length(), ""); //$NON-NLS-1$
-			clipboard.setContent(Collections.singletonMap(DataFormat.PLAIN_TEXT, content));
 		}
 	}
 
@@ -1900,19 +1945,233 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Reveal the current caret location
+	 *
 	 * @since 2.4.0
 	 */
 	public void revealCaret() {
 		if (getSkin() != null) {
-			((StyledTextSkin)getSkin()).scrollOffsetIntoView(getCaretOffset(), 2, 2);
+			((StyledTextSkin) getSkin()).scrollOffsetIntoView(getCaretOffset(), 2, 2);
 		}
 	}
 
 	/**
 	 * Trigger the respective action
-	 * @param action the action
+	 *
+	 * @param action
+	 *            the action
 	 */
 	public void triggerAction(TextEditAction action) {
-		((StyledTextSkin)getSkin()).getBehavior().triggerAction(action);
+		((StyledTextSkin) getSkin()).getBehavior().triggerAction(action);
+	}
+
+	ClipboardContent createClipboardContent(int start, int length) {
+		ClipboardContent c = new ClipboardContent();
+		TextWriter plainTextWriter = new TextWriter(start, length);
+		String delimitedText = getPlatformDelimitedText(plainTextWriter);
+		if( needClipboardFix ) {
+			delimitedText.replaceAll("\r\n", "\n");  //$NON-NLS-1$//$NON-NLS-2$
+		}
+		c.putString(delimitedText);
+		return c;
+	}
+
+	String getPlatformDelimitedText(TextWriter writer) {
+		StyledTextContent content = getContent();
+		int end = writer.getStart() + writer.getCharCount();
+		int startLine = content.getLineAtOffset(writer.getStart());
+		int endLine = content.getLineAtOffset(end);
+		String endLineText = content.getLine(endLine);
+		int endLineOffset = content.getOffsetAtLine(endLine);
+
+		for (int i = startLine; i <= endLine; i++) {
+			writer.writeLine(content.getLine(i), content.getOffsetAtLine(i));
+			if (i < endLine) {
+				writer.writeLineDelimiter(PlatformLineDelimiter);
+			}
+		}
+		if (end > endLineOffset + endLineText.length()) {
+			writer.writeLineDelimiter(PlatformLineDelimiter);
+		}
+		writer.close();
+		return writer.toString();
+	}
+
+	/**
+	 * The <code>TextWriter</code> class is used to write widget content to a
+	 * string. Whole and partial lines and line breaks can be written. To write
+	 * partial lines, specify the start and length of the desired segment during
+	 * object creation.
+	 * <p>
+	 * </b>NOTE:</b> <code>toString()</code> is guaranteed to return a valid
+	 * string only after close() has been called.
+	 * </p>
+	 */
+	static class TextWriter {
+		private StringBuffer buffer;
+		private int startOffset; // offset of first character that will be
+									// written
+		private int endOffset; // offset of last character that will be written.
+								// 0 based from the beginning of the widget
+								// text.
+		private boolean isClosed = false;
+
+		/**
+		 * Creates a writer that writes content starting at offset "start" in
+		 * the document. <code>start</code> and <code>length</code> can be set
+		 * to specify partial lines.
+		 *
+		 * @param start
+		 *            start offset of content to write, 0 based from beginning
+		 *            of document
+		 * @param length
+		 *            length of content to write
+		 */
+		public TextWriter(int start, int length) {
+			this.buffer = new StringBuffer(length);
+			this.startOffset = start;
+			this.endOffset = start + length;
+		}
+
+		/**
+		 * Closes the writer. Once closed no more content can be written.
+		 * <b>NOTE:</b> <code>toString()</code> is not guaranteed to return a
+		 * valid string unless the writer is closed.
+		 */
+		public void close() {
+			if (!this.isClosed) {
+				this.isClosed = true;
+			}
+		}
+
+		/**
+		 * Returns the number of characters to write.
+		 *
+		 * @return the integer number of characters to write
+		 */
+		public int getCharCount() {
+			return this.endOffset - this.startOffset;
+		}
+
+		/**
+		 * Returns the offset where writing starts. 0 based from the start of
+		 * the widget text. Used to write partial lines.
+		 *
+		 * @return the integer offset where writing starts
+		 */
+		public int getStart() {
+			return this.startOffset;
+		}
+
+		/**
+		 * Returns whether the writer is closed.
+		 *
+		 * @return a boolean specifying whether or not the writer is closed
+		 */
+		public boolean isClosed() {
+			return this.isClosed;
+		}
+
+		/**
+		 * Returns the string. <code>close()</code> must be called before
+		 * <code>toString()</code> is guaranteed to return a valid string.
+		 *
+		 * @return the string
+		 */
+		@Override
+		public String toString() {
+			return this.buffer.toString();
+		}
+
+		/**
+		 * Appends the given string to the data.
+		 */
+		void write(String string) {
+			this.buffer.append(string);
+		}
+
+		/**
+		 * Inserts the given string to the data at the specified offset.
+		 * <p>
+		 * Do nothing if "offset" is < 0 or > getCharCount()
+		 * </p>
+		 *
+		 * @param string
+		 *            text to insert
+		 * @param offset
+		 *            offset in the existing data to insert "string" at.
+		 */
+		void write(String string, int offset) {
+			if (offset < 0 || offset > buffer.length()) {
+				return;
+			}
+			this.buffer.insert(offset, string);
+		}
+
+		/**
+		 * Appends the given int to the data.
+		 */
+		void write(int i) {
+			this.buffer.append(i);
+		}
+
+		/**
+		 * Appends the given character to the data.
+		 */
+		void write(char i) {
+			this.buffer.append(i);
+		}
+
+		/**
+		 * Appends the specified line text to the data.
+		 *
+		 * @param line
+		 *            line text to write. Must not contain line breaks Line
+		 *            breaks should be written using writeLineDelimiter()
+		 * @param lineOffset
+		 *            offset of the line. 0 based from the start of the widget
+		 *            document. Any text occurring before the start offset or
+		 *            after the end offset specified during object creation is
+		 *            ignored.
+		 * @exception IllegalStateException
+		 *                <ul>
+		 *                <li>when the writer is closed.</li>
+		 *                </ul>
+		 */
+		public void writeLine(String line, int lineOffset) {
+			if (this.isClosed) {
+				throw new IllegalStateException("Writer is closed"); //$NON-NLS-1$
+			}
+			int writeOffset = this.startOffset - lineOffset;
+			int lineLength = line.length();
+			int lineIndex;
+			if (writeOffset >= lineLength) {
+				return; // whole line is outside write range
+			} else if (writeOffset > 0) {
+				lineIndex = writeOffset; // line starts before write start
+			} else {
+				lineIndex = 0;
+			}
+			int copyEnd = Math.min(lineLength, this.endOffset - lineOffset);
+			if (lineIndex < copyEnd) {
+				write(line.substring(lineIndex, copyEnd));
+			}
+		}
+
+		/**
+		 * Appends the specified line delimiter to the data.
+		 *
+		 * @param lineDelimiter
+		 *            line delimiter to write
+		 * @exception IllegalStateException
+		 *                <ul>
+		 *                <li>when the writer is closed.</li>
+		 *                </ul>
+		 */
+		public void writeLineDelimiter(String lineDelimiter) {
+			if (this.isClosed) {
+				throw new IllegalStateException("Writer is closed"); //$NON-NLS-1$
+			}
+			write(lineDelimiter);
+		}
 	}
 }
