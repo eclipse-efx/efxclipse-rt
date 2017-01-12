@@ -9,7 +9,11 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.di.Service;
+import org.eclipse.fx.core.observable.BaseValueObservable;
+import org.eclipse.fx.core.observable.ValueObservable.OString;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -57,6 +61,38 @@ public class ServiceSupplierTestCase {
 		}
 	}
 
+	public static class TestDynamicFilterBean {
+		TestService service;
+		List<TestService> serviceList;
+		int serviceInjectionCount;
+		int serviceListInjectionCount;
+
+		@Inject
+		public void setService(@Optional @Service(dynamicFilterExpression=StringFilterObs.class) TestService service) {
+			this.service = service;
+			this.serviceInjectionCount++;
+		}
+
+		@Inject
+		public void setServiceList(@Service(dynamicFilterExpression=StringFilterObs.class) List<TestService> serviceList) {
+			this.serviceList = serviceList;
+			this.serviceListInjectionCount++;
+		}
+	}
+
+	static class StringFilterObs extends BaseValueObservable<String> implements OString {
+		static List<StringFilterObs> LIST = new ArrayList<>();
+
+		public StringFilterObs() {
+			super("(filtervalue=Test)"); //$NON-NLS-1$
+			LIST.add(this);
+		}
+
+		public static void updateFilter(String filter) {
+			LIST.stream().forEach( o -> o.setValue(filter));
+		}
+	}
+
 	private List<ServiceRegistration<?>> registrations = new ArrayList<>();
 
 	@After
@@ -93,6 +129,41 @@ public class ServiceSupplierTestCase {
 
 		Assert.assertEquals(2, bean.serviceList.size());
 		Assert.assertEquals(1, bean.serviceListInjectionCount);
+		Assert.assertSame(FilterServiceA.class,bean.serviceList.get(0).getClass());
+		Assert.assertSame(FilterServiceB.class,bean.serviceList.get(1).getClass());
+	}
+
+	@Test
+	public void testDynamicFilter() {
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		TestDynamicFilterBean bean = ContextInjectionFactory.make(TestDynamicFilterBean.class, serviceContext);
+
+		Assert.assertNotNull(bean.service);
+		Assert.assertNotNull(bean.serviceList);
+
+		Assert.assertSame(FilterServiceA.class,bean.service.getClass());
+		Assert.assertEquals(1, bean.serviceInjectionCount);
+
+		Assert.assertEquals(2, bean.serviceList.size());
+		Assert.assertEquals(1, bean.serviceListInjectionCount);
+		Assert.assertSame(FilterServiceA.class,bean.serviceList.get(0).getClass());
+		Assert.assertSame(FilterServiceB.class,bean.serviceList.get(1).getClass());
+
+		StringFilterObs.updateFilter("(filtervalue=NixDa)");
+		Assert.assertNull(bean.service);
+		Assert.assertEquals(2, bean.serviceInjectionCount);
+
+		Assert.assertTrue(bean.serviceList.isEmpty());
+		Assert.assertEquals(2, bean.serviceListInjectionCount);
+
+		StringFilterObs.updateFilter("(filtervalue=Test)");
+		Assert.assertNotNull(bean.service);
+		Assert.assertNotNull(bean.serviceList);
+
+		Assert.assertSame(FilterServiceA.class,bean.service.getClass());
+		Assert.assertEquals(3, bean.serviceInjectionCount);
+		Assert.assertEquals(2, bean.serviceList.size());
+		Assert.assertEquals(3, bean.serviceListInjectionCount);
 		Assert.assertSame(FilterServiceA.class,bean.serviceList.get(0).getClass());
 		Assert.assertSame(FilterServiceB.class,bean.serviceList.get(1).getClass());
 	}

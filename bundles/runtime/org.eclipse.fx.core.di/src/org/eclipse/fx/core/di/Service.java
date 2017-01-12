@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
-import org.eclipse.fx.core.observable.ValueObservable.StringObservable;
+import org.eclipse.fx.core.observable.ValueObservable.OString;
 
 /**
  * Annotation to use with DI to support dynamics and multiple services
@@ -46,5 +46,5 @@ public @interface Service {
 	 * @return class providing a dynamic filter expression
 	 * @since 3.0.0
 	 */
-	Class<StringObservable> dynamicFilterExpression() default StringObservable.class;
+	Class<? extends OString> dynamicFilterExpression() default OString.class;
 }

@@ -25,6 +25,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class BaseValueObservable<T> implements ValueObservable<T> {
 	private List<ChangeSubscription<T>> subscriptions;
 	private T value;
+	private boolean disposed;
 
 	static class NullBaseValueObservable<@Nullable T> extends BaseValueObservable<T> {
 
@@ -45,6 +46,9 @@ public class BaseValueObservable<T> implements ValueObservable<T> {
 
 	@Override
 	public void setValue(T value) {
+		if( this.disposed ) {
+			throw new IllegalStateException("Observable is disposed"); //$NON-NLS-1$
+		}
 		notifyChange(this.value, this.value = value);
 
 	}
@@ -56,17 +60,34 @@ public class BaseValueObservable<T> implements ValueObservable<T> {
 
 	private void notifyChange(T oldValue, T newValue) {
 		if (this.subscriptions != null) {
-			this.subscriptions.stream().forEach(s -> s.handle(this, oldValue, newValue));
+			new ArrayList<>(this.subscriptions).stream().forEach(s -> s.handle(this, oldValue, newValue));
 		}
 	}
 
 	@Override
 	public Subscription onValueChange(ChangeSubscription<T> c) {
+		if( this.disposed ) {
+			throw new IllegalStateException("Observable is disposed"); //$NON-NLS-1$
+		}
+
 		if (this.subscriptions == null) {
 			this.subscriptions = new ArrayList<>();
 		}
 		this.subscriptions.add(c);
 		return () -> this.subscriptions.remove(c);
+	}
+
+	@Override
+	public boolean isDisposed() {
+		return this.disposed;
+	}
+
+	@Override
+	public void dispose() {
+		this.disposed = true;
+		if( this.subscriptions != null ) {
+			this.subscriptions = null;
+		}
 	}
 
 }

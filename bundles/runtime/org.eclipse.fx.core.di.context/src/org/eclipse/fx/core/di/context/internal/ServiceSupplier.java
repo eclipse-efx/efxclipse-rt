@@ -26,7 +26,9 @@ import org.eclipse.e4.core.di.IInjector;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
+import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.core.di.Service;
+import org.eclipse.fx.core.observable.ValueObservable.OString;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -98,6 +100,8 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 
 	Map<BundleContext,Map<Class<?>,ServiceHandler>> handlerList = new HashMap<>();
 
+	Map<Requestor<?>, OString> obsStore = new HashMap<>();
+
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
 		Type desiredType = descriptor.getDesiredType();
@@ -126,6 +130,34 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 		try {
 			{
 				String filter = qualifier.filterExpression() != null && ! qualifier.filterExpression().isEmpty() ? qualifier.filterExpression() : null;
+
+				if( filter == null && qualifier.dynamicFilterExpression() != OString.class ) {
+					Requestor<?> r = (Requestor<?>) requestor;
+					OString obs = this.obsStore.get(r);
+					if( obs == null ) {
+						obs = r.getInjector().make(qualifier.dynamicFilterExpression(), r.getPrimarySupplier());
+						this.obsStore.put(r, obs);
+						if( obs != null ) {
+							obs.onValueChange( (o,ol,ne) -> {
+								if( ! r.isValid() ) {
+									this.obsStore.remove(r);
+									o.dispose();
+								} else {
+									try {
+										r.resolveArguments(false);
+										r.execute();
+									} catch(Throwable th) {
+										th.printStackTrace();
+									}
+								}
+							});
+						}
+					}
+
+					if( obs != null ) {
+						filter = obs.getValue();
+					}
+				}
 
 				ServiceReference<?>[] serviceReferences = context.getServiceReferences(cl.getName(), filter);
 				if( serviceReferences != null ) {
@@ -159,6 +191,34 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 		Class<Object> cl = t instanceof ParameterizedType ? (Class<Object>) ((ParameterizedType) t).getRawType() : (Class<Object>) t;
 		try {
 			String filter = qualifier.filterExpression() != null && ! qualifier.filterExpression().isEmpty() ? qualifier.filterExpression() : null;
+
+			if( filter == null && qualifier.dynamicFilterExpression() != OString.class ) {
+				Requestor<?> r = (Requestor<?>) requestor;
+				OString obs = this.obsStore.get(r);
+				if( obs == null ) {
+					obs = r.getInjector().make(qualifier.dynamicFilterExpression(), r.getPrimarySupplier());
+					this.obsStore.put(r, obs);
+					if( obs != null ) {
+						obs.onValueChange( (o,ol,ne) -> {
+							if( ! r.isValid() ) {
+								this.obsStore.remove(r);
+								o.dispose();
+							} else {
+								try {
+									r.resolveArguments(false);
+									r.execute();
+								} catch(Throwable th) {
+									th.printStackTrace();
+								}
+							}
+						});
+					}
+				}
+
+				if( obs != null ) {
+					filter = obs.getValue();
+				}
+			}
 
 			ServiceReference<?>[] serviceReferences = context.getServiceReferences(cl.getName(), filter);
 			if( serviceReferences != null ) {

@@ -44,6 +44,16 @@ public interface ValueObservable<T> {
 	public Subscription onValueChange(ChangeSubscription<T> c);
 
 	/**
+	 * Dispose the observable releasing all resources
+	 */
+	public void dispose();
+
+	/**
+	 * @return <code>true</code> if the observable is disposed
+	 */
+	public boolean isDisposed();
+
+	/**
 	 * Subscription for value changes
 	 *
 	 * @param <T>
@@ -104,7 +114,7 @@ public interface ValueObservable<T> {
 	 *
 	 * @since 3.0.0
 	 */
-	public interface StringObservable extends ValueObservable<String> {
+	public interface OString extends ValueObservable<String> {
 		// empty by default
 	}
 }
