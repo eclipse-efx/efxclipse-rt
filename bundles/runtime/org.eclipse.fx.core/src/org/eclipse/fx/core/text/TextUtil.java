@@ -285,7 +285,7 @@ public class TextUtil {
 	 */
 	public static String createRepeatedString(char c, int length) {
 		char[] vals = new char[length];
-		Arrays.fill(vals, ' ');
+		Arrays.fill(vals, c);
 		return String.valueOf(vals);
 	}
 
