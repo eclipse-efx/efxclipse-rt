@@ -26,6 +26,8 @@ import javafx.util.Duration;
 
 public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 
+	private static boolean DEBUG_HOVER = Boolean.getBoolean("org.eclipse.fx.ui.controls.styledtext.debug"); //$NON-NLS-1$
+	
 	private List<HoverPresenter> presenters = new ArrayList<>();
 
 	private final StyledTextArea parent;
@@ -39,6 +41,7 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 
 	private volatile Timeline hideTimeline;
 	private void scheduleHide(long delay) {
+		if (DEBUG_HOVER) System.err.println("DefaultHoverWindowPresenter: scheduleHide("+delay+")");  //$NON-NLS-1$//$NON-NLS-2$
 		Timeline t = new Timeline();
 		t.getKeyFrames().add(new KeyFrame(Duration.millis(delay), (a) -> {
 			if (this.preventHide) return;
@@ -50,6 +53,7 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 		t.play();
 	}
 	private void cancelScheduledHide() {
+		if (DEBUG_HOVER) System.err.println("DefaultHoverWindowPresenter: cancelScheduledHide()"); //$NON-NLS-1$
 		if (this.hideTimeline != null) {
 			this.hideTimeline.stop();
 		}
@@ -86,10 +90,12 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 	}
 	
 	private void onMouseEntered(MouseEvent event) {
+		if (DEBUG_HOVER) System.err.println("DefaultHoverWindowPresenter: onMouseEntered()"); //$NON-NLS-1$
 		cancelScheduledHide();
 		setDisableOnWebViews(this.root, false);
 	}
 	private void onMouseExited(MouseEvent event) {
+		if (DEBUG_HOVER) System.err.println("DefaultHoverWindowPresenter: onMouseExited()"); //$NON-NLS-1$
 		scheduleHide(500);
 		setDisableOnWebViews(this.root, true);
 	}

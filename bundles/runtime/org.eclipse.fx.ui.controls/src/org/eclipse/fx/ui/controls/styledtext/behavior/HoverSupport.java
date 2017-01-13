@@ -18,7 +18,6 @@ import org.eclipse.fx.ui.controls.styledtext.events.HoverTarget;
 import org.eclipse.fx.ui.controls.styledtext.events.TextHoverEvent;
 import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
 
-
 import javafx.event.Event;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
@@ -30,10 +29,13 @@ import javafx.util.Duration;
  */
 public class HoverSupport {
 
+	private static boolean DEBUG_HOVER = Boolean.getBoolean("org.eclipse.fx.ui.controls.styledtext.debug"); //$NON-NLS-1$
+	
 	private Region control;
 	private TextHoverEvent lastHover;
 
 	private TextHoverEvent curHover;
+	private long curHoverTimeout;
 
 	/**
 	 * Create a hover support instance
@@ -54,6 +56,17 @@ public class HoverSupport {
 		this.control.addEventHandler(MouseEvent.MOUSE_EXITED, this::onMouseExited);
 		Util.installHoverCallback(this.control, Duration.millis(300), this::handleHover);
 	}
+	
+	private void fireHoverEvent(MouseEvent event, List<HoverTarget> hoverTargets) {
+		if (hoverTargets == null) {
+			if (DEBUG_HOVER) System.err.println("fireHoverEvent " + hoverTargets);
+			Event.fireEvent(this.control, new TextHoverEvent(event, -1, -1, -1, "")); //$NON-NLS-1$
+		}
+		else {
+			if (DEBUG_HOVER) System.err.println("fireHoverEvent " + hoverTargets);
+			Event.fireEvent(this.control, new TextHoverEvent(event, hoverTargets));
+		}
+	}
 
 	/**
 	 * Install the hover support on the provided control
@@ -69,39 +82,19 @@ public class HoverSupport {
 	}
 
 	private void onMouseExited(MouseEvent event) {
-		Event.fireEvent(this.control, new TextHoverEvent(event, -1, -1, -1, "")); //$NON-NLS-1$
-		this.lastHover = null;
-		this.curHover = null;
+		if (DEBUG_HOVER) System.err.println("HoverManager: onMouseExited"); //$NON-NLS-1$
+		fireHoverEvent(event, null);
 	}
 
 	private void onMouseMoved(MouseEvent event) {
-//		if (this.lastHover != null) {
-//			TextHoverEvent hoverEvent = createHoverEvent(event);
-//			if (this.lastHover.getOffsetTokenStart() != hoverEvent.getOffsetTokenStart()) {
-//				Event.fireEvent(this.control, new TextHoverEvent(event, -1, -1, -1, "")); //$NON-NLS-1$
-//				this.lastHover = null;
-//			}
-//		}
-
-		if (this.curHover != null) {
-			List<HoverTarget> hoverTargets = ((ContentView)this.control).findHoverTargets(new Point2D(event.getX(), event.getY()));
-			TextHoverEvent e = new TextHoverEvent(event, hoverTargets);
-			if (!e.equals(curHover)) {
-				Event.fireEvent(this.control, new TextHoverEvent(event, -1, -1, -1, "")); //$NON-NLS-1$
-				this.curHover = null;
-			}
-		}
-
-
-
+//		System.err.println("HoverManager: onMouseMoved");
+//		List<HoverTarget> hoverTargets = ((ContentView)this.control).findHoverTargets(new Point2D(event.getX(), event.getY()));
+//		fireHoverEvent(event, hoverTargets);
 	}
 
 	private void onMousePressed(MouseEvent event) {
-		if (this.lastHover != null) {
-			Event.fireEvent(this.control, new TextHoverEvent(event, -1, -1, -1, "")); //$NON-NLS-1$
-			this.lastHover = null;
-			curHover = null;
-		}
+		if (DEBUG_HOVER) System.err.println("HoverManager: onMousePressed"); //$NON-NLS-1$
+		fireHoverEvent(event, null);
 	}
 
 	/**
@@ -142,23 +135,9 @@ public class HoverSupport {
 	 * @param e the event
 	 */
 	protected void handleHover(MouseEvent event) {
-//		TextHoverEvent event = createHoverEvent(e);
-//		if (this.lastHover == null || this.lastHover.getOffsetTokenStart() != event.getOffsetTokenStart()) {
-//			Event.fireEvent(this.control, event);
-//			if (event.getOffset() == -1) {
-//				this.lastHover = null;
-//			} else {
-//				this.lastHover = event;
-//			}
-//		}
-
-
+		if (DEBUG_HOVER) System.err.println("HoverManager: handleHover"); //$NON-NLS-1$
 		List<HoverTarget> hoverTargets = ((ContentView)this.control).findHoverTargets(new Point2D(event.getX(), event.getY()));
-		TextHoverEvent e = new TextHoverEvent(event, hoverTargets);
-		if (this.curHover == null || !e.equals(curHover)) {
-			Event.fireEvent(this.control, e);
-			curHover = e;
-		}
+		fireHoverEvent(event, hoverTargets);
 	}
 
 }
