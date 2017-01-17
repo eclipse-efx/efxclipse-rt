@@ -30,7 +30,7 @@ import javafx.util.Duration;
 public class HoverSupport {
 
 	private static boolean DEBUG_HOVER = Boolean.getBoolean("org.eclipse.fx.ui.controls.styledtext.debug"); //$NON-NLS-1$
-	
+
 	private Region control;
 	private TextHoverEvent lastHover;
 
@@ -56,7 +56,7 @@ public class HoverSupport {
 		this.control.addEventHandler(MouseEvent.MOUSE_EXITED, this::onMouseExited);
 		Util.installHoverCallback(this.control, Duration.millis(300), this::handleHover);
 	}
-	
+
 	private void fireHoverEvent(MouseEvent event, List<HoverTarget> hoverTargets) {
 		if (hoverTargets == null) {
 			if (DEBUG_HOVER) System.err.println("fireHoverEvent " + hoverTargets);
@@ -83,7 +83,10 @@ public class HoverSupport {
 
 	private void onMouseExited(MouseEvent event) {
 		if (DEBUG_HOVER) System.err.println("HoverManager: onMouseExited"); //$NON-NLS-1$
-		fireHoverEvent(event, null);
+		// Work-Around for windows where the exit occurs
+		if( ! this.control.getBoundsInLocal().contains(event.getX(),event.getY()) ) {
+			fireHoverEvent(event, null);
+		}
 	}
 
 	private void onMouseMoved(MouseEvent event) {
