@@ -380,18 +380,19 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		// build the stack item list out of the model
 		List<@NonNull WStackItem<I, IC>> items = transmuteList(parentWidget, list);
 		parentWidget.removeItems(items);
-		ArrayList<MStackElement> removeOnHideList = new ArrayList<MStackElement>();
+//		ArrayList<MStackElement> removeOnHideList = new ArrayList<MStackElement>();
 		Boolean b = (Boolean) this.application.getContext().get("__efx_engine_shutdown"); //$NON-NLS-1$
 		if( b == null || ! b.booleanValue() ) {
 			for (MStackElement element : list) {
-				if (element.getTags().contains(EPartService.REMOVE_ON_HIDE_TAG)) {
-					removeOnHideList.add(element);
-				}
+// Unnecessary code
+//				if (element.getTags().contains(EPartService.REMOVE_ON_HIDE_TAG)) {
+//					removeOnHideList.add(element);
+//				}
 				if( ! element.getTransientData().containsKey(MAP_MOVE) ) {
 					element.getTransientData().remove(MAP_ITEM_KEY);
 				}
 			}
-			parent.getChildren().removeAll(removeOnHideList);
+//			parent.getChildren().removeAll(removeOnHideList);
 		}
 
 		checkSelectedElement(parent);
