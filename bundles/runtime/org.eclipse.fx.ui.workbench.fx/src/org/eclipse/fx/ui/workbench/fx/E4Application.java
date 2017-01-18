@@ -488,10 +488,9 @@ public class E4Application extends AbstractE4Application implements IApplication
 			try {
 				Collection<ServiceReference<@NonNull Location>> references = context.getServiceReferences(Location.class, Location.INSTANCE_FILTER);
 				if( ! references.isEmpty() ) {
-					Location location = context.getService(references.iterator().next());
-					if( location.isSet() ) {
-						return Optional.of(new ApplicationLocationImpl(location));
-					}
+					return Optional.of(new ApplicationLocationImpl(context.getService(references.iterator().next())));
+				} else {
+					LoggerCreator.createLogger(getClass()).error("Could not find an instance location service"); //$NON-NLS-1$
 				}
 			} catch (InvalidSyntaxException e) {
 				LoggerCreator.createLogger(getClass()).error("Failed to create a filter '"+Location.INSTANCE_FILTER+"'", e);  //$NON-NLS-1$//$NON-NLS-2$
