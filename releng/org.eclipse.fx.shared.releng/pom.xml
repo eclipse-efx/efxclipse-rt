@@ -29,7 +29,6 @@
 
 	<modules>
 		<!-- Bundles -->
-		<module>../../bundles/runtime/org.eclipse.fx.javafx</module>
 		<module>../../bundles/runtime/org.eclipse.fx.osgi</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench3</module>
 
