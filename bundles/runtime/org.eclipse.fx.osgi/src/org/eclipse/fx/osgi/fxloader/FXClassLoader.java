@@ -13,17 +13,19 @@ package org.eclipse.fx.osgi.fxloader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.eclipse.osgi.internal.debug.Debug;
 import org.eclipse.osgi.internal.framework.EquinoxConfiguration;
 import org.eclipse.osgi.internal.hookregistry.ClassLoaderHook;
 import org.eclipse.osgi.internal.loader.BundleLoader;
 import org.eclipse.osgi.internal.loader.ModuleClassLoader;
-import org.eclipse.osgi.internal.loader.classpath.ClasspathManager;
 import org.eclipse.osgi.storage.BundleInfo.Generation;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -38,59 +40,107 @@ public class FXClassLoader extends ClassLoaderHook {
 	private static final String SWT_SYMBOLIC_NAME = "org.eclipse.swt"; //$NON-NLS-1$
 
 	private URLClassLoader classLoader;
-	private boolean swtAvailable;
+//	private boolean swtAvailable;
 	private BundleContext frameworkContext;
+	private ClassLoader j9Classloader;
+
+	private static boolean isJDK8() {
+		return System.getProperty("java.version","").startsWith("1"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
 
 	@SuppressWarnings("resource")
 	@Override
 	public Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
-		if( (name.startsWith("javafx") //$NON-NLS-1$
-				|| name.startsWith("netscape.javascript") //$NON-NLS-1$
-				|| name.startsWith("com.sun.glass.events") //$NON-NLS-1$
-				|| name.startsWith("com.sun.glass.ui") //$NON-NLS-1$
-				|| name.startsWith("com.sun.javafx") //$NON-NLS-1$
-				|| name.startsWith("com.sun.media.jfxmedia") //$NON-NLS-1$
-				|| name.startsWith("com.sun.media.jfxmediaimpl") //$NON-NLS-1$
-				|| name.startsWith("com.sun.openpisces") //$NON-NLS-1$
-				|| name.startsWith("com.sun.pisces") //$NON-NLS-1$
-				|| name.startsWith("com.sun.prism") //$NON-NLS-1$
-				|| name.startsWith("com.sun.scenario") //$NON-NLS-1$
-				|| name.startsWith("com.sun.webkit") //$NON-NLS-1$
-				) && ! moduleClassLoader.getBundle().getSymbolicName().equals("org.eclipse.swt")) { //$NON-NLS-1$
-			URLClassLoader fxClassloader = getFXClassloader();
-			if( fxClassloader != null ) {
-				return fxClassloader.loadClass(name);
-			} else {
-				throw new ClassNotFoundException("Unable to locate JavaFX. Please make sure you have a JDK with JavaFX installed eg on Linux you require an Oracle JDK"); //$NON-NLS-1$
+		// this is pre java 9
+		if( isJDK8() ) {
+			if( (name.startsWith("javafx") //$NON-NLS-1$
+					|| name.startsWith("netscape.javascript") //$NON-NLS-1$
+					|| name.startsWith("com.sun.glass.events") //$NON-NLS-1$
+					|| name.startsWith("com.sun.glass.ui") //$NON-NLS-1$
+					|| name.startsWith("com.sun.javafx") //$NON-NLS-1$
+					|| name.startsWith("com.sun.media.jfxmedia") //$NON-NLS-1$
+					|| name.startsWith("com.sun.media.jfxmediaimpl") //$NON-NLS-1$
+					|| name.startsWith("com.sun.openpisces") //$NON-NLS-1$
+					|| name.startsWith("com.sun.pisces") //$NON-NLS-1$
+					|| name.startsWith("com.sun.prism") //$NON-NLS-1$
+					|| name.startsWith("com.sun.scenario") //$NON-NLS-1$
+					|| name.startsWith("com.sun.webkit") //$NON-NLS-1$
+					) && ! moduleClassLoader.getBundle().getSymbolicName().equals("org.eclipse.swt")) { //$NON-NLS-1$
+				URLClassLoader fxClassloader = getFXClassloader();
+				if( fxClassloader != null ) {
+					return fxClassloader.loadClass(name);
+				} else {
+					throw new ClassNotFoundException("Unable to locate JavaFX. Please make sure you have a JDK with JavaFX installed eg on Linux you require an Oracle JDK"); //$NON-NLS-1$
+				}
+			}
+		} else {
+			if( name.startsWith("javafx.embed") ) { //$NON-NLS-1$
+				if( this.j9Classloader == null ) {
+					try {
+						this.j9Classloader = createModuleLoader(getSWTClassloader(this.frameworkContext));
+					} catch (Throwable e) {
+						throw new ClassNotFoundException("Could not find class '"+name+"'", e);  //$NON-NLS-1$//$NON-NLS-2$
+					}
+				}
+				return this.j9Classloader.loadClass(name);
 			}
 		}
 
+
 		return super.postFindClass(name, moduleClassLoader);
+	}
+
+	private ClassLoader createModuleLoader(ClassLoader swtClassloader) throws Throwable {
+		Path path = Paths.get(System.getProperty("java.home")).resolve("lib").resolve("javafx-swt.jar"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+		ClassLoader cl = getClass().getClassLoader();
+		Class<?> ModuleFinderClass = cl.loadClass("java.lang.module.ModuleFinder"); //$NON-NLS-1$
+		Class<?> LayerClass = cl.loadClass("java.lang.reflect.Layer"); //$NON-NLS-1$
+		Class<?> ConfigurationClass = cl.loadClass("java.lang.module.Configuration"); //$NON-NLS-1$
+
+//		ModuleFinder finder = ModuleFinder.of(path);
+		Object finder = ModuleFinderClass.getMethod("of", Path[].class).invoke(null, new Object[] { new Path[] { path } }); //$NON-NLS-1$
+//		Layer boot = Layer.boot();
+		Object boot = LayerClass.getMethod("boot").invoke(null); //$NON-NLS-1$
+//		Configuration configuration = boot.configuration();
+		Object configuration = LayerClass.getMethod("configuration").invoke(boot); //$NON-NLS-1$
+//		ModuleFinder of = ModuleFinder.of();
+		Object of = ModuleFinderClass.getMethod("of", Path[].class).invoke(null, new Object[] { new Path[0] }); //$NON-NLS-1$
+		Set<String> set = new HashSet<String>();
+		set.add("javafx.swt"); //$NON-NLS-1$
+//		Configuration cf = configuration.resolveRequires(finder, of, set);
+		Object cf = ConfigurationClass.getMethod("resolveRequires", ModuleFinderClass, ModuleFinderClass, Collection.class).invoke(configuration, finder, of, set); //$NON-NLS-1$
+//		Layer layer = boot.defineModulesWithOneLoader(cf, Display.class.getClassLoader());
+		Object layer = LayerClass.getMethod("defineModulesWithOneLoader", ConfigurationClass, ClassLoader.class).invoke(boot, cf, swtClassloader); //$NON-NLS-1$
+//		ClassLoader loader = layer.findLoader("javafx.swt");
+		ClassLoader loader = (ClassLoader) LayerClass.getMethod("findLoader", String.class).invoke(layer, "javafx.swt"); //$NON-NLS-1$ //$NON-NLS-2$
+		return loader;
 	}
 
 	private URLClassLoader getFXClassloader() {
 		if( this.classLoader == null ) {
 			ClassLoader swtClassloader = getSWTClassloader(this.frameworkContext);
-			this.swtAvailable = swtClassloader != null;
+//			this.swtAvailable = swtClassloader != null;
 			this.classLoader = createJREBundledClassloader(swtClassloader == null ? ClassLoader.getSystemClassLoader() : swtClassloader, swtClassloader != null);
 		}
 		return this.classLoader;
 	}
 
-	@SuppressWarnings("resource")
 	@Override
 	public ModuleClassLoader createClassLoader(ClassLoader parent,
 			EquinoxConfiguration configuration, BundleLoader delegate,
 			Generation generation) {
+		//FIXME Can we get rid of this?
 		if( this.frameworkContext == null ) {
 			this.frameworkContext = generation.getBundleInfo().getStorage().getModuleContainer().getFrameworkWiring().getBundle().getBundleContext();
 		}
 		if (FX_SYMBOLIC_NAME.equals(generation.getRevision().getBundle()
 				.getSymbolicName())) {
-			System.err.println("WARNING: You are binding against the deprecated org.eclipse.fx.javafx - please remove all javafx imports"); //$NON-NLS-1$
-			URLClassLoader cl = getFXClassloader();
-			return new FXModuleClassloader(this.swtAvailable, cl, parent, configuration, delegate,
-					generation);
+			System.err.println("ERROR: Binding against 'org.eclipse.fx.javafx' had been deprecated since 2.x and has been removed in 3.x "); //$NON-NLS-1$
+//			System.err.println("WARNING: You are binding against the deprecated org.eclipse.fx.javafx - please remove all javafx imports"); //$NON-NLS-1$
+//			URLClassLoader cl = getFXClassloader();
+//			return new FXModuleClassloader(this.swtAvailable, cl, parent, configuration, delegate,
+//					generation);
 		}
 		return super.createClassLoader(parent, configuration, delegate, generation);
 	}
@@ -126,122 +176,122 @@ public class FXClassLoader extends ClassLoaderHook {
 	}
 
 
-	static class FXModuleClassloader extends ModuleClassLoader {
-		private final EquinoxConfiguration configuration;
-		private final BundleLoader delegate;
-		private final Generation generation;
-
-		private ClasspathManager classpathManager;
-		boolean flag;
-
-		public FXModuleClassloader(final boolean isSWT, final URLClassLoader fxClassloader,
-				ClassLoader parent, EquinoxConfiguration configuration,
-				BundleLoader delegate, Generation generation) {
-			super(parent);
-			this.configuration = configuration;
-			this.delegate = delegate;
-			this.generation = generation;
-			this.classpathManager = new ClasspathManager(generation, this) {
-				@Override
-				public Class<?> findLocalClass(String classname)
-						throws ClassNotFoundException {
-					if( FXClassloaderConfigurator.DEBUG ) {
-						System.err.println("FXModuleClassloader#findLocalClass trying to load class '"+classname+"'");  //$NON-NLS-1$//$NON-NLS-2$
-					}
-
-					if(isSWT && ! FXModuleClassloader.this.flag && "javafx.embed.swt.FXCanvas".equals(classname) ) { //$NON-NLS-1$
-						Boolean b = Boolean.FALSE;
-						FXModuleClassloader.this.flag = true;
-						try {
-							if( FXClassloaderConfigurator.DEBUG ) {
-								System.err.println("FXModuleClassloader#findLocalClass - Someone is trying to load FXCanvas. Need to check for GTK3"); //$NON-NLS-1$
-							}
-
-							// Check for GTK3
-							String value = (String) loadClass("org.eclipse.swt.SWT").getDeclaredMethod("getPlatform").invoke(null); //$NON-NLS-1$ //$NON-NLS-2$
-							if( "gtk".equals(value) ) { //$NON-NLS-1$
-								if( FXClassloaderConfigurator.DEBUG ) {
-									System.err.println("FXModuleClassloader#findLocalClass - We are on GTK need to take a closer look"); //$NON-NLS-1$
-								}
-								b = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3").get(null);  //$NON-NLS-1$//$NON-NLS-2$
-							} else {
-								if( FXClassloaderConfigurator.DEBUG ) {
-									System.err.println("FXModuleClassloader#findLocalClass - OS is '"+value+"' no need to get upset all is fine"); //$NON-NLS-1$ //$NON-NLS-2$
-								}
-							}
-						} catch (Throwable e) {
-							System.err.println("FXModuleClassloader#findLocalClass - Failed to check for Gtk3"); //$NON-NLS-1$
-							e.printStackTrace();
-						}
-
-						if( b.booleanValue() ) {
-							if( FXClassloaderConfigurator.DEBUG ) {
-								System.err.println("FXModuleClassloader#findLocalClass - We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
-							}
-							throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
-						}
-
-						try {
-							if( FXClassloaderConfigurator.DEBUG ) {
-								System.err.println("FXModuleClassloader#findLocalClass - We need to disable implicit exiting when running in embedded mode"); //$NON-NLS-1$
-							}
-							loadClass("javafx.application.Platform").getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE); //$NON-NLS-1$ //$NON-NLS-2$
-						} catch (Throwable e) {
-							System.err.println("FXModuleClassloader#findLocalClass - Unable to setImplicitExit to false"); //$NON-NLS-1$
-							e.printStackTrace();
-						}
-					}
-
-					return fxClassloader.loadClass(classname);
-				}
-
-				@Override
-				public URL findLocalResource(String resource) {
-					return fxClassloader.getResource(resource);
-				}
-
-				@Override
-				public Enumeration<URL> findLocalResources(String resource) {
-					try {
-						return fxClassloader.getResources(resource);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					return EmptyEnumeration.INSTANCE;
-				}
-			};
-		}
-
-		@Override
-		protected Generation getGeneration() {
-			return this.generation;
-		}
-
-		@Override
-		protected Debug getDebug() {
-			return this.configuration.getDebug();
-		}
-
-		@Override
-		public ClasspathManager getClasspathManager() {
-			return this.classpathManager;
-		}
-
-		@Override
-		protected EquinoxConfiguration getConfiguration() {
-			return this.configuration;
-		}
-
-		@Override
-		public BundleLoader getBundleLoader() {
-			return this.delegate;
-		}
-
-		@Override
-		public boolean isRegisteredAsParallel() {
-			return false;
-		}
-	}
+//	static class FXModuleClassloader extends ModuleClassLoader {
+//		private final EquinoxConfiguration configuration;
+//		private final BundleLoader delegate;
+//		private final Generation generation;
+//
+//		private ClasspathManager classpathManager;
+//		boolean flag;
+//
+//		public FXModuleClassloader(final boolean isSWT, final URLClassLoader fxClassloader,
+//				ClassLoader parent, EquinoxConfiguration configuration,
+//				BundleLoader delegate, Generation generation) {
+//			super(parent);
+//			this.configuration = configuration;
+//			this.delegate = delegate;
+//			this.generation = generation;
+//			this.classpathManager = new ClasspathManager(generation, this) {
+//				@Override
+//				public Class<?> findLocalClass(String classname)
+//						throws ClassNotFoundException {
+//					if( FXClassloaderConfigurator.DEBUG ) {
+//						System.err.println("FXModuleClassloader#findLocalClass trying to load class '"+classname+"'");  //$NON-NLS-1$//$NON-NLS-2$
+//					}
+//
+//					if(isSWT && ! FXModuleClassloader.this.flag && "javafx.embed.swt.FXCanvas".equals(classname) ) { //$NON-NLS-1$
+//						Boolean b = Boolean.FALSE;
+//						FXModuleClassloader.this.flag = true;
+//						try {
+//							if( FXClassloaderConfigurator.DEBUG ) {
+//								System.err.println("FXModuleClassloader#findLocalClass - Someone is trying to load FXCanvas. Need to check for GTK3"); //$NON-NLS-1$
+//							}
+//
+//							// Check for GTK3
+//							String value = (String) loadClass("org.eclipse.swt.SWT").getDeclaredMethod("getPlatform").invoke(null); //$NON-NLS-1$ //$NON-NLS-2$
+//							if( "gtk".equals(value) ) { //$NON-NLS-1$
+//								if( FXClassloaderConfigurator.DEBUG ) {
+//									System.err.println("FXModuleClassloader#findLocalClass - We are on GTK need to take a closer look"); //$NON-NLS-1$
+//								}
+//								b = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3").get(null);  //$NON-NLS-1$//$NON-NLS-2$
+//							} else {
+//								if( FXClassloaderConfigurator.DEBUG ) {
+//									System.err.println("FXModuleClassloader#findLocalClass - OS is '"+value+"' no need to get upset all is fine"); //$NON-NLS-1$ //$NON-NLS-2$
+//								}
+//							}
+//						} catch (Throwable e) {
+//							System.err.println("FXModuleClassloader#findLocalClass - Failed to check for Gtk3"); //$NON-NLS-1$
+//							e.printStackTrace();
+//						}
+//
+//						if( b.booleanValue() ) {
+//							if( FXClassloaderConfigurator.DEBUG ) {
+//								System.err.println("FXModuleClassloader#findLocalClass - We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
+//							}
+//							throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
+//						}
+//
+//						try {
+//							if( FXClassloaderConfigurator.DEBUG ) {
+//								System.err.println("FXModuleClassloader#findLocalClass - We need to disable implicit exiting when running in embedded mode"); //$NON-NLS-1$
+//							}
+//							loadClass("javafx.application.Platform").getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE); //$NON-NLS-1$ //$NON-NLS-2$
+//						} catch (Throwable e) {
+//							System.err.println("FXModuleClassloader#findLocalClass - Unable to setImplicitExit to false"); //$NON-NLS-1$
+//							e.printStackTrace();
+//						}
+//					}
+//
+//					return fxClassloader.loadClass(classname);
+//				}
+//
+//				@Override
+//				public URL findLocalResource(String resource) {
+//					return fxClassloader.getResource(resource);
+//				}
+//
+//				@Override
+//				public Enumeration<URL> findLocalResources(String resource) {
+//					try {
+//						return fxClassloader.getResources(resource);
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//					return EmptyEnumeration.INSTANCE;
+//				}
+//			};
+//		}
+//
+//		@Override
+//		protected Generation getGeneration() {
+//			return this.generation;
+//		}
+//
+//		@Override
+//		protected Debug getDebug() {
+//			return this.configuration.getDebug();
+//		}
+//
+//		@Override
+//		public ClasspathManager getClasspathManager() {
+//			return this.classpathManager;
+//		}
+//
+//		@Override
+//		protected EquinoxConfiguration getConfiguration() {
+//			return this.configuration;
+//		}
+//
+//		@Override
+//		public BundleLoader getBundleLoader() {
+//			return this.delegate;
+//		}
+//
+//		@Override
+//		public boolean isRegisteredAsParallel() {
+//			return false;
+//		}
+//	}
 
 	private static URLClassLoader createJREBundledClassloader(
 			ClassLoader parent, boolean swtAvailable) {
