@@ -532,7 +532,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 
 		Boolean b = (Boolean) this.application.getContext().get("__efx_engine_shutdown"); //$NON-NLS-1$
-		if ((b == null || ! b.booleanValue()) && changedObj.getTags().contains(EPartService.REMOVE_ON_HIDE_TAG)) {
+		if ((b == null || ! b.booleanValue()) && changedObj.getTags().contains(EPartService.REMOVE_ON_HIDE_TAG) && changedObj.isToBeRendered() == false) {
 			container.getChildren().remove(changedObj);
 		}
 	}
