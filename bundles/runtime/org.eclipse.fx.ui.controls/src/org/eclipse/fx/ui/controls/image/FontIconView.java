@@ -51,12 +51,14 @@ public class FontIconView extends Control {
 	protected Skin<?> createDefaultSkin() {
 		return new FontIconViewSkin(this);
 	}
-
-	@Deprecated
-	@Override
-	protected/* do not make final */Boolean impl_cssGetFocusTraversableInitialValue() {
-		return Boolean.FALSE;
-	}
+// Not available on Java9
+//	@Deprecated
+//	@Override
+//	protected/* do not make final */Boolean impl_cssGetFocusTraversableInitialValue() {
+//		return Boolean.FALSE;
+//	}
+	
+	
 
 	private ObjectProperty<FontIcon> icon;
 
