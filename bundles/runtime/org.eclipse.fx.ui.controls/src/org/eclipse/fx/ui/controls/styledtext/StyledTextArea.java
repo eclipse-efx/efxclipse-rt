@@ -21,6 +21,7 @@ import java.util.function.Function;
 
 import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.text.TextEditAction;
+import org.eclipse.fx.ui.controls.JavaFXCompatUtil;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
@@ -124,7 +125,7 @@ public class StyledTextArea extends Control {
 	public double getFontZoomFactor() {
 		return this.fontZoomFactor.get();
 	}
-	
+
 	@NonNull
 	private final StyledTextRenderer renderer = new StyledTextRenderer();
 
@@ -381,7 +382,7 @@ public class StyledTextArea extends Control {
 		protected void invalidated() {
 			super.invalidated();
 			if (this.settingFontViaCSS == false) {
-				StyledTextArea.this.impl_reapplyCSS();
+				JavaFXCompatUtil.reapplyCSS(StyledTextArea.this);
 			}
 		}
 
@@ -1749,12 +1750,12 @@ public class StyledTextArea extends Control {
 			}
 		}
 	}
-	
+
 	private static String fix0TerminatedString(String text) {
 		String result = text;
-		int nullIdx = text.indexOf(0); 
+		int nullIdx = text.indexOf(0);
 		if(nullIdx>0) {
-			result = text.substring(0, nullIdx); 
+			result = text.substring(0, nullIdx);
 		}
 		return result;
 	}
