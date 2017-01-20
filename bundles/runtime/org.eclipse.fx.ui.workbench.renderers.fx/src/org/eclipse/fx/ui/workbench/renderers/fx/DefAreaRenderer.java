@@ -91,11 +91,16 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 		private void handleDeviderChange(javafx.collections.ListChangeListener.Change<? extends Divider> c) {
 			while (c.next()) {
 				for (Divider d : c.getAddedSubList()) {
-					d.positionProperty().addListener(this.listener);
+					if( d != null ) {
+						d.positionProperty().addListener(this.listener);
+					}
+					
 				}
 
 				for (Divider d : c.getRemoved()) {
-					d.positionProperty().removeListener(this.listener);
+					if( d != null ) {
+						d.positionProperty().removeListener(this.listener);
+					}
 				}
 			}
 		}

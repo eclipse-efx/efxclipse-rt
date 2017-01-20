@@ -55,7 +55,6 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		if (container.getTags().contains(WSash.TAG_FIXED_LAYOUT)) {
 			return WFixedSashImpl.class;
 		} else if(Boolean.getBoolean("efxclipse.eclipse.compat.sash")) { //$NON-NLS-1$
-			System.err.println("======> CUSTOM IMPL");
 			return WResizableSashImpl_2.class;
 		} else {
 			return WResizableSashImpl.class;
@@ -357,11 +356,15 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 				public void onChanged(javafx.collections.ListChangeListener.Change<? extends Divider> c) {
 					while (c.next()) {
 						for (Divider d : c.getAddedSubList()) {
-							d.positionProperty().addListener(WResizableSashImpl.this.listener);
+							if( d != null ) {
+								d.positionProperty().addListener(WResizableSashImpl.this.listener);
+							}
 						}
 
 						for (Divider d : c.getRemoved()) {
-							d.positionProperty().removeListener(WResizableSashImpl.this.listener);
+							if( d != null ) {
+								d.positionProperty().removeListener(WResizableSashImpl.this.listener);
+							}
 						}
 					}
 				}

@@ -24,6 +24,7 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.ui.controls.JavaFXCompatUtil;
 import org.eclipse.fx.ui.keybindings.KeySequence;
 import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
@@ -214,9 +215,8 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 				KeyStroke k = sequence.getKeyStrokes()[0];
 
 				KeyCode keyCode = null;
-				@SuppressWarnings("deprecation")
 				List<KeyCode> collect = Arrays.asList(KeyCode.values()).stream().filter(code -> {
-					return code.impl_getCode() == k.getKeyCode();
+					return JavaFXCompatUtil.getCode(code) == k.getKeyCode();
 				}).collect(Collectors.toList());
 				if (collect.size() > 0)
 					keyCode = collect.get(0);
