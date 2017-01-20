@@ -14,6 +14,7 @@ import java.util.StringTokenizer;
 
 import javafx.scene.input.KeyCode;
 
+import org.eclipse.fx.ui.controls.JavaFXCompatUtil;
 import org.eclipse.fx.ui.keybindings.KeyLookup;
 import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.keybindings.ParseException;
@@ -76,7 +77,7 @@ public class KeyStrokeImpl extends TriggerImpl implements KeyStroke {
 							if (naturalKey == NO_KEY) {
 								 KeyCode fxKeyCode = KeyCode.valueOf(token);
 								 if (fxKeyCode != null)
-									 naturalKey = fxKeyCode.impl_getCode();
+									 naturalKey = JavaFXCompatUtil.getCode(fxKeyCode);
 							}
 						}
 						

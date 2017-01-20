@@ -119,11 +119,15 @@ public class DefaultThemeManager implements ThemeManager {
 		while (change.next()) {
 			for (Scene scene : this.managedScenes) {
 				for (URL url : change.getRemoved()) {
-					scene.getStylesheets().remove(url.toExternalForm());
+					if( url != null ) {
+						scene.getStylesheets().remove(url.toExternalForm());	
+					}
 				}
 
 				for (URL url : change.getAddedSubList()) {
-					scene.getStylesheets().add(url.toExternalForm());
+					if( url != null ) {
+						scene.getStylesheets().add(url.toExternalForm());
+					}
 				}
 			}
 		}

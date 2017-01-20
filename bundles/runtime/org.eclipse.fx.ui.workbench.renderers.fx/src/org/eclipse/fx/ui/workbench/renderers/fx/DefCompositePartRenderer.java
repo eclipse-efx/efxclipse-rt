@@ -484,11 +484,15 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 				public void onChanged(javafx.collections.ListChangeListener.Change<? extends Divider> c) {
 					while (c.next()) {
 						for (Divider d : c.getAddedSubList()) {
-							d.positionProperty().addListener(WResizableSashImpl.this.listener);
+							if( d != null ) {
+								d.positionProperty().addListener(WResizableSashImpl.this.listener);
+							}
 						}
 
 						for (Divider d : c.getRemoved()) {
-							d.positionProperty().removeListener(WResizableSashImpl.this.listener);
+							if( d != null ) {
+								d.positionProperty().removeListener(WResizableSashImpl.this.listener);
+							}
 						}
 					}
 				}
