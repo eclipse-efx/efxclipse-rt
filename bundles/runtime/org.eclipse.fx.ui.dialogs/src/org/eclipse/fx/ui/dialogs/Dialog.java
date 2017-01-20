@@ -61,7 +61,7 @@ public abstract class Dialog {
 
 	/**
 	 * Create a new dialog instance
-	 * 
+	 *
 	 * @param parent
 	 *            the owner, might be <code>null</code>
 	 * @param title
@@ -77,7 +77,7 @@ public abstract class Dialog {
 	 * <p>
 	 * Subclasses should normally override {@link #createDialogArea()}
 	 * </p>
-	 * 
+	 *
 	 * @return the content
 	 */
 	protected Parent createContents() {
@@ -127,7 +127,7 @@ public abstract class Dialog {
 
 	/**
 	 * Create the buttons for the bar
-	 * 
+	 *
 	 * @return list of buttons to create
 	 */
 	protected List<Button> createButtonsForBar() {
@@ -140,7 +140,7 @@ public abstract class Dialog {
 
 	/**
 	 * Check if the button ID is the default ok button
-	 * 
+	 *
 	 * @param buttonId
 	 *            the button id
 	 * @return <code>true</code> if the button is the default ok button
@@ -153,7 +153,7 @@ public abstract class Dialog {
 
 	/**
 	 * Check if the button ID is the default cancle button
-	 * 
+	 *
 	 * @param buttonId
 	 *            the button id
 	 * @return <code>true</code> if the button is the default cancel button
@@ -165,7 +165,7 @@ public abstract class Dialog {
 
 	/**
 	 * Create a button for the button bar
-	 * 
+	 *
 	 * @param type
 	 *            the button id
 	 * @param label
@@ -192,7 +192,7 @@ public abstract class Dialog {
 
 	/**
 	 * Method called when button is pressed
-	 * 
+	 *
 	 * @param type
 	 *            the button id
 	 */
@@ -222,7 +222,7 @@ public abstract class Dialog {
 
 	/**
 	 * Setting the return code
-	 * 
+	 *
 	 * @param returnCode
 	 *            the new return code
 	 */
@@ -249,7 +249,7 @@ public abstract class Dialog {
 
 	/**
 	 * Create the dialogs stage
-	 * 
+	 *
 	 * @return the stage
 	 */
 	@SuppressWarnings("deprecation")
@@ -259,7 +259,7 @@ public abstract class Dialog {
 		stage.initOwner(this.parent);
 		stage.initModality(getModality());
 		Parent content = createContents();
-		
+
 		Pane rootContainer = getCustomWindowPane();
 		if( rootContainer == null ) {
 			rootContainer = new BorderPane();
@@ -279,7 +279,7 @@ public abstract class Dialog {
 			stage.setWidth(size.getX());
 			stage.setHeight(size.getY());
 		} else {
-			rootContainer.impl_processCSS(true);
+			rootContainer.applyCss();
 			size = getInitialContentSize(rootContainer);
 			if (size != null) {
 				rootContainer.setPrefSize(size.getX(), size.getY());
@@ -292,14 +292,14 @@ public abstract class Dialog {
 		}
 		return stage;
 	}
-	
+
 	protected ResizeableFramePane getCustomWindowPane() {
 		return null;
 	}
 
 	/**
 	 * Get the initial size of the content
-	 * 
+	 *
 	 * @param rootContainer
 	 *            the root container
 	 * @return <code>null</code> if default is used
@@ -311,7 +311,7 @@ public abstract class Dialog {
 
 	/**
 	 * Get the initial size of the dialog
-	 * 
+	 *
 	 * @param rootContainer
 	 *            the root container
 	 * @return <code>null</code> if the default is used
@@ -323,7 +323,7 @@ public abstract class Dialog {
 
 	/**
 	 * Get initial location of the dialog
-	 * 
+	 *
 	 * @param rootContainer
 	 *            the root container
 	 * @return <code>null</code> if the default is used
@@ -339,7 +339,7 @@ public abstract class Dialog {
 	 * <b>Has to be called after {@link #open()}.</b> For initial size and location use
 	 * {@link #getInitialSize(Parent)} {@link #getInitialLocation(Parent)}
 	 * </p>
-	 * 
+	 *
 	 * @param x
 	 *            the x position
 	 * @param y
@@ -361,7 +361,7 @@ public abstract class Dialog {
 	 * <p>
 	 * <b>Has to be called after {@link #open()}.</b>
 	 * </p>
-	 * 
+	 *
 	 * @return the current bounds of the dialog window
 	 */
 	public @NonNull
@@ -402,7 +402,7 @@ public abstract class Dialog {
 
 	/**
 	 * Open the dialog
-	 * 
+	 *
 	 * @return the return value
 	 */
 	public int open() {
@@ -431,7 +431,7 @@ public abstract class Dialog {
 
 	/**
 	 * Called before dialog is opened
-	 * 
+	 *
 	 * @param s
 	 *            the stage
 	 */
