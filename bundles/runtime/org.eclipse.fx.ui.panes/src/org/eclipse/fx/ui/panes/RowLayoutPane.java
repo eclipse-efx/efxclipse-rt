@@ -14,30 +14,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.css.CssMetaData;
 import javafx.css.SimpleStyleableBooleanProperty;
 import javafx.css.SimpleStyleableIntegerProperty;
+import javafx.css.StyleConverter;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-
-import com.sun.javafx.css.converters.BooleanConverter;
-import com.sun.javafx.css.converters.SizeConverter;
-
 /**
  * Layout items from top to bottom or left to right
  */
-@SuppressWarnings("restriction")
 public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 
-	private static final CssMetaData<RowLayoutPane, Number> MARGIN_WIDTH = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-width", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Number> MARGIN_WIDTH = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-width", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -51,7 +48,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Number> MARGIN_HEIGHT = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-height", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Number> MARGIN_HEIGHT = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-height", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -65,7 +62,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Number> MARGIN_LEFT = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-left", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Number> MARGIN_LEFT = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-left", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -79,7 +76,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Number> MARGIN_TOP = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-top", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Number> MARGIN_TOP = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-top", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -93,7 +90,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Number> MARGIN_RIGHT = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-right", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Number> MARGIN_RIGHT = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-right", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -107,7 +104,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Number> MARGIN_BOTTOM = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-bottom", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Number> MARGIN_BOTTOM = new CssMetaData<RowLayoutPane, Number>("-fx-inner-margin-bottom", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -121,7 +118,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Number> SPACING = new CssMetaData<RowLayoutPane, Number>("-fx-spacing", SizeConverter.getInstance(), Integer.valueOf(3)) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Number> SPACING = new CssMetaData<RowLayoutPane, Number>("-fx-spacing", StyleConverter.getSizeConverter(), Integer.valueOf(3)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -135,7 +132,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Boolean> WRAP = new CssMetaData<RowLayoutPane, Boolean>("-fx-wrap", BooleanConverter.getInstance(), Boolean.TRUE) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Boolean> WRAP = new CssMetaData<RowLayoutPane, Boolean>("-fx-wrap", StyleConverter.getBooleanConverter(), Boolean.TRUE) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -149,7 +146,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Boolean> PACK = new CssMetaData<RowLayoutPane, Boolean>("-fx-pack", BooleanConverter.getInstance(), Boolean.TRUE) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Boolean> PACK = new CssMetaData<RowLayoutPane, Boolean>("-fx-pack", StyleConverter.getBooleanConverter(), Boolean.TRUE) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -163,7 +160,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Boolean> FILL = new CssMetaData<RowLayoutPane, Boolean>("-fx-fill", BooleanConverter.getInstance(), Boolean.FALSE) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Boolean> FILL = new CssMetaData<RowLayoutPane, Boolean>("-fx-fill", StyleConverter.getBooleanConverter(), Boolean.FALSE) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -177,7 +174,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Boolean> CENTER = new CssMetaData<RowLayoutPane, Boolean>("-fx-center", BooleanConverter.getInstance(), Boolean.FALSE) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Boolean> CENTER = new CssMetaData<RowLayoutPane, Boolean>("-fx-center", StyleConverter.getBooleanConverter(), Boolean.FALSE) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -191,7 +188,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Boolean> JUSTIFY = new CssMetaData<RowLayoutPane, Boolean>("-fx-justify", BooleanConverter.getInstance(), Boolean.FALSE) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Boolean> JUSTIFY = new CssMetaData<RowLayoutPane, Boolean>("-fx-justify", StyleConverter.getBooleanConverter(), Boolean.FALSE) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -205,7 +202,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		}
 	};
 
-	private static final CssMetaData<RowLayoutPane, Boolean> HORIZONTAL = new CssMetaData<RowLayoutPane, Boolean>("-fx-horizontal", BooleanConverter.getInstance(), Boolean.FALSE) { //$NON-NLS-1$
+	private static final CssMetaData<RowLayoutPane, Boolean> HORIZONTAL = new CssMetaData<RowLayoutPane, Boolean>("-fx-horizontal", StyleConverter.getBooleanConverter(), Boolean.FALSE) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(RowLayoutPane node) {
@@ -218,7 +215,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			return (StyleableProperty<Boolean>) node.horizontalProperty();
 		}
 	};
-	
+
 	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
 
 	static {
@@ -236,14 +233,14 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 		styleables.add(PACK);
 		styleables.add(SPACING);
 		styleables.add(WRAP);
-		
+
 		STYLEABLES = Collections.unmodifiableList(styleables);
 	}
 
 	public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
 		return STYLEABLES;
 	}
-	
+
 	@Override
 	public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
 		return getClassCssMetaData();
@@ -289,7 +286,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 
 	/**
 	 * Associate a layout constraint with the node
-	 * 
+	 *
 	 * @param n
 	 *            the node
 	 * @param griddata
@@ -301,7 +298,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 
 	/**
 	 * Get the layout constraint for the node
-	 * 
+	 *
 	 * @param n
 	 *            the node
 	 * @return the layout constraint or <code>null</code>
@@ -350,7 +347,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			layoutVertical(true, isWrap(), clientArea.getHeight(), true);
 		}
 	}
-	
+
 	private int getInnerMarginLeft() {
 		return (int) Math.ceil(getMarginWidth() + getMarginLeft() + getPadding().getLeft());
 	}
@@ -697,11 +694,11 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * center specifies whether the controls in a row should be centered
 	 * vertically in each cell for horizontal layouts, or centered horizontally
 	 * in each cell for vertical layouts.
-	 * 
+	 *
 	 * <p>
 	 * The default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the new value
 	 */
@@ -713,11 +710,11 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * center specifies whether the controls in a row should be centered
 	 * vertically in each cell for horizontal layouts, or centered horizontally
 	 * in each cell for vertical layouts.
-	 * 
+	 *
 	 * <p>
 	 * The default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public boolean isCenter() {
@@ -728,11 +725,11 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * center specifies whether the controls in a row should be centered
 	 * vertically in each cell for horizontal layouts, or centered horizontally
 	 * in each cell for vertical layouts.
-	 * 
+	 *
 	 * <p>
 	 * The default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull BooleanProperty centerProperty() {
@@ -742,11 +739,11 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	/**
 	 * fill specifies whether the controls in a row should be all the same
 	 * height for horizontal layouts, or the same width for vertical layouts.
-	 * 
+	 *
 	 * <p>
 	 * The default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the new value
 	 */
@@ -757,11 +754,11 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	/**
 	 * fill specifies whether the controls in a row should be all the same
 	 * height for horizontal layouts, or the same width for vertical layouts.
-	 * 
+	 *
 	 * <p>
 	 * The default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public boolean isFill() {
@@ -771,11 +768,11 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	/**
 	 * fill specifies whether the controls in a row should be all the same
 	 * height for horizontal layouts, or the same width for vertical layouts.
-	 * 
+	 *
 	 * <p>
 	 * The default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull BooleanProperty fillProperty() {
@@ -788,7 +785,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the new value
 	 */
@@ -802,7 +799,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public boolean isJustify() {
@@ -815,7 +812,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull BooleanProperty justifyProperty() {
@@ -828,7 +825,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @param value the value
 	 */
 	public void setMarginBottom(int value) {
@@ -841,7 +838,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public int getMarginBottom() {
@@ -854,7 +851,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull IntegerProperty marginBottomProperty() {
@@ -868,7 +865,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the new value
 	 */
@@ -883,7 +880,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public int getMarginHeight() {
@@ -897,7 +894,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull IntegerProperty marginHeightProperty() {
@@ -910,7 +907,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the new value
 	 */
@@ -924,7 +921,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public int getMarginLeft() {
@@ -937,7 +934,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull IntegerProperty marginLeftProperty() {
@@ -950,7 +947,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the new value
 	 */
@@ -964,7 +961,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public int getMarginRight() {
@@ -977,7 +974,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull IntegerProperty marginRightProperty() {
@@ -990,7 +987,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the new value
 	 */
@@ -1004,7 +1001,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public int getMarginTop() {
@@ -1017,7 +1014,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull IntegerProperty marginTopProperty() {
@@ -1030,7 +1027,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the new value
 	 */
@@ -1044,7 +1041,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public int getMarginWidth() {
@@ -1057,7 +1054,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is 0
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull IntegerProperty marginWidthProperty() {
@@ -1072,7 +1069,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the new value
 	 */
@@ -1088,7 +1085,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public boolean isPack() {
@@ -1103,7 +1100,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull BooleanProperty packProperty() {
@@ -1113,11 +1110,11 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	/**
 	 * spacing specifies the number of pixels between the edge of one cell and
 	 * the edge of its neighboring cell.
-	 * 
+	 *
 	 * <p>
 	 * The default is 3
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the spacing
 	 */
@@ -1128,11 +1125,11 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	/**
 	 * spacing specifies the number of pixels between the edge of one cell and
 	 * the edge of its neighboring cell.
-	 * 
+	 *
 	 * <p>
 	 * The default is 3
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public int getSpacing() {
@@ -1142,11 +1139,11 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	/**
 	 * spacing specifies the number of pixels between the edge of one cell and
 	 * the edge of its neighboring cell.
-	 * 
+	 *
 	 * <p>
 	 * The default is 3
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull IntegerProperty spacingProperty() {
@@ -1159,7 +1156,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the new value
 	 */
@@ -1173,7 +1170,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public boolean isWrap() {
@@ -1186,7 +1183,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull BooleanProperty wrapProperty() {
@@ -1198,7 +1195,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @param value
 	 *            the new value
 	 */
@@ -1211,7 +1208,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public boolean isHorizontal() {
@@ -1223,7 +1220,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	 * <p>
 	 * The default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull BooleanProperty horizontalProperty() {

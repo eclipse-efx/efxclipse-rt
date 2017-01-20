@@ -15,21 +15,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.fx.ui.panes.GridData.Alignment;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.css.CssMetaData;
 import javafx.css.SimpleStyleableBooleanProperty;
 import javafx.css.SimpleStyleableIntegerProperty;
+import javafx.css.StyleConverter;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.scene.Node;
-
-import org.eclipse.fx.ui.panes.GridData.Alignment;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-
-import com.sun.javafx.css.converters.BooleanConverter;
-import com.sun.javafx.css.converters.SizeConverter;
 
 /**
  * @author tomschindl
@@ -38,12 +36,11 @@ import com.sun.javafx.css.converters.SizeConverter;
 /**
  * Layout pane known from SWT
  */
-@SuppressWarnings("restriction")
 public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 	@NonNull
 	private static final String LAYOUT_KEY = "gridData"; //$NON-NLS-1$
 
-	private static final CssMetaData<GridLayoutPane, Number> NUM_COLUMNS = new CssMetaData<GridLayoutPane, Number>("-fx-columns", SizeConverter.getInstance(), Integer.valueOf(1)) { //$NON-NLS-1$
+	private static final CssMetaData<GridLayoutPane, Number> NUM_COLUMNS = new CssMetaData<GridLayoutPane, Number>("-fx-columns", StyleConverter.getSizeConverter(), Integer.valueOf(1)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(GridLayoutPane node) {
@@ -57,7 +54,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 		}
 	};
 
-	private static final CssMetaData<GridLayoutPane, Boolean> MAKE_COLS_EQUAL_WIDTH = new CssMetaData<GridLayoutPane, Boolean>("-fx-columns-equal-width", BooleanConverter.getInstance(), Boolean.FALSE) { //$NON-NLS-1$
+	private static final CssMetaData<GridLayoutPane, Boolean> MAKE_COLS_EQUAL_WIDTH = new CssMetaData<GridLayoutPane, Boolean>("-fx-columns-equal-width", StyleConverter.getBooleanConverter(), Boolean.FALSE) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(GridLayoutPane node) {
@@ -71,7 +68,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 		}
 	};
 
-	private static final CssMetaData<GridLayoutPane, Number> MARGIN_WIDTH = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-width", SizeConverter.getInstance(), Integer.valueOf(5)) { //$NON-NLS-1$
+	private static final CssMetaData<GridLayoutPane, Number> MARGIN_WIDTH = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-width", StyleConverter.getSizeConverter(), Integer.valueOf(5)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(GridLayoutPane node) {
@@ -85,7 +82,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 		}
 	};
 
-	private static final CssMetaData<GridLayoutPane, Number> MARGIN_HEIGHT = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-height", SizeConverter.getInstance(), Integer.valueOf(5)) { //$NON-NLS-1$
+	private static final CssMetaData<GridLayoutPane, Number> MARGIN_HEIGHT = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-height", StyleConverter.getSizeConverter(), Integer.valueOf(5)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(GridLayoutPane node) {
@@ -99,7 +96,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 		}
 	};
 
-	private static final CssMetaData<GridLayoutPane, Number> MARGIN_LEFT = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-left", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<GridLayoutPane, Number> MARGIN_LEFT = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-left", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(GridLayoutPane node) {
@@ -113,7 +110,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 		}
 	};
 
-	private static final CssMetaData<GridLayoutPane, Number> MARGIN_TOP = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-top", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<GridLayoutPane, Number> MARGIN_TOP = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-top", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(GridLayoutPane node) {
@@ -127,7 +124,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 		}
 	};
 
-	private static final CssMetaData<GridLayoutPane, Number> MARGIN_RIGHT = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-right", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<GridLayoutPane, Number> MARGIN_RIGHT = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-right", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(GridLayoutPane node) {
@@ -141,7 +138,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 		}
 	};
 
-	private static final CssMetaData<GridLayoutPane, Number> MARGIN_BOTTOM = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-bottom", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<GridLayoutPane, Number> MARGIN_BOTTOM = new CssMetaData<GridLayoutPane, Number>("-fx-inner-margin-bottom", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(GridLayoutPane node) {
@@ -155,7 +152,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 		}
 	};
 
-	private static final CssMetaData<GridLayoutPane, Number> HORIZONTAL_SPACING = new CssMetaData<GridLayoutPane, Number>("-fx-hspace", SizeConverter.getInstance(), Integer.valueOf(5)) { //$NON-NLS-1$
+	private static final CssMetaData<GridLayoutPane, Number> HORIZONTAL_SPACING = new CssMetaData<GridLayoutPane, Number>("-fx-hspace", StyleConverter.getSizeConverter(), Integer.valueOf(5)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(GridLayoutPane node) {
@@ -169,7 +166,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 		}
 	};
 
-	private static final CssMetaData<GridLayoutPane, Number> VERTICAL_SPACING = new CssMetaData<GridLayoutPane, Number>("-fx-vspace", SizeConverter.getInstance(), Integer.valueOf(5)) { //$NON-NLS-1$
+	private static final CssMetaData<GridLayoutPane, Number> VERTICAL_SPACING = new CssMetaData<GridLayoutPane, Number>("-fx-vspace", StyleConverter.getSizeConverter(), Integer.valueOf(5)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(GridLayoutPane node) {

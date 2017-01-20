@@ -15,29 +15,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.css.CssMetaData;
 import javafx.css.SimpleStyleableBooleanProperty;
 import javafx.css.SimpleStyleableIntegerProperty;
+import javafx.css.StyleConverter;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-
-import com.sun.javafx.css.converters.BooleanConverter;
-import com.sun.javafx.css.converters.SizeConverter;
-
 /**
  * A layout pane known from SWT which layouts all children horizontal or
  * vertical providing them the full space and sizing all them equally
  */
-@SuppressWarnings("restriction")
 public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> {
-	private static final CssMetaData<FillLayoutPane, Number> MARGIN_WIDTH = new CssMetaData<FillLayoutPane, Number>("-fx-inner-margin-width", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<FillLayoutPane, Number> MARGIN_WIDTH = new CssMetaData<FillLayoutPane, Number>("-fx-inner-margin-width", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(FillLayoutPane node) {
@@ -51,7 +48,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 		}
 	};
 
-	private static final CssMetaData<FillLayoutPane, Number> MARGIN_HEIGHT = new CssMetaData<FillLayoutPane, Number>("-fx-inner-margin-height", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<FillLayoutPane, Number> MARGIN_HEIGHT = new CssMetaData<FillLayoutPane, Number>("-fx-inner-margin-height", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(FillLayoutPane node) {
@@ -65,7 +62,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 		}
 	};
 
-	private static final CssMetaData<FillLayoutPane, Number> SPACING = new CssMetaData<FillLayoutPane, Number>("-fx-spacing", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<FillLayoutPane, Number> SPACING = new CssMetaData<FillLayoutPane, Number>("-fx-spacing", StyleConverter.getSizeConverter(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(FillLayoutPane node) {
@@ -79,7 +76,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 		}
 	};
 
-	private static final CssMetaData<FillLayoutPane, Boolean> HORIZONTAL = new CssMetaData<FillLayoutPane, Boolean>("-fx-horizontal", BooleanConverter.getInstance(), Boolean.TRUE) { //$NON-NLS-1$
+	private static final CssMetaData<FillLayoutPane, Boolean> HORIZONTAL = new CssMetaData<FillLayoutPane, Boolean>("-fx-horizontal", StyleConverter.getBooleanConverter(), Boolean.TRUE) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(FillLayoutPane node) {
@@ -161,10 +158,10 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 	@NonNull
 	private static final String LAYOUT_KEY = "fillData"; //$NON-NLS-1$
-	
+
 	/**
 	 * Set a constraint object for the node
-	 * 
+	 *
 	 * @param n
 	 *            the node
 	 * @param data
@@ -176,7 +173,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 	/**
 	 * Access the constraint object for the node
-	 * 
+	 *
 	 * @param n
 	 *            the node
 	 * @return the constraint or <code>null</code>
@@ -187,7 +184,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 	/**
 	 * Define how controls are layouted
-	 * 
+	 *
 	 * @param horizontal
 	 *            <code>true</code> to layout next to each other
 	 */
@@ -212,7 +209,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 	/**
 	 * Margin left on the left and right border of the container
-	 * 
+	 *
 	 * @param marginWidth
 	 *            the width
 	 */
@@ -222,7 +219,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 	/**
 	 * Margin left on the left and right border of the container
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public final int getMarginWidth() {
@@ -245,7 +242,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 	/**
 	 * The margin left on top and bottom of the container
-	 * 
+	 *
 	 * @param marginHeight
 	 *            the margin
 	 */
@@ -276,7 +273,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 	/**
 	 * The spacing between children
-	 * 
+	 *
 	 * @param spacing
 	 *            the spacing
 	 */
@@ -325,7 +322,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 			height = hHint;
 		return new Size(width, height);
 	}
- 
+
 	static Size computeChildSize(@NonNull Node control, double wHint, double hHint, boolean flushCache) {
 		FillData data = getConstraint(control);
 		if (data == null) {
