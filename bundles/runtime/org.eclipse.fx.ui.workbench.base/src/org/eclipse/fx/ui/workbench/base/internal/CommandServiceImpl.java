@@ -10,9 +10,13 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.base.internal;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -26,6 +30,7 @@ import org.eclipse.e4.core.contexts.RunAndTrack;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.fx.core.ObjectSerializer;
 import org.eclipse.fx.core.command.Command;
 import org.eclipse.fx.core.command.CommandService;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
@@ -51,6 +56,8 @@ public class CommandServiceImpl implements CommandService {
 	private final EHandlerService handlerService;
 	@NonNull
 	private final IEclipseContext context;
+	@NonNull
+	private final ObjectSerializer serializer;
 
 	/**
 	 * Create a new instance
@@ -63,10 +70,11 @@ public class CommandServiceImpl implements CommandService {
 	 *            the context
 	 */
 	@Inject
-	public CommandServiceImpl(@NonNull ECommandService commandService, @NonNull EHandlerService handlerService, @NonNull IEclipseContext context) {
+	public CommandServiceImpl(@NonNull ECommandService commandService, @NonNull EHandlerService handlerService, @NonNull IEclipseContext context,@NonNull ObjectSerializer serializer) {
 		this.commandService = commandService;
 		this.handlerService = handlerService;
 		this.context = context;
+		this.serializer = serializer;
 	}
 
 	@Override
@@ -76,15 +84,42 @@ public class CommandServiceImpl implements CommandService {
 
 	@Override
 	public boolean canExecute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
-		ParameterizedCommand cmd = this.commandService.createCommand(commandId, parameters);
+		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(parameters));
 		return this.handlerService.canExecute(cmd);
 	}
 
 	@SuppressWarnings({ "unchecked" })
 	@Override
 	public <O> Optional<O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
-		ParameterizedCommand cmd = this.commandService.createCommand(commandId, parameters);
+		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(parameters));
 		return Optional.ofNullable((O) this.handlerService.executeHandler(cmd));
+	}
+
+	private Map<@NonNull String, @Nullable Object> mapToString(Map<@NonNull String, @Nullable Object> map) {
+		Map<@NonNull String, @Nullable Object> rv = new HashMap<>(map);
+		rv.putAll(map.entrySet().stream()
+			.filter( e -> e.getValue() != null)
+			.filter( e -> !(e.getValue() instanceof String))
+			.filter( e -> !(e.getValue() instanceof Number))
+			.collect(Collectors.toMap( e -> e.getKey(), e -> {
+				if( e.getValue() instanceof List<?> || e.getValue() instanceof Set<?> ) {
+					Collection<Object> c = (Collection<Object>) e.getValue();
+					if( c == null ) {
+						return null;
+					}
+					if( c.isEmpty() ) {
+						return serializer.serializeCollection(c, Object.class);
+					} else {
+						Class<Object> t = (Class<Object>) c.iterator().next().getClass();
+						return serializer.serializeCollection(c, t);
+					}
+				} else {
+					return serializer.serialize(e.getValue());
+				}
+			})));
+
+
+		return rv;
 	}
 
 	@Override

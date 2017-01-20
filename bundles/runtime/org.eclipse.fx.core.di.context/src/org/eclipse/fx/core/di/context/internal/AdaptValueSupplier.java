@@ -12,6 +12,10 @@ package org.eclipse.fx.core.di.context.internal;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -25,6 +29,7 @@ import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.di.Requestor;
+import org.eclipse.fx.core.ObjectSerializer;
 import org.eclipse.fx.core.adapter.Adapt;
 import org.eclipse.fx.core.adapter.AdapterService;
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
@@ -77,6 +82,28 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 			if( dummy.adapterService.canAdapt(ref.get(), desiredClass) ) {
 				return dummy.adapterService.adapt(ref.get(), desiredClass, new ValueAccessImpl(dummy.context));
 			}
+		}
+
+		try {
+			Object object = dummy.context.get(key);
+			if( object instanceof String ) {
+				ObjectSerializer s = dummy.context.get(ObjectSerializer.class);
+				Type desiredType = descriptor.getDesiredType();
+				if (desiredType instanceof ParameterizedType) {
+					ParameterizedType t = (ParameterizedType) desiredType;
+					if (t.getRawType() == Set.class) {
+						return s.deserializeCollection(Set.class, (Class<?>)t.getActualTypeArguments()[0], (String)object);
+					} else if(t.getRawType() == List.class) {
+						return s.deserializeCollection(List.class, (Class<?>)t.getActualTypeArguments()[0], (String)object);
+					} else {
+						return s.deserialize((Class<?>)desiredType, (String)object);
+					}
+				} else {
+					return s.deserialize((Class<?>)desiredType, (String)object);
+				}
+			}
+		} catch( Throwable t ) {
+			// omit
 		}
 
 		return IInjector.NOT_A_VALUE;
