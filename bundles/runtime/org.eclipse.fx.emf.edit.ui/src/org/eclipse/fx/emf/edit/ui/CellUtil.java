@@ -23,7 +23,7 @@ public class CellUtil {
 
 	/**
 	 * Helper to get the row node for a cell
-	 * 
+	 *
 	 * @param cell
 	 *            the cell
 	 * @return the row node
@@ -39,7 +39,7 @@ public class CellUtil {
 
 	/**
 	 * Helper to get the selection model of the view for a given cell
-	 * 
+	 *
 	 * @param cell
 	 *            the cell
 	 * @return the selection model
@@ -74,7 +74,7 @@ public class CellUtil {
 
 	/**
 	 * Helper to get selected items for a cell
-	 * 
+	 *
 	 * @param cell
 	 *            the cell
 	 * @return list of items
@@ -86,9 +86,11 @@ public class CellUtil {
 		if (cell instanceof TreeCell || cell instanceof TreeTableCell) {
 			List<Object> unwrappedItems = new ArrayList<>(items.size());
 			for (Object item : items) {
-				unwrappedItems.add(((TreeItem<?>) item).getValue());
+				if( item != null ) {
+					unwrappedItems.add(((TreeItem<?>) item).getValue());
+				}
 			}
-				
+
 			return unwrappedItems;
 		}
 
