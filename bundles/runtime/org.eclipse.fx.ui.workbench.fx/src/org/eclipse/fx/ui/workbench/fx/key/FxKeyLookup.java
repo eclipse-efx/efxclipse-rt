@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javafx.scene.input.KeyCode;
 
+import org.eclipse.fx.ui.controls.JavaFXCompatUtil;
 import org.eclipse.fx.ui.keybindings.KeyLookup;
 import org.eclipse.osgi.service.environment.Constants;
 import org.osgi.framework.FrameworkUtil;
@@ -81,12 +82,11 @@ public final class FxKeyLookup implements KeyLookup {
 	 * Constructs a new look-up class. This should only be done by the look-up
 	 * factory.
 	 */
-	@SuppressWarnings("deprecation")
 	public FxKeyLookup() {
-		final Integer alt = new Integer(ALT);
-		final Integer command = new Integer(COMMAND);
-		final Integer ctrl = new Integer(CTRL);
-		final Integer shift = new Integer(SHIFT);
+		final Integer alt = Integer.valueOf(ALT);
+		final Integer command = Integer.valueOf(COMMAND);
+		final Integer ctrl = Integer.valueOf(CTRL);
+		final Integer shift = Integer.valueOf(SHIFT);
 		this.modifierKeyTable.put(ALT_NAME, alt);
 		this.nameTable.put(alt, ALT_NAME);
 		this.modifierKeyTable.put(COMMAND_NAME, command);
@@ -102,22 +102,22 @@ public final class FxKeyLookup implements KeyLookup {
 
 		// FIXME Port to FX
 		{
-			final Integer code = Integer.valueOf(KeyCode.DOWN.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.DOWN));
 			this.naturalKeyTable.put(ARROW_DOWN_NAME, code);
 			this.nameTable.put(code, ARROW_DOWN_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.LEFT.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.LEFT));
 			this.naturalKeyTable.put(ARROW_LEFT_NAME, code);
 			this.nameTable.put(code, ARROW_LEFT_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.RIGHT.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.RIGHT));
 			this.naturalKeyTable.put(ARROW_RIGHT_NAME, code);
 			this.nameTable.put(code, ARROW_RIGHT_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.UP.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.UP));
 			this.naturalKeyTable.put(ARROW_UP_NAME, code);
 			this.nameTable.put(code, ARROW_UP_NAME);
 		}
@@ -125,134 +125,134 @@ public final class FxKeyLookup implements KeyLookup {
 		// naturalKeyTable.put(BREAK_NAME, breakKey);
 		// nameTable.put(breakKey, BREAK_NAME);
 		{
-			final Integer code = Integer.valueOf(KeyCode.BACK_SPACE.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.BACK_SPACE));
 			this.naturalKeyTable.put(BS_NAME, code);
 			this.nameTable.put(code, BS_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.CAPS.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.CAPS));
 			this.naturalKeyTable.put(CAPS_LOCK_NAME, code);
 			this.nameTable.put(code, CAPS_LOCK_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.ENTER.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.ENTER));
 			this.naturalKeyTable.put(CR_NAME, code);
 			this.nameTable.put(code, CR_NAME);
 			this.naturalKeyTable.put(ENTER_NAME, code);
 			this.naturalKeyTable.put(RETURN_NAME, code);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.DELETE.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.DELETE));
 			this.naturalKeyTable.put(DEL_NAME, code);
 			this.nameTable.put(code, DEL_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.END.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.END));
 			this.naturalKeyTable.put(END_NAME, code);
 			this.nameTable.put(code, END_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.ESCAPE.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.ESCAPE));
 			this.naturalKeyTable.put(ESC_NAME, code);
 			this.nameTable.put(code, ESC_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F1.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F1));
 			this.naturalKeyTable.put(F1_NAME, code);
 			this.nameTable.put(code, F1_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F2.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F2));
 			this.naturalKeyTable.put(F2_NAME, code);
 			this.nameTable.put(code, F2_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F3.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F3));
 			this.naturalKeyTable.put(F3_NAME, code);
 			this.nameTable.put(code, F3_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F4.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F4));
 			this.naturalKeyTable.put(F4_NAME, code);
 			this.nameTable.put(code, F4_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F5.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F5));
 			this.naturalKeyTable.put(F5_NAME, code);
 			this.nameTable.put(code, F5_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F6.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F6));
 			this.naturalKeyTable.put(F6_NAME, code);
 			this.nameTable.put(code, F6_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F7.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F7));
 			this.naturalKeyTable.put(F7_NAME, code);
 			this.nameTable.put(code, F7_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F8.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F8));
 			this.naturalKeyTable.put(F8_NAME, code);
 			this.nameTable.put(code, F8_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F9.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F9));
 			this.naturalKeyTable.put(F9_NAME, code);
 			this.nameTable.put(code, F9_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F10.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F10));
 			this.naturalKeyTable.put(F10_NAME, code);
 			this.nameTable.put(code, F10_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F11.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F11));
 			this.naturalKeyTable.put(F11_NAME, code);
 			this.nameTable.put(code, F11_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F12.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F12));
 			this.naturalKeyTable.put(F12_NAME, code);
 			this.nameTable.put(code, F12_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F13.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F13));
 			this.naturalKeyTable.put(F13_NAME, code);
 			this.nameTable.put(code, F13_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F14.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F14));
 			this.naturalKeyTable.put(F14_NAME, code);
 			this.nameTable.put(code, F14_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F15.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F15));
 			this.naturalKeyTable.put(F15_NAME, code);
 			this.nameTable.put(code, F15_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F16.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F16));
 			this.naturalKeyTable.put(F16_NAME, code);
 			this.nameTable.put(code, F16_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F17.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F17));
 			this.naturalKeyTable.put(F17_NAME, code);
 			this.nameTable.put(code, F17_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F18.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F18));
 			this.naturalKeyTable.put(F18_NAME, code);
 			this.nameTable.put(code, F18_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F19.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F19));
 			this.naturalKeyTable.put(F19_NAME, code);
 			this.nameTable.put(code, F19_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.F20.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.F20));
 			this.naturalKeyTable.put(F20_NAME, code);
 			this.nameTable.put(code, F20_NAME);
 		}
@@ -261,12 +261,12 @@ public final class FxKeyLookup implements KeyLookup {
 		// nameTable.put(ff, FF_NAME);
 
 		{
-			final Integer code = Integer.valueOf(KeyCode.HOME.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.HOME));
 			this.naturalKeyTable.put(HOME_NAME, code);
 			this.nameTable.put(code, HOME_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.INSERT.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.INSERT));
 			this.naturalKeyTable.put(INSERT_NAME, code);
 			this.nameTable.put(code, INSERT_NAME);
 		}
@@ -278,67 +278,67 @@ public final class FxKeyLookup implements KeyLookup {
 		// nameTable.put(nul, NUL_NAME);
 
 		{
-			final Integer code = Integer.valueOf(KeyCode.NUM_LOCK.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.NUM_LOCK));
 			this.naturalKeyTable.put(NUM_LOCK_NAME, code);
 			this.nameTable.put(code, NUM_LOCK_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.NUMPAD0.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.NUMPAD0));
 			this.naturalKeyTable.put(NUMPAD_0_NAME, code);
 			this.nameTable.put(code, NUMPAD_0_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.NUMPAD1.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.NUMPAD1));
 			this.naturalKeyTable.put(NUMPAD_1_NAME, code);
 			this.nameTable.put(code, NUMPAD_1_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.NUMPAD2.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.NUMPAD2));
 			this.naturalKeyTable.put(NUMPAD_2_NAME, code);
 			this.nameTable.put(code, NUMPAD_2_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.NUMPAD3.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.NUMPAD3));
 			this.naturalKeyTable.put(NUMPAD_3_NAME, code);
 			this.nameTable.put(code, NUMPAD_3_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.NUMPAD4.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.NUMPAD4));
 			this.naturalKeyTable.put(NUMPAD_4_NAME, code);
 			this.nameTable.put(code, NUMPAD_4_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.NUMPAD5.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.NUMPAD5));
 			this.naturalKeyTable.put(NUMPAD_5_NAME, code);
 			this.nameTable.put(code, NUMPAD_5_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.NUMPAD6.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.NUMPAD6));
 			this.naturalKeyTable.put(NUMPAD_6_NAME, code);
 			this.nameTable.put(code, NUMPAD_6_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.NUMPAD7.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.NUMPAD7));
 			this.naturalKeyTable.put(NUMPAD_7_NAME, code);
 			this.nameTable.put(code, NUMPAD_7_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.NUMPAD8.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.NUMPAD8));
 			this.naturalKeyTable.put(NUMPAD_8_NAME, code);
 			this.nameTable.put(code, NUMPAD_8_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.NUMPAD9.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.NUMPAD9));
 			this.naturalKeyTable.put(NUMPAD_9_NAME, code);
 			this.nameTable.put(code, NUMPAD_9_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.ADD.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.ADD));
 			this.naturalKeyTable.put(NUMPAD_ADD_NAME, code);
 			this.nameTable.put(code, NUMPAD_ADD_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.DECIMAL.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.DECIMAL));
 			this.naturalKeyTable.put(NUMPAD_DECIMAL_NAME, code);
 			this.nameTable.put(code, NUMPAD_DECIMAL_NAME);
 		}
@@ -358,37 +358,37 @@ public final class FxKeyLookup implements KeyLookup {
 		// naturalKeyTable.put(NUMPAD_SUBTRACT_NAME, keypadSubtract);
 		// nameTable.put(keypadSubtract, NUMPAD_SUBTRACT_NAME);
 		{
-			final Integer code = Integer.valueOf(KeyCode.PAGE_DOWN.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.PAGE_DOWN));
 			this.naturalKeyTable.put(PAGE_DOWN_NAME, code);
 			this.nameTable.put(code, PAGE_DOWN_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.PAGE_UP.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.PAGE_UP));
 			this.naturalKeyTable.put(PAGE_UP_NAME, code);
 			this.nameTable.put(code, PAGE_UP_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.PAUSE.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.PAUSE));
 			this.naturalKeyTable.put(PAUSE_NAME, code);
 			this.nameTable.put(code, PAUSE_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.PRINTSCREEN.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.PRINTSCREEN));
 			this.naturalKeyTable.put(PRINT_SCREEN_NAME, code);
 			this.nameTable.put(code, PRINT_SCREEN_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.SCROLL_LOCK.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.SCROLL_LOCK));
 			this.naturalKeyTable.put(SCROLL_LOCK_NAME, code);
 			this.nameTable.put(code, SCROLL_LOCK_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.SPACE.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.SPACE));
 			this.naturalKeyTable.put(SPACE_NAME, code);
 			this.nameTable.put(code, SPACE_NAME);
 		}
 		{
-			final Integer code = Integer.valueOf(KeyCode.TAB.impl_getCode());
+			final Integer code = Integer.valueOf(JavaFXCompatUtil.getCode(KeyCode.TAB));
 			this.naturalKeyTable.put(TAB_NAME, code);
 			this.nameTable.put(code, TAB_NAME);
 		}

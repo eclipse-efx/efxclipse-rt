@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.fx.key;
 
+import org.eclipse.fx.ui.controls.JavaFXCompatUtil;
 import org.eclipse.fx.ui.keybindings.KeyLookup;
 import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.keybindings.service.BindingFactory;
@@ -19,13 +20,11 @@ import javafx.scene.input.KeyEvent;
 
 class FxKeySupport {
 
-	@SuppressWarnings("deprecation")
 	static int convertEventToUnmodifiedAccelerator(KeyEvent event) {
 		int modifiers = getStateMask(event) & FxKeyLookup.MODIFIER_MASK;
-		return modifiers + event.getCode().impl_getCode();
+		return modifiers + JavaFXCompatUtil.getCode(event.getCode());
 	}
 
-	@SuppressWarnings("deprecation")
 	static final int convertEventToUnshiftedModifiedAccelerator(final KeyEvent event) {
 		// Disregard alphabetic key strokes.
 		if (Character.isLetter(event.getCharacter().charAt(0))) {
@@ -33,15 +32,14 @@ class FxKeySupport {
 		}
 
 		int modifiers = getStateMask(event) & (FxKeyLookup.MODIFIER_MASK ^ FxKeyLookup.SHIFT);
-		return modifiers + event.getCode().impl_getCode();
+		return modifiers + JavaFXCompatUtil.getCode(event.getCode());
 		// char character = topKey(event);
 		// return modifiers + toUpperCase(character);
 	}
 
-	@SuppressWarnings("deprecation")
 	static final int convertEventToModifiedAccelerator(final KeyEvent event) {
 		int modifiers = getStateMask(event) & FxKeyLookup.MODIFIER_MASK;
-		return modifiers + event.getCode().impl_getCode();
+		return modifiers + JavaFXCompatUtil.getCode(event.getCode());
 		// char character = topKey(event);
 		// return modifiers + toUpperCase(character);
 	}
