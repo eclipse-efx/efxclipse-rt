@@ -121,13 +121,21 @@
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/eclipse/updates/4.6/R-4.6-201606061100/</url>
 		</repository>
+		<!-- repository>
+			<id>orbit-antlr</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/</url>
+		</repository-->
 		<repository>
 			<id>orbit</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/</url>
 		</repository>
-		<repository> <id>xtext</id> <layout>p2</layout> <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
-			</repository>
+		<repository>
+			<id>xtext</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
+		</repository>
 		<repository>
 			<id>efx-shared-runtime</id>
 			<layout>p2</layout>
