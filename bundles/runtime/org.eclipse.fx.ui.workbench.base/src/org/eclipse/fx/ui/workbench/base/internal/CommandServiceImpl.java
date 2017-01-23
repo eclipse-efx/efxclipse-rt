@@ -31,6 +31,7 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.core.ObjectSerializer;
+import org.eclipse.fx.core.adapter.AdapterService;
 import org.eclipse.fx.core.command.Command;
 import org.eclipse.fx.core.command.CommandService;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
@@ -58,6 +59,8 @@ public class CommandServiceImpl implements CommandService {
 	private final IEclipseContext context;
 	@NonNull
 	private final ObjectSerializer serializer;
+	@NonNull
+	private final AdapterService adapterService;
 
 	/**
 	 * Create a new instance
@@ -70,11 +73,12 @@ public class CommandServiceImpl implements CommandService {
 	 *            the context
 	 */
 	@Inject
-	public CommandServiceImpl(@NonNull ECommandService commandService, @NonNull EHandlerService handlerService, @NonNull IEclipseContext context,@NonNull ObjectSerializer serializer) {
+	public CommandServiceImpl(@NonNull ECommandService commandService, @NonNull EHandlerService handlerService, @NonNull IEclipseContext context,@NonNull ObjectSerializer serializer, @NonNull AdapterService adapterService) {
 		this.commandService = commandService;
 		this.handlerService = handlerService;
 		this.context = context;
 		this.serializer = serializer;
+		this.adapterService = adapterService;
 	}
 
 	@Override
@@ -84,24 +88,30 @@ public class CommandServiceImpl implements CommandService {
 
 	@Override
 	public boolean canExecute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
-		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(this.serializer,parameters));
+		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(this.adapterService,this.serializer,parameters));
 		return this.handlerService.canExecute(cmd);
 	}
 
 	@SuppressWarnings({ "unchecked" })
 	@Override
 	public <O> Optional<O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
-		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(this.serializer,parameters));
+		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(this.adapterService,this.serializer,parameters));
 		return Optional.ofNullable((O) this.handlerService.executeHandler(cmd));
 	}
 
 	@SuppressWarnings("null")
-	private static Map<@NonNull String, @Nullable Object> mapToString(@NonNull ObjectSerializer serializer, Map<@NonNull String, @Nullable Object> map) {
+	private static Map<@NonNull String, @Nullable Object> mapToString(@NonNull AdapterService adapterService, @NonNull ObjectSerializer serializer, Map<@NonNull String, @Nullable Object> map) {
 		Map<@NonNull String, @Nullable Object> rv = new HashMap<>(map);
+		rv.putAll(rv.entrySet()
+					.stream()
+					.filter( e -> e.getValue() != null)
+					.filter( e -> !(e.getValue() instanceof String))
+					.filter( e -> adapterService.canAdapt(e.getValue(), String.class))
+					.collect(Collectors.toMap( e -> e.getKey(), e -> adapterService.adapt(e.getValue(), String.class))));
+
 		rv.putAll(rv.entrySet().stream()
 			.filter( e -> e.getValue() != null)
 			.filter( e -> !(e.getValue() instanceof String))
-			.filter( e -> !(e.getValue() instanceof Number))
 			.collect(Collectors.toMap( e -> e.getKey(), e -> {
 				if( e.getValue() instanceof List<?> || e.getValue() instanceof Set<?> ) {
 					Collection<Object> c = (Collection<Object>) e.getValue();

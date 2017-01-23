@@ -15,9 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.fx.core.ValueSerializer;
 import org.eclipse.fx.core.adapter.AdapterProvider;
 import org.eclipse.fx.core.adapter.AdapterService;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -30,6 +32,19 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class AdapterServiceImpl implements AdapterService {
 	@NonNull
 	private Map<Class<Object>, Map<Class<Object>, List<AdapterProvider<Object, Object>>>> adapterMap = new HashMap<>();
+
+	private ValueSerializer valueSerializer;
+
+	@Reference(cardinality=ReferenceCardinality.OPTIONAL, policyOption=ReferencePolicyOption.GREEDY)
+	public void setValueSerializer(ValueSerializer valueSerializer) {
+		this.valueSerializer = valueSerializer;
+	}
+
+	public void unsetValueSerializer(ValueSerializer valueSerializer) {
+		if( this.valueSerializer == valueSerializer ) {
+			this.valueSerializer = null;
+		}
+	}
 
 	/**
 	 * Register provider services
@@ -81,7 +96,16 @@ public class AdapterServiceImpl implements AdapterService {
 			return true;
 		}
 
-		return canAdaptRec(sourceObject, sourceObject.getClass(), targetType);
+		boolean rv = canAdaptRec(sourceObject, sourceObject.getClass(), targetType);
+		ValueSerializer valueSerializer = this.valueSerializer;
+		if( ! rv && valueSerializer != null ) {
+			if( targetType == String.class ) {
+				return valueSerializer.test(sourceObject.getClass());
+			} else if( sourceObject instanceof String ) {
+				return valueSerializer.test(targetType);
+			}
+		}
+		return rv;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -125,7 +149,17 @@ public class AdapterServiceImpl implements AdapterService {
 		if( sourceObject == null ) {
 			return null;
 		}
-		return (A) adaptRec(sourceObject, sourceObject.getClass(), targetType, valueAccess);
+
+		A rv = (A) adaptRec(sourceObject, sourceObject.getClass(), targetType, valueAccess);
+		ValueSerializer valueSerializer = this.valueSerializer;
+		if( rv == null && canAdapt(sourceObject, targetType) ) {
+			if( targetType == String.class ) {
+				return (@Nullable A) valueSerializer.toString(sourceObject);
+			} else if( sourceObject instanceof String ) {
+				return valueSerializer.fromString(targetType, (String)sourceObject);
+			}
+		}
+		return rv;
 	}
 
 	@SuppressWarnings("unchecked")

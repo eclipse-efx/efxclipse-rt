@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.core.di.context.tests;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -63,6 +64,11 @@ public class AdaptSupplierTestCase {
 		@Adapt
 		@Named("serializedSet")
 		Set<Pojo> pojoSet;
+
+		@Inject
+		@Adapt
+		@Named("valueSerializer")
+		LocalDateTime dateTime;
 
 		int executeCalled;
 
@@ -124,6 +130,8 @@ public class AdaptSupplierTestCase {
 		serviceContext.set("serializedObject", serializer.serialize(pojo));
 		serviceContext.set("serializedList",serializer.serializeCollection(Arrays.asList(new Pojo("Pojo 2")), Pojo.class)); //$NON-NLS-2$
 		serviceContext.set("serializedSet", serializer.serializeCollection(Collections.singleton(new Pojo("Pojo 3")), Pojo.class)); //$NON-NLS-2$
+		LocalDateTime dateTime = LocalDateTime.now();
+		serviceContext.set("valueSerializer", dateTime.toString());
 		serviceContext.set("test", "12");  //$NON-NLS-1$//$NON-NLS-2$
 
 		Bean bean = ContextInjectionFactory.make(Bean.class, serviceContext);
@@ -139,6 +147,9 @@ public class AdaptSupplierTestCase {
 
 		Assert.assertNotNull(bean.pojoSet);
 		Assert.assertEquals(1, bean.pojoSet.size());
+
+		Assert.assertNotNull(bean.dateTime);
+		Assert.assertEquals(bean.dateTime, dateTime);
 
 		serviceContext.set("test", "14");
 
