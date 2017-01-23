@@ -113,11 +113,12 @@ public class AdapterServiceImpl implements AdapterService {
 		ValueSerializer valueSerializer = this.valueSerializer;
 		if (!rv && valueSerializer != null) {
 			if (targetType == String.class) {
-				return valueSerializer.test(sourceObject.getClass());
+				rv = valueSerializer.test(sourceObject.getClass());
 			} else if (sourceObject instanceof String) {
-				return valueSerializer.test(targetType);
+				rv = valueSerializer.test(targetType);
 			}
 		}
+
 		return rv;
 	}
 
@@ -167,7 +168,7 @@ public class AdapterServiceImpl implements AdapterService {
 
 		A rv = (A) adaptRec(sourceObject, sourceObject.getClass(), targetType, valueAccess);
 		ValueSerializer valueSerializer = this.valueSerializer;
-		if (rv == null && canAdapt(sourceObject, targetType)) {
+		if (rv == null && valueSerializer != null && canAdapt(sourceObject, targetType)) {
 			if (targetType == String.class) {
 				return (@Nullable A) valueSerializer.toString(sourceObject);
 			} else if (sourceObject instanceof String) {
