@@ -98,7 +98,7 @@ public class CommandServiceImpl implements CommandService {
 
 	private static Map<@NonNull String, @Nullable Object> mapToString(AdapterService adapterService, @NonNull ObjectSerializer serializer, Map<@NonNull String, @Nullable Object> map) {
 		Map<@NonNull String, @Nullable Object> rv = new HashMap<>(map);
-		Map<@NonNull String, String> collect = rv.entrySet()
+		Map<@NonNull String, Object> collect = rv.entrySet()
 					.stream()
 					.filter( e -> e.getValue() != null)
 					.filter( e -> !(e.getValue() instanceof String))
