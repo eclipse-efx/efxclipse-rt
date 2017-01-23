@@ -85,14 +85,14 @@ public class CommandServiceImpl implements CommandService {
 
 	@Override
 	public boolean canExecute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
-		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(serializer,parameters));
+		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(adapterService,serializer,parameters));
 		return this.handlerService.canExecute(cmd);
 	}
 
 	@SuppressWarnings({ "unchecked" })
 	@Override
 	public <O> Optional<@NonNull O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
-		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(serializer,parameters));
+		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(adapterService,serializer,parameters));
 		return Optional.ofNullable((O)this.handlerService.executeHandler(cmd));
 	}
 
