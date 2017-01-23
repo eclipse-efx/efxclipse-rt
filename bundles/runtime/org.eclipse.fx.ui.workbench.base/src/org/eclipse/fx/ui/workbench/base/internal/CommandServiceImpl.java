@@ -84,18 +84,19 @@ public class CommandServiceImpl implements CommandService {
 
 	@Override
 	public boolean canExecute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
-		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(parameters));
+		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(this.serializer,parameters));
 		return this.handlerService.canExecute(cmd);
 	}
 
 	@SuppressWarnings({ "unchecked" })
 	@Override
 	public <O> Optional<O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
-		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(parameters));
+		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(this.serializer,parameters));
 		return Optional.ofNullable((O) this.handlerService.executeHandler(cmd));
 	}
 
-	private Map<@NonNull String, @Nullable Object> mapToString(Map<@NonNull String, @Nullable Object> map) {
+	@SuppressWarnings("null")
+	private static Map<@NonNull String, @Nullable Object> mapToString(@NonNull ObjectSerializer serializer, Map<@NonNull String, @Nullable Object> map) {
 		Map<@NonNull String, @Nullable Object> rv = new HashMap<>(map);
 		rv.putAll(map.entrySet().stream()
 			.filter( e -> e.getValue() != null)
