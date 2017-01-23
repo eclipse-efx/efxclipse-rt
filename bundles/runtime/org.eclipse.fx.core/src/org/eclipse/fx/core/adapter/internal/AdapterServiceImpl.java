@@ -35,13 +35,25 @@ public class AdapterServiceImpl implements AdapterService {
 
 	private ValueSerializer valueSerializer;
 
-	@Reference(cardinality=ReferenceCardinality.OPTIONAL, policyOption=ReferencePolicyOption.GREEDY)
+	/**
+	 * Register the value serializer
+	 *
+	 * @param valueSerializer
+	 *            the value serializer
+	 */
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL, policyOption = ReferencePolicyOption.GREEDY)
 	public void setValueSerializer(ValueSerializer valueSerializer) {
 		this.valueSerializer = valueSerializer;
 	}
 
+	/**
+	 * Unregister the value serializer
+	 *
+	 * @param valueSerializer
+	 *            the value serializer
+	 */
 	public void unsetValueSerializer(ValueSerializer valueSerializer) {
-		if( this.valueSerializer == valueSerializer ) {
+		if (this.valueSerializer == valueSerializer) {
 			this.valueSerializer = null;
 		}
 	}
@@ -53,10 +65,11 @@ public class AdapterServiceImpl implements AdapterService {
 	 *            the service to register
 	 */
 	@SuppressWarnings("unchecked")
-	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policyOption=ReferencePolicyOption.GREEDY)
+	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policyOption = ReferencePolicyOption.GREEDY)
 	public void registerAdapterProviderService(AdapterProvider<?, ?> service) {
 		synchronized (this.adapterMap) {
-			Map<Class<Object>, List<AdapterProvider<Object, Object>>> map = this.adapterMap.get(service.getSourceType());
+			Map<Class<Object>, List<AdapterProvider<Object, Object>>> map = this.adapterMap
+					.get(service.getSourceType());
 			if (map == null) {
 				map = new HashMap<>();
 				this.adapterMap.put((Class<Object>) service.getSourceType(), map);
@@ -79,7 +92,8 @@ public class AdapterServiceImpl implements AdapterService {
 	 */
 	public void unregisterAdapterProviderService(AdapterProvider<?, ?> service) {
 		synchronized (this.adapterMap) {
-			Map<Class<Object>, List<AdapterProvider<Object, Object>>> map = this.adapterMap.get(service.getSourceType());
+			Map<Class<Object>, List<AdapterProvider<Object, Object>>> map = this.adapterMap
+					.get(service.getSourceType());
 			if (map != null) {
 				List<AdapterProvider<Object, Object>> list = map.get(service.getTargetType());
 				if (list != null) {
@@ -89,19 +103,18 @@ public class AdapterServiceImpl implements AdapterService {
 		}
 	}
 
-
 	@Override
 	public boolean canAdapt(Object sourceObject, Class<?> targetType) {
-		if( sourceObject == null ) {
+		if (sourceObject == null) {
 			return true;
 		}
 
 		boolean rv = canAdaptRec(sourceObject, sourceObject.getClass(), targetType);
 		ValueSerializer valueSerializer = this.valueSerializer;
-		if( ! rv && valueSerializer != null ) {
-			if( targetType == String.class ) {
+		if (!rv && valueSerializer != null) {
+			if (targetType == String.class) {
 				return valueSerializer.test(sourceObject.getClass());
-			} else if( sourceObject instanceof String ) {
+			} else if (sourceObject instanceof String) {
 				return valueSerializer.test(targetType);
 			}
 		}
@@ -110,31 +123,33 @@ public class AdapterServiceImpl implements AdapterService {
 
 	@SuppressWarnings("unchecked")
 	private boolean canAdaptRec(@NonNull Object sourceObject, Class<?> sourceType, @NonNull Class<?> targetType) {
-		boolean adapt = canAdapt(this.adapterMap, sourceObject, (Class<Object>)sourceType, (Class<Object>)targetType);
-		if( adapt ) {
+		boolean adapt = canAdapt(this.adapterMap, sourceObject, (Class<Object>) sourceType, (Class<Object>) targetType);
+		if (adapt) {
 			return true;
 		}
 
-		for( Class<?> i : sourceType.getInterfaces()  ) {
-			if( canAdapt(this.adapterMap, sourceObject, (Class<Object>) i, (Class<Object>)targetType) ) {
+		for (Class<?> i : sourceType.getInterfaces()) {
+			if (canAdapt(this.adapterMap, sourceObject, (Class<Object>) i, (Class<Object>) targetType)) {
 				return true;
 			}
 		}
 
-		if( sourceType.getSuperclass() != Object.class ) {
+		if (sourceType.getSuperclass() != Object.class) {
 			return canAdaptRec(sourceObject, sourceType.getSuperclass(), targetType);
 		}
 
 		return false;
 	}
 
-	private static boolean canAdapt(Map<Class<Object>, Map<Class<Object>, List<AdapterProvider<Object, Object>>>> adapterMap, @NonNull Object sourceObject, Class<Object> source, @NonNull Class<Object> target) {
+	private static boolean canAdapt(
+			Map<Class<Object>, Map<Class<Object>, List<AdapterProvider<Object, Object>>>> adapterMap,
+			@NonNull Object sourceObject, Class<Object> source, @NonNull Class<Object> target) {
 		Map<Class<Object>, List<AdapterProvider<Object, Object>>> map = adapterMap.get(source);
-		if( map != null ) {
+		if (map != null) {
 			List<AdapterProvider<Object, Object>> aList = map.get(target);
-			if( aList != null ) {
-				for( AdapterProvider<Object, Object> a : aList ) {
-					if( a.canAdapt(sourceObject, target) ) {
+			if (aList != null) {
+				for (AdapterProvider<Object, Object> a : aList) {
+					if (a.canAdapt(sourceObject, target)) {
 						return true;
 					}
 				}
@@ -146,51 +161,56 @@ public class AdapterServiceImpl implements AdapterService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <A> A adapt(Object sourceObject, Class<A> targetType, ValueAccess... valueAccess) {
-		if( sourceObject == null ) {
+		if (sourceObject == null) {
 			return null;
 		}
 
 		A rv = (A) adaptRec(sourceObject, sourceObject.getClass(), targetType, valueAccess);
 		ValueSerializer valueSerializer = this.valueSerializer;
-		if( rv == null && canAdapt(sourceObject, targetType) ) {
-			if( targetType == String.class ) {
+		if (rv == null && canAdapt(sourceObject, targetType)) {
+			if (targetType == String.class) {
 				return (@Nullable A) valueSerializer.toString(sourceObject);
-			} else if( sourceObject instanceof String ) {
-				return valueSerializer.fromString(targetType, (String)sourceObject);
+			} else if (sourceObject instanceof String) {
+				return valueSerializer.fromString(targetType, (String) sourceObject);
 			}
 		}
 		return rv;
 	}
 
 	@SuppressWarnings("unchecked")
-	private Object adaptRec(@NonNull Object sourceObject, Class<?> sourceType, @NonNull Class<?> targetType, ValueAccess[] valueAccess) {
-		Object adapt = adapt(this.adapterMap, sourceObject, (Class<Object>)sourceType, (Class<Object>)targetType, valueAccess);
-		if( adapt != null ) {
+	private Object adaptRec(@NonNull Object sourceObject, Class<?> sourceType, @NonNull Class<?> targetType,
+			ValueAccess[] valueAccess) {
+		Object adapt = adapt(this.adapterMap, sourceObject, (Class<Object>) sourceType, (Class<Object>) targetType,
+				valueAccess);
+		if (adapt != null) {
 			return adapt;
 		}
 
-		for( Class<?> i : sourceType.getInterfaces()  ) {
-			adapt = adapt(this.adapterMap, sourceObject,(Class<Object>) i, (Class<Object>)targetType, valueAccess);
-			if( adapt != null ) {
+		for (Class<?> i : sourceType.getInterfaces()) {
+			adapt = adapt(this.adapterMap, sourceObject, (Class<Object>) i, (Class<Object>) targetType, valueAccess);
+			if (adapt != null) {
 				return adapt;
 			}
 		}
 
-		if( sourceType.getSuperclass() != Object.class ) {
+		if (sourceType.getSuperclass() != Object.class) {
 			return adaptRec(sourceObject, sourceType.getSuperclass(), targetType, valueAccess);
 		}
 
 		return null;
 	}
 
-	private static Object adapt(Map<Class<Object>, Map<Class<Object>, List<AdapterProvider<Object, Object>>>> adapterMap, @NonNull Object sourceObject, Class<Object> source, @NonNull Class<Object> target, ValueAccess[] valueAccess) {
+	private static Object adapt(
+			Map<Class<Object>, Map<Class<Object>, List<AdapterProvider<Object, Object>>>> adapterMap,
+			@NonNull Object sourceObject, Class<Object> source, @NonNull Class<Object> target,
+			ValueAccess[] valueAccess) {
 		Map<Class<Object>, List<AdapterProvider<Object, Object>>> map = adapterMap.get(source);
-		if( map != null ) {
+		if (map != null) {
 			List<AdapterProvider<Object, Object>> aList = map.get(target);
-			if( aList != null ) {
-				for( AdapterProvider<Object, Object> a : aList ) {
+			if (aList != null) {
+				for (AdapterProvider<Object, Object> a : aList) {
 					Object adapt = a.adapt(sourceObject, target, valueAccess);
-					if( adapt != null ) {
+					if (adapt != null) {
 						return adapt;
 					}
 				}
