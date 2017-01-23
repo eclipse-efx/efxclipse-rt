@@ -98,12 +98,13 @@ public class CommandServiceImpl implements CommandService {
 
 	private static Map<@NonNull String, @Nullable Object> mapToString(AdapterService adapterService, @NonNull ObjectSerializer serializer, Map<@NonNull String, @Nullable Object> map) {
 		Map<@NonNull String, @Nullable Object> rv = new HashMap<>(map);
+
 		Map<@NonNull String, Object> collect = rv.entrySet()
 					.stream()
 					.filter( e -> e.getValue() != null)
 					.filter( e -> !(e.getValue() instanceof String))
 					.filter( e -> adapterService.canAdapt(e.getValue(), String.class))
-					.collect(Collectors.toMap( e -> e.getKey(), e -> adapterService.adapt(e.getValue(), String.class)));
+					.collect(Collectors.toMap( e -> e.getKey(), e -> (Object)adapterService.adapt(e.getValue(), String.class)));
 		rv.putAll(collect);
 
 		rv.putAll(rv.entrySet().stream()
