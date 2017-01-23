@@ -98,7 +98,7 @@ public class CommandServiceImpl implements CommandService {
 	@SuppressWarnings("null")
 	private static Map<@NonNull String, @Nullable Object> mapToString(@NonNull ObjectSerializer serializer, Map<@NonNull String, @Nullable Object> map) {
 		Map<@NonNull String, @Nullable Object> rv = new HashMap<>(map);
-		rv.putAll(map.entrySet().stream()
+		rv.putAll(rv.entrySet().stream()
 			.filter( e -> e.getValue() != null)
 			.filter( e -> !(e.getValue() instanceof String))
 			.filter( e -> !(e.getValue() instanceof Number))
@@ -118,7 +118,6 @@ public class CommandServiceImpl implements CommandService {
 					return serializer.serialize(e.getValue());
 				}
 			})));
-
 
 		return rv;
 	}

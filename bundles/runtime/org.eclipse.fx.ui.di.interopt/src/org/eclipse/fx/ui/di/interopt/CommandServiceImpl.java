@@ -94,13 +94,16 @@ public class CommandServiceImpl implements CommandService {
 
 	private static Map<@NonNull String, @Nullable Object> mapToString(@NonNull ObjectSerializer serializer, Map<@NonNull String, @Nullable Object> map) {
 		Map<@NonNull String, @Nullable Object> rv = new HashMap<>(map);
-		rv.putAll(map.entrySet().stream()
+		rv.putAll(rv.entrySet().stream()
 			.filter( e -> e.getValue() != null)
 			.filter( e -> !(e.getValue() instanceof String))
 			.filter( e -> !(e.getValue() instanceof Number))
 			.collect(Collectors.toMap( e -> e.getKey(), e -> {
 				if( e.getValue() instanceof List<?> || e.getValue() instanceof Set<?> ) {
 					Collection<Object> c = (Collection<Object>) e.getValue();
+					if( c == null ) {
+						return null;
+					}
 					if( c.isEmpty() ) {
 						return serializer.serializeCollection(c, Object.class);
 					} else {
@@ -111,7 +114,6 @@ public class CommandServiceImpl implements CommandService {
 					return serializer.serialize(e.getValue());
 				}
 			})));
-
 
 		return rv;
 	}
