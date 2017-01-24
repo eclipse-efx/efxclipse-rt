@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.controls.tabpane;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.ui.controls.dnd.EFXDragEvent;
 import org.eclipse.fx.ui.controls.markers.PositionMarker;
 import org.eclipse.fx.ui.controls.markers.TabOutlineMarker;
@@ -92,20 +93,25 @@ public final class DndTabPaneFactory {
 	 * @return the tab pane
 	 */
 	public static TabPane createDndTabPane(Consumer<DragSetup> setup, boolean allowDetach) {
-		return new TabPane() {
-			@Override
-			protected javafx.scene.control.Skin<?> createDefaultSkin() {
-				if( allowDetach ) {
-					DnDTabPaneSkinFullDrag skin = new DnDTabPaneSkinFullDrag(this);
-					setup.accept(skin);
-					return skin;
-				} else {
-					DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
-					setup.accept(skin);
-					return skin;
+		//FIXME Create a Java8/9 replacement
+		if( SystemUtils.isFX9() ) {
+			return new TabPane();
+		} else {
+			return new TabPane() {
+				@Override
+				protected javafx.scene.control.Skin<?> createDefaultSkin() {
+					if( allowDetach ) {
+						DnDTabPaneSkinFullDrag skin = new DnDTabPaneSkinFullDrag(this);
+						setup.accept(skin);
+						return skin;
+					} else {
+						DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
+						setup.accept(skin);
+						return skin;
+					}
 				}
-			}
-		};
+			};			
+		}
 	}
 
 	/**
@@ -121,20 +127,26 @@ public final class DndTabPaneFactory {
 	 */
 	public static Pane createDefaultDnDPane(FeedbackType feedbackType, boolean allowDetach, Consumer<TabPane> setup) {
 		StackPane pane = new StackPane();
-		TabPane tabPane = new TabPane() {
-			@Override
-			protected javafx.scene.control.Skin<?> createDefaultSkin() {
-				if (allowDetach) {
-					DnDTabPaneSkinFullDrag skin = new DnDTabPaneSkinFullDrag(this);
-					setup(feedbackType, pane, skin, null);
-					return skin;
-				} else {
-					DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
-					setup(feedbackType, pane, skin, null);
-					return skin;
+		TabPane tabPane;
+		if( SystemUtils.isFX9() ) {
+			tabPane = new TabPane();
+		} else {
+			tabPane = new TabPane() {
+				@Override
+				protected javafx.scene.control.Skin<?> createDefaultSkin() {
+					if (allowDetach) {
+						DnDTabPaneSkinFullDrag skin = new DnDTabPaneSkinFullDrag(this);
+						setup(feedbackType, pane, skin, null);
+						return skin;
+					} else {
+						DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
+						setup(feedbackType, pane, skin, null);
+						return skin;
+					}
 				}
-			}
-		};
+			};	
+		}
+		
 		setup.accept(tabPane);
 		pane.getChildren().add(tabPane);
 		return pane;
