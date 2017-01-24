@@ -95,7 +95,6 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 
 		try {
 			Object object = ref.get();
-			System.err.println("====> value: " + object);
 			if( object instanceof String ) {
 				ObjectSerializer s = primaryContext.get(ObjectSerializer.class);
 				Type desiredType = descriptor.getDesiredType();
