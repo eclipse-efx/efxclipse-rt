@@ -150,7 +150,7 @@ public class Util {
 			return findNode(w.getScene().getRoot(), screenX, screenY);
 		}
 
-		Iterator<Window> impl_getWindows = Window.impl_getWindows();
+		Iterator<Window> impl_getWindows = JavaFXCompatUtil.getAllWindows().iterator();
 
 		List<Window> sortedWindows = new ArrayList<>();
 		Map<Window,List<Window>> parentChildRelation = new HashMap<>();
