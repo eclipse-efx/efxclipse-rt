@@ -4,5 +4,6 @@
    <service>
       <provide interface="org.eclipse.fx.core.adapter.AdapterService"/>
    </service>
+   <reference bind="setValueSerializer" cardinality="0..1" interface="org.eclipse.fx.core.ValueSerializer" name="ValueSerializer" policy="static" policy-option="greedy" unbind="unsetValueSerializer"/>
    <reference bind="registerAdapterProviderService" cardinality="0..n" interface="org.eclipse.fx.core.adapter.AdapterProvider" name="registerAdapterProviderService" policy="static" policy-option="greedy" unbind="unregisterAdapterProviderService"/>
 </scr:component>
