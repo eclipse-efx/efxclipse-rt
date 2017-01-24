@@ -26,6 +26,7 @@ import org.eclipse.e4.core.di.IInjector;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
+import org.eclipse.e4.core.internal.contexts.ContextObjectSupplier;
 import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.core.ObjectSerializer;
 import org.eclipse.fx.core.adapter.Adapt;
@@ -58,9 +59,15 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 
 		AtomicInteger i = new AtomicInteger();
 		AtomicReference<Object> ref = new AtomicReference<>();
-		Dummy dummy = r.getInjector().make(Dummy.class, r.getPrimarySupplier());
+
+		ContextObjectSupplier primary = (ContextObjectSupplier) r.getPrimarySupplier();
+		ContextObjectSupplier temp = (ContextObjectSupplier) r.getTempSupplier();
+
+		IEclipseContext primaryContext = primary.getContext();
+		IEclipseContext tempContext = temp != null ? temp.getContext() : null;
+
 		if( track ) {
-			dummy.context.runAndTrack(new RunAndTrack() {
+			primaryContext.runAndTrack(new RunAndTrack() {
 
 				@Override
 				public boolean changed(IEclipseContext context) {
@@ -69,23 +76,28 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 						requestor.execute();
 						return false;
 					}
-					ref.set(dummy.context.get(key));
+					ref.set(primaryContext.get(key));
 					return true;
 				}
 			});
 		} else {
-			ref.set(dummy.context.get(key));
+			ref.set(primaryContext.get(key));
+			if( ref.get() == null && tempContext != null ) {
+				ref.set(tempContext.get(key));
+			}
 		}
 		if( ref.get() != null ) {
-			if( dummy.adapterService.canAdapt(ref.get(), desiredClass) ) {
-				return dummy.adapterService.adapt(ref.get(), desiredClass, new ValueAccessImpl(dummy.context));
+			AdapterService adapterService = primaryContext.get(AdapterService.class);
+			if( adapterService.canAdapt(ref.get(), desiredClass) ) {
+				return adapterService.adapt(ref.get(), desiredClass, new ValueAccessImpl(primaryContext));
 			}
 		}
 
 		try {
-			Object object = dummy.context.get(key);
+			Object object = ref.get();
+			System.err.println("====> value: " + object);
 			if( object instanceof String ) {
-				ObjectSerializer s = dummy.context.get(ObjectSerializer.class);
+				ObjectSerializer s = primaryContext.get(ObjectSerializer.class);
 				Type desiredType = descriptor.getDesiredType();
 				if (desiredType instanceof ParameterizedType) {
 					ParameterizedType t = (ParameterizedType) desiredType;

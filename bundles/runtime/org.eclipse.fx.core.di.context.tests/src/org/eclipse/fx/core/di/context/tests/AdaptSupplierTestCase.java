@@ -29,7 +29,11 @@ import org.eclipse.fx.core.ObjectSerializer;
 import org.eclipse.fx.core.adapter.Adapt;
 import org.eclipse.fx.core.adapter.AdapterProvider;
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -39,6 +43,11 @@ import org.osgi.framework.ServiceRegistration;
  *
  */
 public class AdaptSupplierTestCase {
+	private ServiceRegistration<AdapterProvider> r1;
+	private ServiceRegistration<AdapterProvider> r2;
+	private IEclipseContext testContext;
+	private static IEclipseContext SERVICE_CONTEXT;
+
 	static class Bean {
 		@Inject
 		@Adapt
@@ -72,8 +81,22 @@ public class AdaptSupplierTestCase {
 
 		int executeCalled;
 
+		Double callMeValue;
+
 		@Execute
 		public void callMe(@Adapt @Named("test") Double doubleValue) {
+			this.callMeValue = doubleValue;
+			this.executeCalled++;
+		}
+	}
+
+	public static class Bug510916 {
+		int executeCalled;
+		Double callMeValue;
+
+		@Execute
+		public void callMe(@Adapt @Named("bug510916") Double doubleValue) {
+			this.callMeValue = doubleValue;
 			this.executeCalled++;
 		}
 	}
@@ -115,26 +138,47 @@ public class AdaptSupplierTestCase {
 		}
 	}
 
+	@BeforeClass
+	public static void init() {
+		BundleContext context = FrameworkUtil.getBundle(AdaptSupplierTestCase.class).getBundleContext();
+		SERVICE_CONTEXT = EclipseContextFactory.createServiceContext(context);
+	}
+
+	@Before
+	public void setup() {
+		BundleContext context = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		this.r1 = context.registerService(AdapterProvider.class, new StringIntegerProvider(), new Hashtable<String,Object>());
+		this.r2 = context.registerService(AdapterProvider.class, new StringDoubleProvider(), new Hashtable<String,Object>());
+		this.testContext = SERVICE_CONTEXT.createChild("Test Context");
+	}
+
+	@After
+	public void cleanup() {
+		this.r1.unregister();
+		this.r2.unregister();
+		this.testContext.dispose();
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		SERVICE_CONTEXT.dispose();
+	}
+
 	/**
 	 *
 	 */
 	@Test
 	public void testAdapt() {
-		BundleContext context = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		ServiceRegistration<AdapterProvider> r1 = context.registerService(AdapterProvider.class, new StringIntegerProvider(), new Hashtable<String,Object>());
-		ServiceRegistration<AdapterProvider> r2 = context.registerService(AdapterProvider.class, new StringDoubleProvider(), new Hashtable<String,Object>());
-
-		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(context);
-		ObjectSerializer serializer = serviceContext.get(ObjectSerializer.class);
+		ObjectSerializer serializer = testContext.get(ObjectSerializer.class);
 		Pojo pojo = new Pojo("Pojo 1");
-		serviceContext.set("serializedObject", serializer.serialize(pojo));
-		serviceContext.set("serializedList",serializer.serializeCollection(Arrays.asList(new Pojo("Pojo 2")), Pojo.class)); //$NON-NLS-2$
-		serviceContext.set("serializedSet", serializer.serializeCollection(Collections.singleton(new Pojo("Pojo 3")), Pojo.class)); //$NON-NLS-2$
+		testContext.set("serializedObject", serializer.serialize(pojo));
+		testContext.set("serializedList",serializer.serializeCollection(Arrays.asList(new Pojo("Pojo 2")), Pojo.class)); //$NON-NLS-2$
+		testContext.set("serializedSet", serializer.serializeCollection(Collections.singleton(new Pojo("Pojo 3")), Pojo.class)); //$NON-NLS-2$
 		LocalDateTime dateTime = LocalDateTime.now();
-		serviceContext.set("valueSerializer", dateTime.toString());
-		serviceContext.set("test", "12");  //$NON-NLS-1$//$NON-NLS-2$
+		testContext.set("valueSerializer", dateTime.toString());
+		testContext.set("test", "12");  //$NON-NLS-1$//$NON-NLS-2$
 
-		Bean bean = ContextInjectionFactory.make(Bean.class, serviceContext);
+		Bean bean = ContextInjectionFactory.make(Bean.class, testContext);
 
 		Assert.assertEquals(12,bean.integerValue.intValue());
 		Assert.assertEquals(12.0,bean.doubleValue.doubleValue(),0.0);
@@ -151,24 +195,41 @@ public class AdaptSupplierTestCase {
 		Assert.assertNotNull(bean.dateTime);
 		Assert.assertEquals(bean.dateTime, dateTime);
 
-		serviceContext.set("test", "14");
+		testContext.set("test", "14");
 
 		Assert.assertEquals(14,bean.integerValue.intValue());
 		Assert.assertEquals(14.0,bean.doubleValue.doubleValue(),0.0);
 
-		serviceContext.set("test", "15");
+		testContext.set("test", "15");
 
 		Assert.assertEquals(15,bean.integerValue.intValue());
 		Assert.assertEquals(15.0,bean.doubleValue.doubleValue(),0.0);
 
-		ContextInjectionFactory.invoke(bean, Execute.class, serviceContext);
+		ContextInjectionFactory.invoke(bean, Execute.class, testContext);
 		Assert.assertEquals(1,bean.executeCalled);
+		Assert.assertEquals(15.0, bean.callMeValue.doubleValue(),0.0);
 
-		serviceContext.set("test", "16");
+		testContext.set("test", "16");
 		Assert.assertEquals(1,bean.executeCalled);
+		Assert.assertEquals(15.0, bean.callMeValue.doubleValue(),0.0);
 
-		r1.unregister();
-		r2.unregister();
+		ContextInjectionFactory.invoke(bean, Execute.class, testContext);
+		Assert.assertEquals(2,bean.executeCalled);
+		Assert.assertEquals(16.0, bean.callMeValue.doubleValue(),0.0);
+
+	}
+
+	@Test
+	public void testBug510916() {
+		IEclipseContext staticContext = EclipseContextFactory.create("Static Context"); //$NON-NLS-1$
+		staticContext.set("bug510916", "17");  //$NON-NLS-1$//$NON-NLS-2$
+
+		Bug510916 bean = ContextInjectionFactory.make(Bug510916.class, this.testContext);
+		ContextInjectionFactory.invoke(bean, Execute.class, this.testContext, staticContext, null);
+
+		Assert.assertEquals(1,bean.executeCalled);
+		Assert.assertEquals(17.0, bean.callMeValue.doubleValue(),0.0);
+
 	}
 
 	static class StringIntegerProvider implements AdapterProvider<String, Integer> {
