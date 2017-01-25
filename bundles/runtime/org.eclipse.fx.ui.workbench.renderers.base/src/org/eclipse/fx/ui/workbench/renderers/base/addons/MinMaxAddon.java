@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
@@ -48,7 +49,7 @@ public class MinMaxAddon {
 
 	void handleChildrenChanged(Event event) {
 		final MUIElement changedElement = (MUIElement) event.getProperty(EventTags.ELEMENT);
-		if( changedElement instanceof MElementContainer<?> ) {
+		if (changedElement instanceof MElementContainer<?> && !(changedElement instanceof MApplication)) {
 			// TODO we also need to check for visiblity!!!!
 			if( this.modelService.toBeRenderedCount((MElementContainer<?>) changedElement) == 0 ) {
 				handleMinMaxCallback(WMinMaxState.RESTORE, changedElement);
