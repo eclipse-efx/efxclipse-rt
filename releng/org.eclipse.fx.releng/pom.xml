@@ -117,6 +117,7 @@
 
 	<repositories>
 		<repository>
+			<!-- Important changing this requires to publish the platform bundles to maven -->
 			<id>neon</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/eclipse/updates/4.6/R-4.6-201606061100/</url>
