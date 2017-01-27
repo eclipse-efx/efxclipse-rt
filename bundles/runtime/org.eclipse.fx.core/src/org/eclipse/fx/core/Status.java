@@ -58,9 +58,34 @@ public interface Status {
 
 	/**
 	 * @return <code>true</code> if {@link #getState()} equals {@link State#OK}
+	 * @since 3.0.0
 	 */
 	public default boolean isOk() {
 		return getState() == State.OK;
+	}
+
+	/**
+	 * Filter of the status is one of those states
+	 *
+	 * @param states
+	 *            the states
+	 * @return a none-empty {@link Optional} if one of the states matches
+	 *         {@link #getState()}
+	 */
+	public default Optional<Status> filter(State... states) {
+		return is(states) ? Optional.of(this) : Optional.empty();
+	}
+
+	/**
+	 * Check if status is one of these states
+	 *
+	 * @param states
+	 *            the states
+	 * @return <code>true</code> if one of the states matches
+	 *         {@link #getState()}
+	 */
+	public default boolean is(State... states) {
+		return Stream.of(states).anyMatch(s -> s == getState());
 	}
 
 	/**
@@ -119,7 +144,8 @@ public interface Status {
 	 * @return the new status instance
 	 */
 	@NonNull
-	public static <@Nullable O> ValueStatus<O> status(@Nullable O value, @NonNull State state, int code, @NonNull String message, @Nullable Throwable t) {
+	public static <@Nullable O> ValueStatus<O> status(@Nullable O value, @NonNull State state, int code,
+			@NonNull String message, @Nullable Throwable t) {
 		return new ValueStatusImpl<O>(value, state, code, message, t);
 	}
 
