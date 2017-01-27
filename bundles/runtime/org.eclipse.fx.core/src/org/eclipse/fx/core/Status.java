@@ -11,6 +11,7 @@
 package org.eclipse.fx.core;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -54,6 +55,13 @@ public interface Status {
 	 * @return the state
 	 */
 	public Optional<State> state();
+
+	/**
+	 * @return <code>true</code> if {@link #getState()} equals {@link State#OK}
+	 */
+	public default boolean isOk() {
+		return getState() == State.OK;
+	}
 
 	/**
 	 * @return a status representing {@link State#OK}
