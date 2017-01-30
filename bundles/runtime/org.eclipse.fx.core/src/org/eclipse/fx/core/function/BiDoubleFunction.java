@@ -21,6 +21,7 @@ import java.util.function.BiFunction;
  *            the type of the result of the function
  * @since 3.0
  */
+@FunctionalInterface
 public interface BiDoubleFunction<R> {
 	/**
 	 * Applies this function to the given arguments.
