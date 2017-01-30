@@ -69,7 +69,7 @@ public class FXObservableUtil {
 	 *            the listener
 	 * @return subscription used to unsubscribe
 	 */
-	public static <T> Subscription onChange(ObservableValue<T> o, ChangeListener<T> l) {
+	public static <T> Subscription onChange(ObservableValue<T> o, ChangeListener<? super T> l) {
 		o.addListener(l);
 		return () -> o.removeListener(l);
 	}
@@ -83,7 +83,7 @@ public class FXObservableUtil {
 	 *            the listener
 	 * @return subscription used to unsubscribe
 	 */
-	public static <T> Subscription onChange(ObservableValue<T> o, Consumer<T> l) {
+	public static <T> Subscription onChange(ObservableValue<T> o, Consumer<? super T> l) {
 		ChangeListener<? super T> listener = (ob, ol, ne) -> l.accept(ne);
 		o.addListener(listener);
 		return () -> o.removeListener(listener);
@@ -99,7 +99,7 @@ public class FXObservableUtil {
 	 * @return subscription used to unsubscribe
 	 * @see ObservableList#addListener(ListChangeListener)
 	 */
-	public static <E> Subscription onChange(ObservableList<E> o, ListChangeListener<E> l) {
+	public static <E> Subscription onChange(ObservableList<E> o, ListChangeListener<? super E> l) {
 		o.addListener(l);
 		return () -> o.removeListener(l);
 	}
