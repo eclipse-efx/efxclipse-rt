@@ -304,7 +304,7 @@ public class StyledTextBehavior {
 		}
 
 		// tab insertion if not otherwise handled
-		if (KeyCombination.keyCombination("Tab").match(event)) { //$NON-NLS-1$
+		if (KeyCombination.keyCombination("Tab").match(event) && getControl().getEditable()) { //$NON-NLS-1$
 			getControl().insert("\t"); //$NON-NLS-1$
 			event.consume();
 		}
