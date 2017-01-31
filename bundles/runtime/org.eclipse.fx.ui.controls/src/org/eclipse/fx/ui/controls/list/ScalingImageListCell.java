@@ -17,8 +17,6 @@ import org.eclipse.fx.ui.controls.image.MultiDimensionImage;
 import org.eclipse.fx.ui.controls.image.ScalingImageViewer;
 import org.eclipse.fx.ui.controls.image.ScalingImageViewer.Dimension;
 
-import javafx.beans.Observable;
-import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ListCell;
