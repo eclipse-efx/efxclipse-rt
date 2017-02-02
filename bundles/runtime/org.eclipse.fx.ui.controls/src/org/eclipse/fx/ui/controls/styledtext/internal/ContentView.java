@@ -740,6 +740,9 @@ public class ContentView  extends Pane {
 	@Override
 	protected void layoutChildren() {
 		double scrollX = -this.offsetX.get();
+		if( Double.isNaN(scrollX) ) {
+			scrollX = 0.0;
+		}
 		this.contentBody.resizeRelocate(scrollX, 0, computeLongestLine(), getHeight());
 	}
 
