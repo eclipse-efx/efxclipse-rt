@@ -740,6 +740,9 @@ public class ContentView  extends Pane {
 	@Override
 	protected void layoutChildren() {
 		double scrollX = -this.offsetX.get();
+		if( Double.isNaN(scrollX) ) {
+			scrollX = 0.0;
+		}
 		this.contentBody.resizeRelocate(scrollX, 0, computeLongestLine(), getHeight());
 	}
 
@@ -751,8 +754,29 @@ public class ContentView  extends Pane {
 		bar.setMin(0);
 		DoubleBinding max = this.contentBody.widthProperty().subtract(widthProperty());
 		DoubleBinding factor = this.contentBody.widthProperty().divide(max);
-		bar.maxProperty().bind(this.contentBody.widthProperty().divide(factor));
-		bar.visibleAmountProperty().bind(widthProperty().divide(factor));
+
+//		DoubleProperty santizedFactor = new SimpleDoubleProperty();
+//		santizedFactor.set( Double.isNaN(factor.get()) ? 1.0 : factor.get() );
+//		factor.addListener( (ob,ol,ne) -> {
+//			santizedFactor.set( Double.isNaN(ne.doubleValue()) ? 1.0 : ne.doubleValue() );
+//		} );
+
+		maxValue = this.contentBody.widthProperty().divide(factor);
+		visibleAmount = widthProperty().divide(factor);
+
+		updateValue(maxValue.get(), bar.maxProperty());
+		updateValue(visibleAmount.get(), bar.visibleAmountProperty());
+
+		maxValue.addListener( o -> {
+			updateValue(maxValue.get(), bar.maxProperty());
+		});
+		visibleAmount.addListener( o -> {
+			updateValue(visibleAmount.get(), bar.visibleAmountProperty());
+		});
+
+//		bar.maxProperty().bind(maxValue);
+//		bar.visibleAmountProperty().bind(visibleAmount);
+
 		this.offsetX.bind(bar.valueProperty());
 
 		this.widthProperty().addListener((x, o, n) -> {
@@ -760,6 +784,14 @@ public class ContentView  extends Pane {
 				bar.setValue(Math.max(0, Math.min(bar.getMax(), bar.getValue())));
 			}
 		});
+	}
+
+	private void updateValue(double v, DoubleProperty p) {
+		if( Double.isNaN(v) ) {
+			p.set(0);
+		} else {
+			p.set(v);
+		}
 	}
 
 	public void bindVerticalScrollbar(ScrollBar bar) {
@@ -784,6 +816,10 @@ public class ContentView  extends Pane {
 	}
 
 	private int insertionMarkerIndex = -1;
+
+	private DoubleBinding maxValue;
+
+	private DoubleBinding visibleAmount;
 
 	public void updateInsertionMarkerIndex(int index) {
 		if (this.insertionMarkerIndex != index) {

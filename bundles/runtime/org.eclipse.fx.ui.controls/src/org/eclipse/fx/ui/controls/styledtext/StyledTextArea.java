@@ -1754,7 +1754,7 @@ public class StyledTextArea extends Control {
 	private static String fix0TerminatedString(String text) {
 		String result = text;
 		int nullIdx = text.indexOf(0);
-		if(nullIdx>0) {
+		if(nullIdx > 0) {
 			result = text.substring(0, nullIdx);
 		}
 		return result;
