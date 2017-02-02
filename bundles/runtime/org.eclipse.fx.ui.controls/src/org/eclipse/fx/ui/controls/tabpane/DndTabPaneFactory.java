@@ -17,8 +17,8 @@ import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.ui.controls.dnd.EFXDragEvent;
 import org.eclipse.fx.ui.controls.markers.PositionMarker;
 import org.eclipse.fx.ui.controls.markers.TabOutlineMarker;
-import org.eclipse.fx.ui.controls.tabpane.skin.DnDTabPaneSkin;
-import org.eclipse.fx.ui.controls.tabpane.skin.DnDTabPaneSkinFullDrag;
+import org.eclipse.fx.ui.controls.tabpane.skin.DnDTabPaneSkinHookerFullDrag;
+import org.eclipse.fx.ui.controls.tabpane.skin.DndTabPaneSkinHooker;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -26,6 +26,8 @@ import javafx.event.Event;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.control.Skin;
+import javafx.scene.control.SkinBase;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.Pane;
@@ -93,25 +95,20 @@ public final class DndTabPaneFactory {
 	 * @return the tab pane
 	 */
 	public static TabPane createDndTabPane(Consumer<DragSetup> setup, boolean allowDetach) {
-		//FIXME Create a Java8/9 replacement
-		if( SystemUtils.isFX9() ) {
-			return new TabPane();
-		} else {
-			return new TabPane() {
-				@Override
-				protected javafx.scene.control.Skin<?> createDefaultSkin() {
-					if( allowDetach ) {
-						DnDTabPaneSkinFullDrag skin = new DnDTabPaneSkinFullDrag(this);
-						setup.accept(skin);
-						return skin;
-					} else {
-						DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
-						setup.accept(skin);
-						return skin;
-					}
+		return new TabPane() {
+			@Override
+			protected javafx.scene.control.Skin<?> createDefaultSkin() {
+				Skin<?> skin = super.createDefaultSkin();
+				DragSetup ds;
+				if( allowDetach ) {
+					ds = new DnDTabPaneSkinHookerFullDrag((SkinBase<TabPane>)skin);
+				} else {
+					ds = new DndTabPaneSkinHooker((Skin<TabPane>) skin);
 				}
-			};			
-		}
+				setup.accept(ds);
+				return skin;
+			}
+		};
 	}
 
 	/**
@@ -128,25 +125,25 @@ public final class DndTabPaneFactory {
 	public static Pane createDefaultDnDPane(FeedbackType feedbackType, boolean allowDetach, Consumer<TabPane> setup) {
 		StackPane pane = new StackPane();
 		TabPane tabPane;
-		if( SystemUtils.isFX9() ) {
+		if( SystemUtils.isFX9() || Boolean.getBoolean("java9.tabpane") ) {
 			tabPane = new TabPane();
 		} else {
 			tabPane = new TabPane() {
 				@Override
 				protected javafx.scene.control.Skin<?> createDefaultSkin() {
-					if (allowDetach) {
-						DnDTabPaneSkinFullDrag skin = new DnDTabPaneSkinFullDrag(this);
-						setup(feedbackType, pane, skin, null);
-						return skin;
+					Skin<?> skin = super.createDefaultSkin();
+					DragSetup ds;
+					if( allowDetach ) {
+						ds = new DnDTabPaneSkinHookerFullDrag((SkinBase<TabPane>)skin);
 					} else {
-						DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
-						setup(feedbackType, pane, skin, null);
-						return skin;
+						ds = new DndTabPaneSkinHooker((Skin<TabPane>) skin);
 					}
+					setup(feedbackType, pane, ds, null);
+					return skin;
 				}
-			};	
+			};
 		}
-		
+
 		setup.accept(tabPane);
 		pane.getChildren().add(tabPane);
 		return pane;
@@ -161,7 +158,7 @@ public final class DndTabPaneFactory {
 	 */
 	public static boolean hasDnDContent(Event e) {
 		if (e instanceof DragEvent) {
-			return ((DragEvent) e).getDragboard().hasContent(DnDTabPaneSkin.TAB_MOVE);
+			return ((DragEvent) e).getDragboard().hasContent(DndTabPaneSkinHooker.TAB_MOVE);
 		} else if (e instanceof EFXDragEvent) {
 			return ((EFXDragEvent) e).getDraggedContent() != null;
 		}
@@ -177,7 +174,7 @@ public final class DndTabPaneFactory {
 	 */
 	public static String getDnDContent(Event e) {
 		if (e instanceof DragEvent) {
-			return (String) ((DragEvent) e).getDragboard().getContent(DnDTabPaneSkin.TAB_MOVE);
+			return (String) ((DragEvent) e).getDragboard().getContent(DndTabPaneSkinHooker.TAB_MOVE);
 		} else if (e instanceof EFXDragEvent) {
 			return (String) ((EFXDragEvent) e).getDraggedContent();
 		}
