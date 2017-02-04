@@ -12,6 +12,7 @@ package org.eclipse.fx.core.text;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -59,7 +60,6 @@ public interface TextRegistry {
 	 * @return the supplier or <code>null</code>
 	 * @since 2.1
 	 */
-	@SuppressWarnings("null")
 	default public java.util.function.Supplier<String> getSupplierByKey(String key, Object... values) {
 		//FIXME Make none default in 3.0
 		if( values.length == 0 ) {
@@ -81,7 +81,7 @@ public interface TextRegistry {
 			}
 		} else {
 			try {
-				Stream.of(getClass().getMethods())
+				Optional<Supplier<String>> rv = Stream.of(getClass().getMethods())
 					.filter(m -> (key + "_supplier").equals(m.getName())) //$NON-NLS-1$
 					.findFirst().map( m -> new Supplier<String>() {
 
@@ -94,6 +94,9 @@ public interface TextRegistry {
 						}
 					}
 				});
+				if( rv.isPresent() ) {
+					return rv.get();
+				}
 			} catch (SecurityException e) {
 				LoggerCreator.createLogger(getClass()).error("No translation for '"+key+"' is found");  //$NON-NLS-1$//$NON-NLS-2$
 			}
