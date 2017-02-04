@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang.text.StrLookup;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.eclipse.fx.core.IntTuple;
+import org.eclipse.fx.core.Triple;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -246,14 +247,14 @@ public class TextUtil {
 		char[] cs = content.toCharArray();
 		char[] target = new char[cs.length];
 		int j = 0;
-		for( int i = 0; i < cs.length; i++ ) {
-			if( ! filter.test(cs[i]) ) {
+		for (int i = 0; i < cs.length; i++) {
+			if (!filter.test(cs[i])) {
 				target[j++] = cs[i];
 			}
 		}
 
-		if( j < cs.length ) {
-			return new String(target,0,j);
+		if (j < cs.length) {
+			return new String(target, 0, j);
 		}
 
 		return content;
@@ -316,7 +317,8 @@ public class TextUtil {
 						}
 					}
 					if (m == null) {
-						throw new IllegalStateException("Unable to locate accessor property for property '" + path[i] + "' on object " + object + "."); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
+						throw new IllegalStateException("Unable to locate accessor property for property '" + path[i] //$NON-NLS-1$
+								+ "' on object " + object + "."); //$NON-NLS-1$//$NON-NLS-2$
 					}
 
 					m.setAccessible(true);
@@ -337,5 +339,58 @@ public class TextUtil {
 			return object == null ? null : object.toString();
 		}
 
+	}
+
+	/**
+	 * Replace tabs through spaces return
+	 * <ul>
+	 * <li>{@link Triple#value1}: the new char array</li>
+	 * <li>{@link Triple#value2}: the indices the tabs have been found</li>
+	 * <li>{@link Triple#value3}: the new indices where a "tab" is starts
+	 * now</li>
+	 * </ul>
+	 * 
+	 * @param source
+	 *            the source array
+	 * @param tabAdvance
+	 * @return a triple with the values
+	 */
+	public static Triple<char[], int[], int[]> replaceTabBySpace(char[] source, int tabAdvance) {
+		if (tabAdvance <= 0) {
+			throw new IllegalArgumentException("tabAdvance must be greater 0"); //$NON-NLS-1$
+		}
+		int tabCount = 0;
+		for (int i = 0; i < source.length; i++) {
+			if (source[i] == '\t') {
+				tabCount++;
+			}
+		}
+
+		if (tabCount == 0) {
+			char[] rv = new char[source.length];
+			System.arraycopy(source, 0, rv, 0, rv.length);
+			return new Triple<>(rv, new int[0], new int[0]);
+		}
+
+		int[] tabPositions = new int[tabCount];
+		int[] newTabPositions = new int[tabCount];
+		char[] rv = new char[source.length + (tabCount * (tabAdvance - 1))];
+
+		int count = 0;
+		int tabIdx = 0;
+		for (int i = 0; i < source.length; i++) {
+			if (source[i] == '\t') {
+				tabPositions[tabIdx] = i;
+				newTabPositions[tabIdx] = count;
+				tabIdx++;
+				for (int j = 0; j < tabAdvance; j++) {
+					rv[count++] = ' ';
+				}
+			} else {
+				rv[count++] = source[i];
+			}
+		}
+
+		return new Triple<>(rv, tabPositions, newTabPositions);
 	}
 }
