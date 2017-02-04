@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016 BestSolution.at and others.
+ * Copyright (c) 2017 BestSolution.at and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,15 +11,18 @@
 package org.eclipse.fx.core;
 
 /**
- * A value class holding 2 values
- *
+ * A value to hold tripples
+ * 
  * @param <U>
- *            type of value 1
+ *            the type of value 1
  * @param <V>
- *            type of value 2
- * @since 2.4.0
+ *            the type of value 2
+ * @param <W>
+ *            the type of value 3
+ *            
+ * @since 3.0
  */
-public final class Tuple<U, V> {
+public class Triple<U, V, W> {
 	/**
 	 * Value 1
 	 */
@@ -28,18 +31,25 @@ public final class Tuple<U, V> {
 	 * Value 2
 	 */
 	public final V value2;
+	/**
+	 * Value 3
+	 */
+	public final W value3;
 
 	/**
-	 * Create a new instance
-	 *
+	 * Create a new triple
+	 * 
 	 * @param value1
-	 *            the value
+	 *            the value 1
 	 * @param value2
-	 *            the value
+	 *            the value 2
+	 * @param value3
+	 *            the value 3
 	 */
-	public Tuple(U value1, V value2) {
+	public Triple(U value1, V value2, W value3) {
 		this.value1 = value1;
 		this.value2 = value2;
+		this.value3 = value3;
 	}
 
 	@SuppressWarnings("null")
@@ -49,6 +59,7 @@ public final class Tuple<U, V> {
 		int result = 1;
 		result = prime * result + ((this.value1 == null) ? 0 : this.value1.hashCode());
 		result = prime * result + ((this.value2 == null) ? 0 : this.value2.hashCode());
+		result = prime * result + ((this.value3 == null) ? 0 : this.value3.hashCode());
 		return result;
 	}
 
@@ -61,7 +72,7 @@ public final class Tuple<U, V> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Tuple<?,?> other = (Tuple<?,?>) obj;
+		Triple<?,?,?> other = (Triple<?,?,?>) obj;
 		if (this.value1 == null) {
 			if (other.value1 != null)
 				return false;
@@ -71,6 +82,11 @@ public final class Tuple<U, V> {
 			if (other.value2 != null)
 				return false;
 		} else if (!this.value2.equals(other.value2))
+			return false;
+		if (this.value3 == null) {
+			if (other.value3 != null)
+				return false;
+		} else if (!this.value3.equals(other.value3))
 			return false;
 		return true;
 	}
