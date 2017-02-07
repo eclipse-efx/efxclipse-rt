@@ -1,5 +1,6 @@
 package org.eclipse.fx.core.modulesystem;
 
+import java.nio.file.Path;
 import java.util.Optional;
 
 import org.eclipse.fx.core.Version;
@@ -14,6 +15,11 @@ class NoModuleSystem implements ModuleSystem {
 
 		@Override
 		public Optional<Version> getVersion() {
+			return Optional.empty();
+		}
+
+		@Override
+		public Optional<Path> getLocation() {
 			return Optional.empty();
 		}
 	}
@@ -38,4 +44,5 @@ class NoModuleSystem implements ModuleSystem {
 	public Optional<Module> getModuleById(String moduleId) {
 		return Optional.of(this.module);
 	}
+
 }

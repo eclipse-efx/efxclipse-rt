@@ -1,7 +1,13 @@
 package org.eclipse.fx.core.modulesystem;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
+import org.eclipse.fx.core.IOUtils;
 import org.eclipse.fx.core.Version;
 import org.osgi.framework.Bundle;
 
@@ -20,6 +26,29 @@ public class OSGiModule implements Module {
 	@Override
 	public Optional<Version> getVersion() {
 		return Optional.of(new BundleVersion(this.bundle.getVersion()));
+	}
+
+	@Override
+	public Optional<Path> getLocation() {
+		Optional<URL> optUrl = IOUtils.getLocalURL(this.bundle.getResource("META-INF/MANIFEST.MF")); //$NON-NLS-1$
+		if( optUrl.isPresent() ) {
+			URL url = optUrl.get();
+			if( url.getProtocol().equals("file") ) { //$NON-NLS-1$
+				try {
+					Path path = Paths.get(url.toURI());
+					return Optional.of(path.getParent().getParent());
+				} catch (URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else if( url.getProtocol().equals("jar") ) {
+				String path = url.getPath();
+				if( path.startsWith("file:") ) {
+					return Optional.of(Paths.get(URI.create(path.substring(0,path.indexOf('!')))));
+				}
+			}
+		}
+		return null;
 	}
 
 	static class BundleVersion extends Version {
