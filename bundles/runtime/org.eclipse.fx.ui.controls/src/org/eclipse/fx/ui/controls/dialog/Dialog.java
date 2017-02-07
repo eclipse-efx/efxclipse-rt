@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import org.eclipse.fx.ui.controls.JavaFXCompatUtil;
 import org.eclipse.fx.ui.controls.stage.DefaultFramePane;
 import org.eclipse.fx.ui.panes.GridData;
 import org.eclipse.fx.ui.panes.GridData.Alignment;
@@ -26,6 +27,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.beans.value.WritableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -109,6 +111,10 @@ public class Dialog extends DefaultFramePane {
 				Platform.runLater( () -> e.requestFocus());
 			} );
 		}
+		// Fix regression introduced in Java8u102
+		Platform.runLater( () -> {
+			JavaFXCompatUtil.reapplyCSS(this);
+		});
 	}
 
 	@Override
