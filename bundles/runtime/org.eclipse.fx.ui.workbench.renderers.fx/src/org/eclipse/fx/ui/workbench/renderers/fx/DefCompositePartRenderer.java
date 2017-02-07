@@ -33,6 +33,7 @@ import javafx.scene.layout.StackPane;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MCompositePart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
@@ -45,6 +46,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCompositePart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.fx.DefPartRenderer.HandleGroup;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
@@ -221,7 +223,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 
 	static class WFixedSashImpl extends AbstractCompositePartImpl<GridLayoutPane> {
 		private StackPane overlayContainer;
-		
+
 		@Override
 		public void setDialog(Object dialogNode) {
 			@NonNull
@@ -242,13 +244,13 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 						this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 					});
 				}
-				
+
 				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 				this.overlayContainer.getChildren().setAll((Node)dialogNode);
 				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
 			}
 		}
-		
+
 		private static @NonNull GridData toGridData(Map<String, String> dataMap) {
 			GridData gd = new GridData();
 			if (dataMap.containsKey(WCompositePart.FIXED_LAYOUT_WIDTH)) {
@@ -297,7 +299,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 			MPartSashContainerElement domElement2 = widget.getDomElement();
 			if( domElement2 != null ) {
 				GridData gd = toGridData(domElement2.getPersistedState());
-				GridLayoutPane.setConstraint(n, gd);				
+				GridLayoutPane.setConstraint(n, gd);
 			}
 			p.getChildren().add(n);
 		}
@@ -314,11 +316,11 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 
 			for (WLayoutedWidget<MPartSashContainerElement> w : list) {
 				Node n = (Node) w.getStaticLayoutNode();
-				
+
 				MPartSashContainerElement element = w.getDomElement();
 				if( element != null ) {
 					GridData gd = toGridData(element.getPersistedState());
-					GridLayoutPane.setConstraint(n, gd);					
+					GridLayoutPane.setConstraint(n, gd);
 				}
 				nodeList.add(n);
 			}
@@ -338,11 +340,11 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 
 			for (WLayoutedWidget<MPartSashContainerElement> w : list) {
 				Node n = (Node) w.getStaticLayoutNode();
-				
+
 				MPartSashContainerElement element = w.getDomElement();
 				if( element != null ) {
 					GridData gd = toGridData(element.getPersistedState());
-					GridLayoutPane.setConstraint(n, gd);					
+					GridLayoutPane.setConstraint(n, gd);
 				}
 				nodeList.add(n);
 			}
@@ -370,14 +372,14 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 			p.setMarginHeight(0);
 			p.setHorizontalSpacing(0);
 			p.setVerticalSpacing(0);
-			p.setNumColumns(0); 
+			p.setNumColumns(0);
 			return p;
 		}
 
 		@Override
 		public void updateLayout() {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
 
@@ -385,7 +387,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		private StackPane overlayContainer;
-		
+
 		@Override
 		public void setDialog(Object dialogNode) {
 			@NonNull
@@ -406,13 +408,13 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 						this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 					});
 				}
-				
+
 				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 				this.overlayContainer.getChildren().setAll((Node)dialogNode);
 				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
 			}
 		}
-		
+
 		ChangeListener<Number> listener = new ChangeListener<Number>() {
 			boolean queueing;
 
@@ -432,7 +434,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 				}
 			}
 		};
-		
+
 		@Override
 		public void updateLayout() {
 			updateDividers();
@@ -443,12 +445,12 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 			MCompositePart domElement = getDomElement();
 			if( domElement != null ) {
 				BaseRenderer<?, ?> r = (BaseRenderer<?, ?>) domElement.getRenderer();
-				r.syncUIModifications(domElement, this::doRecalcWeight);	
+				r.syncUIModifications(domElement, this::doRecalcWeight);
 			} else {
 				this.logger.error("The domain object should not be null at this point"); //$NON-NLS-1$
 			}
 		}
-		
+
 		void doRecalcWeight() {
 			if (this.state != WidgetState.CREATED) {
 				return;
@@ -465,13 +467,13 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 			for (double d : getWidget().getDividerPositions()) {
 				MPartSashContainerElement element = this.items.get(idx++).getDomElement();
 				if( element != null ) {
-					element.setContainerData((d - prev) * 10 + ""); //$NON-NLS-1$	
+					element.setContainerData((d - prev) * 10 + ""); //$NON-NLS-1$
 				}
 				prev = d;
 			}
 			MPartSashContainerElement element = this.items.get(this.items.size() - 1).getDomElement();
 			if( element != null ) {
-				element.setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$	
+				element.setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$
 			}
 		}
 
@@ -513,9 +515,17 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 			getWidget().setOrientation(horizontal ? Orientation.HORIZONTAL : Orientation.VERTICAL);
 		}
 
+		private static void setResizableWithParent(WLayoutedWidget widget) {
+			MUIElement domElement = widget.getDomElement();
+			if( domElement != null ) {
+				SplitPane.setResizableWithParent((Node)widget.getStaticLayoutNode(), ! domElement.getTags().contains(WSash.TAG_NO_AUTO_RESIZE));
+			}
+		}
+
 		@Override
 		public void addItem(WLayoutedWidget<MPartSashContainerElement> widget) {
 			SplitPane p = getWidget();
+			setResizableWithParent(widget);
 			p.getItems().add((Node) widget.getStaticLayoutNode());
 			this.items.add(widget);
 			updateDividers();
@@ -526,6 +536,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 			SplitPane p = getWidget();
 			List<Node> l = new ArrayList<Node>();
 			for (WLayoutedWidget<MPartSashContainerElement> i : list) {
+				setResizableWithParent(i);
 				l.add((Node) i.getStaticLayoutNode());
 			}
 			p.getItems().addAll(index, l);
@@ -538,6 +549,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 			SplitPane p = getWidget();
 			List<Node> l = new ArrayList<Node>();
 			for (WLayoutedWidget<MPartSashContainerElement> i : list) {
+				setResizableWithParent(i);
 				l.add((Node) i.getStaticLayoutNode());
 			}
 			p.getItems().addAll(l);
