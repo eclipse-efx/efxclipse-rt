@@ -83,7 +83,7 @@ public interface TextRegistry {
 			try {
 				Optional<Supplier<String>> rv = Stream.of(getClass().getMethods())
 					.filter(m -> (key + "_supplier").equals(m.getName())) //$NON-NLS-1$
-					.findFirst().map( m -> new Supplier<String>() {
+					.findFirst().<Supplier<String>>map( m -> new Supplier<String>() {
 
 					@Override
 					public String get() {
