@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.stage;
 
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.NumberUtils;
 
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -124,7 +124,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 						case TOP:
 						{
 							double value = this.height + -1 * (int) deltaY;
-							double constraintedValue = Util.unsignedConstraintValue(
+							double constraintedValue = NumberUtils.unsignedConstraintValue(
 									value,
 									getMinHeight(),
 									getMaxHeight());
@@ -139,7 +139,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 						case BOTTOM:
 						{
 							double value = this.height + deltaY;
-							value = Util.unsignedConstraintValue(
+							value = NumberUtils.unsignedConstraintValue(
 									value,
 									getMinHeight(),
 									getMaxHeight());
@@ -149,7 +149,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 						case LEFT:
 						{
 							double value = this.width + -1 * (int) deltaX;
-							double constraintedValue = Util.unsignedConstraintValue(
+							double constraintedValue = NumberUtils.unsignedConstraintValue(
 									value,
 									getMinWidth(),
 									getMaxWidth());
@@ -165,7 +165,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 						case RIGHT:
 						{
 							double value = this.width + deltaX;
-							value = Util.unsignedConstraintValue(
+							value = NumberUtils.unsignedConstraintValue(
 									value,
 									getMinWidth(),
 									getMaxWidth());
@@ -204,7 +204,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 					if( ne.doubleValue() != -1 ) {
 						if( getScene() != null && getScene().getWindow() != null ) {
 							Window w = getScene().getWindow();
-							getScene().getWindow().setWidth(Util.unsignedConstraintValue(w.getWidth(), getMinWidth(), getMaxWidth()));
+							getScene().getWindow().setWidth(NumberUtils.unsignedConstraintValue(w.getWidth(), getMinWidth(), getMaxWidth()));
 						}
 					}
 				};
@@ -217,7 +217,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 					if( ne.doubleValue() != -1 ) {
 						if( getScene() != null && getScene().getWindow() != null ) {
 							Window w = getScene().getWindow();
-							getScene().getWindow().setHeight(Util.unsignedConstraintValue(w.getHeight(), getMinHeight(), getMaxHeight()));
+							getScene().getWindow().setHeight(NumberUtils.unsignedConstraintValue(w.getHeight(), getMinHeight(), getMaxHeight()));
 						}
 					}
 				};
