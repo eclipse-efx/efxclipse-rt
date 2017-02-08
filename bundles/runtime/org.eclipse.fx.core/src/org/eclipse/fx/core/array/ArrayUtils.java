@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016 BestSolution.at and others.
+ * Copyright (c) 2017 BestSolution.at and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,14 +8,23 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.core;
+package org.eclipse.fx.core.array;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.PrimitiveIterator;
+import java.util.PrimitiveIterator.OfInt;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
+import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 /**
  * Utility methods to deal with arrays
@@ -107,5 +116,49 @@ public class ArrayUtils {
 			}
 		}
 		return rv;
+	}
+
+	/**
+	 * Create a character stream similar to
+	 * {@link Arrays#stream(int[], int, int)}
+	 *
+	 * @param content
+	 *            the content
+	 * @param startInclusive
+	 *            the first index to cover, inclusive
+	 * @param endExclusive
+	 *            index immediately past the last index to cover
+	 * @return stream of characters
+	 */
+	public static IntStream stream(char[] content, int startInclusive, int endExclusive) {
+		OfInt ofInt = new PrimitiveIterator.OfInt() {
+			int cur = startInclusive;
+
+			@Override
+			public boolean hasNext() {
+				return this.cur < endExclusive;
+			}
+
+			@Override
+			public int nextInt() {
+				if (hasNext()) {
+					return content[this.cur];
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+
+			@Override
+			public void forEachRemaining(IntConsumer action) {
+				while (this.cur < endExclusive) {
+					action.accept(content[this.cur]);
+					this.cur++;
+				}
+			}
+
+		};
+		return StreamSupport.intStream(
+				() -> Spliterators.spliterator(ofInt, endExclusive - startInclusive, Spliterator.ORDERED),
+				Spliterator.SUBSIZED | Spliterator.SIZED | Spliterator.ORDERED, false);
 	}
 }
