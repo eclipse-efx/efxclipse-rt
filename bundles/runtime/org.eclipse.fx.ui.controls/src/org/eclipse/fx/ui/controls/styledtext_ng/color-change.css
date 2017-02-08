@@ -1,0 +1,12 @@
+.root {
+	-fx-background-color: black;
+}
+
+.keyword {
+	-efx-styled-bold: true;
+	-efx-fill: #d78b40;
+}
+
+.default {
+	-efx-fill: #b8c4d1;
+}

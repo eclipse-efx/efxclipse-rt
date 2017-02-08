@@ -1,0 +1,8 @@
+.keyword {
+	-efx-styled-bold: true;
+	-efx-fill: rgb(127, 0, 85);
+}
+
+.default {
+	-efx-fill: black;
+}
