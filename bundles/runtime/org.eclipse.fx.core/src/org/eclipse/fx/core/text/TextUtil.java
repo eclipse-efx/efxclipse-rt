@@ -30,6 +30,8 @@ import org.apache.commons.lang.text.StrLookup;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.eclipse.fx.core.IntTuple;
 import org.eclipse.fx.core.Triple;
+import org.eclipse.fx.core.function.BiIntPredicate;
+import org.eclipse.fx.core.function.BiIntToIntFunction;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -349,7 +351,7 @@ public class TextUtil {
 	 * <li>{@link Triple#value3}: the new indices where a "tab" is starts
 	 * now</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param source
 	 *            the source array
 	 * @param tabAdvance
@@ -392,5 +394,95 @@ public class TextUtil {
 		}
 
 		return new Triple<>(rv, tabPositions, newTabPositions);
+	}
+
+	/**
+	 * Replaces all occurences of the provided character in the source
+	 *
+	 * @param source
+	 *            the source
+	 * @param c
+	 *            the character to replace
+	 * @param newChar
+	 *            the replacement
+	 * @return a new array with all character replaced
+	 */
+	public static char[] replaceAll(char[] source, char c, char[] newChar) {
+		StringBuilder b = new StringBuilder(source.length);
+
+		for (int i = 0; i < source.length; i++) {
+			if (source[i] == c) {
+				b.append(newChar);
+			} else {
+				b.append(source[i]);
+			}
+		}
+
+		char[] rv = new char[b.length()];
+		b.getChars(0, b.length(), rv, 0);
+		return rv;
+	}
+
+	/**
+	 * Transform the provided source array by applying the provided function
+	 *
+	 * @param source
+	 *            the source
+	 * @param transformer
+	 *            the transformation function, first argument is the character
+	 *            index, second argument is the character
+	 * @return transformed character array
+	 */
+	public static char[] transform(char[] source, BiIntToIntFunction transformer) {
+		char[] rv = new char[source.length];
+		for (int i = 0; i < source.length; i++) {
+			rv[i] = (char) transformer.apply(i, source[i]);
+		}
+		return rv;
+	}
+
+	/**
+	 * Replace entries matching the provided predicate with the provided char
+	 *
+	 * @param source
+	 *            the source array
+	 * @param c
+	 *            the replacement character
+	 * @param predicate
+	 *            the predicate to decided if a character is replaced, first
+	 *            argument is the character index, second argument is the
+	 *            character
+	 * @return transformed character array
+	 */
+	public static char[] replace(char[] source, char c, BiIntPredicate predicate) {
+		char[] rv = new char[source.length];
+		for (int i = 0; i < source.length; i++) {
+			rv[i] = predicate.test(i, source[i]) ? c : source[i];
+		}
+		return rv;
+	}
+
+	private static String[] BASIC_STRING_CACHE = new String[256];
+
+	/**
+	 * Get the matching string for the char. The string object returned might be
+	 * the same instance.
+	 *
+	 * @param c
+	 *            the character
+	 * @return a (cached) string object
+	 */
+	public static String toString(char c) {
+		String rv = null;
+		if (c < BASIC_STRING_CACHE.length) {
+			rv = BASIC_STRING_CACHE[c];
+			if (rv == null) {
+				BASIC_STRING_CACHE[c] = String.valueOf(c);
+			}
+		}
+		if (rv == null) {
+			rv = String.valueOf(c);
+		}
+		return rv;
 	}
 }
