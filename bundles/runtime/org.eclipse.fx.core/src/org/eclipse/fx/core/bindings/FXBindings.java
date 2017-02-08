@@ -33,26 +33,6 @@ import java.util.function.ToLongFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javafx.beans.binding.Binding;
-import javafx.beans.binding.BooleanExpression;
-import javafx.beans.binding.ListBinding;
-import javafx.beans.binding.ObjectBinding;
-import javafx.beans.binding.StringBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableBooleanValue;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
-import javafx.collections.ObservableList;
-
 import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize;
@@ -70,6 +50,25 @@ import org.eclipse.fx.core.bindings.internal.MapSimpleObjectBinding;
 import org.eclipse.fx.core.bindings.internal.SyncListBinding;
 import org.eclipse.fx.core.bindings.internal.SyncObjectBinding;
 import org.eclipse.fx.core.bindings.internal.TenaryBinding;
+
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.ListBinding;
+import javafx.beans.binding.ObjectBinding;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableBooleanValue;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ObservableList;
 
 /**
  * Collection of JavaFX bean bindings.
@@ -111,6 +110,82 @@ public class FXBindings {
 			}
 		}
 	}
+
+//	public static <E> ObservableList<ObservableList<E>> segmentedList(int segmentSize, ObservableList<E> list) {
+//		ObservableList<ObservableList<E>> rv = FXCollections.observableArrayList();
+//
+//		ObservableList<E> v = null;
+//		for( int i = 0; i < list.size(); i++ ) {
+//			if( i % segmentSize == 0 ) {
+//				rv.add(v = FXCollections.observableArrayList());
+//			}
+//			if( v != null ) {
+//				v.add(list.get(i));
+//			}
+//		}
+//
+//		list.addListener( (Change<? extends E> c) -> {
+//			while( c.next() ) {
+//				if( c.wasReplaced() || c.wasRemoved() ) {
+//					for( int i = 0; i < c.getAddedSize(); i++ ) {
+//						int ii = i + c.getFrom();
+//						int listIndex = ii / segmentSize;
+//						ObservableList<E> target;
+//						if( rv.size() == listIndex ) {
+//							rv.add(target = FXCollections.observableArrayList());
+//						} else {
+//							target = rv.get(listIndex);
+//						}
+//
+//						if( target.size() == ii % segmentSize ) {
+//							target.add(c.getAddedSubList().get(i));
+//						} else {
+//							target.set(ii % segmentSize, c.getAddedSubList().get(i));
+//						}
+//					}
+//
+//					if( c.getAddedSize() < c.getRemovedSize() ) {
+//						int removeIdx = -1;
+//						for( int i = 0; i < c.getRemovedSize() - c.getAddedSize(); i++ ) {
+//							int ii = i + c.getFrom() + c.getAddedSize();
+//							int listIndex = ii / segmentSize;
+//							if( removeIdx == -1 ) {
+//								if( ii % segmentSize == 0 ) {
+//									removeIdx = listIndex;
+//								} else {
+//									rv.get(listIndex).remove(ii % segmentSize);
+//								}
+//							}
+//						}
+//
+//						if( removeIdx != -1 ) {
+//							List<ObservableList<E>> subList = rv.subList(removeIdx, rv.size());
+//							List<ObservableList<E>> tmp = new ArrayList<>(subList);
+//							subList.clear();
+//							tmp.forEach( List::clear );
+//						}
+//					}
+//				} else if( c.wasAdded() ) {
+//					for( int i = 0; i < c.getAddedSize(); i++ ) {
+//						int ii = i + c.getFrom();
+//						int listIndex = ii / segmentSize;
+//						ObservableList<E> target;
+//						if( rv.size() == listIndex ) {
+//							rv.add(target = FXCollections.observableArrayList());
+//						} else {
+//							target = rv.get(listIndex);
+//						}
+//
+//						if( target.size() == ii % segmentSize ) {
+//							target.add(c.getAddedSubList().get(i));
+//						}
+//					}
+//				}
+//			}
+//		});
+//
+//		return rv;
+//	}
 
 	/**
 	 * Create a concatenated list similar to
