@@ -32,7 +32,7 @@ import javafx.stage.Modality;
 
 /**
  * A default implementation for the window
- * 
+ *
  * @since 2.0
  */
 public class DefaultFramePane extends ResizeableFramePane {
@@ -67,7 +67,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 
 	/**
 	 * Create a new pane
-	 * 
+	 *
 	 * @param lightweight
 	 *            <code>true</code> to make it lightweight
 	 */
@@ -78,7 +78,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 	/**
 	 * Create a default window pane (heavyweight) with a default client area as
 	 * {@link #setContent(Node)}
-	 * 
+	 *
 	 * @param contentContainer
 	 *            a contentContainer area
 	 */
@@ -88,7 +88,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 
 	/**
 	 * Create a default frame pane
-	 * 
+	 *
 	 * @param contentContainer
 	 *            the content container
 	 * @param lightweight
@@ -111,6 +111,10 @@ public class DefaultFramePane extends ResizeableFramePane {
 	@Override
 	protected Node createWindowArea() {
 		BorderPane root = new BorderPane();
+		root.setOpacity(1.0);
+		backgroundProperty().addListener( (o,ol,ne) -> {
+			System.err.println(ne);
+		});
 
 		getStyleClass().addAll("default-window", "decorated-root"); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -243,7 +247,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 
 	/**
 	 * Update the client area node
-	 * 
+	 *
 	 * @param o
 	 *            the property
 	 * @param oldClientArea
@@ -278,9 +282,11 @@ public class DefaultFramePane extends ResizeableFramePane {
 		}
 	}
 
+	private static String USER_AGENT_CSS = DefaultFramePane.class.getResource("window.css").toExternalForm(); //$NON-NLS-1$
+
 	@Override
 	public String getUserAgentStylesheet() {
-		return DefaultFramePane.class.getResource("window.css").toExternalForm(); //$NON-NLS-1$
+		return USER_AGENT_CSS;
 	}
 
 }
