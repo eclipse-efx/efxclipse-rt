@@ -5,11 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
-import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.Status.State;
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.bindings.FXBindings;
 import org.eclipse.fx.core.bindings.FXBindings.StatusBinding;
 import org.eclipse.fx.core.bindings.FXCollectors;
@@ -18,10 +16,8 @@ import org.junit.Test;
 
 import javafx.beans.binding.ListBinding;
 import javafx.beans.binding.ObjectBinding;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -63,6 +59,58 @@ public class FXBindingsTest {
 	public static class Address {
 		private StringProperty street = new SimpleStringProperty();
 	}
+
+//	@Test
+//	public void testSegmentedList() {
+//		ObservableList<String> source = FXCollections.observableArrayList();
+//		source.addAll("A","B","C","D","E");
+//		ObservableList<ObservableList<String>> segmentedList = FXBindings.segmentedList(3, source);
+//
+//		Assert.assertEquals(2,segmentedList.size());
+//		Assert.assertEquals("A",segmentedList.get(0).get(0));
+//		Assert.assertEquals("B",segmentedList.get(0).get(1));
+//		Assert.assertEquals("C",segmentedList.get(0).get(2));
+//		Assert.assertEquals("D",segmentedList.get(1).get(0));
+//		Assert.assertEquals("E",segmentedList.get(1).get(1));
+//
+//		// Check replacement
+//		source.set(0,"A0");
+//		Assert.assertEquals("A0",segmentedList.get(0).get(0));
+//		Assert.assertEquals("B",segmentedList.get(0).get(1));
+//		Assert.assertEquals("C",segmentedList.get(0).get(2));
+//		Assert.assertEquals("D",segmentedList.get(1).get(0));
+//		Assert.assertEquals("E",segmentedList.get(1).get(1));
+//
+//		source.setAll("A1","B1");
+//		Assert.assertEquals(1,segmentedList.size());
+//		Assert.assertEquals("A1",segmentedList.get(0).get(0));
+//		Assert.assertEquals("B1",segmentedList.get(0).get(1));
+//
+//		source.setAll("A2","B2","C2","D2","E2");
+//		Assert.assertEquals(2,segmentedList.size());
+//		Assert.assertEquals("A2",segmentedList.get(0).get(0));
+//		Assert.assertEquals("B2",segmentedList.get(0).get(1));
+//		Assert.assertEquals("C2",segmentedList.get(0).get(2));
+//		Assert.assertEquals("D2",segmentedList.get(1).get(0));
+//		Assert.assertEquals("E2",segmentedList.get(1).get(1));
+//
+//		source.clear();
+//		Assert.assertEquals(0,segmentedList.size());
+//
+//		// Add
+//		source.add("A");
+//		Assert.assertEquals(1,segmentedList.size());
+//		Assert.assertEquals("A",segmentedList.get(0).get(0));
+//		source.addAll("B","C","D");
+//		Assert.assertEquals(2,segmentedList.size());
+//		Assert.assertEquals("B",segmentedList.get(0).get(1));
+//		Assert.assertEquals("C",segmentedList.get(0).get(2));
+//		Assert.assertEquals("D",segmentedList.get(1).get(0));
+//
+////		Assert.assertEquals(2,segmentedList.size());
+////		source.add(0,"A00");
+////		Assert.assertEquals(2,segmentedList.size());
+//	}
 
 	@Test
 	public void testBindStream() {
