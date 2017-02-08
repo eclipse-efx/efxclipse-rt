@@ -31,7 +31,7 @@ import org.apache.commons.lang.text.StrSubstitutor;
 import org.eclipse.fx.core.IntTuple;
 import org.eclipse.fx.core.Triple;
 import org.eclipse.fx.core.function.BiIntPredicate;
-import org.eclipse.fx.core.function.BiIntToIntFunction;
+import org.eclipse.fx.core.function.BiIntUnaryOperator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -433,10 +433,10 @@ public class TextUtil {
 	 *            index, second argument is the character
 	 * @return transformed character array
 	 */
-	public static char[] transform(char[] source, BiIntToIntFunction transformer) {
+	public static char[] transform(char[] source, BiIntUnaryOperator transformer) {
 		char[] rv = new char[source.length];
 		for (int i = 0; i < source.length; i++) {
-			rv[i] = (char) transformer.apply(i, source[i]);
+			rv[i] = (char) transformer.applyAsInt(i, source[i]);
 		}
 		return rv;
 	}
