@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -26,10 +27,15 @@ import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
+import org.eclipse.fx.core.geom.Size;
+import org.eclipse.fx.core.text.TextUtil;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -44,10 +50,15 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -72,7 +83,7 @@ public class Util {
 	 *
 	 * @noreference
 	 */
-	public static final boolean MNEMONICS_FIX = ! Boolean.getBoolean("efxclipse.mnemonicfix.disabled"); //$NON-NLS-1$
+	public static final boolean MNEMONICS_FIX = !Boolean.getBoolean("efxclipse.mnemonicfix.disabled"); //$NON-NLS-1$
 
 	/**
 	 * Dump the scene graph to a formatted string
@@ -153,24 +164,24 @@ public class Util {
 		Iterator<Window> impl_getWindows = JavaFXCompatUtil.getAllWindows().iterator();
 
 		List<Window> sortedWindows = new ArrayList<>();
-		Map<Window,List<Window>> parentChildRelation = new HashMap<>();
+		Map<Window, List<Window>> parentChildRelation = new HashMap<>();
 
-		while( impl_getWindows.hasNext() ) {
+		while (impl_getWindows.hasNext()) {
 			Window window = impl_getWindows.next();
 			Window owner;
-			if( window instanceof Stage ) {
-				owner = ((Stage)window).getOwner();
-			} else if( window instanceof PopupWindow ) {
-				owner = ((PopupWindow)window).getOwnerWindow();
+			if (window instanceof Stage) {
+				owner = ((Stage) window).getOwner();
+			} else if (window instanceof PopupWindow) {
+				owner = ((PopupWindow) window).getOwnerWindow();
 			} else {
 				owner = null;
 			}
 
-			if( owner == null ) {
+			if (owner == null) {
 				sortedWindows.add(window);
 			} else {
 				List<Window> list = parentChildRelation.get(owner);
-				if( list == null ) {
+				if (list == null) {
 					list = new ArrayList<>();
 					parentChildRelation.put(owner, list);
 				}
@@ -178,10 +189,10 @@ public class Util {
 			}
 		}
 
-		while( ! parentChildRelation.isEmpty() ) {
-			for( Window rw : sortedWindows.toArray(new Window[0]) ) {
+		while (!parentChildRelation.isEmpty()) {
+			for (Window rw : sortedWindows.toArray(new Window[0])) {
 				List<Window> list = parentChildRelation.remove(rw);
-				if( list != null ) {
+				if (list != null) {
 					sortedWindows.addAll(list);
 				}
 			}
@@ -189,7 +200,7 @@ public class Util {
 
 		Collections.reverse(sortedWindows);
 
-		for( Window window : sortedWindows ) {
+		for (Window window : sortedWindows) {
 			if (!FIND_NODE_EXCLUDE.equals(window.getUserData()) && new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
 				return findNode(window.getScene().getRoot(), screenX, screenY);
 			}
@@ -216,11 +227,10 @@ public class Util {
 			return rv;
 		}
 		Point2D b = n.screenToLocal(screenX, screenY);
-		if (n.getBoundsInLocal().contains(b) && ! FIND_NODE_EXCLUDE.equals(n.getUserData())) {
+		if (n.getBoundsInLocal().contains(b) && !FIND_NODE_EXCLUDE.equals(n.getUserData())) {
 			rv = n;
 			if (n instanceof Parent) {
-				List<Node> cList = ((Parent) n).getChildrenUnmodifiable()
-						.stream().filter( no -> no.isVisible()).collect(Collectors.toList());
+				List<Node> cList = ((Parent) n).getChildrenUnmodifiable().stream().filter(no -> no.isVisible()).collect(Collectors.toList());
 
 				for (Node c : cList) {
 					Node cn = findNode(c, screenX, screenY);
@@ -274,7 +284,8 @@ public class Util {
 	 * @param <E>
 	 *            the source type
 	 * @return the subscription to dispose the binding
-	 * @deprecated use {@link FXObservableUtils#bindContent(List, ObservableList, Function)}
+	 * @deprecated use
+	 *             {@link FXObservableUtils#bindContent(List, ObservableList, Function)}
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static <T, E> Subscription bindContent(List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction) {
@@ -474,18 +485,19 @@ public class Util {
 
 	/**
 	 * Create a binding for text width calculation.
+	 *
 	 * @param text
 	 * @param font
 	 * @return
 	 */
 	public static DoubleBinding createTextWidthBinding(ObservableValue<String> text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
-		return Bindings.createDoubleBinding(()->{
+		return Bindings.createDoubleBinding(() -> {
 			return getTextWidth(text.getValue(), font.getValue(), fontZoomFactor.getValue().doubleValue());
 		}, text, font, fontZoomFactor);
 	}
 
 	public static DoubleBinding createTextWidthBinding(String text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
-		return Bindings.createDoubleBinding(()->{
+		return Bindings.createDoubleBinding(() -> {
 			return getTextWidth(text, font.getValue(), fontZoomFactor.getValue().doubleValue());
 		}, font, fontZoomFactor);
 	}
@@ -497,16 +509,90 @@ public class Util {
 	}
 
 	public static DoubleBinding createTextHeightBinding(String text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
-		return Bindings.createDoubleBinding(()->{
+		return Bindings.createDoubleBinding(() -> {
 			return getTextHeight(text, font.getValue(), fontZoomFactor.getValue().doubleValue());
 		}, font, fontZoomFactor);
 	}
 
 	public static boolean isCopyEvent(MouseEvent event) {
-		if( org.eclipse.fx.core.Util.isMacOS() ) {
+		if (org.eclipse.fx.core.Util.isMacOS()) {
 			return event.isAltDown();
 		} else {
 			return event.isControlDown();
 		}
+	}
+
+	private static Cache<CacheKey, Size> FONT_SIZE_CACHE;
+
+	private static class CacheKey {
+		private final Font f;
+		private final char c;
+
+		CacheKey(Font f, char c) {
+			this.f = f;
+			this.c = c;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + this.c;
+			result = prime * result + ((this.f == null) ? 0 : f.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			CacheKey other = (CacheKey) obj;
+			if (this.c != other.c)
+				return false;
+			if (this.f == null) {
+				if (other.f != null)
+					return false;
+			} else if (!this.f.equals(other.f))
+				return false;
+			return true;
+		}
+	}
+
+	/**
+	 * Get the size for the provided character
+	 *
+	 * @param font
+	 *            the font
+	 * @param c
+	 *            the character
+	 * @return the size
+	 */
+	public static Size getSize(Font font, char c) {
+		if (FONT_SIZE_CACHE == null) {
+			FONT_SIZE_CACHE = CacheBuilder.newBuilder().maximumSize(20).build();
+		}
+		Size rv = FONT_SIZE_CACHE.getIfPresent(new CacheKey(font, c));
+		if (rv == null) {
+			Text t = new Text(TextUtil.toString(c));
+			t.setFont(font);
+			FONT_SIZE_CACHE.put(new CacheKey(font, c), rv = new Size(t.prefWidth(-1), t.prefHeight(-1)));
+		}
+
+		return rv;
+	}
+
+	/**
+	 * Create a simple background fill
+	 *
+	 * @param p
+	 *            the paint
+	 * @return the background
+	 */
+	public static Background getSimpleBackground(Paint p) {
+		return new Background(new BackgroundFill(p, CornerRadii.EMPTY, Insets.EMPTY));
 	}
 }
