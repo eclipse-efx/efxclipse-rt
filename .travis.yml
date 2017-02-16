@@ -1,0 +1,7 @@
+language: java
+
+script:
+- mvn releng/org.eclipse.fx.releng/pom.xml
+
+jdk:
+  - oraclejdk8
