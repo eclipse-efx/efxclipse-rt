@@ -113,6 +113,8 @@ public class ServiceSupplierTestCase {
 		Assert.assertEquals(1, bean.serviceListInjectionCount);
 		Assert.assertSame(SampleServiceA.class,bean.serviceList.get(0).getClass());
 		Assert.assertSame(SampleServiceB.class,bean.serviceList.get(1).getClass());
+		Assert.assertSame(FilterServiceA.class,bean.serviceList.get(2).getClass());
+		Assert.assertSame(FilterServiceB.class,bean.serviceList.get(3).getClass());
 
 	}
 
@@ -223,7 +225,7 @@ public class ServiceSupplierTestCase {
 		};
 
 		Hashtable<String, Object> properties = new Hashtable<>();
-		properties.put("service.ranking", 2); //$NON-NLS-1$
+		properties.put("service.ranking", 52); //$NON-NLS-1$
 		this.registrations.add(context.registerService(TestService.class, t, properties));
 
 		Assert.assertSame(t,bean.service);
@@ -244,6 +246,8 @@ public class ServiceSupplierTestCase {
 		Assert.assertEquals(4, bean.serviceList.size());
 		Assert.assertSame(SampleServiceA.class,bean.serviceList.get(0).getClass());
 		Assert.assertSame(SampleServiceB.class,bean.serviceList.get(1).getClass());
+		Assert.assertSame(FilterServiceA.class,bean.serviceList.get(2).getClass());
+		Assert.assertSame(FilterServiceB.class,bean.serviceList.get(3).getClass());
 	}
 
 	@Test
