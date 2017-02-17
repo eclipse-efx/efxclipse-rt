@@ -1,5 +1,11 @@
 language: java
 
+sudo: false
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+      
 script:
 - mvn -f releng/org.eclipse.fx.releng/pom.xml clean package
 
