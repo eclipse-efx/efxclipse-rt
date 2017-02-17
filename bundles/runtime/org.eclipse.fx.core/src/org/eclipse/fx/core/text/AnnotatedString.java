@@ -22,17 +22,23 @@ import org.eclipse.fx.core.array.ArrayUtils;
 /**
  * {@link CharSequence} who is built from annotated segments
  *
+ * @param <T>
+ *            the annotation type
+ *
  * @since 3.0
  */
-public final class AnnotatedString implements CharSequence {
+public final class AnnotatedString<T> implements CharSequence {
 	final char[] content;
 	final int[][] ranges;
-	final String[][] annotations;
+	final T[][] annotations;
 
 	/**
 	 * Consumes a segment
+	 *
+	 * @param <T>
+	 *            the annotation type
 	 */
-	public interface SegmentConsumer {
+	public interface SegmentConsumer<T> {
 		/**
 		 * Consumes a segment
 		 *
@@ -43,7 +49,7 @@ public final class AnnotatedString implements CharSequence {
 		 * @param annotation
 		 *            the annotations
 		 */
-		public void consume(int start, int end, String[] annotation);
+		public void consume(int start, int end, T[] annotation);
 	}
 
 	/**
@@ -87,13 +93,13 @@ public final class AnnotatedString implements CharSequence {
 		/**
 		 * @return annotations
 		 */
-		public String[] annotations() {
+		public T[] annotations() {
 			return Arrays.copyOf(AnnotatedString.this.annotations[this.idx],
 					AnnotatedString.this.annotations[this.idx].length);
 		}
 	}
 
-	AnnotatedString(char[] content, int[][] ranges, String[][] annotations) {
+	AnnotatedString(char[] content, int[][] ranges, T[][] annotations) {
 		this.content = content;
 		this.ranges = ranges;
 		this.annotations = annotations;
@@ -105,7 +111,7 @@ public final class AnnotatedString implements CharSequence {
 	 * @param consumer
 	 *            the consumer
 	 */
-	public void forEachSegment(SegmentConsumer consumer) {
+	public void forEachSegment(SegmentConsumer<T> consumer) {
 		for (int r = 0; r < this.ranges.length; r++) {
 			consumer.consume(this.ranges[r][0], this.ranges[r][1], this.annotations[r]);
 		}
@@ -115,28 +121,6 @@ public final class AnnotatedString implements CharSequence {
 	 * @return stream of segments
 	 */
 	public Stream<Segment> stream() {
-		// Iterator<Segment> it = new Iterator<Segment>() {
-		// private int cur = 0;
-		//
-		// @Override
-		// public Segment next() {
-		// if( hasNext() ) {
-		// return new Segment(cur++);
-		// } else {
-		// throw new NoSuchElementException();
-		// }
-		//
-		// }
-		//
-		// @Override
-		// public boolean hasNext() {
-		// return this.cur < AnnotatedString.this.ranges.length;
-		// }
-		// };
-		// return StreamSupport.stream(() ->
-		// Spliterators.spliterator(it, this.ranges.length,Spliterator.ORDERED),
-		// Spliterator.SUBSIZED | Spliterator.SIZED | Spliterator.ORDERED,
-		// false);
 		return IntStream.range(0, this.ranges.length).mapToObj(Segment::new);
 
 	}
@@ -187,14 +171,16 @@ public final class AnnotatedString implements CharSequence {
 			}
 		}
 
-		int[][] targetRange = new int[0][0];
-		String[][] targetAnnotation = new String[0][0];
+		int[][] targetRange = Arrays.copyOfRange(this.ranges, 0, 0);
+		@SuppressWarnings("unchecked")
+		Class<T> type = (Class<T>) this.annotations.getClass().getComponentType();
+		T[][] targetAnnotation = ArrayUtils.createArray2Dim(type, 0);
 		if (idx != -1) {
-			targetRange = new int[idx + 1][2];
-			targetAnnotation = new String[idx + 1][0];
+			targetRange = Arrays.copyOf(this.ranges, this.ranges.length - idx);
+			targetAnnotation = Arrays.copyOf(this.annotations, this.annotations.length - idx);
 		}
 
-		return new AnnotatedString(Arrays.copyOfRange(this.content, start, end), targetRange, targetAnnotation);
+		return new AnnotatedString<T>(Arrays.copyOfRange(this.content, start, end), targetRange, targetAnnotation);
 	}
 
 	@Override
@@ -205,19 +191,22 @@ public final class AnnotatedString implements CharSequence {
 	/**
 	 * Create a builder to create an {@link AnnotatedString}
 	 *
+	 * @param type
+	 *            the annotation type
+	 *
 	 * @param capacity
 	 *            the initial capacity
 	 * @return the builder
 	 */
-	public static Builder create(int capacity) {
-		return new Builder(capacity);
+	public static <T> Builder<T> create(Class<T> type, int capacity) {
+		return new BuilderImpl<T>(type, capacity);
 	}
 
-	private static class Struct {
+	private static class Struct<T> {
 		int[] range;
-		String[] annotations;
+		T[] annotations;
 
-		public Struct(int start, int end, String[] annotations) {
+		public Struct(int start, int end, T[] annotations) {
 			this.range = new int[] { start, end };
 			this.annotations = annotations;
 		}
@@ -225,15 +214,11 @@ public final class AnnotatedString implements CharSequence {
 
 	/**
 	 * Builder used to create an {@link AnnotatedString}
+	 *
+	 * @param <T>
+	 *            the annotation type
 	 */
-	public final static class Builder {
-		private StringBuilder builder;
-		private final List<Struct> ranges = new ArrayList<>();
-
-		Builder(int capacity) {
-			this.builder = new StringBuilder(capacity);
-		}
-
+	public interface Builder<T> {
 		/**
 		 * Add the provided the character array
 		 *
@@ -243,11 +228,8 @@ public final class AnnotatedString implements CharSequence {
 		 *            the annotations
 		 * @return the builder
 		 */
-		public Builder add(char[] c, String... annotations) {
-			this.ranges.add(new Struct(this.builder.length(), this.builder.length() + c.length, annotations));
-			this.builder.append(c);
-			return this;
-		}
+		@SuppressWarnings("unchecked")
+		public Builder<T> add(char[] c, T... annotations);
 
 		/**
 		 * Add the provided {@link CharSequence}
@@ -258,25 +240,52 @@ public final class AnnotatedString implements CharSequence {
 		 *            the annotations
 		 * @return the builder
 		 */
-		public Builder add(CharSequence s, String... annotations) {
-			this.ranges.add(new Struct(this.builder.length(), this.builder.length() + s.length(), annotations));
-			this.builder.append(s);
-			return this;
-		}
+		@SuppressWarnings("unchecked")
+		public Builder<T> add(CharSequence s, T... annotations);
 
 		/**
 		 * @return an {@link AnnotatedString} instance
 		 */
-		public AnnotatedString build() {
+		public AnnotatedString<T> build();
+	}
+
+	private final static class BuilderImpl<T> implements Builder<T> {
+		private StringBuilder builder;
+		private final List<Struct<T>> ranges = new ArrayList<>();
+		private final Class<T> clazz;
+
+		BuilderImpl(Class<T> clazz, int capacity) {
+			this.clazz = clazz;
+			this.builder = new StringBuilder(capacity);
+		}
+
+		@Override
+		@SafeVarargs
+		public final Builder<T> add(char[] c, T... annotations) {
+			this.ranges.add(new Struct<T>(this.builder.length(), this.builder.length() + c.length, annotations));
+			this.builder.append(c);
+			return this;
+		}
+
+		@Override
+		@SafeVarargs
+		public final Builder<T> add(CharSequence s, T... annotations) {
+			this.ranges.add(new Struct<T>(this.builder.length(), this.builder.length() + s.length(), annotations));
+			this.builder.append(s);
+			return this;
+		}
+
+		@Override
+		public AnnotatedString<T> build() {
 			char[] content = new char[this.builder.length()];
 			this.builder.getChars(0, this.builder.length(), content, 0);
 
 			int[][] ranges = new int[this.ranges.size()][2];
-			String[][] annotations = new String[this.ranges.size()][0];
+			T[][] annotations = ArrayUtils.createArray2Dim(this.clazz, this.ranges.size());
 			ArrayUtils.fill(ranges, i -> this.ranges.get(i).range);
 			ArrayUtils.fill(annotations, i -> this.ranges.get(i).annotations);
 
-			return new AnnotatedString(content, ranges, annotations);
+			return new AnnotatedString<T>(content, ranges, annotations);
 		}
 	}
 }
