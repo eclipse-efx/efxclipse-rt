@@ -145,7 +145,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					MPart domElement = getDomElement();
 					if (domElement != null) {
 						domElement.getContext().get(EPartService.class).activate(domElement, true);
-						if (!checkFocusControl(getWidget()) && (domElement.getObject() != null)) {
+						if (!checkFocusControl(getStaticLayoutNode()) && (domElement.getObject() != null)) {
 							// ContextInjectionFactory.invoke(domElement.getObject(),
 							// Focus.class, domElement.getContext(), null);
 							// if (!checkFocusControl()) {
