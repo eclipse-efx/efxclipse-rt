@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.core.array;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -160,5 +161,53 @@ public class ArrayUtils {
 		return StreamSupport.intStream(
 				() -> Spliterators.spliterator(ofInt, endExclusive - startInclusive, Spliterator.ORDERED),
 				Spliterator.SUBSIZED | Spliterator.SIZED | Spliterator.ORDERED, false);
+	}
+
+	/**
+	 * Convenience method to create a new array with the specified type
+	 *
+	 * @param elementType
+	 *            the element type
+	 * @param length
+	 *            the length
+	 * @return an array of this type
+	 * @see Array#newInstance(Class, int)
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T[] createArray1Dim(Class<T> elementType, int length) {
+		return (T[]) Array.newInstance(elementType, length);
+	}
+
+	/**
+	 * Convenience method to create a new 2 dimensional array with the specified
+	 * type
+	 *
+	 * @param elementType
+	 *            the element type
+	 * @param lengthLevel1
+	 *            the array length at the 1st level
+	 * @param lengthLevel2
+	 *            the array length at the 2nd level
+	 * @return a new 2 dimensional array
+	 * @see Array#newInstance(Class, int...)
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T[][] createArray2Dim(Class<T> elementType, int lengthLevel1, int lengthLevel2) {
+		return (T[][]) Array.newInstance(elementType, lengthLevel1, lengthLevel2);
+	}
+
+	/**
+	 * Shorthand method for {@link #createArray2Dim(Class, int, int)} with
+	 * length at level 2 equal to 0
+	 *
+	 * @param elementType
+	 *            the element type
+	 * @param lengthLevel1
+	 *            the array length at the 1st level
+	 * @return a new 2 dimensional array
+	 * @see Array#newInstance(Class, int...)
+	 */
+	public static <T> T[][] createArray2Dim(Class<T> elementType, int lengthLevel1) {
+		return createArray2Dim(elementType, lengthLevel1, 0);
 	}
 }
