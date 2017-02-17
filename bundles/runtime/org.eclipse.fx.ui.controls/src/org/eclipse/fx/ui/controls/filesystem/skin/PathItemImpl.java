@@ -21,11 +21,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.stream.Collectors;
 
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import org.eclipse.fx.core.FilesystemService;
 import org.eclipse.fx.core.FilesystemService.Kind;
 import org.eclipse.fx.core.Subscription;
@@ -35,6 +30,11 @@ import org.eclipse.fx.ui.controls.filesystem.FileItem;
 import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
 import org.eclipse.fx.ui.controls.filesystem.RootDirItem;
 import org.eclipse.jdt.annotation.NonNull;
+
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Implementation of the resource item system
@@ -53,7 +53,7 @@ public abstract class PathItemImpl implements ResourceItem {
 
 	@Override
 	public String getName() {
-		return this.path.getFileName().toString();
+		return this.path.getFileName() == null ? this.path.toString() : this.path.getFileName().toString();
 	}
 
 	@Override
