@@ -114,8 +114,10 @@
 		<module>../code/org.eclipse.fx.code.target.feature</module>
 
 		<module>../org.eclipse.fx.updatesite</module>
-		<module>../org.eclipse.fx.runtime.doc</module>
+		<!--  module>../org.eclipse.fx.runtime.doc</module-->
 
+		<!-- Tests -->
+		<module>../../bundles/runtime/org.eclipse.fx.core.di.context.tests</module>
 	</modules>
 
 	<repositories>
