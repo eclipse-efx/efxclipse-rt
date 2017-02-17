@@ -50,6 +50,7 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 @SuppressWarnings("javadoc")
@@ -74,17 +75,18 @@ public class LineNode extends StackPane {
 	private static final String CSS_CLASS_STYLED_TEXT_LINE = "styled-text-line"; //$NON-NLS-1$
 	private static final String CSS_CLASS_CURRENT_LINE = "current-line"; //$NON-NLS-1$
 
+	private static boolean USE_SINGLE_CHARS = Boolean.getBoolean("efxclipse.styledtext.singlechars");
 
 	private int getLineIndex() {
 		return this.index;
 	}
 
 	static TextNode createNode(IntegerProperty tabCharAdvance) {
-		TextNode textNode = new TextNode("",tabCharAdvance); //$NON-NLS-1$
+		TextNode textNode = USE_SINGLE_CHARS ? new TextNodeOriginal("", tabCharAdvance) : new TextNodeSingle("",tabCharAdvance); //$NON-NLS-1$
 		return textNode;
 	}
 
-	public class TextLayer extends HBox {
+	public class TextLayer extends Region {
 
 		protected final ReuseCache<TextNode> cache;
 
@@ -96,7 +98,7 @@ public class LineNode extends StackPane {
 
 			this.cache = new ReuseCache<>( () -> LineNode.createNode(tabCharAdvance));
 			this.cache.addOnActivate(node->{
-				getChildren().add(node);
+				getChildren().add((Node) node);
 //				if (!getChildren().contains(node)) {
 //					getChildren().add(node);
 //				}
@@ -203,7 +205,38 @@ public class LineNode extends StackPane {
 
 		@Override
 		protected void layoutChildren() {
-			super.layoutChildren();
+//			super.layoutChildren();
+			double x = 0;
+			for( Node n : getChildren() ) {
+				if( n.isManaged() && n instanceof TextNode ) {
+					double w = n.prefWidth(-1);
+					n.resizeRelocate(x, 0, w, n.prefHeight(-1));
+					x += w;
+				}
+			}
+		}
+
+//		@Override
+//		protected double computePrefHeight(double width) {
+//			double x = 0;
+//			for( Node n : getChildren() ) {
+//				if( n.isManaged() && n instanceof TextNode ) {
+//					x = Math.max(x,n.prefHeight(-1));
+//				}
+//			}
+//			return x;
+//		}
+
+		@Override
+		protected double computePrefWidth(double height) {
+			double x = 0;
+			for( Node n : getChildren() ) {
+				if( n.isManaged() && n instanceof TextNode ) {
+					double w = n.prefWidth(-1);
+					x += w;
+				}
+			}
+			return x;
 		}
 
 		protected String getText() {
