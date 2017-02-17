@@ -6,6 +6,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 
 public interface TextNode {
 
@@ -38,6 +39,8 @@ public interface TextNode {
 	public abstract void requestLayout();
 
 	public abstract Object getUserData();
+
+	public abstract void setUserData(Object l);
 
 
 }
