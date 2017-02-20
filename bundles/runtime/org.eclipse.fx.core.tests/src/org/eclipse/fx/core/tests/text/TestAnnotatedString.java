@@ -1,5 +1,6 @@
-package org.eclipse.fx.core.text;
+package org.eclipse.fx.core.tests.text;
 
+import org.eclipse.fx.core.text.AnnotatedString;
 import org.eclipse.fx.core.text.AnnotatedString.Builder;
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package org.eclipse.fx.core.property;
+package org.eclipse.fx.core.tests.property;
 
 import java.util.ArrayList;
 import java.util.Arrays;
