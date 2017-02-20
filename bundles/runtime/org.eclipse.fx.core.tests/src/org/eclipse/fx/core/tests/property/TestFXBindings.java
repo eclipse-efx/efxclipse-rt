@@ -28,7 +28,7 @@ import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 
-public class FXBindingsTest {
+public class TestFXBindings {
 
 	public static class Inner {
 		public final StringProperty Value;
