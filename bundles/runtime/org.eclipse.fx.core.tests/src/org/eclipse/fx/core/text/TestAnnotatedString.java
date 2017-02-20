@@ -7,8 +7,8 @@ import org.junit.Test;
 public class TestAnnotatedString {
 	@Test
 	public void testAdd_Char() {
-		Builder builder = AnnotatedString.create(10);
-		AnnotatedString string = builder
+		Builder<String> builder = AnnotatedString.create(String.class,10);
+		AnnotatedString<String> string = builder
 			.add(new char [] { 'H','e','l','l','o' }, "a", "b")
 			.add(new char[] { ' ' })
 			.add(new char [] { 'W','o','r','l','d', '!' }, "c", "d")
