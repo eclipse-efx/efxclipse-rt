@@ -118,6 +118,7 @@
 
 		<!-- Tests -->
 		<module>../../bundles/runtime/org.eclipse.fx.core.di.context.tests</module>
+		<module>../../bundles/runtime/org.eclipse.fx.core.tests</module>
 	</modules>
 
 	<repositories>
