@@ -5,7 +5,7 @@ import org.eclipse.fx.core.text.TextUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TextUtilTests {
+public class TestTextUtil {
 	@Test
 	public void test_replaceTabBySpace() {
 		Triple<char[], int[], int[]> rv = TextUtil.replaceTabBySpace("h	ello	world".toCharArray(), 4);
