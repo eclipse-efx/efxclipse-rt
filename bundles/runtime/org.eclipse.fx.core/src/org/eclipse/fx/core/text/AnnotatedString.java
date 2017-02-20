@@ -52,7 +52,7 @@ public final class AnnotatedString<T> implements CharSequence {
 		 * @param annotation
 		 *            the annotations
 		 */
-		public void consume(int segmentIndex, int start, int end, T[] annotation);
+		public void accept(int segmentIndex, int start, int end, T[] annotation);
 	}
 
 	/**
@@ -116,7 +116,7 @@ public final class AnnotatedString<T> implements CharSequence {
 	 */
 	public void forEachSegment(SegmentConsumer<T> consumer) {
 		for (int r = 0; r < this.ranges.length; r++) {
-			consumer.consume(r, this.ranges[r][0], this.ranges[r][1], this.annotations[r]);
+			consumer.accept(r, this.ranges[r][0], this.ranges[r][1], this.annotations[r]);
 		}
 	}
 
