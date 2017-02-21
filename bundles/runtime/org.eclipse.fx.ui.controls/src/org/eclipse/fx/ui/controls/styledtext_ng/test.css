@@ -6,3 +6,7 @@
 .default {
 	-efx-fill: black;
 }
+
+.comment {
+	-efx-fill: rgb(63, 127, 95);
+}

@@ -10,3 +10,7 @@
 .default {
 	-efx-fill: #b8c4d1;
 }
+
+.comment {
+	-efx-fill: #929292;
+}
