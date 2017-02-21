@@ -1,13 +1,13 @@
 package org.eclipse.fx.ui.controls.styledtext_ng;
 
-import org.eclipse.fx.ui.controls.styledtext.StyledString;
-import org.eclipse.fx.ui.controls.styledtext_ng.internal.SingleCharStyledLineRendererFactory;
+import org.eclipse.fx.core.text.AnnotatedString;
+import org.eclipse.fx.core.text.AnnotatedString.Builder;
+import org.eclipse.fx.ui.controls.styledtext_ng.internal.SingleTextGradientStyledLineRendererFactory;
 import org.eclipse.fx.ui.controls.styledtext_ng.internal.SingleTextStyledLineRendererFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -21,26 +21,31 @@ public class TestStyledLine extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		VBox p = new VBox();
-		StyledString ss = new StyledString();
-		ss.appendSegment("public", "keyword");
-		ss.appendSegment(" ", "default");
-		ss.appendSegment("class", "keyword");
-		ss.appendSegment(" Hello {", "default");
+		Builder<@NonNull String> builder = AnnotatedString.create(String.class, 10);
 
-//		{
-//			StyledLine l = new StyledLine(new SingleCharStyledLineRendererFactory());
-//			l.setFont("monospace", 20);
-//			l.setStyledString(ss);
-//			p.getChildren().add(l);
-//		}
-
+		AnnotatedString<String> ss = builder
+			.add("public", "keyword")
+			.add(" ", "default")
+			.add("class", "keyword")
+			.add(" Hello ", "default")
+			.add("implements", "keyword")
+			.add(" Serializable ","default")
+			.add("/* Allow to serialize */","comment")
+			.add(" {", "default")
+			.build();
 		{
 			StyledLine l = new StyledLine(new SingleTextStyledLineRendererFactory());
-			l.setFont("monospace", 20);
-			l.setStyledString(ss);
+			l.setFont("Courier New", 40);
+			l.setText(ss);
 			p.getChildren().add(l);
 		}
 
+		{
+			StyledLine l = new StyledLine(new SingleTextGradientStyledLineRendererFactory());
+			l.setFont("Courier New", 40);
+			l.setText(ss);
+			p.getChildren().add(l);
+		}
 
 		Scene s = new Scene(p, 400,400);
 
