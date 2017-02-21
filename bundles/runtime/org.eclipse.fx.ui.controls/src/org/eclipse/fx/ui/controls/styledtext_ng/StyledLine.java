@@ -138,7 +138,9 @@ public class StyledLine extends Region {
 				super.invalidated();
 				SegmentNode.this.renderer.combinedAction( () -> {
 					Paint p = get();
-					SegmentNode.this.ranges.forEach(r -> SegmentNode.this.renderer.setForeground(p, r));
+					SegmentNode.this.fillSubscriptions.forEach(Subscription::dispose);
+					SegmentNode.this.fillSubscriptions.clear();
+					SegmentNode.this.fillSubscriptions = SegmentNode.this.ranges.stream().map(r -> SegmentNode.this.renderer.setForeground(p, r)).collect(Collectors.toList());
 				});
 			}
 		};
