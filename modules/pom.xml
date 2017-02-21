@@ -83,6 +83,21 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<failOnError>false</failOnError>
+					<tags>
+						<tag>
+							<name>noimplement</name>
+							<placement>a</placement>
+							<head>@noimplement - This API is only supposed to be referenced</head>
+						</tag>
+						<tag>
+							<name>noreference</name>
+							<placement>a</placement>
+							<head>@noreference - This API is not finalized and should be treated as an implementation detail</head>
+						</tag>
+					</tags>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
