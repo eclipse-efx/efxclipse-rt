@@ -35,9 +35,9 @@
 		<!-- dependency> <groupId>at.bestsolution.efxclipse.eclipse</groupId> <artifactId>org.eclipse.osgi</artifactId>
 			<version>3.11.2</version> </dependency -->
 		<dependency>
-			<groupId>javax.inject</groupId>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
 			<artifactId>javax.inject</artifactId>
-			<version>1</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
