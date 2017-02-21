@@ -1,6 +1,7 @@
 package org.eclipse.fx.ui.controls.styledtext_ng;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Range;
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.text.AnnotatedString;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
 
@@ -38,16 +40,15 @@ public class StyledLine extends Region {
 		getManagedChildren().forEach( c -> c.resizeRelocate(0, 0, c.prefWidth(-1), c.prefHeight(-1)));
 	}
 
-	public void setStyledString(StyledString string) {
+	public void setText(AnnotatedString<String> string) {
 
 		Map<List<String>, SegmentNode> map = new HashMap<>();
 		renderer.combinedAction( () -> {
-			int idx = 0;
 			ranges.forEach(Subscription::dispose);
-			for( StyledStringSegment s : string.getSegmentList() ) {
-				SegmentNode node = map.computeIfAbsent(s.getStyleClass(), l -> new SegmentNode(l,this.renderer));
-				this.ranges.add(node.addRange(new Range(idx, idx += s.getText().length())));
-			}
+			string.forEachSegment( ( segIdx, start, end, annotations) -> {
+				SegmentNode node = map.computeIfAbsent(Arrays.asList(annotations), l -> new SegmentNode(l,this.renderer));
+				this.ranges.add(node.addRange(new Range(start, end)));
+			} );
 			this.renderer.setText(string.toString().toCharArray());
 		});
 
