@@ -124,13 +124,13 @@ public abstract class BaseStyledLineRenderer implements StyledLineRenderer {
 	@Override
 	public Subscription setForeground(Paint paint, org.eclipse.fx.core.Range r) {
 		Range<Integer> closed = Range.closed(r.start, r.end-1);
-		for( PaintRange pr : paintRanges ) {
-			if( pr.range.equals(closed) ) {
-				pr.paint = paint;
-				rebuildFill();
-				return null;
-			}
-		}
+//		for( PaintRange pr : paintRanges ) {
+//			if( pr.range.equals(closed) ) {
+//				pr.paint = paint;
+//				rebuildFill();
+//				return null;
+//			}
+//		}
 
 		PaintRange range = new PaintRange(paint, closed);
 		this.paintRanges.add(range);
