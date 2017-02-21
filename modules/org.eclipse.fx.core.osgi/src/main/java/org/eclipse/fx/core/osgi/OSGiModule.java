@@ -1,4 +1,4 @@
-package org.eclipse.fx.core.modulesystem;
+package org.eclipse.fx.core.osgi;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import org.eclipse.fx.core.IOUtils;
 import org.eclipse.fx.core.Version;
+import org.eclipse.fx.core.modulesystem.Module;
 import org.osgi.framework.Bundle;
 
 public class OSGiModule implements Module {

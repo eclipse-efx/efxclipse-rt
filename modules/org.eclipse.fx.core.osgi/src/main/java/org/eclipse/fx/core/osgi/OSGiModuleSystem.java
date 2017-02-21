@@ -1,12 +1,16 @@
-package org.eclipse.fx.core.modulesystem;
+package org.eclipse.fx.core.osgi;
 
 import java.util.Optional;
 import java.util.WeakHashMap;
 import java.util.stream.Stream;
 
+import org.eclipse.fx.core.modulesystem.Module;
+import org.eclipse.fx.core.modulesystem.ModuleSystem;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
 
+@Component
 public class OSGiModuleSystem implements ModuleSystem {
 	private static OSGiModuleSystem INSTANCE;
 	private WeakHashMap<Bundle, Module> bundleCache = new WeakHashMap<>();
