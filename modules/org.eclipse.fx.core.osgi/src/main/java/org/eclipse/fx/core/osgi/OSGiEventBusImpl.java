@@ -8,7 +8,7 @@
  * Contributors:
  *     Christoph Keimel <c.keimel@emsw.de> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.core.internal;
+package org.eclipse.fx.core.osgi;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -33,7 +33,7 @@ import org.osgi.service.event.EventHandler;
  */
 @Component
 public class OSGiEventBusImpl implements GlobalEventBus {
-	
+
 	/**
 	 * Copy of IEventBroker.DATA as not to pull in the dependency on e4
 	 */
@@ -50,7 +50,7 @@ public class OSGiEventBusImpl implements GlobalEventBus {
 			this.eventAdmin = null;
 		}
 	}
-	
+
 	@Override
 	public <@Nullable T> void publish(Event<T> event, boolean synchronous) {
 		Dictionary<String, Object> d = new Hashtable<String, Object>(2);
@@ -78,12 +78,12 @@ public class OSGiEventBusImpl implements GlobalEventBus {
 			this.eventAdmin.postEvent(event);
 		}
 	}
-	
+
 	@Override
 	public void publish(String topic, Object data, boolean synchronous) {
 		publish(new Topic<Object>(topic), data, synchronous);
 	}
-	
+
 	@Override
 	public <@Nullable T> Subscription subscribe(Topic<T> topic, Consumer<Event<T>> consumer) {
 		@SuppressWarnings("unchecked")
@@ -97,7 +97,7 @@ public class OSGiEventBusImpl implements GlobalEventBus {
 		ServiceRegistration<EventHandler> serviceRegistration = bundleContext.registerService(EventHandler.class, handler, properties);
 		return () -> serviceRegistration.unregister();
 	}
-	
+
 	@Override
 	public <@Nullable T> Subscription subscribe(String topic, Consumer<Event<T>> consumer) {
 		return subscribe(new Topic<T>(topic), consumer);
