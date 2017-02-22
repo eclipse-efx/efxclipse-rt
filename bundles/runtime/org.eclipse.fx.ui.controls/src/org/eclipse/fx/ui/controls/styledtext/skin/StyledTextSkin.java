@@ -531,7 +531,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			int lineIdx = getSkinnable().getContent().getLineAtOffset(offset);
 			Range<Integer> visibleLines = this.content.getVisibleLines();
 			if( ! visibleLines.contains(Integer.valueOf(lineIdx)) ) {
-				int linesVisible = visibleLines.upperEndpoint().intValue();
+				int linesVisible = visibleLines.upperEndpoint().intValue() - visibleLines.lowerEndpoint().intValue();
 				int delta = linesVisible - verticalOffset;
 				int scrollLine = Math.min(lineIdx+delta, getSkinnable().getContent().getLineCount()-1);
 				scrollLineIntoView(scrollLine);
