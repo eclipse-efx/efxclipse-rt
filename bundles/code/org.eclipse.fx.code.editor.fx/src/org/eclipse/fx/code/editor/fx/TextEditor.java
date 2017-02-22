@@ -79,17 +79,17 @@ public class TextEditor {
 	private EditorContextMenuProvider contextMenuProvider;
 
 	private List<Subscription> toDispose = new ArrayList<>();
-	
+
 	private <T> void installListener(Property<T> property, ChangeListener<? super T> listener) {
 		property.addListener(listener);
 		toDispose.add(() -> property.removeListener(listener));
 	}
-	
+
 	private void disposeListeners() {
 		toDispose.forEach(s -> s.dispose());
 		toDispose.clear();
 	}
-	
+
 	public void setContextMenuProvider(EditorContextMenuProvider contextMenuProvider) {
 		this.contextMenuProvider = contextMenuProvider;
 	}
@@ -208,15 +208,15 @@ public class TextEditor {
 			activeInput.setValue(input);
 		}
 		viewer.getTextWidget().setFontZoomFactor(zoomFactor.getValue() != null ? zoomFactor.getValue() : 1.0);
-		
+
 		installListener(viewer.getTextWidget().fontZoomFactorProperty(), (o,ol,ne) -> {
 			zoomFactor.setValue(ne.doubleValue());
 		});
-		
+
 		toDispose.add(
 				eventBus.subscribe(Constants.TOPIC_SELECT_SOURCE, EventBus.data(this::onSourceSelect))
 		);
-		
+
 		if (editingContext instanceof DelegatingEditingContext) {
 			DelegatingEditingContext c = (DelegatingEditingContext) editingContext;
 			c.setDelegate(new EditingContext() {
@@ -253,6 +253,11 @@ public class TextEditor {
 				@Override
 				public void setCaretOffset(int offset) {
 					viewer.getTextWidget().setCaretOffset(offset);
+				}
+
+				@Override
+				public void revealCaret() {
+					viewer.getTextWidget().revealCaret();
 				}
 
 				@Override
@@ -348,15 +353,15 @@ public class TextEditor {
 			activeInput.setValue(null);
 		}
 		this.input = null;
-		
+
 		if (editingContext instanceof DelegatingEditingContext) {
 			// cleanup delegate
 			DelegatingEditingContext c = (DelegatingEditingContext) editingContext;
 			c.dispose();
 		}
-		
+
 		disposeListeners();
-		
+
 		viewer.dispose();
 	}
 }

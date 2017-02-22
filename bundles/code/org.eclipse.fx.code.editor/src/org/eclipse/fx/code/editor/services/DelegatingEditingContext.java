@@ -90,6 +90,11 @@ public class DelegatingEditingContext implements EditingContext {
 	}
 
 	@Override
+	public void revealCaret() {
+		delegate.revealCaret();
+	}
+
+	@Override
 	public IRegion getSelection() {
 		return delegate.getSelection();
 	}

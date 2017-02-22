@@ -27,6 +27,7 @@ public interface EditingContext {
 	void setCaretOffset(int offset);
 
 	void setCaretOffset(int offset, boolean keepSelection);
+	void revealCaret();
 
 	IRegion getSelection();
 	void setSelection(IRegion selection);
