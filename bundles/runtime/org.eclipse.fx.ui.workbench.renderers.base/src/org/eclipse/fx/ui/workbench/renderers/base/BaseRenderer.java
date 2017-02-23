@@ -365,6 +365,16 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		return context;
 	}
 
+	@Override
+	public void destroyRenderingContext(@NonNull M element) {
+		IEclipseContext context = (IEclipseContext) element.getTransientData().get(RENDERING_CONTEXT_KEY);
+		if (context != null) {
+			IEclipseContext ctx = (IEclipseContext) element.getTransientData().get(RENDERING_CONTEXT_KEY);
+			ctx.dispose();
+			element.getTransientData().remove(RENDERING_CONTEXT_KEY);
+		}
+	}
+
 	/**
 	 * Initialize the context
 	 *
@@ -522,21 +532,19 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	@SuppressWarnings({ "unchecked", "all" })
 	@Override
 	public void destroyWidget(@NonNull M element) {
-		if (element.getTransientData().containsKey(RENDERING_CONTEXT_KEY)) {
-			if (element.getWidget() instanceof WWidget<?>) {
-				((WWidget<?>) element.getWidget()).setWidgetState(WidgetState.DISPOSED);
-			}
+		if (element.getWidget() != null) {
+			((W) element.getWidget()).setWidgetState(WidgetState.DISPOSED);
 			unbindWidget(element, (W) element.getWidget());
-
-			IEclipseContext ctx = (IEclipseContext) element.getTransientData().get(RENDERING_CONTEXT_KEY);
-			ctx.dispose();
-			element.getTransientData().remove(RENDERING_CONTEXT_KEY);
 		}
+
+		destroyRenderingContext(element);
 
 		if (element.getVisibleWhen() != null) {
 			this.visibleWhenElements.remove(element);
 		}
 	}
+
+
 
 	private void unbindWidget(@NonNull M me, @NonNull W widget) {
 		widget.setDomElement(null);

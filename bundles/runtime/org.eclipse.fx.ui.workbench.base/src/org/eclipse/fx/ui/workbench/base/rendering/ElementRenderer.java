@@ -48,6 +48,14 @@ public interface ElementRenderer<M extends MUIElement, C> {
 	public IEclipseContext setupRenderingContext(@NonNull M element);
 
 	/**
+	 * Destroy the context used for rendering the element
+	 *
+	 * @param element
+	 *            the element
+	 */
+	public void destroyRenderingContext(@NonNull M element);
+
+	/**
 	 * Bind the widget and the element together
 	 *
 	 * @param element
