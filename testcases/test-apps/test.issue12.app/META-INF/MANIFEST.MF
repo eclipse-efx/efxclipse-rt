@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: My Sample App
+Bundle-SymbolicName: test.issue12.app; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.fx.ui.workbench.fx,
+ org.eclipse.e4.ui.model.workbench,
+ org.eclipse.e4.core.services,
+ org.eclipse.e4.core.di,
+ org.eclipse.e4.ui.di,
+ org.eclipse.e4.core.di.extensions,
+ org.eclipse.fx.ui.theme,
+ org.eclipse.fx.ui.di,
+ org.eclipse.e4.core.contexts,
+ org.eclipse.fx.core.databinding,
+ org.eclipse.fx.ui.databinding,
+ org.eclipse.core.databinding,
+ org.eclipse.core.databinding.observable,
+ org.eclipse.core.databinding.property,
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.e4.ui.services,
+ org.eclipse.fx.ui.services
+Import-Package: javax.inject;version="1.0.0"
+Service-Component: OSGI-INF/services/theme-default.xml
