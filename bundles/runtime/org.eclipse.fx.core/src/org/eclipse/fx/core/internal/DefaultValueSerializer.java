@@ -86,11 +86,22 @@ public class DefaultValueSerializer implements ValueSerializer, RankedService {
 		this.mappings.put(ZonedDateTime.class, new TwoVal<>(ZonedDateTime::parse, (v) -> v.toString()));
 
 		this.mappings.put(Boolean.class, new TwoVal<>(Boolean::valueOf, (v) -> v.toString()));
+		this.mappings.put(boolean.class, new TwoVal<>(Boolean::valueOf, (v) -> v.toString()));
+
 		this.mappings.put(Short.class, new TwoVal<>(Short::valueOf, (v) -> v.toString()));
+		this.mappings.put(short.class, new TwoVal<>(Short::valueOf, (v) -> v.toString()));
+
 		this.mappings.put(Integer.class, new TwoVal<>(Integer::valueOf, (v) -> v.toString()));
+		this.mappings.put(int.class, new TwoVal<>(Integer::valueOf, (v) -> v.toString()));
+
 		this.mappings.put(Long.class, new TwoVal<>(Long::valueOf, (v) -> v.toString()));
+		this.mappings.put(long.class, new TwoVal<>(Long::valueOf, (v) -> v.toString()));
+
 		this.mappings.put(Double.class, new TwoVal<>(Double::valueOf, (v) -> v.toString()));
+		this.mappings.put(double.class, new TwoVal<>(Double::valueOf, (v) -> v.toString()));
+
 		this.mappings.put(Float.class, new TwoVal<>(Float::valueOf, (v) -> v.toString()));
+		this.mappings.put(float.class, new TwoVal<>(Float::valueOf, (v) -> v.toString()));
 
 		this.mappings.put(BigDecimal.class, new TwoVal<>(BigDecimal::new, (v) -> v.toString()));
 		this.mappings.put(BigInteger.class, new TwoVal<>(BigInteger::new, (v) -> v.toString()));
