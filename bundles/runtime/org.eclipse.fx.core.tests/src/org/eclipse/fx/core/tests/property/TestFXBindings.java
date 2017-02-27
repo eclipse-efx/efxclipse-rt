@@ -16,8 +16,11 @@ import org.junit.Test;
 
 import javafx.beans.binding.ListBinding;
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.ReadOnlyListWrapper;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -460,6 +463,25 @@ public class TestFXBindings {
 	}
 
 	@Test
+	public void testConcatOverBoundLists() {
+		ObservableList<String> l0 = FXCollections.observableArrayList();
+		ObservableList<String> l1 = FXCollections.observableArrayList();
+		ListProperty<String> l0Bound = new SimpleListProperty<>(this, "l0Bound", FXCollections.observableArrayList());
+		ListProperty<String> l1Bound = new SimpleListProperty<>(this, "l1Bound", FXCollections.observableArrayList());
+
+		l0.add("Hello");
+		l0.add("World");
+		
+		@SuppressWarnings("unchecked")
+		ListBinding<String> concat = FXBindings.concat(l0Bound, l1Bound);
+		
+		l0Bound.bindContent(l0);
+		l1Bound.bindContent(l1);
+		
+		Assert.assertArrayEquals(new String[] { "Hello", "World" }, concat.toArray());
+	}
+	
+	@Test
 	public void testConcatChangeEvents() {
 		ObservableList<String> l0 = FXCollections.observableArrayList("A","B","C");
 		ObservableList<String> l1 = FXCollections.observableArrayList("E","F","G");
@@ -564,6 +586,23 @@ public class TestFXBindings {
 		}, result.toArray());
 	}
 
+	@Test
+	public void testMapListOverBoundLists() {
+		ObservableList<Integer> lInteger = FXCollections.observableArrayList();
+		ListProperty<Integer> lIntegerBound = new SimpleListProperty<>(this, "lIntegerBound", FXCollections.observableArrayList());
+		ListProperty<String> lString = new SimpleListProperty<>(this, "lString", FXCollections.observableArrayList());
+
+		lInteger.add(1);
+		lInteger.add(2);
+		
+		@SuppressWarnings("unchecked")
+		ListBinding<String> mapList = FXBindings.mapList(lIntegerBound, i -> "test " + i);
+		lIntegerBound.bindContent(lInteger);
+		
+		Assert.assertArrayEquals(new String[] { "test 1", "test 2" }, mapList.toArray());
+	}
+	
+	
 	@Test
 	public void testFlatMapList() {
 

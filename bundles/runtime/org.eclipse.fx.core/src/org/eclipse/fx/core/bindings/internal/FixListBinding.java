@@ -13,7 +13,7 @@ import javafx.collections.WeakListChangeListener;
 
 @SuppressWarnings("javadoc")
 public class FixListBinding<A> extends ListBinding<A> {
-	private ObservableList<A> source;
+	private final ObservableList<A> source;
 	private ObservableList<A> fixed;
 	
 	private ListChangeListener<A> changeListener = this::onSourceChange;
@@ -27,7 +27,7 @@ public class FixListBinding<A> extends ListBinding<A> {
 	private void onSourceChange(Change<? extends A> change) {
 		// make sure that fixed is initialized
 		if (this.fixed == null) {
-			this.fixed = FXCollections.observableArrayList(this.source);
+			this.fixed = FXCollections.observableArrayList();
 		}
 		while (change.next()) {
 			// we handle the setAll change explicitly to produce a nice change event
