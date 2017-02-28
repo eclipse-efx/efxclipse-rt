@@ -108,8 +108,14 @@ public class FXClassLoader extends ClassLoaderHook {
 		Object of = ModuleFinderClass.getMethod("of", Path[].class).invoke(null, new Object[] { new Path[0] }); //$NON-NLS-1$
 		Set<String> set = new HashSet<String>();
 		set.add("javafx.swt"); //$NON-NLS-1$
-//		Configuration cf = configuration.resolveRequires(finder, of, set);
-		Object cf = ConfigurationClass.getMethod("resolveRequires", ModuleFinderClass, ModuleFinderClass, Collection.class).invoke(configuration, finder, of, set); //$NON-NLS-1$
+//		Configuration cf = configuration.resolveRequires(finder, of, set); // since u158 it is only resolve see https://github.com/eclipse/efxclipse-rt/issues/16
+		Object cf;
+		try {
+			cf = ConfigurationClass.getMethod("resolve", ModuleFinderClass, ModuleFinderClass, Collection.class).invoke(configuration, finder, of, set); //$NON-NLS-1$
+		} catch( Throwable t ) {
+			cf = ConfigurationClass.getMethod("resolveRequires", ModuleFinderClass, ModuleFinderClass, Collection.class).invoke(configuration, finder, of, set); //$NON-NLS-1$
+		}
+
 //		Layer layer = boot.defineModulesWithOneLoader(cf, Display.class.getClassLoader());
 		Object layer = LayerClass.getMethod("defineModulesWithOneLoader", ConfigurationClass, ClassLoader.class).invoke(boot, cf, swtClassloader); //$NON-NLS-1$
 //		ClassLoader loader = layer.findLoader("javafx.swt");
