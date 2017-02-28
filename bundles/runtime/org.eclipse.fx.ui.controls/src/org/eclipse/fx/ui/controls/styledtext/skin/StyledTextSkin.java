@@ -437,47 +437,52 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		this.content.lineHeightProperty().bind(getSkinnable().fixedLineHeightProperty());
 
 		this.content.setOnDragExited(e -> {
-			updateInsertionMarkerIndex(-1);
-			e.consume();
+			if( getSkinnable().getEditable() ) {
+				updateInsertionMarkerIndex(-1);
+				e.consume();
+			}
 		});
 
 		this.content.setOnDragOver(e -> {
-			Point2D coords = new Point2D(e.getX(), e.getY());
-			Optional<Integer> lineIndex = this.content.getLineIndex(coords);
+			if( getSkinnable().getEditable() ) {
+				Point2D coords = new Point2D(e.getX(), e.getY());
+				Optional<Integer> lineIndex = this.content.getLineIndex(coords);
 
-			if (lineIndex.isPresent()) {
-				if (lineIndex.get() != -1) {
-					Dragboard db = e.getDragboard();
-					if (db.hasString()) {
-						e.acceptTransferModes(TransferMode.COPY);
-						updateInsertionMarkerIndex(lineIndex.get());
+				if (lineIndex.isPresent()) {
+					if (lineIndex.get() != -1) {
+						Dragboard db = e.getDragboard();
+						if (db.hasString()) {
+							e.acceptTransferModes(TransferMode.COPY);
+							updateInsertionMarkerIndex(lineIndex.get());
+						}
 					}
 				}
-			}
-			else {
-				updateInsertionMarkerIndex(-1);
-			}
+				else {
+					updateInsertionMarkerIndex(-1);
+				}
 
-			e.consume();
+				e.consume();
+			}
 		});
 
 		this.content.setOnDragDropped(e -> {
+			if( getSkinnable().getEditable() ) {
+				if (e.getDragboard().hasContent(DataFormat.PLAIN_TEXT)) {
 
-			if (e.getDragboard().hasContent(DataFormat.PLAIN_TEXT)) {
+					String insert = e.getDragboard().getString();
 
-				String insert = e.getDragboard().getString();
-
-				Point2D coords = new Point2D(e.getX(), e.getY());
-				Optional<Integer> lineIndex = this.content.getLineIndex(coords);
-				if (lineIndex.isPresent() && lineIndex.get() != -1) {
-					getSkinnable().getContent().replaceTextRange(lineIndex.get(), 0, insert);
-					getSkinnable().setCaretOffset(lineIndex.get() + insert.length());
-					getSkinnable().setSelection(new TextSelection(lineIndex.get(), insert.length()));
-					updateInsertionMarkerIndex(-1);
-					e.setDropCompleted(true);
+					Point2D coords = new Point2D(e.getX(), e.getY());
+					Optional<Integer> lineIndex = this.content.getLineIndex(coords);
+					if (lineIndex.isPresent() && lineIndex.get() != -1) {
+						getSkinnable().getContent().replaceTextRange(lineIndex.get(), 0, insert);
+						getSkinnable().setCaretOffset(lineIndex.get() + insert.length());
+						getSkinnable().setSelection(new TextSelection(lineIndex.get(), insert.length()));
+						updateInsertionMarkerIndex(-1);
+						e.setDropCompleted(true);
+					}
 				}
+				e.consume();
 			}
-			e.consume();
 		});
 	}
 

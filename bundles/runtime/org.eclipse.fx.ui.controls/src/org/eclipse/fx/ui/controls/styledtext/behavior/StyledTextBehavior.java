@@ -489,7 +489,7 @@ public class StyledTextBehavior {
 			this.mousePressedOffset = getControl().getContent().getCharCount();
 		}
 
-		if (isInSelection(this.mousePressedOffset)) {
+		if (isInSelection(this.mousePressedOffset) && getControl().getEditable()) {
 			this.pressedInSelection = true;
 			event.consume();
 		} else {
