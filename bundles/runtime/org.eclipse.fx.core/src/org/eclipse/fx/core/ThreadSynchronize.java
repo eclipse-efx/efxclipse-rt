@@ -12,9 +12,15 @@ package org.eclipse.fx.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -32,6 +38,10 @@ import javafx.beans.value.ObservableValue;
  * @since 2.0
  */
 public interface ThreadSynchronize {
+	/**
+	 * @return <code>true</code> if the calling thread is synchronization thread
+	 */
+	boolean isCurrent();
 
 	/**
 	 * Sync with the sync thread and provide a result when done
@@ -186,7 +196,8 @@ public interface ThreadSynchronize {
 	 * @return the subscription
 	 * @since 3.0
 	 */
-	default <T> Subscription delayedChangeExecution(long delay, Consumer<List<T>> consumer, @SuppressWarnings("unchecked") Property<T>... properties) {
+	default <T> Subscription delayedChangeExecution(long delay, Consumer<List<T>> consumer,
+			@SuppressWarnings("unchecked") Property<T>... properties) {
 		Runnable r = () -> {
 			List<T> l = new ArrayList<>();
 			for (Property<T> p : properties) {
@@ -363,5 +374,114 @@ public interface ThreadSynchronize {
 			this.callbacks.clear();
 			this.isBlocked = false;
 		}
+	}
+
+	/**
+	 * <p>
+	 * Create a basic thread synchronization object who forces all executions on
+	 * the same arbitrary thread
+	 * </p>
+	 * <p>
+	 * A {@link ThreadSynchronize} like this is eg useful in JUnit-Test cases
+	 * </p>
+	 * @return an thread synchronizer
+	 */
+	public static ThreadSynchronize createBasicThreadSyncronize() {
+		class BasicThreadSynchronize implements ThreadSynchronize {
+			private AtomicReference<Runnable> runnableRef = new AtomicReference<>();
+
+			private final Thread thread = new Thread() {
+				@Override
+				public void run() {
+					BasicThreadSynchronize.this.runnableRef.get().run();
+				}
+			};
+			private ExecutorService executor = Executors.newSingleThreadExecutor( r -> {
+				this.runnableRef.set(r);
+				this.thread.setDaemon(true);
+				return this.thread;
+			});
+			private Timer timer = new Timer(true);
+
+			@Override
+			public <V> V syncExec(Callable<V> callable, V defaultValue) {
+				V rv;
+				try {
+					rv = CompletableFuture.supplyAsync(() -> {
+						try {
+							return callable.call();
+						} catch (Exception e) {
+							throw ExceptionUtils.wrap(e);
+						}
+
+					}, this.executor).get();
+				} catch (InterruptedException | ExecutionException e) {
+					throw new RuntimeException(e);
+				}
+				return rv == null ? defaultValue : rv;
+			}
+
+			@Override
+			public void syncExec(Runnable runnable) {
+				try {
+					CompletableFuture.supplyAsync(() -> {
+						runnable.run();
+						return null;
+					}, this.executor).get();
+				} catch (InterruptedException | ExecutionException e) {
+					throw new RuntimeException(e);
+				}
+			}
+
+			@Override
+			public <V> Future<V> asyncExec(Callable<V> callable) {
+				return CompletableFuture.supplyAsync(() -> {
+					try {
+						return callable.call();
+					} catch (Exception e) {
+						throw ExceptionUtils.wrap(e);
+					}
+				}, this.executor);
+			}
+
+			@Override
+			public void asyncExec(Runnable runnable) {
+				CompletableFuture.runAsync(runnable, this.executor);
+			}
+
+			@Override
+			public Subscription scheduleExecution(long delay, Runnable runnable) {
+				TimerTask task = new TimerTask() {
+
+					@Override
+					public void run() {
+						asyncExec(runnable);
+					}
+				};
+				this.timer.schedule(task, delay);
+				return () -> {
+					task.cancel();
+				};
+			}
+
+			@Override
+			public <T> CompletableFuture<T> scheduleExecution(long delay, Callable<T> runnable) {
+				return CompletableFuture.supplyAsync(() -> {
+					try {
+						Thread.sleep(delay);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return syncExec(runnable, null);
+				});
+			}
+
+			@Override
+			public boolean isCurrent() {
+				return this.thread == Thread.currentThread();
+			}
+		}
+		return new BasicThreadSynchronize();
 	}
 }

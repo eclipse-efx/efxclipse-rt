@@ -30,6 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.util.Duration;
 
 /**
@@ -161,4 +162,8 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 		return future;
 	}
 
+	@Override
+	public boolean isCurrent() {
+		return Platform.isFxApplicationThread();
+	}
 }

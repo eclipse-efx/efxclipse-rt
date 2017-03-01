@@ -166,4 +166,9 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 		return future;
 	}
 
+	@Override
+	public boolean isCurrent() {
+		return Display.getThread() == Thread.currentThread();
+	}
+
 }
