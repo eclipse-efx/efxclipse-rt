@@ -207,10 +207,12 @@ public class LineNode extends StackPane {
 		protected void layoutChildren() {
 //			super.layoutChildren();
 			double x = 0;
+			double h = getHeight();
 			for( Node n : getChildren() ) {
 				if( n.isManaged() && n instanceof TextNode ) {
 					double w = n.prefWidth(-1);
-					n.resizeRelocate(x, 0, w, n.prefHeight(-1));
+					double y = h / 2 - n.prefHeight(-1) / 2;
+					n.resizeRelocate(x, y, w, n.prefHeight(-1));
 					x += w;
 				}
 			}
