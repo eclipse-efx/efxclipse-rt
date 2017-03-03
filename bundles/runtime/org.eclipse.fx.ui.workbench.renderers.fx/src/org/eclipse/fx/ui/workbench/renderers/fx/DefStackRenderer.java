@@ -38,6 +38,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
@@ -59,11 +60,14 @@ import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
@@ -112,6 +116,8 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		@NonNull
 		private final MPartStack domainElement;
+		private BorderPane pane;
+		private Label titleLabel;
 
 		@Inject
 		public StackWidgetImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartStack domainElement) {
@@ -252,6 +258,19 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				@SuppressWarnings("synthetic-access")
 				@Override
 				public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+					if( StackWidgetImpl.this.titleLabel != null ) {
+						StackWidgetImpl.this.titleLabel.graphicProperty().unbind();
+						StackWidgetImpl.this.titleLabel.textProperty().unbind();
+
+						if( newValue == null ) {
+							StackWidgetImpl.this.titleLabel.setGraphic(null);
+							StackWidgetImpl.this.titleLabel.setText(null);
+						} else {
+							StackWidgetImpl.this.titleLabel.graphicProperty().bind(newValue.graphicProperty());
+							StackWidgetImpl.this.titleLabel.textProperty().bind(newValue.textProperty());
+						}
+					}
+
 					if (newValue == null || (getWidgetState() != WidgetState.CREATED && getWidgetState() != WidgetState.IN_SETUP)) {
 						return;
 					}
@@ -311,8 +330,22 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public TabPane getWidgetNode() {
-			return getWidget();
+		public BorderPane getWidgetNode() {
+			if( this.pane == null ) {
+				this.pane = new BorderPane();
+
+				if( this.domainElement.getTags().contains(WStack.SHOW_TOP_TRIM_AREA_TAG) ) {
+					HBox box = new HBox();
+					box.getStyleClass().add("tool-bar"); //$NON-NLS-1$
+					this.titleLabel = new Label();
+					box.getChildren().add(this.titleLabel);
+					this.pane.setTop(box);
+				}
+
+				this.pane.setCenter(getWidget());
+			}
+
+			return this.pane;
 		}
 
 		@Override
@@ -709,7 +742,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			this.initCallback = null;
 		}
 	}
-	
+
 	static class StackPaneWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
 		@NonNull
 		List<@NonNull WStackItem<Object, Node>> items = new ArrayList<>();
@@ -735,11 +768,11 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		public StackPane getWidget() {
 			return (StackPane) super.getWidget();
 		}
-		
+
 		private void addChildNode(WStackItem<Object, Node> item) {
 			addStackPaneItem((StackPaneItemImpl)item);
 		}
-		
+
 		@Override
 		public void addItem(WStackItem<Object, Node> item) {
 			this.items.add(item);
@@ -765,7 +798,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			});
 			getWidget().getChildren().addAll(index, collect);
 		}
-		
+
 		private void addStackPaneItem(StackPaneItemImpl item) {
 			Node node = item.getNativeItem();
 			if (node != null) {
@@ -781,7 +814,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			if (this.items.size() > index) {
 				StackPaneItemImpl item = (StackPaneItemImpl)this.items.get(index);
 				item.handleSelection();
-				
+
 				getWidget().getChildren().forEach(node -> {
 					node.setVisible(false);
 					node.setManaged(false);
@@ -837,12 +870,12 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			// no drag in this control
 		}
 	}
-	
+
 	static class StackPaneItemImpl implements WStackItem<Object, Node> {
 		private WCallback<WStackItem<Object, Node>, Node> initCallback;
 		private StackPane internalPane = new StackPane();
 		private MStackElement domElement;
-		
+
 		void handleSelection() {
 			if (this.initCallback != null) {
 				this.internalPane.getChildren().add(this.initCallback.call(this));
@@ -880,5 +913,5 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			this.initCallback = null;
 		}
 	}
-	
+
 }

@@ -59,6 +59,12 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	public static final String STATE_KEY_TABS_LOCATION = "fx.stack.tabslocation"; //$NON-NLS-1$
 
 	/**
+	 * Show a trim area
+	 * @since 3.0.0
+	 */
+	public static final String SHOW_TOP_TRIM_AREA_TAG = "showTopTrimArea"; //$NON-NLS-1$
+
+	/**
 	 * Abstraction representing an item in the stack
 	 *
 	 * @param <I>
