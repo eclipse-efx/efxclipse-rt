@@ -29,6 +29,7 @@ import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.core.bindings.FXBindings;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.fx.EMFUri;
@@ -52,6 +53,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import com.google.common.base.Strings;
 
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -113,6 +118,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		@NonNull
 		@Inject
 		ModelService modelService;
+
+		@Inject
+		GraphicsLoader graphicsLoader;
 
 		@NonNull
 		private final MPartStack domainElement;
@@ -259,14 +267,15 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				@Override
 				public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
 					if( StackWidgetImpl.this.titleLabel != null ) {
-						StackWidgetImpl.this.titleLabel.graphicProperty().unbind();
 						StackWidgetImpl.this.titleLabel.textProperty().unbind();
+						StackWidgetImpl.this.titleLabel.graphicProperty().unbind();
 
-						if( newValue == null ) {
-							StackWidgetImpl.this.titleLabel.setGraphic(null);
-							StackWidgetImpl.this.titleLabel.setText(null);
-						} else {
-							StackWidgetImpl.this.titleLabel.graphicProperty().bind(newValue.graphicProperty());
+						StackWidgetImpl.this.titleLabel.setGraphic(null);
+						StackWidgetImpl.this.titleLabel.setText(null);
+
+						if( newValue != null ) {
+							StackItemImpl d = (StackItemImpl) newValue.getUserData();
+							StackWidgetImpl.this.titleLabel.graphicProperty().bind(FXBindings.map(d.iconUri, (u) -> StackWidgetImpl.this.graphicsLoader.getGraphicsNode(u)));
 							StackWidgetImpl.this.titleLabel.textProperty().bind(newValue.textProperty());
 						}
 					}
@@ -434,6 +443,8 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		private String label;
 		private boolean dirty;
 
+		private ObjectProperty<org.eclipse.fx.core.URI> iconUri = new SimpleObjectProperty<>(this, "iconUri", null); //$NON-NLS-1$
+
 		@Inject
 		public StackItemImpl(@Named(UIEvents.UILabel.LOCALIZED_LABEL) @Optional String label, @Named(UIEvents.Dirtyable.DIRTY) @Optional boolean dirty) {
 			this.label = label;
@@ -540,8 +551,10 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		public void setIcon(@Named(UIEvents.UILabel.ICONURI) @Optional String iconUri) {
 			if (!Strings.isNullOrEmpty(iconUri)) {
 				EMFUri uri = new EMFUri(URI.createURI(iconUri));
+				this.iconUri.set(uri);
 				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(uri));
 			} else {
+				this.iconUri.set(null);
 				getWidget().setGraphic(null);
 			}
 		}
