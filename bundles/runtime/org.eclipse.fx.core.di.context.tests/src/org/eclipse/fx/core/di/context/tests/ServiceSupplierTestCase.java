@@ -1,5 +1,10 @@
 package org.eclipse.fx.core.di.context.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -10,7 +15,6 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.di.Service;
 import org.eclipse.fx.core.observable.BaseValueObservable;
 import org.eclipse.fx.core.observable.ValueObservable.OString;
@@ -18,8 +22,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 public class ServiceSupplierTestCase {
@@ -78,6 +82,17 @@ public class ServiceSupplierTestCase {
 			this.serviceList = serviceList;
 			this.serviceListInjectionCount++;
 		}
+	}
+
+	public static class TestDisabledBean {
+		@Inject
+		@Optional
+		@Service(filterExpression = "(component=disabled)")
+		TestService disabledService;
+
+		@Inject
+		@Service(filterExpression = "(component=disabled)")
+		List<TestService> services;
 	}
 
 	static class StringFilterObs extends BaseValueObservable<String> implements OString {
@@ -266,5 +281,52 @@ public class ServiceSupplierTestCase {
 		this.registrations.add(context.registerService(TestService.class, t, properties));
 
 		Assert.assertSame(SampleServiceA.class,bean.service.getClass());
+	}
+
+	@Test
+	public void testOptionalReferences() throws InterruptedException {
+		BundleContext context = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(context);
+		TestDisabledBean bean = ContextInjectionFactory.make(TestDisabledBean.class, serviceContext);
+
+		assertNull(bean.disabledService);
+		assertEquals(0, bean.services.size());
+
+		ServiceReference<ComponentEnabler> ref = context.getServiceReference(ComponentEnabler.class);
+		ComponentEnabler enabler = context.getService(ref);
+		try {
+			enabler.enableDisabledServiceA();
+			// give the service registry and the injection some time
+			Thread.sleep(100);
+			assertNotNull(bean.disabledService);
+			assertEquals(1, bean.services.size());
+			assertSame(DisabledServiceA.class, bean.disabledService.getClass());
+
+			enabler.enableDisabledServiceB();
+			// give the service registry and the injection some time
+			Thread.sleep(100);
+			assertNotNull(bean.disabledService);
+			assertEquals(2, bean.services.size());
+			assertSame(DisabledServiceB.class, bean.disabledService.getClass());
+
+			enabler.disableDisabledServiceB();
+			// give the service registry and the injection some time
+			Thread.sleep(100);
+			assertNotNull(bean.disabledService);
+			assertEquals(1, bean.services.size());
+			assertSame(DisabledServiceA.class, bean.disabledService.getClass());
+
+			enabler.disableDisabledServiceA();
+			// give the service registry and the injection some time
+			Thread.sleep(100);
+			assertNull(bean.disabledService);
+			assertEquals(0, bean.services.size());
+		} finally {
+			enabler.disableDisabledServiceA();
+			enabler.disableDisabledServiceB();
+			// give the service registry and the injection some time to ensure
+			// clear state after this test
+			Thread.sleep(100);
+		}
 	}
 }

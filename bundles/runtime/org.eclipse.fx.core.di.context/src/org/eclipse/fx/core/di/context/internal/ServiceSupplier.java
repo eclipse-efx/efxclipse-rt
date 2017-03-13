@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 BestSolution.at and others.
+ * Copyright (c) 2014, 2017 BestSolution.at and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import org.eclipse.e4.core.di.IInjector;
+import org.eclipse.e4.core.di.InjectionException;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
@@ -38,6 +39,10 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.log.LogService;
 
 /**
  * Supplier for {@link Service}
@@ -48,6 +53,17 @@ import org.osgi.service.component.annotations.Component;
 @Component(service=ExtendedObjectSupplier.class,property="dependency.injection.annotation:String=org.eclipse.fx.core.di.Service")
 public class ServiceSupplier extends ExtendedObjectSupplier {
 
+	LogService logService;
+	
+	@Reference(cardinality=ReferenceCardinality.OPTIONAL, policy=ReferencePolicy.DYNAMIC)
+	void setLogService(LogService logService) {
+		this.logService = logService;
+	}
+	
+	void unsetLogService(LogService logService) {
+		this.logService = null;
+	}
+	
 	static class ServiceHandler implements ServiceListener {
 		private final ServiceSupplier supplier;
 		final Set<IRequestor> requestors = new HashSet<>();
@@ -87,8 +103,13 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 							try {
 								r.resolveArguments(false);
 								r.execute();
-							} catch(Throwable t) {
-								t.printStackTrace();
+							} catch(InjectionException e) {
+								if (this.supplier.logService != null) {
+									this.supplier.logService.log(LogService.LOG_ERROR, "Invalid filter expression", e); //$NON-NLS-1$
+								} else {
+									// fallback if no LogService is available
+									e.printStackTrace();
+								}
 							}
 						});
 						break;
@@ -119,64 +140,78 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 		return handleSingle(b, desiredType, requestor, descriptor, track && qualifier.dynamic(), qualifier);
 	}
 
-	private Object handleSingle(Bundle bundle, Type t, IRequestor requestor, IObjectDescriptor descriptor, boolean track, Service qualifier) {
+	private Object handleSingle(Bundle bundle, Type t, IRequestor requestor, IObjectDescriptor descriptor,
+			boolean track, Service qualifier) {
 		BundleContext context = bundle.getBundleContext();
 		if (context == null) {
 			context = FrameworkUtil.getBundle(getClass()).getBundleContext();
 		}
 
 		@SuppressWarnings("unchecked")
-		Class<Object> cl = t instanceof ParameterizedType ? (Class<Object>) ((ParameterizedType) t).getRawType() : (Class<Object>) t;
+		Class<Object> cl = t instanceof ParameterizedType ? (Class<Object>) ((ParameterizedType) t).getRawType()
+				: (Class<Object>) t;
+		Object result = IInjector.NOT_A_VALUE;
 		try {
-			{
-				String filter = qualifier.filterExpression() != null && ! qualifier.filterExpression().isEmpty() ? qualifier.filterExpression() : null;
+			String filter = qualifier.filterExpression() != null && !qualifier.filterExpression().isEmpty()
+					? qualifier.filterExpression()
+					: null;
 
-				if( filter == null && qualifier.dynamicFilterExpression() != OString.class ) {
-					Requestor<?> r = (Requestor<?>) requestor;
-					OString obs = this.obsStore.get(r);
-					if( obs == null ) {
-						obs = r.getInjector().make(qualifier.dynamicFilterExpression(), r.getPrimarySupplier());
-						this.obsStore.put(r, obs);
-						if( obs != null ) {
-							obs.onValueChange( (o,ol,ne) -> {
-								if( ! r.isValid() ) {
-									this.obsStore.remove(r);
-									o.dispose();
-								} else {
-									try {
-										r.resolveArguments(false);
-										r.execute();
-									} catch(Throwable th) {
-										th.printStackTrace();
+			if (filter == null && qualifier.dynamicFilterExpression() != OString.class) {
+				Requestor<?> r = (Requestor<?>) requestor;
+				OString obs = this.obsStore.get(r);
+				if (obs == null) {
+					obs = r.getInjector().make(qualifier.dynamicFilterExpression(), r.getPrimarySupplier());
+					this.obsStore.put(r, obs);
+					if (obs != null) {
+						obs.onValueChange((o, ol, ne) -> {
+							if (!r.isValid()) {
+								this.obsStore.remove(r);
+								o.dispose();
+							} else {
+								try {
+									r.resolveArguments(false);
+									r.execute();
+								} catch (InjectionException e) {
+									if (this.logService != null) {
+										this.logService.log(LogService.LOG_ERROR, "Invalid filter expression", e); //$NON-NLS-1$
+									} else {
+										// fallback if no LogService is
+										// available
+										e.printStackTrace();
 									}
 								}
-							});
-						}
-					}
-
-					if( obs != null ) {
-						filter = obs.getValue();
+							}
+						});
 					}
 				}
 
-				ServiceReference<?>[] serviceReferences = context.getServiceReferences(cl.getName(), filter);
-				if( serviceReferences != null ) {
-					Arrays.sort(serviceReferences);
+				if (obs != null) {
+					filter = obs.getValue();
+				}
+			}
 
-					if( serviceReferences.length > 0 ) {
-						if( track ) {
-							trackService(context, cl, requestor);
-						}
-						return context.getService(serviceReferences[serviceReferences.length-1]);
-					}
+			ServiceReference<?>[] serviceReferences = context.getServiceReferences(cl.getName(), filter);
+			if (serviceReferences != null) {
+				Arrays.sort(serviceReferences);
+
+				if (serviceReferences.length > 0) {
+					result = context.getService(serviceReferences[serviceReferences.length - 1]);
 				}
 			}
 		} catch (InvalidSyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (this.logService != null) {
+				this.logService.log(LogService.LOG_ERROR, "Invalid filter expression", e); //$NON-NLS-1$
+			} else {
+				// fallback if no LogService is available
+				e.printStackTrace();
+			}
 		}
 
-		return IInjector.NOT_A_VALUE;
+		if (track) {
+			trackService(context, cl, requestor);
+		}
+
+		return result;
 	}
 
 	private List<Object> handleCollection(Bundle bundle, Type t, IRequestor requestor, boolean track, Service qualifier) {
@@ -207,8 +242,13 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 								try {
 									r.resolveArguments(false);
 									r.execute();
-								} catch(Throwable th) {
-									th.printStackTrace();
+								} catch(InjectionException e) {
+									if (this.logService != null) {
+										this.logService.log(LogService.LOG_ERROR, "Invalid filter expression", e); //$NON-NLS-1$
+									} else {
+										// fallback if no LogService is available
+										e.printStackTrace();
+									}
 								}
 							}
 						});
@@ -236,8 +276,12 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 				trackService(context, cl, requestor);
 			}
 		} catch (InvalidSyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (this.logService != null) {
+				this.logService.log(LogService.LOG_ERROR, "Invalid filter expression", e); //$NON-NLS-1$
+			} else {
+				// fallback if no LogService is available
+				e.printStackTrace();
+			}
 		}
 
 		return rv;
