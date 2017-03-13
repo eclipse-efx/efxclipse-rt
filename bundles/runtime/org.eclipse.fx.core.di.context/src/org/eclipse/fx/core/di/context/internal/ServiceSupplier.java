@@ -104,12 +104,7 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 								r.resolveArguments(false);
 								r.execute();
 							} catch(InjectionException e) {
-								if (this.supplier.logService != null) {
-									this.supplier.logService.log(LogService.LOG_ERROR, "Invalid filter expression", e); //$NON-NLS-1$
-								} else {
-									// fallback if no LogService is available
-									e.printStackTrace();
-								}
+								this.supplier.logError("Injection failed", e); //$NON-NLS-1$
 							}
 						});
 						break;
@@ -172,13 +167,7 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 									r.resolveArguments(false);
 									r.execute();
 								} catch (InjectionException e) {
-									if (this.logService != null) {
-										this.logService.log(LogService.LOG_ERROR, "Invalid filter expression", e); //$NON-NLS-1$
-									} else {
-										// fallback if no LogService is
-										// available
-										e.printStackTrace();
-									}
+									logError("Injection failed", e); //$NON-NLS-1$
 								}
 							}
 						});
@@ -199,12 +188,7 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 				}
 			}
 		} catch (InvalidSyntaxException e) {
-			if (this.logService != null) {
-				this.logService.log(LogService.LOG_ERROR, "Invalid filter expression", e); //$NON-NLS-1$
-			} else {
-				// fallback if no LogService is available
-				e.printStackTrace();
-			}
+			logError("Invalid filter expression", e); //$NON-NLS-1$
 		}
 
 		if (track) {
@@ -243,12 +227,7 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 									r.resolveArguments(false);
 									r.execute();
 								} catch(InjectionException e) {
-									if (this.logService != null) {
-										this.logService.log(LogService.LOG_ERROR, "Invalid filter expression", e); //$NON-NLS-1$
-									} else {
-										// fallback if no LogService is available
-										e.printStackTrace();
-									}
+									logError("Injection failed", e); //$NON-NLS-1$
 								}
 							}
 						});
@@ -276,12 +255,7 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 				trackService(context, cl, requestor);
 			}
 		} catch (InvalidSyntaxException e) {
-			if (this.logService != null) {
-				this.logService.log(LogService.LOG_ERROR, "Invalid filter expression", e); //$NON-NLS-1$
-			} else {
-				// fallback if no LogService is available
-				e.printStackTrace();
-			}
+			logError("Invalid filter expression", e); //$NON-NLS-1$
 		}
 
 		return rv;
@@ -295,5 +269,19 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 			return h;
 		});
 		handler.requestors.add(requestor);
+	}
+	
+	/**
+	 * Method to log an exception.
+	 * @param message The log message.
+	 * @param e The exception that should be logged.
+	 */
+	void logError(String message, Throwable e) {
+		if (this.logService != null) {
+			this.logService.log(LogService.LOG_ERROR, message, e);
+		} else {
+			// fallback if no LogService is available
+			e.printStackTrace();
+		}
 	}
 }
