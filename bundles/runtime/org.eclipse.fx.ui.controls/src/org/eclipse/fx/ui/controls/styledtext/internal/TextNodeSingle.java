@@ -38,6 +38,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.PathElement;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
 public class TextNodeSingle extends Pane implements TextNode {
 
@@ -207,6 +208,7 @@ public class TextNodeSingle extends Pane implements TextNode {
 		this.tabCharAdvance = tabCharAdvance;
 		this.originalText = text;
 		this.text = new Text();
+		this.text.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
 		this.text.fillProperty().bind(fillProperty());
 		getStyleClass().add("styled-text-node"); //$NON-NLS-1$
 //		setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
