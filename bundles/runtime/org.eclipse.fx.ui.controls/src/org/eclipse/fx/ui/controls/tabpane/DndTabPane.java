@@ -92,6 +92,9 @@ public class DndTabPane extends TabPane {
 			if (newValue != null) {
 				Skin<?> skin = getSkin();
 				if (skin != null) {
+					if (this.setup != null) {
+						teardown(this.setup);
+					}
 					setupDnd(skin, setup);
 				}
 			}
