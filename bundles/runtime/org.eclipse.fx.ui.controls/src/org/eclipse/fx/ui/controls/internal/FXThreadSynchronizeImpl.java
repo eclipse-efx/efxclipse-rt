@@ -37,7 +37,7 @@ import javafx.util.Duration;
  * JavaFX UI-Thread
  */
 @Component
-public class FXThreadSynchronize implements ThreadSynchronize {
+public class FXThreadSynchronizeImpl implements ThreadSynchronize {
 	private LoggerFactory factory;
 	private Logger logger;
 

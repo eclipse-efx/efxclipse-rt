@@ -33,7 +33,7 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.ui.controls.styledtext.Under
  OSGI-INF/services/org.eclipse.fx.ui.controls.image.internal.FontGraphicNodeProvider.xml,
  OSGI-INF/services/org.eclipse.fx.ui.controls.image.internal.FXMLNodeProvider.xml,
  OSGI-INF/services/org.eclipse.fx.ui.controls.image.internal.ImageClipNodeProvider.xml,
- OSGI-INF/services/org.eclipse.fx.ui.controls.internal.FXThreadSynchronize.xml
+ OSGI-INF/services/org.eclipse.fx.ui.controls.internal.FXThreadSynchronizeImpl.xml
 Bundle-Vendor: Eclipse.org
 Import-Package: com.google.common.cache;version="15.0.0",
  com.google.common.collect;version="15.0.0",
