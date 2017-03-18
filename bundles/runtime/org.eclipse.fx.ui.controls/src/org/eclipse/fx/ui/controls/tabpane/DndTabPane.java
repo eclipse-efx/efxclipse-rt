@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Adrodoc55<adrodoc55@googlemail.com> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.ui.controls.tabpane;
 
 import static org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.setup;
@@ -20,8 +30,6 @@ import javafx.scene.control.TabPane;
 
 /**
  * A TabPane with Drag and Drop Support
- *
- * @author Adrodoc55
  */
 public class DndTabPane extends TabPane {
 	private static final FeedbackType DEFAULT_FEEDBACK_TYPE = FeedbackType.MARKER;
