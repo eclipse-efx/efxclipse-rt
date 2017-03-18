@@ -31,6 +31,8 @@ import javafx.scene.control.TabPane;
 
 /**
  * A TabPane with Drag and Drop Support
+ *
+ * @since 3.0.0
  */
 public class DndTabPane extends TabPane {
 	private static final FeedbackType DEFAULT_FEEDBACK_TYPE = FeedbackType.MARKER;
