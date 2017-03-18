@@ -33,8 +33,8 @@ import javafx.scene.control.TabPane;
  */
 public class DndTabPane extends TabPane {
 	private static final FeedbackType DEFAULT_FEEDBACK_TYPE = FeedbackType.MARKER;
-	private final BooleanProperty allowDetach = new SimpleBooleanProperty();
-	private final ObjectProperty<FeedbackType> feedbackType = new SimpleObjectProperty<>(DEFAULT_FEEDBACK_TYPE);
+	private final BooleanProperty allowDetach = new SimpleBooleanProperty(this, "allowDetach"); //$NON-NLS-1$
+	private final ObjectProperty<FeedbackType> feedbackType = new SimpleObjectProperty<>(this, "feedbackType", DEFAULT_FEEDBACK_TYPE); //$NON-NLS-1$
 
 	private DragSetup setup;
 
