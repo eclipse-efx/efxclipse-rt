@@ -19,6 +19,7 @@ import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DragSetup;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.FeedbackType;
 import org.eclipse.fx.ui.controls.tabpane.skin.DnDTabPaneSkinHookerFullDrag;
 import org.eclipse.fx.ui.controls.tabpane.skin.DndTabPaneSkinHooker;
+import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -33,8 +34,8 @@ import javafx.scene.control.TabPane;
  */
 public class DndTabPane extends TabPane {
 	private static final FeedbackType DEFAULT_FEEDBACK_TYPE = FeedbackType.MARKER;
-	private final BooleanProperty allowDetach = new SimpleBooleanProperty(this, "allowDetach"); //$NON-NLS-1$
-	private final ObjectProperty<FeedbackType> feedbackType = new SimpleObjectProperty<>(this, "feedbackType", DEFAULT_FEEDBACK_TYPE); //$NON-NLS-1$
+	private @Nullable BooleanProperty allowDetach;
+	private @Nullable ObjectProperty<FeedbackType> feedbackType;
 
 	private DragSetup setup;
 
@@ -56,7 +57,7 @@ public class DndTabPane extends TabPane {
 	public DndTabPane(FeedbackType feedbackType, boolean allowDetach) {
 		setFeedbackType(feedbackType);
 		setAllowDetach(allowDetach);
-		initListeners(setup -> setup(this.feedbackType::get, this, getChildren(), setup, null));
+		initListeners(setup -> setup(feedbackTypeProperty()::get, this, getChildren(), setup, null));
 	}
 
 	/**
@@ -96,7 +97,7 @@ public class DndTabPane extends TabPane {
 				setupDnd(newValue, setup);
 			}
 		});
-		this.allowDetach.addListener((observable, oldValue, newValue) -> {
+		allowDetachProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null) {
 				Skin<?> skin = getSkin();
 				if (skin != null) {
@@ -122,6 +123,9 @@ public class DndTabPane extends TabPane {
 	 * @return a property indicating whether Tabs can be detached or not
 	 */
 	public BooleanProperty allowDetachProperty() {
+		if (this.allowDetach == null) {
+			this.allowDetach = new SimpleBooleanProperty(this, "allowDetach"); //$NON-NLS-1$
+		}
 		return this.allowDetach;
 	}
 
@@ -129,7 +133,7 @@ public class DndTabPane extends TabPane {
 	 * @return whether Tabs can be detached or not
 	 */
 	public boolean isAllowDetach() {
-		return this.allowDetach.get();
+		return this.allowDetach != null ? this.allowDetach.get() : false;
 	}
 
 	/**
@@ -137,13 +141,16 @@ public class DndTabPane extends TabPane {
 	 *            whether Tabs can be detached or not
 	 */
 	public void setAllowDetach(boolean allowDetach) {
-		this.allowDetach.set(allowDetach);
+		allowDetachProperty().set(allowDetach);
 	}
 
 	/**
 	 * @return the type of visual Feedback for the User
 	 */
 	public ObjectProperty<FeedbackType> feedbackTypeProperty() {
+		if (this.feedbackType == null) {
+			this.feedbackType = new SimpleObjectProperty<>(this, "feedbackType", DEFAULT_FEEDBACK_TYPE); //$NON-NLS-1$
+		}
 		return this.feedbackType;
 	}
 
@@ -151,7 +158,7 @@ public class DndTabPane extends TabPane {
 	 * @return the type of visual Feedback for the User
 	 */
 	public FeedbackType getFeedbackType() {
-		return this.feedbackType.get();
+		return this.feedbackType != null ? this.feedbackType.get() : DEFAULT_FEEDBACK_TYPE;
 	}
 
 	/**
@@ -159,6 +166,6 @@ public class DndTabPane extends TabPane {
 	 *            the type of visual Feedback for the User
 	 */
 	public void setFeedbackType(FeedbackType feedbackType) {
-		this.feedbackType.set(feedbackType);
+		feedbackTypeProperty().set(feedbackType);
 	}
 }
