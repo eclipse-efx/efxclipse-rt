@@ -12,22 +12,21 @@ package org.eclipse.fx.ui.controls.tabpane;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.ui.controls.dnd.EFXDragEvent;
 import org.eclipse.fx.ui.controls.markers.PositionMarker;
 import org.eclipse.fx.ui.controls.markers.TabOutlineMarker;
-import org.eclipse.fx.ui.controls.tabpane.skin.DnDTabPaneSkinHookerFullDrag;
 import org.eclipse.fx.ui.controls.tabpane.skin.DndTabPaneSkinHooker;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
-import javafx.scene.control.Skin;
-import javafx.scene.control.SkinBase;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.Pane;
@@ -56,7 +55,7 @@ public final class DndTabPaneFactory {
 	 */
 	public static <D extends Node & DragSetup> Pane setup(FeedbackType feedbackType, D dragSetup, Consumer<GenericTab> detachHandler) {
 		StackPane pane = new StackPane();
-		setup(feedbackType, pane, dragSetup, detachHandler);
+		setup(() -> feedbackType, pane, pane.getChildren(), dragSetup, detachHandler);
 		pane.getChildren().add(dragSetup);
 		return pane;
 	}
@@ -77,12 +76,10 @@ public final class DndTabPaneFactory {
 	 *
 	 * @param feedbackType
 	 *            the feedback type
-	 * @param setup
-	 *            consumer to set up the tab pane
 	 * @return a pane containing the TabPane
 	 */
-	public static Pane createDefaultDnDPane(FeedbackType feedbackType, Consumer<TabPane> setup) {
-		return createDefaultDnDPane(feedbackType, false, setup);
+	public static TabPane createDefaultDnDPane(FeedbackType feedbackType) {
+		return createDefaultDnDPane(feedbackType, false);
 	}
 
 	/**
@@ -91,24 +88,11 @@ public final class DndTabPaneFactory {
 	 * @param setup
 	 *            the setup instance for the pane
 	 * @param allowDetach
-	 * 			  allow detaching
+	 *            allow detaching
 	 * @return the tab pane
 	 */
 	public static TabPane createDndTabPane(Consumer<DragSetup> setup, boolean allowDetach) {
-		return new TabPane() {
-			@Override
-			protected javafx.scene.control.Skin<?> createDefaultSkin() {
-				Skin<?> skin = super.createDefaultSkin();
-				DragSetup ds;
-				if( allowDetach ) {
-					ds = new DnDTabPaneSkinHookerFullDrag((SkinBase<TabPane>)skin);
-				} else {
-					ds = new DndTabPaneSkinHooker((Skin<TabPane>) skin);
-				}
-				setup.accept(ds);
-				return skin;
-			}
-		};
+		return new DndTabPane(allowDetach, setup);
 	}
 
 	/**
@@ -118,35 +102,14 @@ public final class DndTabPaneFactory {
 	 *            the feedback type
 	 * @param allowDetach
 	 *            allow detaching
-	 * @param setup
-	 *            consumer to set up the tab pane
-	 * @return a pane containing the TabPane
+	 * @return the TabPane
 	 */
-	public static Pane createDefaultDnDPane(FeedbackType feedbackType, boolean allowDetach, Consumer<TabPane> setup) {
-		StackPane pane = new StackPane();
-		TabPane tabPane;
-		if( SystemUtils.isFX9() || Boolean.getBoolean("java9.tabpane") ) {
-			tabPane = new TabPane();
+	public static TabPane createDefaultDnDPane(FeedbackType feedbackType, boolean allowDetach) {
+		if (SystemUtils.isFX9() || Boolean.getBoolean("java9.tabpane")) {
+			return new TabPane();
 		} else {
-			tabPane = new TabPane() {
-				@Override
-				protected javafx.scene.control.Skin<?> createDefaultSkin() {
-					Skin<?> skin = super.createDefaultSkin();
-					DragSetup ds;
-					if( allowDetach ) {
-						ds = new DnDTabPaneSkinHookerFullDrag((SkinBase<TabPane>)skin);
-					} else {
-						ds = new DndTabPaneSkinHooker((Skin<TabPane>) skin);
-					}
-					setup(feedbackType, pane, ds, null);
-					return skin;
-				}
-			};
+			return new DndTabPane(feedbackType, allowDetach);
 		}
-
-		setup.accept(tabPane);
-		pane.getChildren().add(tabPane);
-		return pane;
 	}
 
 	/**
@@ -186,15 +149,30 @@ public final class DndTabPaneFactory {
 	 *
 	 * @param layoutNode
 	 *            the layout node used to position
+	 * @param layoutNodeChildren
+	 *            the children of {@code layoutNode}
 	 * @param setup
 	 *            the setup
 	 */
 	@SuppressWarnings("null")
-	static void setup(FeedbackType type, Pane layoutNode, DragSetup setup, Consumer<GenericTab> detachHandler) {
+	static void setup(Supplier<FeedbackType> typeProvider, Node layoutNode, ObservableList<Node> layoutNodeChildren, DragSetup setup, Consumer<GenericTab> detachHandler) {
 		setup.setStartFunction((t) -> Boolean.TRUE);
-		setup.setFeedbackConsumer((d) -> handleFeedback(type, layoutNode, d));
+		setup.setFeedbackConsumer((d) -> handleFeedback(typeProvider, layoutNode, layoutNodeChildren, d));
 		setup.setDropConsumer(d -> handleDropped(d, detachHandler));
 		setup.setDragFinishedConsumer(DndTabPaneFactory::handleFinished);
+	}
+
+	/**
+	 * Teardown insert marker
+	 *
+	 * @param setup
+	 *            the setup
+	 */
+	static void teardown(DragSetup setup) {
+		setup.setStartFunction(null);
+		setup.setFeedbackConsumer(null);
+		setup.setDropConsumer(null);
+		setup.setDragFinishedConsumer(null);
 	}
 
 	private static void handleDropped(DroppedData data, Consumer<GenericTab> detachHandler) {
@@ -219,7 +197,7 @@ public final class DndTabPaneFactory {
 		}
 	}
 
-	private static void handleFeedback(FeedbackType type, Pane layoutNode, FeedbackData data) {
+	private static void handleFeedback(Supplier<FeedbackType> typeProvider, Node layoutNode, ObservableList<Node> layoutNodeChildren, FeedbackData data) {
 		if (data.dropType == DropType.NONE) {
 			cleanup();
 			return;
@@ -228,10 +206,10 @@ public final class DndTabPaneFactory {
 		MarkerFeedback f = CURRENT_FEEDBACK;
 		if (f == null || !f.data.equals(data)) {
 			cleanup();
-			if (type == FeedbackType.MARKER) {
-				CURRENT_FEEDBACK = handleMarker(layoutNode, data);
+			if (typeProvider.get() == FeedbackType.OUTLINE) {
+				CURRENT_FEEDBACK = handleOutline(layoutNode, layoutNodeChildren, data);
 			} else {
-				CURRENT_FEEDBACK = handleOutline(layoutNode, data);
+				CURRENT_FEEDBACK = handleMarker(layoutNodeChildren, data);
 			}
 		}
 	}
@@ -247,9 +225,9 @@ public final class DndTabPaneFactory {
 		}
 	}
 
-	private static MarkerFeedback handleMarker(Pane layoutNode, FeedbackData data) {
+	private static MarkerFeedback handleMarker(ObservableList<Node> layoutNodeChildren, FeedbackData data) {
 		PositionMarker marker = null;
-		for (Node n : layoutNode.getChildren()) {
+		for (Node n : layoutNodeChildren) {
 			if (n instanceof PositionMarker) {
 				marker = (PositionMarker) n;
 			}
@@ -258,7 +236,7 @@ public final class DndTabPaneFactory {
 		if (marker == null) {
 			marker = new PositionMarker();
 			marker.setManaged(false);
-			layoutNode.getChildren().add(marker);
+			layoutNodeChildren.add(marker);
 		} else {
 			marker.setVisible(true);
 		}
@@ -292,10 +270,10 @@ public final class DndTabPaneFactory {
 	}
 
 	@SuppressWarnings("null")
-	private static MarkerFeedback handleOutline(Pane layoutNode, FeedbackData data) {
+	private static MarkerFeedback handleOutline(Node layoutNode, ObservableList<Node> layoutNodeChildren, FeedbackData data) {
 		TabOutlineMarker marker = null;
 
-		for (Node n : layoutNode.getChildren()) {
+		for (Node n : layoutNodeChildren) {
 			if (n instanceof TabOutlineMarker) {
 				marker = (TabOutlineMarker) n;
 			}
@@ -305,7 +283,7 @@ public final class DndTabPaneFactory {
 			marker = new TabOutlineMarker(layoutNode.getBoundsInLocal(), new BoundingBox(data.bounds.getMinX(), data.bounds.getMinY(), data.bounds.getWidth(), data.bounds.getHeight()), data.dropType == DropType.BEFORE);
 			marker.setManaged(false);
 			marker.setMouseTransparent(true);
-			layoutNode.getChildren().add(marker);
+			layoutNodeChildren.add(marker);
 		} else {
 			marker.updateBounds(layoutNode.getBoundsInLocal(), new BoundingBox(data.bounds.getMinX(), data.bounds.getMinY(), data.bounds.getWidth(), data.bounds.getHeight()), data.dropType == DropType.BEFORE);
 			marker.setVisible(true);
