@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.core.bindings.internal;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import javafx.beans.binding.ListBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,8 +24,9 @@ public class ConcatListBinding<A> extends ListBinding<A> {
 	private ObservableList<A>[] source;
 
 	@SuppressWarnings("unchecked")
-	public ConcatListBinding(ObservableList<A>... source) {
-		this.source = source;
+	public ConcatListBinding(ObservableList<? extends A>... source) {
+		this.source = Arrays.stream(source).map(e -> (ObservableList<A>) e).collect(Collectors.toList())
+				.toArray(new ObservableList[0]);
 		bind(this.source);
 	}
 

@@ -1,5 +1,7 @@
 package org.eclipse.fx.core.tests.property;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -372,6 +374,48 @@ public class TestFXBindings {
 			idx++;
 		}
 		actual.clear();
+	}
+
+	@Test
+	public void testConcatenatedList() {
+
+		ObservableList<Double> l0 = FXCollections.observableArrayList();
+		ObservableList<Integer> l1 = FXCollections.observableArrayList();
+
+		ObservableList<Number> concat = FXBindings.concatenatedList(l0, l1);
+		
+		l0.addAll(1.0, 2.7182, 3.1416);
+		l1.addAll(5, 6, 7);
+
+		assertEquals(6, concat.size());
+		assertEquals(1.0, concat.get(0));
+		assertEquals(2.7182, concat.get(1));
+		assertEquals(3.1416, concat.get(2));
+		assertEquals(5, concat.get(3));
+		assertEquals(6, concat.get(4));
+		assertEquals(7, concat.get(5));
+		
+	}
+
+	@Test
+	public void testConcatGenerics() {
+
+		ObservableList<Double> l0 = FXCollections.observableArrayList();
+		ObservableList<Integer> l1 = FXCollections.observableArrayList();
+
+		ListBinding<Number> concat = FXBindings.concat(l0, l1);
+		
+		l0.addAll(1.0, 2.7182, 3.1416);
+		l1.addAll(5, 6, 7);
+
+		assertEquals(6, concat.size());
+		assertEquals(1.0, concat.get(0));
+		assertEquals(2.7182, concat.get(1));
+		assertEquals(3.1416, concat.get(2));
+		assertEquals(5, concat.get(3));
+		assertEquals(6, concat.get(4));
+		assertEquals(7, concat.get(5));
+		
 	}
 
 	@Test

@@ -53,6 +53,7 @@ public final class Viewer3d extends Pane {
 	private SubScene scene;
 	private final Rotate cameraXRotation = new Rotate(0, 0, 0, 0, Rotate.X_AXIS);
 	private final Rotate cameraYRotation = new Rotate(-35, 0, 0, 0, Rotate.Y_AXIS);
+	private final Rotate cameraZRotation = new Rotate(0, 0, 0, 0, Rotate.Z_AXIS);
 	private final Translate cameraPosition = new Translate(0, 0, -100);
 	private Camera camera;
 	private double dragStartX, dragStartY, dragStartRotateX, dragStartRotateY;
@@ -335,8 +336,303 @@ public final class Viewer3d extends Pane {
 
 	private Camera setupCamera() {
 		PerspectiveCamera camera = new PerspectiveCamera();
-		camera.getTransforms().addAll(this.cameraXRotation, this.cameraYRotation, this.cameraPosition);
+		camera.getTransforms().addAll(this.cameraXRotation, this.cameraYRotation, this.cameraZRotation, this.cameraPosition);
 		return camera;
+	}
+
+	/**
+	 * Set the x rotation of the camera
+	 *
+	 * @param xRotation
+	 *            the x rotation
+	 * @since 3.0
+	 */
+	public void setCameraXRotation(double xRotation) {
+		this.cameraXRotation.setAngle(xRotation);
+	}
+
+	/**
+	 * @return the current x rotation
+	 * @since 3.0
+	 */
+	public double getCameraXRotation() {
+		return this.cameraXRotation.getAngle();
+	}
+
+	/**
+	 * Set the y rotation of the camera
+	 *
+	 * @param yRotation
+	 *            the y rotation
+	 * @since 3.0
+	 */
+	public void setCameraYRotation(double yRotation) {
+		this.cameraYRotation.setAngle(yRotation);
+	}
+
+	/**
+	 * @return the current y rotation
+	 * @since 3.0
+	 */
+	public double getCameraYRotation() {
+		return this.cameraYRotation.getAngle();
+	}
+
+	/**
+	 * Set the z rotation of the camera
+	 *
+	 * @param zRotation
+	 *            the z rotation
+	 * @since 3.0
+	 */
+	public void setCameraZRotation(double zRotation) {
+		this.cameraZRotation.setAngle(zRotation);
+	}
+
+	/**
+	 * @return the current z rotation
+	 * @since 3.0
+	 */
+	public double getCameraZRotation() {
+		return this.cameraZRotation.getAngle();
+	}
+
+	/**
+	 * Short hand for {@link #setCameraXRotation(double)},
+	 * {@link #setCameraYRotation(double)} and
+	 * {@link #setCameraZRotation(double)}
+	 *
+	 * @param x
+	 *            the x rotation
+	 * @param y
+	 *            the y rotation
+	 * @param z
+	 *            the z rotation
+	 */
+	public void rotateCameraTo(double x, double y, double z) {
+		setCameraXRotation(x);
+		setCameraYRotation(y);
+		setCameraPositionZ(z);
+	}
+
+	/**
+	 * Rotate the camera by the provided deltas
+	 *
+	 * @param deltaX
+	 *            the x delta
+	 * @param deltaY
+	 *            the y delta
+	 * @param deltaZ
+	 *            the z delta
+	 */
+	public void rotateCameraBy(double deltaX, double deltaY, double deltaZ) {
+		setCameraXRotation(getCameraXRotation() + deltaX);
+		setCameraYRotation(getCameraYRotation() + deltaY);
+		setCameraPositionZ(getCameraZRotation() + deltaZ);
+	}
+
+	/**
+	 * Set the x scale of the content
+	 *
+	 * @param scaleX
+	 *            the x scale
+	 * @since 3.0
+	 */
+	public void setContentScaleX(double scaleX) {
+		this.contentScale.setX(scaleX);
+	}
+
+	/**
+	 * @return the current x scale
+	 * @since 3.0
+	 */
+	public double getContentScaleX() {
+		return this.contentScale.getX();
+	}
+
+	/**
+	 * Set the y scale of the content
+	 *
+	 * @param scaleY
+	 *            the y scale
+	 * @since 3.0
+	 */
+	public void setContentScaleY(double scaleY) {
+		this.contentScale.setY(scaleY);
+	}
+
+	/**
+	 * @return the current x scale
+	 * @since 3.0
+	 */
+	public double getContentScaleY() {
+		return this.contentScale.getY();
+	}
+
+	/**
+	 * Set the z scale of the content
+	 *
+	 * @param scaleZ
+	 *            the z scale
+	 * @since 3.0
+	 */
+	public void setContentScaleZ(double scaleZ) {
+		this.contentScale.setZ(scaleZ);
+	}
+
+	/**
+	 * @return the current x scale
+	 * @since 3.0
+	 */
+	public double getContentScaleZ() {
+		return this.contentScale.getZ();
+	}
+
+	/**
+	 * Short hand method to {@link #setContentScaleX(double)},
+	 * {@link #setContentScaleY(double)} and {@link #setContentScaleZ(double)}
+	 *
+	 * @param scale
+	 *            the scale
+	 * @since 3.0
+	 */
+	public void scaleTo(double scale) {
+		scaleTo(scale, scale, scale);
+	}
+
+	/**
+	 * Short hand method to {@link #setContentScaleX(double)},
+	 * {@link #setContentScaleY(double)} and {@link #setContentScaleZ(double)}
+	 *
+	 * @param scaleX
+	 *            the x scale
+	 * @param scaleY
+	 *            the y scale
+	 * @param scaleZ
+	 *            the z scale
+	 * @since 3.0
+	 */
+	public void scaleTo(double scaleX, double scaleY, double scaleZ) {
+		setContentScaleX(scaleX);
+		setContentScaleY(scaleY);
+		setContentScaleZ(scaleZ);
+	}
+
+	/**
+	 * Scale the x, y and z scale to the provided value
+	 *
+	 * @param delta
+	 *            the delta
+	 * @since 3.0
+	 */
+	public void scaleBy(double delta) {
+		setContentScaleX(getContentScaleX() + delta);
+		setContentScaleY(getContentScaleY() + delta);
+		setContentScaleZ(getContentScaleZ() + delta);
+	}
+
+	/**
+	 * Scale by x, y and z scale by the provided delta
+	 *
+	 * @param deltaX
+	 *            the x delta
+	 * @param deltaY
+	 *            the y delta
+	 * @param deltaZ
+	 *            the z delta
+	 * @since 3.0
+	 */
+	public void scaleBy(double deltaX, double deltaY, double deltaZ) {
+		setContentScaleX(getContentScaleX() + deltaX);
+		setContentScaleY(getContentScaleY() + deltaY);
+		setContentScaleZ(getContentScaleZ() + deltaZ);
+	}
+
+	/**
+	 * Set the x position of the camera
+	 *
+	 * @param positionX
+	 *            the x position
+	 * @since 3.0
+	 */
+	public void setCameraPositionX(double positionX) {
+		this.cameraPosition.setX(positionX);
+	}
+
+	/**
+	 * @return the current x position
+	 * @since 3.0
+	 */
+	public double getCameraPositionX() {
+		return this.cameraPosition.getX();
+	}
+
+	/**
+	 * Set the y position of the camera
+	 *
+	 * @param positionY
+	 *            the y position
+	 * @since 3.0
+	 */
+	public void setCameraPositionY(double positionY) {
+		this.cameraPosition.setY(positionY);
+	}
+
+	/**
+	 * @return the current y position
+	 * @since 3.0
+	 */
+	public double getCameraPositionY() {
+		return this.cameraPosition.getY();
+	}
+
+	/**
+	 * Set the z position of the camera
+	 *
+	 * @param positionZ
+	 *            the z position
+	 * @since 3.0
+	 */
+	public void setCameraPositionZ(double positionZ) {
+		this.cameraPosition.setZ(positionZ);
+	}
+
+	/**
+	 * @return the current z position
+	 * @since 3.0
+	 */
+	public double getCameraPositionZ() {
+		return this.cameraPosition.getZ();
+	}
+
+	/**
+	 * Move the camera to the provided positions
+	 *
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param z
+	 *            the z
+	 */
+	public void moveCameraTo(double x, double y, double z) {
+		setCameraPositionX(x);
+		setCameraPositionY(y);
+		setCameraPositionZ(z);
+	}
+
+	/**
+	 * Move the camera by the provided deltas
+	 *
+	 * @param deltaX
+	 *            the x delta
+	 * @param deltaY
+	 *            the y delta
+	 * @param deltaZ
+	 *            the z delta
+	 */
+	public void moveCameraBy(double deltaX, double deltaY, double deltaZ) {
+		moveCameraTo(getCameraPositionX() + deltaX, getCameraPositionY() + deltaY, getCameraPositionZ() + deltaZ);
 	}
 
 	/**

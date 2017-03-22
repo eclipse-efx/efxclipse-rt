@@ -82,7 +82,7 @@ public class FXBindings {
 		final ObservableList<T> roConcatedList = FXCollections.unmodifiableObservableList(this.concatedList);
 
 		@SafeVarargs
-		ConcatListHelper(ObservableList<T>... list) {
+		ConcatListHelper(ObservableList<? extends T>... list) {
 			int[] index = new int[list.length];
 
 			for (int i = 0; i < list.length; i++) {
@@ -196,7 +196,7 @@ public class FXBindings {
 	 * @return an observable list who is synchronized with the source lists
 	 */
 	@SafeVarargs
-	public static <T> ObservableList<T> concatenatedList(ObservableList<T>... lists) {
+	public static <T> ObservableList<T> concatenatedList(ObservableList<? extends T>... lists) {
 		return new ConcatListHelper<>(lists).roConcatedList;
 	}
 
@@ -252,8 +252,8 @@ public class FXBindings {
 	 * @param sources
 	 * @return the concatenated list binding
 	 */
-	@SuppressWarnings("unchecked")
-	public static <A> ListBinding<A> concat(ObservableList<A>... sources) {
+	@SafeVarargs
+	public static <A> ListBinding<A> concat(ObservableList<? extends A>... sources) {
 		return new FixListBinding<>(new ConcatListBinding<>(sources));
 	}
 

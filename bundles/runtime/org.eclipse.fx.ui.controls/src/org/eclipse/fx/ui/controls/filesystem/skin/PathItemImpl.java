@@ -31,6 +31,7 @@ import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
 import org.eclipse.fx.ui.controls.filesystem.RootDirItem;
 import org.eclipse.jdt.annotation.NonNull;
 
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -178,6 +179,14 @@ public abstract class PathItemImpl implements ResourceItem {
 		}
 
 		private void handlePathModification(Kind k, Path p) {
+			if( ! Platform.isFxApplicationThread() ) {
+				Platform.runLater( () -> _handlePathModification(k,p));
+			} else {
+				_handlePathModification(k, p);
+			}
+		}
+
+		private void _handlePathModification(Kind k, Path p) {
 			switch (k) {
 			case CREATE:
 				if (! this.children.stream().filter(i -> i.getNativeResourceObject().equals(p))
