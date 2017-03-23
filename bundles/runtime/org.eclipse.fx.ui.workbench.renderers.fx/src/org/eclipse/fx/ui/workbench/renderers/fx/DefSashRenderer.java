@@ -494,9 +494,10 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 
 		private static int getWeight(WLayoutedWidget<?> w) {
 			double v = w.getWeight();
+			MUIElement domElement = w.getDomElement();
 			if( v < 1 ) {
 				return (int)(v * 100);
-			} else if( w.getDomElement().getContainerData() == null) {
+			} else if( domElement == null || domElement.getContainerData() == null) {
 				return 200;
 			} else {
 				return (int) v;
