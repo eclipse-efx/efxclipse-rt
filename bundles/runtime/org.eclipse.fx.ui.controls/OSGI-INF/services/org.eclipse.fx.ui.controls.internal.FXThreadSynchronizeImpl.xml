@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.ui.controls.internal.FXThreadSynchronizeImpl">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.ui.controls.internal.FXThreadSynchronizeImpl">
    <service>
       <provide interface="org.eclipse.fx.core.ThreadSynchronize"/>
    </service>
-   <reference bind="setLoggerFactory" cardinality="1..1" interface="org.eclipse.fx.core.log.LoggerFactory" name="LoggerFactory" policy="dynamic" policy-option="greedy" unbind="unsetLoggerFactory"/>
    <implementation class="org.eclipse.fx.ui.controls.internal.FXThreadSynchronizeImpl"/>
 </scr:component>
