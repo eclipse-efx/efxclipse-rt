@@ -10,6 +10,11 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.image;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+
+import org.eclipse.fx.core.ThreadSynchronize;
+
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -33,7 +38,37 @@ public class SingleMultiDimensionImage implements MultiDimensionImage {
 	 */
 	public SingleMultiDimensionImage(Image img) {
 		this.img = new ReadOnlyObjectWrapper<Image>(this, "image", img); //$NON-NLS-1$
-		this.ratio = new ReadOnlyDoubleWrapper(this,"ratio",img.getWidth() / img.getHeight()); //$NON-NLS-1$
+		this.ratio = new ReadOnlyDoubleWrapper(this, "ratio", img.getWidth() / img.getHeight()); //$NON-NLS-1$
+	}
+
+	/**
+	 * Create a new image who is calculated in a background thread. The provided
+	 * domain object is used a lock monitor so that for one domain object no
+	 * more than one calculation is running at a time
+	 *
+	 * @param threadSynchronize
+	 *            synchronize to ui thread
+	 *
+	 * @param placeholder
+	 *            image used as a placeholder presented while computing
+	 * @param data
+	 *            the domain object the image is computed for
+	 * @param imageComputer
+	 *            function to compute the image
+	 */
+	public <O> SingleMultiDimensionImage(ThreadSynchronize threadSynchronize, Image placeholder, O data, Function<O, Image> imageComputer) {
+		this.img = new ReadOnlyObjectWrapper<Image>(this, "image", placeholder); //$NON-NLS-1$
+		this.ratio = new ReadOnlyDoubleWrapper(this, "ratio", placeholder.getWidth() / placeholder.getHeight()); //$NON-NLS-1$
+		CompletableFuture.supplyAsync(() -> {
+			synchronized (data) {
+				return imageComputer.apply(data);
+			}
+		}).thenAccept(threadSynchronize.wrap(this::imageComputed));
+	}
+
+	private void imageComputed(Image img) {
+		this.img.set(img);
+		this.ratio.set(img.getWidth() / img.getHeight());
 	}
 
 	@Override

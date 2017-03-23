@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.image;
 
+import java.util.function.Function;
+
+import org.eclipse.fx.core.ThreadSynchronize;
+
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.image.Image;
@@ -56,5 +60,23 @@ public interface MultiDimensionImage {
 	 */
 	public static MultiDimensionImage singleDimension(Image image) {
 		return new SingleMultiDimensionImage(image);
+	}
+
+	/**
+	 * Create a multi dimension image who is calculated lazily and uses the same
+	 * image for any dimension
+	 *
+	 * @param threadSynchronize
+	 *            helper to synchronize back to the UI thread
+	 * @param placeholder
+	 *            a placeholder image to show while loading
+	 * @param data
+	 *            the domain object used a the input to create the image
+	 * @param imageComputer
+	 *            function to compute the image (called outside the UI-Thread)
+	 * @return an image instance
+	 */
+	public static <O> MultiDimensionImage singleDimension(ThreadSynchronize threadSynchronize, Image placeholder, O data, Function<O, Image> imageComputer) {
+		return new SingleMultiDimensionImage(threadSynchronize, placeholder, data, imageComputer);
 	}
 }
