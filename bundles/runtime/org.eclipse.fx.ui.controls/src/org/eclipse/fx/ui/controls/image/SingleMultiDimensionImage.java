@@ -10,10 +10,13 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.image;
 
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 import org.eclipse.fx.core.ThreadSynchronize;
+import org.eclipse.fx.core.cache.Cache;
+import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
@@ -56,12 +59,26 @@ public class SingleMultiDimensionImage implements MultiDimensionImage {
 	 * @param imageComputer
 	 *            function to compute the image
 	 */
-	public <O> SingleMultiDimensionImage(ThreadSynchronize threadSynchronize, Image placeholder, O data, Function<O, Image> imageComputer) {
+	public <O> SingleMultiDimensionImage(ThreadSynchronize threadSynchronize, Image placeholder, O data, Function<O, Image> imageComputer, @Nullable Cache<O, Image> cache) {
 		this.img = new ReadOnlyObjectWrapper<Image>(this, "image", placeholder); //$NON-NLS-1$
 		this.ratio = new ReadOnlyDoubleWrapper(this, "ratio", placeholder.getWidth() / placeholder.getHeight()); //$NON-NLS-1$
+
 		CompletableFuture.supplyAsync(() -> {
 			synchronized (data) {
-				return imageComputer.apply(data);
+				if( cache != null ) {
+					Optional<Image> rv = cache.get(data);
+					if( rv.isPresent() ) {
+						return rv.get();
+					}
+				}
+
+				Image image = imageComputer.apply(data);
+
+				if( cache != null ) {
+					cache.put(data, image);
+				}
+
+				return image;
 			}
 		}).thenAccept(threadSynchronize.wrap(this::imageComputed));
 	}
