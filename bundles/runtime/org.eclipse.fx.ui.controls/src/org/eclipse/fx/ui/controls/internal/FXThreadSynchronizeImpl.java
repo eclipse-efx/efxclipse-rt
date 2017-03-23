@@ -21,6 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,38 +41,38 @@ import javafx.util.Duration;
 public class FXThreadSynchronizeImpl implements ThreadSynchronize {
 	private LoggerFactory factory;
 	private Logger logger;
+// Leads to a warning
+//	/**
+//	 * Setting a new factory
+//	 *
+//	 * @param factory
+//	 *            the new factory
+//	 */
+//	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
+//	public void setLoggerFactory(LoggerFactory factory) {
+//		this.factory = factory;
+//		this.logger = null;
+//	}
+//
+//	/**
+//	 * Unset the logger factory
+//	 *
+//	 * @param factory
+//	 *            the factory
+//	 */
+//	public void unsetLoggerFactory(LoggerFactory factory) {
+//		if (this.factory == factory) {
+//			this.factory = null;
+//			this.logger = null;
+//		}
+//	}
 
-	/**
-	 * Setting a new factory
-	 *
-	 * @param factory
-	 *            the new factory
-	 */
-	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
-	public void setLoggerFactory(LoggerFactory factory) {
-		this.factory = factory;
-		this.logger = null;
-	}
-
-	/**
-	 * Unset the logger factory
-	 *
-	 * @param factory
-	 *            the factory
-	 */
-	public void unsetLoggerFactory(LoggerFactory factory) {
-		if (this.factory == factory) {
-			this.factory = null;
-			this.logger = null;
-		}
-	}
-
-	@SuppressWarnings("null")
 	private Logger getLogger() {
-		if (this.logger == null) {
-			this.logger = this.factory.createLogger(getClass().getName());
-		}
-		return this.logger;
+//		if (this.logger == null) {
+//			this.logger = this.factory.createLogger(getClass().getName());
+//		}
+//		return this.logger;
+		return LoggerCreator.createLogger(getClass());
 	}
 
 	@Override
