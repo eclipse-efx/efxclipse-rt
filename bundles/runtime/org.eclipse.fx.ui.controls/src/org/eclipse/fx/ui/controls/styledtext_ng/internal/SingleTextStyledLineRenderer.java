@@ -65,7 +65,7 @@ public class SingleTextStyledLineRenderer extends BaseStyledLineRenderer {
 		this.node.requestLayout();
 	}
 
-	private void refreshLayout() {
+	void refreshLayout() {
 		if( this.flag == 0 ) {
 			return;
 		}
