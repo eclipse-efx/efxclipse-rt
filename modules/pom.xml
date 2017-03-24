@@ -8,6 +8,7 @@
 	<modules>
 		<module>org.eclipse.fx.core</module>
 		<module>org.eclipse.fx.core.di</module>
+		<module>org.eclipse.fx.core.osgi</module>
 	</modules>
 
 	<repositories>
