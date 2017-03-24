@@ -39,7 +39,7 @@ import org.junit.Test;
 import org.osgi.framework.FrameworkUtil;
 
 /**
- * 
+ *
  */
 public class ContextBoundValueTestCase {
 
@@ -48,7 +48,7 @@ public class ContextBoundValueTestCase {
 	 */
 	public static class SimpleInject {
 		/**
-		 * 
+		 *
 		 */
 		@Inject
 		@ContextValue("simpleValue")
@@ -60,19 +60,19 @@ public class ContextBoundValueTestCase {
 	 */
 	public static class ObservableInject {
 		/**
-		 * 
+		 *
 		 */
 		@Inject
 		@ContextValue("simpleValue")
 		public ContextBoundValue<String> value;
 
 		/**
-		 * 
+		 *
 		 */
 		public IObservableValue observableValue;
 
 		/**
-		 * 
+		 *
 		 */
 		@Inject
 		@Named("simpleValue")
@@ -90,7 +90,7 @@ public class ContextBoundValueTestCase {
 	 */
 	public static class DirectObservableInject {
 		/**
-		 * 
+		 *
 		 */
 		@Inject
 		@ContextValue("simpleValue")
@@ -102,7 +102,7 @@ public class ContextBoundValueTestCase {
 	 */
 	public static class Target {
 		/**
-		 * 
+		 *
 		 */
 		@Inject
 		@Named("simpleValue")
@@ -173,7 +173,7 @@ public class ContextBoundValueTestCase {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Test
 	public void testSimpleInjection() {
@@ -183,7 +183,7 @@ public class ContextBoundValueTestCase {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Test
 	public void testSimpleObservable() {
@@ -193,7 +193,7 @@ public class ContextBoundValueTestCase {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Test
 	public void observableSupportModify() {
@@ -224,7 +224,7 @@ public class ContextBoundValueTestCase {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Test
 	public void testContextModify() {
@@ -242,7 +242,7 @@ public class ContextBoundValueTestCase {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Test
 	public void testDirectObservable() {
@@ -285,7 +285,7 @@ public class ContextBoundValueTestCase {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Test
 	public void testObservableContextConsistency() {
@@ -342,15 +342,15 @@ public class ContextBoundValueTestCase {
 			});
 			Assert.assertTrue("Listener has not been added, cannot continue testing", listenerAdded.await(2, TimeUnit.SECONDS)); //$NON-NLS-1$
 			usedContext.set("simpleValue", "New Value!"); //$NON-NLS-1$ //$NON-NLS-2$
+			Assert.assertTrue("Did not receive a value change event", eventReceived.await(10, TimeUnit.SECONDS)); //$NON-NLS-1$
 		} catch (AssertionFailedException e) {
 			exceptionThrown = true;
 		} finally {
 			usedContext.dispose();
 		}
 		Assert.assertTrue("No assertion failed exception should be thrown", !exceptionThrown); //$NON-NLS-1$
-		Assert.assertTrue("Did not receive a value change event", eventReceived.await(10, TimeUnit.SECONDS)); //$NON-NLS-1$
 	}
-	
+
 	/**
 	 * @throws InterruptedException
 	 */
@@ -367,7 +367,7 @@ public class ContextBoundValueTestCase {
 			realmOfCreatedObservable.set(inject.observableValue.getRealm());
 			//Spawn a new Thread
 			Thread threadObservableNotCreatedIn = new Thread(() -> {
-				independentThreadCurrent.set(realmOfCreatedObservable.get().isCurrent());				
+				independentThreadCurrent.set(realmOfCreatedObservable.get().isCurrent());
 				sync.countDown();
 			});
 			threadObservableNotCreatedIn.start();
