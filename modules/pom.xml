@@ -23,6 +23,19 @@
 		</repository>
 	</repositories>
 
+	<pluginRepositories>
+		<pluginRepository>
+      		<id>eclipse-cbi-releases</id>
+      		<url>https://repo.eclipse.org/content/groups/cbi/</url>
+      		<releases>
+        		<enabled>true</enabled>
+      		</releases>
+      		<snapshots>
+        		<enabled>true</enabled>
+      		</snapshots>
+    	</pluginRepository>
+	</pluginRepositories>
+
 	<build>
 		<plugins>
 			<plugin>
