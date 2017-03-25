@@ -5,6 +5,10 @@
 	<artifactId>rt</artifactId>
 	<version>3.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<properties>
+		<cbi-plugins.version>1.1.3</cbi-plugins.version>
+	</properties>
+
 	<modules>
 		<module>org.eclipse.fx.core</module>
 		<module>org.eclipse.fx.core.di</module>
@@ -95,11 +99,35 @@
 						<tag>
 							<name>noreference</name>
 							<placement>a</placement>
-							<head>@noreference - This API is not finalized and should be treated as an implementation detail</head>
+							<head>@noreference - This API is not finalized and should be
+								treated as an implementation detail</head>
 						</tag>
 					</tags>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>build-server</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.cbi.maven.plugins</groupId>
+						<artifactId>eclipse-jarsigner-plugin</artifactId>
+						<version>${cbi-plugins.version}</version>
+						<executions>
+							<execution>
+								<id>sign</id>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<!-- phase>verify</phase -->
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
