@@ -98,6 +98,8 @@
 		<module>../../bundles/code/org.eclipse.fx.code.editor.asciidoc.fx</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor.asciidoc.fx.e4</module>
 
+		<module>../../bundles/runtime/org.eclipse.fx.core.junit</module>
+
 		<!-- Features -->
 		<module>../runtime/org.eclipse.fx.core.feature</module>
 		<module>../runtime/org.eclipse.fx.runtime.feature</module>
