@@ -5,5 +5,6 @@ Bundle-SymbolicName: org.eclipse.fx.core.junit
 Bundle-Version: 3.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.junit;bundle-version="4.12.0"
-Import-Package: org.eclipse.fx.core
+Import-Package: org.eclipse.fx.core,
+ org.eclipse.fx.core.event;version="3.0.0"
 Export-Package: org.eclipse.fx.core.junit
