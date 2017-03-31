@@ -30,6 +30,7 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.internal.workbench.E4Workbench;
 import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.IWorkbench;
+import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.lifecycle.PreSave;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.equinox.app.IApplication;
@@ -41,6 +42,7 @@ import org.eclipse.fx.core.app.ApplicationInstance;
 import org.eclipse.fx.core.app.ApplicationLocation;
 import org.eclipse.fx.core.app.ExitStatus;
 import org.eclipse.fx.core.databinding.JFXRealm;
+import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.osgi.util.AbstractJFXApplication;
 import org.eclipse.fx.ui.services.Constants;
@@ -65,6 +67,7 @@ import org.osgi.service.event.EventAdmin;
 import org.osgi.service.prefs.BackingStoreException;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
@@ -84,6 +87,7 @@ public class E4Application extends AbstractE4Application implements IApplication
 
 	private static final String PRIMARY_STAGE_KEY = "primaryStage"; //$NON-NLS-1$
 	private static final String CREATE_WORKBENCH_ON_NON_UI_THREAD_ARG = "createWorkbenchOnNonUIThread"; //$NON-NLS-1$
+	private static final String NO_IMPLICIT_EXIT = "noImplicitExit"; //$NON-NLS-1$
 
 	static E4Application SELF;
 
@@ -333,9 +337,16 @@ public class E4Application extends AbstractE4Application implements IApplication
 	 *            the primary stage.
 	 * @return <code>true</code> if the workbench was initialized successfully
 	 */
+	@SuppressWarnings("deprecation")
 	public boolean initE4Workbench(final ApplicationContext context, Application jfxApplication, final Stage primaryStage) {
 		this.workbenchContext = createApplicationContext();
 
+		if( Boolean.parseBoolean(getArgValue(NO_IMPLICIT_EXIT, this.applicationContext, true))) {
+			Platform.setImplicitExit(false);
+			this.workbenchContext.get(EventBus.class).subscribe(UIEvents.UILifeCycle.APP_SHUTDOWN_STARTED, e -> {
+				Platform.exit();
+			});
+		}
 		// It is the very first time when the javaFX Application appears. It
 		// will be used to render the UI.
 		// Add following objects to the context since they might be needed by
