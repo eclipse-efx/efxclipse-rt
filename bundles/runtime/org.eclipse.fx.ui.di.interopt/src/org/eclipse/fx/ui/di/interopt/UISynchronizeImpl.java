@@ -22,6 +22,8 @@ import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.swt.widgets.Display;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -169,6 +171,17 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 	@Override
 	public boolean isCurrent() {
 		return Display.getDefault().getThread() == Thread.currentThread();
+	}
+
+	@Override
+	public <T> @Nullable T block(@NonNull BlockCondition<T> blockCondition) {
+		Display d = Display.getDefault();
+		while( blockCondition.isBlocked() ) {
+			if( ! d.readAndDispatch() ) {
+				d.sleep();
+			}
+		}
+		return null;
 	}
 
 }

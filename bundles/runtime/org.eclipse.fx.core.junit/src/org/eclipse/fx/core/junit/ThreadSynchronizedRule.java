@@ -12,8 +12,10 @@ package org.eclipse.fx.core.junit;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
+import org.eclipse.fx.core.EventLoop;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
 import org.junit.rules.TestRule;
@@ -29,22 +31,42 @@ public class ThreadSynchronizedRule implements TestRule {
 	private final ThreadSynchronize threadSync;
 	private final Consumer<BlockCondition<Void>> waitConditionAcceptor;
 
+	private Thread eventProcessor = new Thread(this::spin);
+	private AtomicBoolean spinning = new AtomicBoolean();
+	private EventLoop queue;
+
 	/**
 	 * Create a new rule who executes the tests on the provided
 	 * {@link ThreadSynchronize} utility. In addition it waits for an
 	 * initialization phase to get completed.
 	 *
-	 * @param threadSync
-	 *            the thread synchronization utility
 	 * @param waitConditionAcceptor
 	 *            acceptor who gets a {@link BlockCondition} and executes after
 	 *            this until the condition object is released to execute the
 	 *            tests. <strong>Important: The consumer method is called on the
 	 *            dedicated thread as well</strong>
 	 */
-	public ThreadSynchronizedRule(ThreadSynchronize threadSync, Consumer<BlockCondition<Void>> waitConditionAcceptor) {
-		this.threadSync = threadSync;
+	public ThreadSynchronizedRule(Consumer<BlockCondition<Void>> waitConditionAcceptor) {
+		this.queue = new EventLoop();
+		this.threadSync = ThreadSynchronize.createBasicThreadSyncronize(queue);
 		this.waitConditionAcceptor = waitConditionAcceptor;
+		this.spinning.set(true);
+		this.eventProcessor.start();
+	}
+
+	private void spin() {
+		while( spinning.get() ) {
+			if( ! queue.dispatch() ) {
+				queue.sleep();
+			}
+		}
+	}
+
+	/**
+	 * Stop the processing of the event queue
+	 */
+	public void stopEventQueue() {
+		spinning.set(false);
 	}
 
 	/**
@@ -116,5 +138,12 @@ public class ThreadSynchronizedRule implements TestRule {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @return a thread synchronizer
+	 */
+	public ThreadSynchronize getThreadSynchronize() {
+		return threadSync;
 	}
 }

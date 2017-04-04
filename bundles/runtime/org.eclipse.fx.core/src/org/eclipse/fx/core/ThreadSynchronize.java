@@ -17,15 +17,17 @@ import java.util.TimerTask;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.eclipse.fx.core.log.LoggerCreator;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.beans.property.Property;
@@ -311,16 +313,16 @@ public interface ThreadSynchronize {
 	// public <O> void schedule(int priority, O value, Consumer<O> consumer);
 	// }
 
-	// TODO Make API in 3.0
-	// /**
-	// * Block the UI-Thread in a way that events are still processed until the
-	// * given condition is released
-	// *
-	// * @param blockCondition
-	// * the condition
-	// * @return the value
-	// */
-	// <T> @Nullable T block(@NonNull BlockCondition<T> blockCondition);
+	/**
+	 * Block the Thread in a way that events are still processed until the given
+	 * condition is released
+	 *
+	 * @param blockCondition
+	 *            the condition
+	 * @return the value
+	 * @since 3.0.0
+	 */
+	<T> @Nullable T block(@NonNull BlockCondition<T> blockCondition);
 
 	/**
 	 * A block condition
@@ -331,7 +333,7 @@ public interface ThreadSynchronize {
 	 */
 	public static class BlockCondition<T> {
 		List<Consumer<T>> callbacks = new ArrayList<>();
-		private boolean isBlocked = true;
+		private volatile boolean isBlocked = true;
 
 		/**
 		 * Subscribe to unblocking
@@ -384,69 +386,70 @@ public interface ThreadSynchronize {
 	 * <p>
 	 * A {@link ThreadSynchronize} like this is eg useful in JUnit-Test cases
 	 * </p>
+	 *
+	 * @param threadQueue
+	 *            the thread queue to use
 	 * @return an thread synchronizer
+	 * @since 3.0.0
 	 */
-	public static ThreadSynchronize createBasicThreadSyncronize() {
+	public static ThreadSynchronize createBasicThreadSyncronize(ThreadQueue threadQueue) {
 		class BasicThreadSynchronize implements ThreadSynchronize {
-			private AtomicReference<Runnable> runnableRef = new AtomicReference<>();
-
-			private final Thread thread = new Thread() {
-				@Override
-				public void run() {
-					BasicThreadSynchronize.this.runnableRef.get().run();
-				}
-			};
-			private ExecutorService executor = Executors.newSingleThreadExecutor( r -> {
-				this.runnableRef.set(r);
-				this.thread.setDaemon(true);
-				return this.thread;
-			});
 			private Timer timer = new Timer(true);
 
 			@Override
-			public <V> V syncExec(Callable<V> callable, V defaultValue) {
-				V rv;
-				try {
-					rv = CompletableFuture.supplyAsync(() -> {
-						try {
-							return callable.call();
-						} catch (Exception e) {
-							throw ExceptionUtils.wrap(e);
-						}
+			public boolean isCurrent() {
+				return threadQueue.isCurrent();
+			}
 
-					}, this.executor).get();
-				} catch (InterruptedException | ExecutionException e) {
-					throw new RuntimeException(e);
+			@Override
+			public <V> V syncExec(Callable<V> callable, V defaultValue) {
+				if (isCurrent()) {
+					try {
+						return callable.call();
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				} else {
+					RunnableFuture<V> task = new FutureTask<V>(callable);
+					asyncExec(task);
+					try {
+						return task.get();
+					} catch (InterruptedException | ExecutionException e) {
+						LoggerCreator.createLogger(getClass()).error("Unable to wait until the task is completed", e); //$NON-NLS-1$
+					} finally {
+						task.cancel(true);
+					}
 				}
-				return rv == null ? defaultValue : rv;
+				return defaultValue;
 			}
 
 			@Override
 			public void syncExec(Runnable runnable) {
-				try {
-					CompletableFuture.supplyAsync(() -> {
-						runnable.run();
-						return null;
-					}, this.executor).get();
-				} catch (InterruptedException | ExecutionException e) {
-					throw new RuntimeException(e);
+				if (javafx.application.Platform.isFxApplicationThread()) {
+					runnable.run();
+				} else {
+					RunnableFuture<?> task = new FutureTask<Void>(runnable, null);
+					asyncExec(task);
+					try {
+						task.get(); // wait for task to complete
+					} catch (InterruptedException | ExecutionException e) {
+						LoggerCreator.createLogger(getClass()).error("Unable to wait until the task is completed", e); //$NON-NLS-1$
+					} finally {
+						task.cancel(true);
+					}
 				}
 			}
 
 			@Override
 			public <V> Future<V> asyncExec(Callable<V> callable) {
-				return CompletableFuture.supplyAsync(() -> {
-					try {
-						return callable.call();
-					} catch (Exception e) {
-						throw ExceptionUtils.wrap(e);
-					}
-				}, this.executor);
+				RunnableFuture<V> task = new FutureTask<V>(callable);
+				asyncExec(task);
+				return task;
 			}
 
 			@Override
 			public void asyncExec(Runnable runnable) {
-				CompletableFuture.runAsync(runnable, this.executor);
+				threadQueue.push(runnable);
 			}
 
 			@Override
@@ -464,6 +467,7 @@ public interface ThreadSynchronize {
 				};
 			}
 
+			@SuppressWarnings("null")
 			@Override
 			public <T> CompletableFuture<T> scheduleExecution(long delay, Callable<T> runnable) {
 				return CompletableFuture.supplyAsync(() -> {
@@ -478,8 +482,10 @@ public interface ThreadSynchronize {
 			}
 
 			@Override
-			public boolean isCurrent() {
-				return this.thread == Thread.currentThread();
+			public <T> @Nullable T block(@NonNull BlockCondition<T> blockCondition) {
+				AtomicReference<T> rv = new AtomicReference<>();
+				threadQueue.spinWhile(blockCondition);
+				return rv.get();
 			}
 		}
 		return new BasicThreadSynchronize();

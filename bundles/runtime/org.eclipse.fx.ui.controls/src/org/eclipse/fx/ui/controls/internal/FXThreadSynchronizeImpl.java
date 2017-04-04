@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.internal;
 
+import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -17,12 +18,17 @@ import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.core.log.LoggerFactory;
+import org.eclipse.fx.ui.controls.Util;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -166,5 +172,21 @@ public class FXThreadSynchronizeImpl implements ThreadSynchronize {
 	@Override
 	public boolean isCurrent() {
 		return Platform.isFxApplicationThread();
+	}
+
+	@Override
+	public <T> @Nullable T block(@NonNull BlockCondition<T> blockCondition) {
+		AtomicReference<@Nullable T> rv = new AtomicReference<>();
+		String uuid = UUID.randomUUID().toString();
+		blockCondition.subscribeUnblockedCallback(new Consumer<T>() {
+
+			@Override
+			public void accept(@Nullable T value) {
+				rv.set(value);
+				Util.exitNestedEventLoop(uuid);
+			}
+		});
+		Util.enterNestedEventLoop(uuid);
+		return rv.get();
 	}
 }

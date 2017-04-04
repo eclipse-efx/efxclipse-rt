@@ -23,6 +23,8 @@ import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -72,6 +74,11 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 			this.logger = this.factory.createLogger(getClass().getName());
 		}
 		return this.logger;
+	}
+
+	@Override
+	public <T> @Nullable T block(@NonNull BlockCondition<T> blockCondition) {
+		return waitUntil(blockCondition);
 	}
 
 	@Override
