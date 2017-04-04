@@ -425,7 +425,7 @@ public interface ThreadSynchronize {
 
 			@Override
 			public void syncExec(Runnable runnable) {
-				if (javafx.application.Platform.isFxApplicationThread()) {
+				if (isCurrent()) {
 					runnable.run();
 				} else {
 					RunnableFuture<?> task = new FutureTask<Void>(runnable, null);
