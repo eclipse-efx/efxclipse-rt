@@ -17,6 +17,8 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Extended UISynchronize Class
+ *
+ * @deprecated use {@link ThreadSynchronize}
  */
 public interface UISynchronize extends ThreadSynchronize {
 	/**
@@ -26,6 +28,7 @@ public interface UISynchronize extends ThreadSynchronize {
 	 *            the condition
 	 * @return the return value of the condition
 	 * @since 2.3.0
+	 * @deprecated use {@link ThreadSynchronize#block(org.eclipse.fx.core.ThreadSynchronize.BlockCondition)}
 	 */
 	public default <T> @Nullable T waitUntil(@NonNull BlockCondition<T> blockCondition) {
 		return Util.waitUntil(blockCondition);
