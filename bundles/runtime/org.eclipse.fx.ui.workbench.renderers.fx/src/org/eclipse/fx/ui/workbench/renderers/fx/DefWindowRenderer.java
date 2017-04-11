@@ -147,9 +147,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		}
 		SaveDialogPresenter presenter;
 		if( this.presenterTypeProvider == null ) {
-			presenter = ContextInjectionFactory.make(DefaultSaveDialogPresenter.class, modelContext);
+			presenter = ContextInjectionFactory.make(DefaultSaveDialogPresenter.class, modelContext.getActiveLeaf());
 		} else {
-			presenter = ContextInjectionFactory.make(this.presenterTypeProvider.getType(), modelContext);
+			presenter = ContextInjectionFactory.make(this.presenterTypeProvider.getType(), modelContext.getActiveLeaf());
 		}
 		return presenter.promptToSave(new SaveData(element.getTags().contains(TAG_LIGHTWEIGHT_DIALOGS), dirtyParts, widget, (Stage)widget.getWidget()));
 	}
