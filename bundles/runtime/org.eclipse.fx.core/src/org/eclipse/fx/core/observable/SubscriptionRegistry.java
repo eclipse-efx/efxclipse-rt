@@ -11,6 +11,7 @@
 package org.eclipse.fx.core.observable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -142,6 +143,13 @@ public class SubscriptionRegistry {
 	 */
 	@PreDestroy
 	public void dispose() {
-		this.subscriptions.forEach(Subscription::dispose);
+		List<Subscription> c = new ArrayList<>(this.subscriptions);
+		this.subscriptions.clear();
+		Collections.reverse(c);
+		c.forEach( s -> {try {
+			s.dispose();
+		} catch (Throwable e) {
+			// skip
+		}} );
 	}
 }
