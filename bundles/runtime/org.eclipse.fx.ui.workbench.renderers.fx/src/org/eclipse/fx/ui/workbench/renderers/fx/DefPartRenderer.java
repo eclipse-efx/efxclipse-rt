@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.UIEvents;
@@ -26,11 +27,13 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.CustomContainerSupport;
+import org.eclipse.fx.ui.workbench.renderers.fx.services.LightweightDialogTransitionService;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -39,6 +42,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -127,6 +131,10 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		private Label titleLabel;
 
 		private MPart domElement;
+
+		@Inject
+		@Optional
+		LightweightDialogTransitionService dialogTransitionService;
 
 		@Inject
 		public PartImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPart domElement) {
@@ -353,12 +361,39 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 			Pane staticLayoutNode = (@NonNull Pane) getStaticLayoutNode();
 			if (dialogNode == null) {
 				if (this.overlayContainer != null) {
-					((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
-					this.overlayContainer.getChildren().clear();
+					if( this.dialogTransitionService != null ) {
+						this.dialogTransitionService.hideDialog(this.domElement, staticLayoutNode, this.overlayContainer, this.overlayContainer, this.overlayContainer.getChildren().size() == 1 ? this.overlayContainer.getChildren().get(0) : null, () -> {
+							((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
+							this.overlayContainer.getChildren().clear();
+						});
+					} else {
+						((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
+						this.overlayContainer.getChildren().clear();
+					}
 				}
 			} else {
 				if (this.overlayContainer == null) {
-					this.overlayContainer = new StackPane();
+					this.overlayContainer = new StackPane() {
+						@Override
+						protected void layoutChildren() {
+							Insets insets = getInsets();
+					        final double w = getWidth() - insets.getLeft() - insets.getRight();
+					        final double h = getHeight() - insets.getTop() - insets.getBottom();
+
+					        for( Node n : getManagedChildren() ) {
+					        	double x,y;
+					        	n.autosize();
+					        	if( n instanceof Region ) {
+					        		x = (w / 2) - (Math.min(w,((Region) n).getWidth()) / 2);
+					        		y = (h / 2) - (Math.min(h,((Region) n).getHeight()) / 2);
+					        	} else {
+					        		x = (w / 2) - (Math.min(w,n.prefWidth(-1)) / 2);
+					        		y = (h / 2) - (Math.min(h,n.prefHeight(-1)) / 2);
+					        	}
+					        	n.relocate(x, y);
+					        }
+						}
+					};
 					this.overlayContainer.getStyleClass().add("overlay-container"); //$NON-NLS-1$
 					this.overlayContainer.setManaged(false);
 					this.overlayContainer.setMouseTransparent(false);
@@ -370,7 +405,11 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 
 				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 				this.overlayContainer.getChildren().setAll((Node)dialogNode);
+				this.overlayContainer.layout();
 				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
+				if( this.dialogTransitionService != null ) {
+					this.dialogTransitionService.showDialog(this.domElement, staticLayoutNode, this.overlayContainer, this.overlayContainer, (Node)dialogNode, null);
+				}
 			}
 		}
 	}
