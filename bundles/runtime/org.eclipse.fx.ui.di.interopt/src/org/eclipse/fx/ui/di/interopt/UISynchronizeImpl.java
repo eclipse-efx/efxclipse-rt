@@ -174,7 +174,7 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 	}
 
 	@Override
-	public <T> @Nullable T block(@NonNull BlockCondition<T> blockCondition) {
+	public <T> T block(@NonNull BlockCondition<T> blockCondition) {
 		Display d = Display.getDefault();
 		while( blockCondition.isBlocked() ) {
 			if( ! d.readAndDispatch() ) {

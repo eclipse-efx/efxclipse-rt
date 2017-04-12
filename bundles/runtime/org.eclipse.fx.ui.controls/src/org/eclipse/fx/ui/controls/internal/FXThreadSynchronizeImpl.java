@@ -175,7 +175,7 @@ public class FXThreadSynchronizeImpl implements ThreadSynchronize {
 	}
 
 	@Override
-	public <T> @Nullable T block(@NonNull BlockCondition<T> blockCondition) {
+	public <T> T block(@NonNull BlockCondition<T> blockCondition) {
 		AtomicReference<@Nullable T> rv = new AtomicReference<>();
 		String uuid = UUID.randomUUID().toString();
 		blockCondition.subscribeUnblockedCallback(new Consumer<T>() {

@@ -322,7 +322,7 @@ public interface ThreadSynchronize {
 	 * @return the value
 	 * @since 3.0.0
 	 */
-	<T> @Nullable T block(@NonNull BlockCondition<T> blockCondition);
+	<T> T block(@NonNull BlockCondition<T> blockCondition);
 
 	/**
 	 * A block condition
@@ -482,7 +482,7 @@ public interface ThreadSynchronize {
 			}
 
 			@Override
-			public <T> @Nullable T block(@NonNull BlockCondition<T> blockCondition) {
+			public <T> T block(@NonNull BlockCondition<T> blockCondition) {
 				AtomicReference<T> rv = new AtomicReference<>();
 				threadQueue.spinWhile(blockCondition);
 				return rv.get();
