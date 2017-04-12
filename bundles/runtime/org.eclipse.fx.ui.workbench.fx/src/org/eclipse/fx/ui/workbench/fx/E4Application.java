@@ -36,6 +36,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.fx.core.SystemUtils;
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.app.ApplicationContext;
 import org.eclipse.fx.core.app.ApplicationContext.Splash;
 import org.eclipse.fx.core.app.ApplicationInstance;
@@ -50,7 +51,6 @@ import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultProgressState;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.ProgressState;
-import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
@@ -228,7 +228,7 @@ public class E4Application extends AbstractE4Application implements IApplication
 					throw new IllegalStateException("The workbench has no context assigned"); //$NON-NLS-1$
 				}
 
-				UISynchronize uiSync = workbench.getContext().get(UISynchronize.class);
+				ThreadSynchronize uiSync = workbench.getContext().get(ThreadSynchronize.class);
 				uiSync.syncExec(() -> {
 					E4Application.this.instanceLocation = (ApplicationLocation) wbContext.get(E4Workbench.INSTANCE_LOCATION);
 					try {

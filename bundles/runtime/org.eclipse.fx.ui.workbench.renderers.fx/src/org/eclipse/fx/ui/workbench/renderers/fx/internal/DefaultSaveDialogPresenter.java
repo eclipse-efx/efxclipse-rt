@@ -22,13 +22,13 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.services.nls.Translation;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
 import org.eclipse.fx.ui.controls.stage.FrameEvent;
 import org.eclipse.fx.ui.dialogs.Dialog;
 import org.eclipse.fx.ui.dialogs.MessageDialog;
 import org.eclipse.fx.ui.dialogs.MessageDialog.QuestionCancelResult;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
-import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.eclipse.fx.ui.workbench.renderers.fx.services.SaveDialogPresenter;
 import org.eclipse.jdt.annotation.NonNull;
@@ -47,7 +47,7 @@ public class DefaultSaveDialogPresenter implements SaveDialogPresenter {
 	private Messages messages;
 
 	@Inject
-	private UISynchronize uiSync;
+	private ThreadSynchronize uiSync;
 
 	@Inject
 	GraphicsLoader graphicsLoader;
@@ -90,7 +90,7 @@ public class DefaultSaveDialogPresenter implements SaveDialogPresenter {
 			widget.setDialog(d);
 			BlockCondition<Object> condition = new BlockCondition<>();
 			d.addEventHandler(FrameEvent.CLOSED, condition::release);
-			this.uiSync.waitUntil(condition);
+			this.uiSync.block(condition);
 			widget.setDialog(null);
 		} else {
 			MultiMessageDialog d = new MultiMessageDialog(window, dirtyParts, graphicsLoader, this.messages.DefWindowRenderer_MultiMessageDialog_Title, this.messages.DefWindowRenderer_MultiMessageDialog_Message);

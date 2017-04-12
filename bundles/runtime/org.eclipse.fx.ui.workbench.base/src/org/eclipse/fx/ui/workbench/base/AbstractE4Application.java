@@ -72,6 +72,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.app.ApplicationContext;
 import org.eclipse.fx.core.app.ApplicationLocation;
 import org.eclipse.fx.core.app.ExitStatus;
@@ -81,7 +82,6 @@ import org.eclipse.fx.ui.services.restart.LifecycleRV;
 import org.eclipse.fx.ui.services.restart.RestartService;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultProgressState;
-import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.workbench.base.internal.CommandEventDispatcher;
 import org.eclipse.fx.ui.workbench.base.internal.LoggerProviderImpl;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
@@ -313,7 +313,7 @@ public abstract class AbstractE4Application {
 	}
 
 	private LifecycleRV invokePostContextCreate(IEclipseContext appContext) {
-		UISynchronize uiSynchronize = appContext.get(UISynchronize.class);
+		ThreadSynchronize uiSynchronize = appContext.get(ThreadSynchronize.class);
 		Object rv = uiSynchronize.syncExec(new Callable<Object>() {
 			@Override
 			public Object call() throws Exception {

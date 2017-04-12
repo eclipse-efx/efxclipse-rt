@@ -29,8 +29,8 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.log.LoggerCreator;
-import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseWindowRenderer;
 import org.osgi.service.event.Event;
 
@@ -40,7 +40,7 @@ import org.osgi.service.event.Event;
 public class CleanUpAddon {
 
 	@Inject
-	UISynchronize synchronize;
+	ThreadSynchronize synchronize;
 
 	@Inject
 	EModelService modelService;
