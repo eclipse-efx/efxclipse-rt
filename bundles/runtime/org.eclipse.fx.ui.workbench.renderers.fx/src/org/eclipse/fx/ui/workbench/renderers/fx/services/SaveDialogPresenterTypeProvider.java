@@ -19,5 +19,5 @@ public interface SaveDialogPresenterTypeProvider {
 	/**
 	 * @return the type
 	 */
-	public <S extends SaveDialogPresenter> Class<S> getType();
+	public Class<? extends SaveDialogPresenter> getType();
 }

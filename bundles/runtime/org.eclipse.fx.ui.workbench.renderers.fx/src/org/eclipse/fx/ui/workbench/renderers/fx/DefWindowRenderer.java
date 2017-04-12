@@ -157,6 +157,11 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		} else {
 			presenter = ContextInjectionFactory.make(this.presenterTypeProvider.getType(), modelContext.getActiveLeaf());
 		}
+		if( presenter == null ) {
+			getLogger().error("Dialog presenter must not be null"); //$NON-NLS-1$
+			Arrays.fill(response, Save.CANCEL);
+			return Arrays.asList(response);
+		}
 		BlockCondition<@NonNull List<@NonNull Save>> c = new BlockCondition<>();
 		CompletableFuture<List<@NonNull Save>> future = presenter.promptToSave(new SaveData(element.getTags().contains(TAG_LIGHTWEIGHT_DIALOGS), dirtyParts, widget, (Stage)widget.getWidget()));
 		future.thenAccept(c::release);
@@ -180,6 +185,11 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			presenter = ContextInjectionFactory.make(DefaultSaveDialogPresenter.class, modelContext);
 		} else {
 			presenter = ContextInjectionFactory.make(this.presenterTypeProvider.getType(), modelContext);
+		}
+
+		if( presenter == null ) {
+			getLogger().error("Dialog presenter must not be null"); //$NON-NLS-1$
+			return Save.CANCEL;
 		}
 
 		BlockCondition<@NonNull List<@NonNull Save>> c = new BlockCondition<>();
