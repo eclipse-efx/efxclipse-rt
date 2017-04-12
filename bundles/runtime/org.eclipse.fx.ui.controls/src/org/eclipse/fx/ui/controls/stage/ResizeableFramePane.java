@@ -626,7 +626,12 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		}
 	}
 
-	@Override
+	/**
+	 * Set if the dialog is maximizable
+	 *
+	 * @param maximizable
+	 *            <code>true</code> to support maximizable
+	 */
 	public final void setMaximizable(boolean maximizeable) {
 		this.maximizable.set(maximizeable);
 	}
@@ -647,7 +652,12 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		return this.maximizable.get();
 	}
 
-	@Override
+	/**
+	 * Set if the dialog is minimizable
+	 *
+	 * @param minimizable
+	 *            <code>true</code> to support minimizable
+	 */
 	public final void setMinimizable(boolean minimizable) {
 		this.minimizable.set(minimizable);
 	}
@@ -668,7 +678,12 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		return this.minimizable.get();
 	}
 
-	@Override
+	/**
+	 * Set if the dialog is resizable
+	 *
+	 * @param resizable
+	 *            <code>true</code> to support resizable
+	 */
 	public final void setResizeable(boolean resizable) {
 		this.resizeable.set(resizable);
 	}
