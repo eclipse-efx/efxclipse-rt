@@ -334,6 +334,7 @@ public interface ThreadSynchronize {
 	public static class BlockCondition<T> {
 		List<Consumer<T>> callbacks = new ArrayList<>();
 		private volatile boolean isBlocked = true;
+		private T value;
 
 		/**
 		 * Subscribe to unblocking
@@ -370,11 +371,19 @@ public interface ThreadSynchronize {
 		 *            the value to pass
 		 */
 		public void release(T value) {
+			this.value = value;
 			for (Consumer<T> r : this.callbacks) {
 				r.accept(value);
 			}
 			this.callbacks.clear();
 			this.isBlocked = false;
+		}
+
+		/**
+		 * @return value set when released
+		 */
+		public T getValue() {
+			return this.value;
 		}
 	}
 
