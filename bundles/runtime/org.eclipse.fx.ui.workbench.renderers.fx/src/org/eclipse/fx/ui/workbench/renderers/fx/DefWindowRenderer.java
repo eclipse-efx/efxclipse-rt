@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -43,6 +44,8 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.fx.core.ThreadSynchronize;
+import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
 import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
@@ -134,6 +137,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	@Optional
 	SaveDialogPresenterTypeProvider presenterTypeProvider;
 
+	@Inject
+	ThreadSynchronize threadSync;
+
 	@SuppressWarnings("null")
 	@Override
 	@NonNull
@@ -151,7 +157,13 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		} else {
 			presenter = ContextInjectionFactory.make(this.presenterTypeProvider.getType(), modelContext.getActiveLeaf());
 		}
-		return presenter.promptToSave(new SaveData(element.getTags().contains(TAG_LIGHTWEIGHT_DIALOGS), dirtyParts, widget, (Stage)widget.getWidget()));
+		BlockCondition<@NonNull List<@NonNull Save>> c = new BlockCondition<>();
+		CompletableFuture<List<@NonNull Save>> future = presenter.promptToSave(new SaveData(element.getTags().contains(TAG_LIGHTWEIGHT_DIALOGS), dirtyParts, widget, (Stage)widget.getWidget()));
+		future.thenAccept(c::release);
+		if( ! c.isBlocked() ) {
+			return c.getValue();
+		}
+		return this.threadSync.block(c);
 	}
 
 	@SuppressWarnings("null")
@@ -169,7 +181,18 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		} else {
 			presenter = ContextInjectionFactory.make(this.presenterTypeProvider.getType(), modelContext);
 		}
-		List<@NonNull Save> promptToSave = presenter.promptToSave(new SaveData(element.getTags().contains(TAG_LIGHTWEIGHT_DIALOGS), Collections.singletonList(dirtyPart), widget, (Stage)widget.getWidget()));
+
+		BlockCondition<@NonNull List<@NonNull Save>> c = new BlockCondition<>();
+		CompletableFuture<List<@NonNull Save>> future = presenter.promptToSave(new SaveData(element.getTags().contains(TAG_LIGHTWEIGHT_DIALOGS), Collections.singletonList(dirtyPart), widget, (Stage)widget.getWidget()));
+		future.thenAccept(c::release);
+		List<@NonNull Save> promptToSave;
+
+		if( ! c.isBlocked() ) {
+			promptToSave = c.getValue();
+		} else {
+			promptToSave = this.threadSync.block(c);
+		}
+
 		return promptToSave.isEmpty() ? Save.CANCEL : promptToSave.get(0);
 	}
 

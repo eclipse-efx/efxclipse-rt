@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import javax.inject.Inject;
 
@@ -53,11 +54,11 @@ public class DefaultSaveDialogPresenter implements SaveDialogPresenter {
 
 	@SuppressWarnings("null")
 	@Override
-	public List<@NonNull Save> promptToSave(SaveData data) {
+	public CompletableFuture<List<@NonNull Save>> promptToSave(SaveData data) {
 		if( data.dirtyParts.size() == 1 ) {
-			return Collections.singletonList(promptToSave(data.lightweight, data.dirtyParts.iterator().next(), data.widget, data.window));
+			return CompletableFuture.completedFuture(Collections.singletonList(promptToSave(data.lightweight, data.dirtyParts.iterator().next(), data.widget, data.window)));
 		} else {
-			return promptToSave(data.lightweight, data.dirtyParts, data.widget, data.window);
+			return CompletableFuture.completedFuture(promptToSave(data.lightweight, data.dirtyParts, data.widget, data.window));
 		}
 	}
 

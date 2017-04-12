@@ -12,6 +12,7 @@ package org.eclipse.fx.ui.workbench.renderers.fx.services;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
@@ -76,5 +77,5 @@ public interface SaveDialogPresenter {
 	 *            the save data
 	 * @return list of save data
 	 */
-	public @NonNull List<@NonNull Save> promptToSave(@NonNull SaveData data);
+	public @NonNull CompletableFuture<List<@NonNull Save>> promptToSave(@NonNull SaveData data);
 }
