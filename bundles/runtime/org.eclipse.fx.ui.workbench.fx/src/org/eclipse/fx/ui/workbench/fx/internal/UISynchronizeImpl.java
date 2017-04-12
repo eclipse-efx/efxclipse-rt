@@ -77,7 +77,7 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 	}
 
 	@Override
-	public <T> @Nullable T block(@NonNull BlockCondition<T> blockCondition) {
+	public <T> T block(@NonNull BlockCondition<T> blockCondition) {
 		return waitUntil(blockCondition);
 	}
 

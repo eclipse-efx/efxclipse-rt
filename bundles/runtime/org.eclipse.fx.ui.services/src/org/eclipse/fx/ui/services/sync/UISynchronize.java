@@ -30,7 +30,7 @@ public interface UISynchronize extends ThreadSynchronize {
 	 * @since 2.3.0
 	 * @deprecated use {@link ThreadSynchronize#block(org.eclipse.fx.core.ThreadSynchronize.BlockCondition)}
 	 */
-	public default <T> @Nullable T waitUntil(@NonNull BlockCondition<T> blockCondition) {
+	public default <T> T waitUntil(@NonNull BlockCondition<T> blockCondition) {
 		return Util.waitUntil(blockCondition);
 	}
 }
