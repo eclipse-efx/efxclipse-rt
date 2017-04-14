@@ -1,26 +1,34 @@
 /*******************************************************************************
- * Copyright (c) 2014 EM-SOFTWARE and others.
+ * Copyright (c) 2017 BestSolution.at and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Christoph Keimel <c.keimel@emsw.de> - initial API and implementation
+ *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.ui.workbench.fx.internal;
+package org.eclipse.fx.ui.services.sync.internal;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
+
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize;
+import org.eclipse.fx.ui.services.sync.UISynchronize;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
- * Implementation of the UISynchronize service for JavaFX
+ * Temporary implementation delegating to {@link ThreadSynchronize}
  */
-@Component(service = { org.eclipse.e4.ui.di.UISynchronize.class })
-public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize {
+@Component
+@Deprecated
+public class UISynchronizeImpl implements UISynchronize {
 	private ThreadSynchronize threadSynchronize;
 
 	/**
@@ -47,12 +55,43 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize {
 	}
 
 	@Override
-	public void syncExec(final Runnable runnable) {
+	public boolean isCurrent() {
+		return this.threadSynchronize.isCurrent();
+	}
+
+	@Override
+	public <V> V syncExec(Callable<V> callable, V defaultValue) {
+		return this.threadSynchronize.syncExec(callable, defaultValue);
+	}
+
+	@Override
+	public void syncExec(Runnable runnable) {
 		this.threadSynchronize.syncExec(runnable);
+	}
+
+	@Override
+	public <V> Future<V> asyncExec(Callable<V> callable) {
+		return this.threadSynchronize.asyncExec(callable);
 	}
 
 	@Override
 	public void asyncExec(Runnable runnable) {
 		this.threadSynchronize.asyncExec(runnable);
 	}
+
+	@Override
+	public Subscription scheduleExecution(long delay, Runnable runnable) {
+		return this.threadSynchronize.scheduleExecution(delay, runnable);
+	}
+
+	@Override
+	public <T> CompletableFuture<T> scheduleExecution(long delay, Callable<T> runnable) {
+		return this.threadSynchronize.scheduleExecution(delay, runnable);
+	}
+
+	@Override
+	public <T> T block(@NonNull BlockCondition<T> blockCondition) {
+		return this.threadSynchronize.block(blockCondition);
+	}
+
 }

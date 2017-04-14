@@ -4,5 +4,5 @@
    <service>
       <provide interface="org.eclipse.e4.ui.di.UISynchronize"/>
    </service>
-   <reference bind="setLoggerFactory" cardinality="1..1" interface="org.eclipse.fx.core.log.LoggerFactory" name="LoggerFactory" policy="dynamic" policy-option="greedy" unbind="unsetLoggerFactory"/>
+   <reference bind="setThreadSynchronize" cardinality="1..1" interface="org.eclipse.fx.core.ThreadSynchronize" name="ThreadSynchronize" policy="dynamic" policy-option="greedy" unbind="unsetThreadSynchronize"/>
 </scr:component>
