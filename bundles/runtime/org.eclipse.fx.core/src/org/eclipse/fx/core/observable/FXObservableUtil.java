@@ -19,7 +19,11 @@ import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import javafx.collections.ObservableSet;
+import javafx.collections.SetChangeListener;
 
 /**
  * Set of utility methods to deal efficiently with JavaFX {@link Observable}
@@ -100,6 +104,36 @@ public class FXObservableUtil {
 	 * @see ObservableList#addListener(ListChangeListener)
 	 */
 	public static <E> Subscription onChange(ObservableList<E> o, ListChangeListener<? super E> l) {
+		o.addListener(l);
+		return () -> o.removeListener(l);
+	}
+
+	/**
+	 * Subscribe to the list change of an {@link ObservableSet}
+	 *
+	 * @param o
+	 *            the observable
+	 * @param l
+	 *            the listener
+	 * @return subscription used to unsubscribe
+	 * @see ObservableSet#addListener(SetChangeListener)
+	 */
+	public static <E> Subscription onChange(ObservableSet<E> o, SetChangeListener<? super E> l) {
+		o.addListener(l);
+		return () -> o.removeListener(l);
+	}
+
+	/**
+	 * Subscribe to the list change of an {@link ObservableMap}
+	 *
+	 * @param o
+	 *            the observable
+	 * @param l
+	 *            the listener
+	 * @return subscription used to unsubscribe
+	 * @see ObservableMap#addListener(MapChangeListener)
+	 */
+	public static <K,V> Subscription onChange(ObservableMap<K,V> o, MapChangeListener<K, V> l) {
 		o.addListener(l);
 		return () -> o.removeListener(l);
 	}

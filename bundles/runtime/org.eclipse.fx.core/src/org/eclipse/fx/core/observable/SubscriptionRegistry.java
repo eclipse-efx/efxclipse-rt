@@ -24,7 +24,11 @@ import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import javafx.collections.ObservableSet;
+import javafx.collections.SetChangeListener;
 
 /**
  * <p>
@@ -130,6 +134,44 @@ public class SubscriptionRegistry {
 	 * @return subscription used to unsubscribe
 	 */
 	public <E> Subscription onChange(ObservableList<E> o, ListChangeListener<? super E> l) {
+		Subscription subscription = FXObservableUtil.onChange(o, l);
+		this.subscriptions.add(subscription);
+		return () -> {
+			subscription.dispose();
+			this.subscriptions.remove(subscription);
+		};
+	}
+
+	/**
+	 * Subscribe to the list change of an {@link ObservableSet}
+	 *
+	 * @param o
+	 *            the observable
+	 * @param l
+	 *            the listener
+	 * @return subscription used to unsubscribe
+	 * @see ObservableSet#addListener(SetChangeListener)
+	 */
+	public <E> Subscription onChange(ObservableSet<E> o, SetChangeListener<? super E> l) {
+		Subscription subscription = FXObservableUtil.onChange(o, l);
+		this.subscriptions.add(subscription);
+		return () -> {
+			subscription.dispose();
+			this.subscriptions.remove(subscription);
+		};
+	}
+
+	/**
+	 * Subscribe to the list change of an {@link ObservableMap}
+	 *
+	 * @param o
+	 *            the observable
+	 * @param l
+	 *            the listener
+	 * @return subscription used to unsubscribe
+	 * @see ObservableMap#addListener(MapChangeListener)
+	 */
+	public <K,V> Subscription onChange(ObservableMap<K,V> o, MapChangeListener<K, V> l) {
 		Subscription subscription = FXObservableUtil.onChange(o, l);
 		this.subscriptions.add(subscription);
 		return () -> {
