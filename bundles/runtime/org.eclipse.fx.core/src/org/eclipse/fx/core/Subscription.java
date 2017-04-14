@@ -28,7 +28,7 @@ public interface Subscription {
 	 * @param s
 	 *            the possible subscription instance, might be <code>null</code>
 	 */
-	public static void dispose(@Nullable Subscription s) {
+	public static void disposeIfExists(@Nullable Subscription s) {
 		if (s != null) {
 			s.dispose();
 		}
