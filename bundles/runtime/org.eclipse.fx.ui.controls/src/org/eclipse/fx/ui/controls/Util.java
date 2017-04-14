@@ -26,6 +26,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
 import org.eclipse.fx.core.geom.Size;
 import org.eclipse.fx.core.text.TextUtil;
@@ -451,7 +452,9 @@ public class Util {
 	 *            the condition
 	 * @return the return value of the condition
 	 * @since 2.3.0
+	 * @deprecated deprecated since 3.0 to to be replaced by {@link ThreadSynchronize#block(BlockCondition)}
 	 */
+	@Deprecated
 	public static <T> @Nullable T waitUntil(@NonNull BlockCondition<T> blockCondition) {
 		AtomicReference<@Nullable T> rv = new AtomicReference<>();
 		String uuid = UUID.randomUUID().toString();
