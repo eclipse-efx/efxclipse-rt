@@ -14,6 +14,7 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
+import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -22,14 +23,20 @@ public abstract class FadeDialogTranstionService implements LightweightDialogTra
 
 	@Override
 	public void showDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node grayArea, Node dialog, Runnable finished) {
+		dialogOverlayContainer.setCache(true);
+		dialogOverlayContainer.setCacheHint(CacheHint.SPEED);
 		dialogOverlayContainer.setOpacity(0);
 		FadeTransition fd = new FadeTransition(Duration.millis(300),dialogOverlayContainer);
 		fd.setFromValue(0);
 		fd.setToValue(1);
 		configureFadeIn(fd);
-		if( finished != null ) {
-			fd.setOnFinished( e -> finished.run());
-		}
+		fd.setOnFinished( e -> {
+			dialogOverlayContainer.setCache(false);
+			dialogOverlayContainer.setCacheHint(CacheHint.DEFAULT);
+			if( finished != null ) {
+				finished.run();
+			}
+		});
 		fd.play();
 	}
 
@@ -39,13 +46,19 @@ public abstract class FadeDialogTranstionService implements LightweightDialogTra
 
 	@Override
 	public void hideDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node grayArea, Node dialog, Runnable finished) {
+		dialogOverlayContainer.setCache(true);
+		dialogOverlayContainer.setCacheHint(CacheHint.SPEED);
 		FadeTransition fd = new FadeTransition(Duration.millis(300),dialogOverlayContainer);
 		fd.setFromValue(1);
 		fd.setToValue(0);
 		configureFadeOut(fd);
-		if( finished != null ) {
-			fd.setOnFinished( e -> finished.run());
-		}
+		fd.setOnFinished( e -> {
+			dialogOverlayContainer.setCache(false);
+			dialogOverlayContainer.setCacheHint(CacheHint.DEFAULT);
+			if( finished != null ) {
+				finished.run();
+			}
+		});
 		fd.play();
 	}
 
