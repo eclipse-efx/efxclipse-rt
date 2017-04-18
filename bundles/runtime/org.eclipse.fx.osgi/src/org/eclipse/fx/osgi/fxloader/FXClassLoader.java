@@ -95,7 +95,7 @@ public class FXClassLoader extends ClassLoaderHook {
 
 		ClassLoader cl = getClass().getClassLoader();
 		Class<?> ModuleFinderClass = cl.loadClass("java.lang.module.ModuleFinder"); //$NON-NLS-1$
-		Class<?> LayerClass = cl.loadClass("java.lang.reflect.Layer"); //$NON-NLS-1$
+		Class<?> LayerClass = cl.loadClass("java.lang.ModuleLayer"); //$NON-NLS-1$
 		Class<?> ConfigurationClass = cl.loadClass("java.lang.module.Configuration"); //$NON-NLS-1$
 
 //		ModuleFinder finder = ModuleFinder.of(path);
