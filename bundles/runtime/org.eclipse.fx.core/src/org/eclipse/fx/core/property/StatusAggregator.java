@@ -58,9 +58,11 @@ public class StatusAggregator implements ValidationStatusPropertyOwner {
 	public Subscription register(ValidationStatusPropertyOwner property) {
 		property.statusProperty().addListener(this::handleBindingStatusChange);
 		this.list.add(property);
+		_validate();
 		return () -> {
 			property.statusProperty().removeListener(this::handleBindingStatusChange);
 			this.list.remove(property);
+			_validate();
 		};
 	}
 
