@@ -78,6 +78,7 @@ public class StatusAggregator implements ValidationStatusPropertyOwner {
 
 	@Override
 	public void validate() {
+		this.list.stream().forEach( ValidationStatusPropertyOwner::validate );
 		_validate();
 	}
 
