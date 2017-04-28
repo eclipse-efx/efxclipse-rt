@@ -1,9 +1,11 @@
 package org.eclipse.fx.core.di.context.internal;
 
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import javax.inject.Inject;
 
@@ -43,23 +45,38 @@ public class LocalInstanceObjectSupplier extends ExtendedObjectSupplier {
 		return null;
 	}
 
-	public static class InstanceCreator<O> {
+	public static class InstanceCreator {
 		private final IEclipseContext context;
-		private final List<TypeTypeProviderService<O>> providerList;
+		private final List<TypeTypeProviderService<?>> providerList;
 
 		@Inject
-		public InstanceCreator(IEclipseContext context, @Service List<TypeTypeProviderService<O>> providerList) {
+		public InstanceCreator(IEclipseContext context, @Service List<TypeTypeProviderService<?>> providerList) {
 			this.context = context;
 			this.providerList = providerList;
 		}
 
-		public O createInstance(Type iType, Class<?> owner) {
-			Optional<TypeTypeProviderService<O>> providerOp = this.providerList.stream().filter( p -> p.test(iType)).findFirst();
-			if( ! providerOp.isPresent() ) {
-				return (O)null;
-			}
-			Class<O> type = (Class<O>) providerOp.get().getType(iType);
+		public Object createInstance(Type iType, Class<?> owner) {
+			Supplier<Class<?>> classSuplier = () -> {
+				if( iType instanceof Class<?> ) {
+					Class<?> cl = (Class<?>) iType;
+					if( ! Modifier.isAbstract(cl.getModifiers())
+							&& ! Modifier.isInterface(cl.getModifiers())) {
+						return (Class<?>) iType;
+					}
+				}
+				return null;
+			};
 
+			Class<?> type = this.providerList
+					.stream()
+					.filter( p -> p.test(iType))
+					.findFirst()
+					.map( p -> (Class)p.getType(iType))
+					.orElseGet( classSuplier );
+
+			if( type == null ) {
+				return null;
+			}
 
 			IEclipseContext staticContext = EclipseContextFactory.create("static"); //$NON-NLS-1$
 			try {

@@ -12,8 +12,6 @@ package org.eclipse.fx.core.observable;
 
 import java.util.function.Consumer;
 
-import javax.inject.Inject;
-
 import org.eclipse.fx.core.DisposeableCollector;
 import org.eclipse.fx.core.Subscription;
 
@@ -151,7 +149,6 @@ public class FXObservableUtil {
 		/**
 		 * Create a new instance
 		 */
-		@Inject
 		public Instance() {
 			super(Subscription::dispose);
 		}

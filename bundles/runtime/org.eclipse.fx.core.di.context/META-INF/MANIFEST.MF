@@ -45,5 +45,4 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.core.di.context.internal.Loc
  OSGI-INF/services/org.eclipse.fx.core.di.context.internal.TemportalAccessorFormatterFunction.xml,
  OSGI-INF/services/org.eclipse.fx.core.di.context.internal.LocalInstanceObjectSupplier.xml,
  OSGI-INF/services/org.eclipse.fx.core.di.context.internal.DefaultScopeCalculator.xml,
- OSGI-INF/services/org.eclipse.fx.core.di.context.internal.SubscriptionRegistryCF.xml,
- OSGI-INF/services/org.eclipse.fx.core.di.context.internal.DisposableCollectorContextFunction.xml
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.SubscriptionRegistryCF.xml
