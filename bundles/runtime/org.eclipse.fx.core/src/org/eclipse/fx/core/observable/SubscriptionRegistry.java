@@ -58,7 +58,9 @@ import javafx.collections.SetChangeListener;
  * 	SubscriptionRegistry registry;
  * }
  * </pre></code>
+ * @deprecated use {@link FXObservableUtil.Instance}
  */
+@Deprecated
 public class SubscriptionRegistry {
 	private List<Subscription> subscriptions = new ArrayList<>();
 
@@ -211,7 +213,7 @@ public class SubscriptionRegistry {
 
 	/**
 	 * add a custom subscription.
-	 * 
+	 *
 	 * @param subscription
 	 *            subscription
 	 */
@@ -551,7 +553,7 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Collect the stream
-	 * 
+	 *
 	 * @param stream
 	 *            binding stream
 	 * @param collector
