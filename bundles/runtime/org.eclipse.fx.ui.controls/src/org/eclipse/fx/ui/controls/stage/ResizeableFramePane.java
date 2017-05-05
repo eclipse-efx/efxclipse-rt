@@ -557,7 +557,6 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 				stage.setY(this.backupWindowBounds.getMinY());
 				stage.setWidth(this.backupWindowBounds.getWidth());
 				stage.setHeight(this.backupWindowBounds.getHeight());
-				stage.setMaximized(false);
 				this.backupWindowBounds = null;
 			}
 		}
