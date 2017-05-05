@@ -161,7 +161,7 @@ public interface ThreadSynchronize {
 	 * @return the subscription
 	 * @since 2.2.0
 	 */
-	default <T> Subscription delayedChangeExecution(long delay, Property<T> property, Consumer<T> consumer) {
+	default <T> Subscription delayedChangeExecution(long delay, ObservableValue<T> property, Consumer<T> consumer) {
 		ChangeListener<T> l = new ChangeListener<T>() {
 			private Subscription currentSubscription;
 
@@ -199,10 +199,10 @@ public interface ThreadSynchronize {
 	 * @since 3.0
 	 */
 	default <T> Subscription delayedChangeExecution(long delay, Consumer<List<T>> consumer,
-			@SuppressWarnings("unchecked") Property<T>... properties) {
+			@SuppressWarnings("unchecked") ObservableValue<T>... properties) {
 		Runnable r = () -> {
 			List<T> l = new ArrayList<>();
-			for (Property<T> p : properties) {
+			for (ObservableValue<T> p : properties) {
 				l.add(p.getValue());
 			}
 			consumer.accept(l);
@@ -222,7 +222,7 @@ public interface ThreadSynchronize {
 				});
 			}
 		};
-		for (Property<T> p : properties) {
+		for (ObservableValue<T> p : properties) {
 			p.addListener(l);
 		}
 
@@ -230,7 +230,7 @@ public interface ThreadSynchronize {
 
 			@Override
 			public void dispose() {
-				for (Property<T> p : properties) {
+				for (ObservableValue<T> p : properties) {
 					p.removeListener(l);
 				}
 			}
