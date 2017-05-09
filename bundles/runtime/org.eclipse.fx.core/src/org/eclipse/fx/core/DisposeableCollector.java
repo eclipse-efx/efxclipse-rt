@@ -62,13 +62,12 @@ public abstract class DisposeableCollector<T> {
 	 */
 	@PreDestroy
 	public void dispose() {
-		for (int i = this.objects.size() - 1; i >= 0; i++) {
+		for (int i = this.objects.size() - 1; i >= 0; i--) {
 			try {
 				this.dispose.accept(this.objects.get(i));
 			} catch (Throwable t) {
 				// TODO
 			}
-
 		}
 	}
 }
