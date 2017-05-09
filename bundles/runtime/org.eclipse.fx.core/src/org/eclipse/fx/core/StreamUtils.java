@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
+import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -28,5 +30,18 @@ public class StreamUtils {
 	public static <T> T debugStderr(T data) {
 		System.err.println(data);
 		return data;
+	}
+	
+	/**
+	 * Creates a {@link Stream} that iterates over the given list in reverse
+	 * order
+	 * 
+	 * @param list
+	 *            list
+	 * @return reverse list stream
+	 */
+	public static <T> Stream<T> reverse(List<T> list) {
+		int size = list.size();
+		return IntStream.range(0, size).mapToObj(i -> list.get(size - 1- i));
 	}
 }
