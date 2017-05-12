@@ -33,6 +33,7 @@ import java.util.function.ToLongFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.eclipse.fx.core.DisposeableCollector;
 import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize;
@@ -212,7 +213,7 @@ public class FXBindings {
 	}
 
 	/**
-	 * Creates a binding dependending on the value of the condition
+	 * Creates a binding depending on the value of the condition
 	 *
 	 * @param condition
 	 *            the condition
@@ -230,7 +231,7 @@ public class FXBindings {
 	}
 
 	/**
-	 * Creates a binding dependending on the value of the condition
+	 * Creates a binding depending on the value of the condition
 	 *
 	 * @param condition
 	 *            the condition
@@ -1964,5 +1965,319 @@ public class FXBindings {
 			};
 		}
 
+	}
+
+	/**
+	 * Instance version of {@link FXBindings} which tracks the created
+	 * {@link Subscription} objects
+	 *
+	 * @since 3.0
+	 */
+	public static class Instance extends DisposeableCollector<Subscription> {
+		/**
+		 * Create a new instance
+		 */
+		public Instance() {
+			super(Subscription::dispose);
+		}
+
+		private Subscription wrap(Subscription subscription) {
+			register(subscription);
+			return () -> {
+				unregister(subscription);
+				subscription.dispose();
+			};
+		}
+
+		private <B extends Binding<T>, T> B wrap(B binding) {
+			if (binding != null) {
+				register(() -> binding.dispose());
+			}
+			return binding;
+		}
+
+		/**
+		 * Bind the content to the source list to the target with an optional
+		 * padding and apply the converter in between
+		 *
+		 * @param padding
+		 *            the initial padding
+		 * @param target
+		 *            the target
+		 * @param sourceList
+		 *            the source list
+		 * @param converterFunction
+		 *            the converter function
+		 * @param paddingEntryFactory
+		 *            function to consult when filling padding slots
+		 * @return the binding
+		 * @see FXBindings#bindContent(int, List, ObservableList, Function,
+		 *      IntFunction)
+		 */
+		public <T, E> Subscription onBindContent(int padding, List<T> target, ObservableList<E> sourceList,
+				Function<E, T> converterFunction, IntFunction<T> paddingEntryFactory) {
+			Subscription subscription = FXBindings.bindContent(padding, target, sourceList, converterFunction,
+					paddingEntryFactory);
+			return wrap(subscription);
+		}
+
+		/**
+		 * Bind the content to the source list to the target and apply the
+		 * converter in between
+		 *
+		 * @param target
+		 *            the target list
+		 * @param sourceList
+		 *            the source list
+		 * @param converterFunction
+		 *            the function used to convert
+		 * @param <T>
+		 *            the target type
+		 * @param <E>
+		 *            the source type
+		 * @return the subscription to dispose the binding
+		 * @see FXBindings#bindContent(List, ObservableList, Function)
+		 */
+		public <T, E> Subscription onBindContent(List<T> target, ObservableList<E> sourceList,
+				Function<E, T> converterFunction) {
+			Subscription subscription = FXBindings.bindContent(target, sourceList, converterFunction);
+			return wrap(subscription);
+		}
+
+		/**
+		 * Bind the content to the source list to the target with an optional
+		 * padding and apply the converter in between
+		 *
+		 * @param threadSync
+		 *            strategy to synchronize the target on a certain thread,
+		 *            might be <code>null</code>
+		 * @param padding
+		 *            the initial padding
+		 * @param target
+		 *            the target
+		 * @param sourceList
+		 *            the source list
+		 * @param converterFunction
+		 *            the converter function
+		 * @param paddingEntryFactory
+		 *            function to consult when filling padding slots
+		 * @return the binding
+		 * @see FXBindings#bindContent(ThreadSynchronize, int, List,
+		 *      ObservableList, Function, IntFunction)
+		 */
+		public <T, E> Subscription onBindContent(ThreadSynchronize threadSync, int padding, List<T> target,
+				ObservableList<E> sourceList, Function<E, T> converterFunction, IntFunction<T> paddingEntryFactory) {
+			Subscription subscription = FXBindings.bindContent(threadSync, padding, target, sourceList,
+					converterFunction, paddingEntryFactory);
+			return wrap(subscription);
+		}
+
+		/**
+		 * Bind the content to the source list to the target and apply the
+		 * converter in between
+		 *
+		 * @param threadSync
+		 *            strategy to synchronize the target on a certain thread,
+		 *            might be <code>null</code>
+		 * @param target
+		 *            the target list
+		 * @param sourceList
+		 *            the source list
+		 * @param converterFunction
+		 *            the function used to convert
+		 * @param <T>
+		 *            the target type
+		 * @param <E>
+		 *            the source type
+		 * @return the subscription to dispose the binding
+		 * @see FXBindings#bindContent(ThreadSynchronize, List, ObservableList,
+		 *      Function)
+		 */
+		public <T, E> Subscription onBindContent(ThreadSynchronize threadSync, List<T> target,
+				ObservableList<E> sourceList, Function<E, T> converterFunction) {
+			Subscription subscription = FXBindings.bindContent(threadSync, target, sourceList, converterFunction);
+			return wrap(subscription);
+		}
+
+		/**
+		 * Concatenates multiple observable lists together.
+		 *
+		 * @param sources
+		 * @return the concatenated list binding
+		 * @see FXBindings#concat(ObservableList...)
+		 */
+		public <A> ListBinding<A> onConcat(@SuppressWarnings("unchecked") ObservableList<? extends A>... sources) {
+			ListBinding<A> binding = FXBindings.concat(sources);
+			return wrap(binding);
+		}
+
+		/**
+		 * Concat all non-null and non empty values with the given delimiter
+		 *
+		 * @param delimiter
+		 *            the delimiter to use
+		 * @param sources
+		 *            list of observable
+		 * @return binding with the source concated
+		 * @see FXBindings#concat(String, ObservableValue...)
+		 */
+		public <T> StringBinding onConcat(String delimiter,
+				@SuppressWarnings("unchecked") ObservableValue<T>... sources) {
+			StringBinding binding = FXBindings.concat(delimiter, sources);
+			return wrap(binding);
+		}
+
+		/**
+		 * Maps an observable value to another observable value
+		 *
+		 * @param source
+		 * @param map
+		 * @return the mapped value binding
+		 * @see FXBindings#flatMap(ObservableValue, Function)
+		 */
+		public <A, B> ObjectBinding<B> onFlatMap(ObservableValue<A> source, Function<A, ObservableValue<B>> map) {
+			ObjectBinding<B> binding = FXBindings.flatMap(source, map);
+			return wrap(binding);
+		}
+
+		/**
+		 * Flat maps an observable list with observable lists
+		 *
+		 * @param source
+		 * @param map
+		 * @return the flat mapped list binding
+		 * @see FXBindings#flatMapList(ObservableList, Function)
+		 */
+		public <A, B> ListBinding<B> onFlatMapList(ObservableList<A> source, Function<A, ObservableList<B>> map) {
+			ListBinding<B> binding = FXBindings.flatMapList(source, map);
+			return wrap(binding);
+		}
+
+		/**
+		 * Flat maps an observable list with observable values
+		 *
+		 * @param source
+		 * @param map
+		 * @return the flat mapped list binding
+		 * @see FXBindings#flatMapListValue(ObservableList, Function)
+		 */
+		public <A, B> ListBinding<B> onFlatMapListValue(ObservableList<A> source, Function<A, ObservableValue<B>> map) {
+			ListBinding<B> binding = FXBindings.flatMapListValue(source, map);
+			return wrap(binding);
+		}
+
+		/**
+		 * allows to sync between threads
+		 *
+		 * @param source
+		 * @param thread
+		 * @return the synced list binding
+		 * @see FXBindings#syncList(ObservableList, ThreadSynchronize)
+		 */
+		public <A> ListBinding<A> onSyncList(ObservableList<A> source, ThreadSynchronize thread) {
+			ListBinding<A> binding = FXBindings.syncList(source, thread);
+			return wrap(binding);
+		}
+
+		/**
+		 * allows to sync between threads
+		 *
+		 * @param source
+		 * @param thread
+		 * @return the synced object binding
+		 * @see FXBindings#sync(ObservableValue, ThreadSynchronize)
+		 */
+		public <A> ObjectBinding<A> onSync(ObservableValue<A> source, ThreadSynchronize thread) {
+			ObjectBinding<A> binding = FXBindings.sync(source, thread);
+			return wrap(binding);
+		}
+
+		/**
+		 * Creates a binding depending on the value of the condition
+		 *
+		 * @param condition
+		 *            the condition
+		 * @param then
+		 *            the value held by the binding if the condition is
+		 *            <code>true</code>
+		 * @param _else
+		 *            the value held by the binding if the condition is
+		 *            <code>false</code>
+		 * @return the binding
+		 * @see FXBindings#tenaryBinding(ObservableBooleanValue,
+		 *      ObservableValue, ObservableValue)
+		 */
+		public <T> Binding<T> onTenaryBinding(ObservableBooleanValue condition, ObservableValue<T> then,
+				ObservableValue<T> _else) {
+			Binding<T> binding = FXBindings.tenaryBinding(condition, then, _else);
+			return wrap(binding);
+		}
+
+		/**
+		 * Creates a binding depending on the value of the condition
+		 *
+		 * @param condition
+		 *            the condition
+		 * @param then
+		 *            the value held by the binding if the condition is
+		 *            <code>true</code>
+		 * @param _else
+		 *            the value held by the binding if the condition is
+		 *            <code>false</code>
+		 * @return the binding
+		 * @see FXBindings#tenaryBinding(ObservableBooleanValue, Object, Object)
+		 */
+		public <T> Binding<T> onTenaryBinding(ObservableBooleanValue condition, T then, T _else) {
+			Binding<T> binding = FXBindings.tenaryBinding(condition, then, _else);
+			return wrap(binding);
+		}
+
+		/**
+		 * Maps an observable value
+		 *
+		 * @param source
+		 *            source value
+		 * @param map
+		 *            map function
+		 * @return the mapped value binding
+		 * @see FXBindings#map(ObservableValue, Function)
+		 */
+		public <A, B> ObjectBinding<B> onMap(ObservableValue<A> source, Function<A, B> map) {
+			ObjectBinding<B> binding = FXBindings.map(source, map);
+			return wrap(binding);
+		}
+
+		/**
+		 * Maps an observable list
+		 *
+		 * @param source
+		 *            source list
+		 * @param map
+		 *            map function
+		 * @return the mapped list binding
+		 * @see FXBindings#mapList(ObservableList, Function)
+		 */
+		public <A, B> ListBinding<B> onMapList(ObservableList<A> source, Function<A, B> map) {
+			ListBinding<B> binding = FXBindings.mapList(source, map);
+			return wrap(binding);
+		}
+
+		/**
+		 * Collect the stream
+		 *
+		 * @param stream
+		 *            binding stream
+		 * @param collector
+		 *            collector
+		 * @return the terminal binding
+		 * @see BindingStream#collect(FXCollector)
+		 */
+		public <R extends Binding<?>, T> R onCollect(BindingStream<T> stream, FXCollector<T, R> collector) {
+			R binding = stream.collect(collector);
+			if (binding != null) {
+				register(() -> binding.dispose());
+			}
+			return binding;
+		}
 	}
 }
