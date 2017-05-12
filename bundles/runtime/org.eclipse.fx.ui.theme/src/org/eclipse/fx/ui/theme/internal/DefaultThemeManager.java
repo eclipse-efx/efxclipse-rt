@@ -19,8 +19,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.fx.core.URLStreamHandler;
-import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.ui.services.Constants;
@@ -65,7 +65,7 @@ public class DefaultThemeManager implements ThemeManager {
 	 * Create a new theme manager instance
 	 */
 	public DefaultThemeManager() {
-		for( URLStreamHandler handler : Util.lookupServiceList(URLStreamHandler.class) ) {
+		for( URLStreamHandler handler : ServiceUtils.getServiceList(URLStreamHandler.class) ) {
 			Hashtable<String, Object> t = new Hashtable<>();
 			t.put(URLConstants.URL_HANDLER_PROTOCOL, new String[] { handler.getProtocol() });
 			Activator.getContext().registerService(URLStreamHandlerService.class, new DelegatingURLStreamHandlerService(handler), t);

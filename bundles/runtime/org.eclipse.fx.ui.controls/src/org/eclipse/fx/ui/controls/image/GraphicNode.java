@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.fx.ui.controls.image.ImageCache.CachedImage;
 
 import javafx.beans.property.ObjectProperty;
@@ -74,7 +74,7 @@ public class GraphicNode extends StackPane {
 	private static List<GraphicNodeProvider> NODE_PROVIDER_LIST = new ArrayList<>();
 
 	static {
-		NODE_PROVIDER_LIST = Util.lookupServiceList(GraphicNode.class, GraphicNodeProvider.class);
+		NODE_PROVIDER_LIST = ServiceUtils.getServiceList(GraphicNode.class, GraphicNodeProvider.class);
 	}
 
 	/**

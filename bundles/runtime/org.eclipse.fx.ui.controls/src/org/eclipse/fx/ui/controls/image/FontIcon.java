@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.scene.text.Font;
@@ -43,7 +43,7 @@ public abstract class FontIcon {
 
 	static
 	{
-		PROVIDER_MAP.putAll(Util.lookupServiceList(FontIconProvider.class).stream().collect(Collectors.toMap(FontIconProvider::getNamespace, p -> p)));
+		PROVIDER_MAP.putAll(ServiceUtils.getServiceList(FontIconProvider.class).stream().collect(Collectors.toMap(FontIconProvider::getNamespace, p -> p)));
 	}
 
 	/**

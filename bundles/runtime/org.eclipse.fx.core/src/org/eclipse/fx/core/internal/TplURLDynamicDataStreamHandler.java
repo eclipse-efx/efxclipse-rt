@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.text.StrSubstitutor;
+import org.eclipse.fx.core.IOUtils;
 import org.eclipse.fx.core.URLDynamicDataStreamHandler;
-import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.component.annotations.Component;
@@ -45,8 +45,8 @@ public class TplURLDynamicDataStreamHandler implements URLDynamicDataStreamHandl
 			URL realURL = new URL(url.getPath());
 			String data;
 			try (InputStream stream = realURL.openStream()) {
-				data = StrSubstitutor.replace(Util.readToString(stream, Charset.forName("UTF-8")), //$NON-NLS-1$
-						map(url.getQuery()),"_(",")");  //$NON-NLS-1$//$NON-NLS-2$
+				data = StrSubstitutor.replace(IOUtils.readToString(stream, Charset.forName("UTF-8")), //$NON-NLS-1$
+						map(url.getQuery()), "_(", ")"); //$NON-NLS-1$//$NON-NLS-2$
 			}
 			return new ByteArrayInputStream(data.getBytes());
 		} catch (IOException e) {

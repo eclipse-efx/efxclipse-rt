@@ -31,7 +31,7 @@ import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.core.ObjectSerializer;
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.fx.core.ValueSerializer;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
@@ -103,7 +103,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 
 	private static ValueSerializer getValueSerializer() {
 		if( serializer == null ) {
-			serializer = Util.lookupService(ValueSerializer.class);
+			ServiceUtils.getService(ValueSerializer.class).ifPresent(s -> serializer = s);
 		}
 		return serializer;
 	}
@@ -112,7 +112,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 
 	private static ObjectSerializer getObjectSerializer() {
 		if( objectSerializer == null ) {
-			objectSerializer = Util.lookupService(ObjectSerializer.class);
+			ServiceUtils.getService(ObjectSerializer.class).ifPresent(s -> objectSerializer = s);
 		}
 		return objectSerializer;
 	}
@@ -121,7 +121,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 
 	private static IPreferencesService getPreferenceService() {
 		if( preferenceService == null ) {
-			preferenceService = Util.lookupService(IPreferencesService.class);
+			ServiceUtils.getService(IPreferencesService.class).ifPresent(s -> preferenceService = s);
 		}
 		return preferenceService;
 	}

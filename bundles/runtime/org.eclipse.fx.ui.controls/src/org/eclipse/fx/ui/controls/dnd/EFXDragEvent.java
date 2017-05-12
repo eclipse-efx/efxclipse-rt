@@ -12,10 +12,8 @@ package org.eclipse.fx.ui.controls.dnd;
 
 import java.util.function.Consumer;
 
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.SystemUtils;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.event.Event;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
@@ -27,7 +25,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Popup;
 import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -197,7 +194,7 @@ public class EFXDragEvent extends Event {
 		if (eventType == DRAG_START) {
 			DRAGGED_CONTENT = null;
 			if( canShowFeedbackDragFeedback() ) {
-				if( Util.isMacOS()) {
+				if( SystemUtils.isMacOS()) {
 					DRAG_FEEDBACK = new DragFeedbackStage((Node) source);
 				} else {
 					DRAG_FEEDBACK = new DragFeedbackPopup((Node) source);

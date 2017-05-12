@@ -10,10 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.core.log;
 
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.fx.core.internal.JUtilLoggerFactory;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Allows to create a logger
@@ -31,12 +30,7 @@ public class LoggerCreator {
 	@SuppressWarnings("null")
 	@NonNull
 	public static Logger createLogger(@NonNull Class<?> clazz) {
-		@Nullable
-		LoggerFactory factory = Util.lookupService(LoggerFactory.class);
-
-		if(factory == null) {
-			factory = new JUtilLoggerFactory();
-		}
+		LoggerFactory factory = ServiceUtils.getService(LoggerFactory.class).orElse(new JUtilLoggerFactory());
 		return factory.createLogger(clazz.getName());
 	}
 }

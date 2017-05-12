@@ -12,11 +12,10 @@
 package org.eclipse.fx.ui.controls.styledtext.behavior;
 
 import java.text.BreakIterator;
-import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.fx.core.IntTuple;
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.text.DefaultTextEditActions;
 import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.core.text.TextUtil;
@@ -285,7 +284,7 @@ public class StyledTextBehavior {
 		Event.fireEvent(getControl(), evt);
 
 		// Bug in JavaFX who enables the menu when ALT is pressed
-		if (Util.isMacOS()) {
+		if (SystemUtils.isMacOS()) {
 			if (event.getCode() == KeyCode.ALT || event.isAltDown()) {
 				event.consume();
 			}
@@ -322,8 +321,8 @@ public class StyledTextBehavior {
 			// check the modifiers
 			// - OS-X: ALT+L ==> @
 			// - win32/linux: ALTGR+Q ==> @
-			if (event.isControlDown() || event.isAltDown() || (Util.isMacOS() && event.isMetaDown())) {
-				if (!((event.isControlDown() || Util.isMacOS()) && event.isAltDown()))
+			if (event.isControlDown() || event.isAltDown() || (SystemUtils.isMacOS() && event.isMetaDown())) {
+				if (!((event.isControlDown() || SystemUtils.isMacOS()) && event.isAltDown()))
 					return;
 			}
 
@@ -1460,7 +1459,7 @@ public class StyledTextBehavior {
 	 */
 	protected void initKeymapping(TriggerActionMapping m) {
 
-		if (Util.isMacOS()) {
+		if (SystemUtils.isMacOS()) {
 			m.map("Meta+Left", DefaultTextEditActions.LINE_START); //$NON-NLS-1$
 			m.map("Meta+Right", DefaultTextEditActions.LINE_END); //$NON-NLS-1$
 			m.map("Meta+Up", DefaultTextEditActions.TEXT_START); //$NON-NLS-1$

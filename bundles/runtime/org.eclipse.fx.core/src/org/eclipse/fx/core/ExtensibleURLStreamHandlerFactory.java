@@ -30,7 +30,7 @@ public class ExtensibleURLStreamHandlerFactory implements URLStreamHandlerFactor
 	private final Map<String, org.eclipse.fx.core.URLStreamHandler> handlerMap;
 
 	private ExtensibleURLStreamHandlerFactory() {
-		this.handlerMap = Util.lookupServiceList(org.eclipse.fx.core.URLStreamHandler.class).stream().collect(Collectors.toMap(h -> h.getProtocol(), h -> h));
+		this.handlerMap = ServiceUtils.getServiceList(org.eclipse.fx.core.URLStreamHandler.class).stream().collect(Collectors.toMap(h -> h.getProtocol(), h -> h));
 	}
 
 	@Override

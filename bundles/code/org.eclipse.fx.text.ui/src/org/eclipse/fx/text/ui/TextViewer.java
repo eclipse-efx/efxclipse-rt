@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.fx.core.Subscription;
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
@@ -39,7 +39,6 @@ import org.eclipse.fx.ui.controls.styledtext.events.UndoHintEvent;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
-import org.eclipse.jface.text.ConfigurableLineTracker;
 import org.eclipse.jface.text.DefaultPositionUpdater;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.DocumentRewriteSessionEvent;
@@ -217,7 +216,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 	private static KeyCode getKeyCode(VerifyEvent event) {
 		// JDK-8150709
 		KeyCode kc = event.getCode();
-		if (Util.isMacOS()) {
+		if (SystemUtils.isMacOS()) {
 			if (kc == KeyCode.Z || kc == KeyCode.Y) {
 				if (event.getText().toUpperCase().equals("Z")) { //$NON-NLS-1$
 					return KeyCode.Z;
@@ -233,7 +232,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 	protected void onVerify(VerifyEvent event) {
 		// TODO add undo support to textViewer
 		if (getUndoManager() != null) {
-			if (Util.isWindows()) {
+			if (SystemUtils.isWindows()) {
 				if (event.isControlDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
 					if (getUndoManager().undoable()) {
 						getUndoManager().undo();
@@ -245,7 +244,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 						event.consume();
 					}
 				}
-			} else if (Util.isMacOS()) {
+			} else if (SystemUtils.isMacOS()) {
 				if (event.isMetaDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
 					if (getUndoManager().undoable()) {
 						getUndoManager().undo();

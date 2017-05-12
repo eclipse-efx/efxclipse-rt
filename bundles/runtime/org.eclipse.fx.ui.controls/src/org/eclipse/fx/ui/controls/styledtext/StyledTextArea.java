@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.text.TextEditAction;
+import org.eclipse.fx.core.text.TextUtil;
 import org.eclipse.fx.ui.controls.JavaFXCompatUtil;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
@@ -1715,7 +1715,7 @@ public class StyledTextArea extends Control {
 
 		String content = text.toString();
 		if( isInsertSpacesForTab() ) {
-			content = content.replaceAll("\t", Util.createRepeatedString(' ', this.tabAdvance.get())); //$NON-NLS-1$
+			content = content.replaceAll("\t", TextUtil.createRepeatedString(' ', this.tabAdvance.get())); //$NON-NLS-1$
 		}
 
 		this.getContent().replaceTextRange(start, replaceLength, content);

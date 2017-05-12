@@ -12,7 +12,7 @@ package org.eclipse.fx.ui.controls.image.internal;
 
 import java.io.IOException;
 
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.URLUtils;
 import org.eclipse.fx.ui.controls.image.GraphicNodeProvider;
 import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.component.annotations.Component;
@@ -41,7 +41,7 @@ public class FXMLNodeProvider implements GraphicNodeProvider {
 	@Override
 	public @NonNull Node getGraphicNode(String uri) {
 		FXMLLoader l = new FXMLLoader();
-		l.setLocation(Util.createUrl(uri));
+		l.setLocation(URLUtils.createUrl(uri));
 		try {
 			return l.load();
 		} catch (IOException e) {

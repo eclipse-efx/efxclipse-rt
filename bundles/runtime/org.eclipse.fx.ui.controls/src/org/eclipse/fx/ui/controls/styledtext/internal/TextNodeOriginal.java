@@ -17,8 +17,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.fx.core.Subscription;
-import org.eclipse.fx.core.Util;
 import org.eclipse.fx.ui.controls.styledtext.DecorationStrategyFactory;
 import org.eclipse.fx.ui.controls.styledtext.model.DecorationStrategy;
 import org.eclipse.jdt.annotation.NonNull;
@@ -121,7 +121,7 @@ public class TextNodeOriginal extends HBox implements TextNode {
 			String definition = value.getValue() + ""; //$NON-NLS-1$
 
 			if (FACTORIES == null) {
-				FACTORIES = Util.lookupServiceList(getClass(), DecorationStrategyFactory.class).stream().sorted((f1, f2) -> -1 * Integer.compare(f1.getRanking(), f2.getRanking())).collect(Collectors.toMap(f -> f.getDecorationStrategyName(), f -> f));
+				FACTORIES = ServiceUtils.getServiceList(getClass(), DecorationStrategyFactory.class).stream().sorted((f1, f2) -> -1 * Integer.compare(f1.getRanking(), f2.getRanking())).collect(Collectors.toMap(f -> f.getDecorationStrategyName(), f -> f));
 			}
 
 			String type;

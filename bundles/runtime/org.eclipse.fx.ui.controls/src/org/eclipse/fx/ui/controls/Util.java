@@ -19,13 +19,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
 import org.eclipse.fx.core.geom.Size;
@@ -383,7 +383,7 @@ public class Util {
 	 * @since 2.3.0
 	 */
 	public static void enterNestedEventLoop(String id) {
-		if (org.eclipse.fx.core.Util.isFX9()) {
+		if (SystemUtils.isFX9()) {
 			enterNestedEventLoop9(id);
 		} else {
 			enterNestedEventLoop8(id);
@@ -418,7 +418,7 @@ public class Util {
 	 * @since 2.3.0
 	 */
 	public static void exitNestedEventLoop(String id) {
-		if (org.eclipse.fx.core.Util.isFX9()) {
+		if (SystemUtils.isFX9()) {
 			exitNestedEventLoop9(id);
 		} else {
 			exitNestedEventLoop8(id);
@@ -518,7 +518,7 @@ public class Util {
 	}
 
 	public static boolean isCopyEvent(MouseEvent event) {
-		if (org.eclipse.fx.core.Util.isMacOS()) {
+		if (SystemUtils.isMacOS()) {
 			return event.isAltDown();
 		} else {
 			return event.isControlDown();

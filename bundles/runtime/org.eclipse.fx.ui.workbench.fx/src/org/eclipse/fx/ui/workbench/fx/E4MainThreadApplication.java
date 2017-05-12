@@ -12,7 +12,7 @@ package org.eclipse.fx.ui.workbench.fx;
 
 import java.util.concurrent.CountDownLatch;
 
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.databinding.JFXRealm;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultProgressState;
 
@@ -36,7 +36,7 @@ public class E4MainThreadApplication extends E4Application {
 
 	@Override
 	protected void launchE4JavaFxApplication() throws Exception {
-		if (Util.isMacOS()) {
+		if (SystemUtils.isMacOS()) {
 			PlatformImpl.addListener(new PlatformImpl.FinishListener() {
 
 				@Override

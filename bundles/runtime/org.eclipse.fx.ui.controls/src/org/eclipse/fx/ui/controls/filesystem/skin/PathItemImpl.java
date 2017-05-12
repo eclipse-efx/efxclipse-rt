@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.FilesystemService;
 import org.eclipse.fx.core.FilesystemService.Kind;
+import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.fx.core.Subscription;
-import org.eclipse.fx.core.Util;
 import org.eclipse.fx.ui.controls.filesystem.DirItem;
 import org.eclipse.fx.ui.controls.filesystem.FileItem;
 import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
@@ -167,12 +167,9 @@ public abstract class PathItemImpl implements ResourceItem {
 				}
 
 				if (this.observe) {
-					FilesystemService service = Util
-							.lookupService(FilesystemService.class);
-					if (service != null) {
-						this.fsSubscription = service.observePath(this.path,
-								this::handlePathModification);
-					}
+					ServiceUtils.getService(FilesystemService.class).ifPresent(service -> {
+						this.fsSubscription = service.observePath(this.path, this::handlePathModification);
+					});
 				}
 			}
 			return this.children;

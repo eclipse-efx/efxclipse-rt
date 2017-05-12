@@ -15,8 +15,8 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.Optional;
 
+import org.eclipse.fx.core.IOUtils;
 import org.eclipse.fx.core.Resource;
-import org.eclipse.fx.core.Util;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.scene.media.AudioClip;
@@ -56,7 +56,7 @@ public class MediaLoader {
 		if (isSupported(url)) {
 			return Optional.of(new Media(url.toExternalForm()));
 		}
-		Optional<URL> localURL = Util.getLocalURL(url);
+		Optional<URL> localURL = IOUtils.getLocalURL(url);
 
 		if (localURL.isPresent()) {
 			if (isSupported(localURL.get())) {
@@ -64,7 +64,7 @@ public class MediaLoader {
 			}
 		}
 
-		Optional<Resource<@NonNull Path>> localPath = Util.getLocalPath(url, false);
+		Optional<Resource<@NonNull Path>> localPath = IOUtils.getLocalPath(url, false);
 		if( localPath.isPresent() ) {
 			try {
 				return Optional.of(new Media(localPath.get().getNativeResource().toUri().toURL().toExternalForm()));
@@ -87,7 +87,7 @@ public class MediaLoader {
 		if (isSupported(url)) {
 			return Optional.of(new AudioClip(url.toExternalForm()));
 		}
-		Optional<URL> localURL = Util.getLocalURL(url);
+		Optional<URL> localURL = IOUtils.getLocalURL(url);
 
 		if (localURL.isPresent()) {
 			if (isSupported(localURL.get())) {
@@ -95,7 +95,7 @@ public class MediaLoader {
 			}
 		}
 
-		Optional<Resource<@NonNull Path>> localPath = Util.getLocalPath(url, false);
+		Optional<Resource<@NonNull Path>> localPath = IOUtils.getLocalPath(url, false);
 		if( localPath.isPresent() ) {
 			try {
 				return Optional.of(new AudioClip(localPath.get().getNativeResource().toUri().toURL().toExternalForm()));

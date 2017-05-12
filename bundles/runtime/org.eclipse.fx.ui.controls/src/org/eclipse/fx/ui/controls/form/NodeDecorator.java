@@ -1,7 +1,7 @@
 package org.eclipse.fx.ui.controls.form;
 
+import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.fx.core.Status;
-import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.property.ValidationStatusPropertyOwner;
 
 import javafx.beans.value.ObservableValue;
@@ -15,7 +15,7 @@ public interface NodeDecorator {
 	}
 
 	public static DecoratedNode apply(Node control) {
-		return Util.getService(NodeDecorator.class).orElseGet(() -> new GraphicDecorator()).decorate(control);
+		return ServiceUtils.getService(NodeDecorator.class).orElse(new GraphicDecorator()).decorate(control);
 	}
 
 	public static void apply(Node control, ValidationStatusPropertyOwner statusOwner) {

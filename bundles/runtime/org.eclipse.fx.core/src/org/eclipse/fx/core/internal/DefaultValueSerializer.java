@@ -29,7 +29,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.RankedService;
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.ServiceUtils;
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.ValueSerializer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -112,8 +113,8 @@ public class DefaultValueSerializer implements ValueSerializer, RankedService {
 			b.setInstant(Date.from(Instant.parse(s)));
 			return b.build();
 		} , (v) -> v.toInstant().toString()));
-		if (!Util.isOsgiEnv()) {
-			Map<Class<?>, TwoVal<?>> collect = Util.lookupServiceList(ValueSerializeProvider.class).stream()
+		if (!SystemUtils.isOsgiEnv()) {
+			Map<Class<?>, TwoVal<?>> collect = ServiceUtils.getServiceList(ValueSerializeProvider.class).stream()
 					.collect(Collectors.toMap(p -> p.getType(), p -> new TwoVal<>(p::fromString, p::toString)));
 			this.mappings.putAll(collect);
 		}

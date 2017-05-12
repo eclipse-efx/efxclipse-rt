@@ -44,9 +44,10 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.fx.core.NumberUtils;
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
-import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.controls.stage.Frame;
@@ -544,7 +545,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			}
 
 			// Fix freaking mnemonics activation on ALTGR
-			if( ! Util.isMacOS() && org.eclipse.fx.ui.controls.Util.MNEMONICS_FIX ) {
+			if( ! SystemUtils.isMacOS() && org.eclipse.fx.ui.controls.Util.MNEMONICS_FIX ) {
 				s.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
 					if( e.isAltDown() && e.isControlDown() ) {
 						e.consume();
@@ -900,7 +901,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		public void setWidth(@Named(UIEvents.Window.WIDTH) int w) {
 			if (!isPropertyChangeInProgress(UIEvents.Window.WIDTH)) {
 				Stage widget = getWidget();
-				double cw = Util.unsignedConstraintValue(w, this.rootPane.getMinWidth(), this.rootPane.getMaxWidth());
+				double cw = NumberUtils.unsignedConstraintValue(w, this.rootPane.getMinWidth(), this.rootPane.getMaxWidth());
 				widget.setWidth(cw);
 			}
 		}
@@ -916,7 +917,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		public void setHeight(@Named(UIEvents.Window.HEIGHT) int h) {
 			if (!isPropertyChangeInProgress(UIEvents.Window.HEIGHT)) {
 				Stage widget = getWidget();
-				double ch = Util.unsignedConstraintValue(h, this.rootPane.getMinHeight(), this.rootPane.getMaxHeight());
+				double ch = NumberUtils.unsignedConstraintValue(h, this.rootPane.getMinHeight(), this.rootPane.getMaxHeight());
 				widget.setHeight(ch);
 			}
 		}

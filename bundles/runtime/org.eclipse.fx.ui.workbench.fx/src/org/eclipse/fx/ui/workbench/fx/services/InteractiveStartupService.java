@@ -13,7 +13,7 @@ package org.eclipse.fx.ui.workbench.fx.services;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.app.ApplicationContext;
 import org.eclipse.fx.core.app.ApplicationContext.Splash;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
@@ -25,7 +25,6 @@ import javafx.animation.Timeline;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -48,7 +47,7 @@ public abstract class InteractiveStartupService implements StartupProgressTracke
 	protected abstract Scene createScene(ApplicationContext applicationContext, Image splashImage);
 
 	protected void show() {
-		if( Util.isMacOS() ) {
+		if( SystemUtils.isMacOS()) {
 			this.stage.show();
 			this.applicationContext.applicationRunning();
 		} else {
@@ -76,7 +75,7 @@ public abstract class InteractiveStartupService implements StartupProgressTracke
 				this.stage.setY(location.getY());
 			}
 		} else if( state == DefaultProgressState.JAVAFX_INITIALIZED_LAUNCHER_THREAD ) {
-			if( ! Util.isMacOS() ) {
+			if( ! SystemUtils.isMacOS() ) {
 				try {
 					this.hideLatch.await();
 				} catch (InterruptedException e) {

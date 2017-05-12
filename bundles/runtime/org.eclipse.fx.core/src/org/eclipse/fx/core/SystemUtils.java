@@ -91,7 +91,7 @@ public class SystemUtils {
 			try {
 				return Optional.of(Version.createVersion(v));
 			} catch (Throwable t) {
-				LoggerCreator.createLogger(Util.class).error("Failed to create version from " + version, t); //$NON-NLS-1$
+				LoggerCreator.createLogger(SystemUtils.class).error("Failed to create version from " + version, t); //$NON-NLS-1$
 				return Optional.empty();
 			}
 		}

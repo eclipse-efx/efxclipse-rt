@@ -2,12 +2,9 @@ package org.eclipse.fx.ui.workbench.fx.services;
 
 import java.util.concurrent.CountDownLatch;
 
-import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.app.ApplicationContext;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
-import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultProgressState;
-import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.OSGiRV;
 
 public class NativeSplashStartupService implements StartupProgressTrackerService {
 	private ApplicationContext applicationContext;
@@ -22,7 +19,7 @@ public class NativeSplashStartupService implements StartupProgressTrackerService
 	@Override
 	public void stateReached(ProgressState state) {
 		if( state == DefaultProgressState.JAVAFX_INITIALIZED_LAUNCHER_THREAD ) {
-			if( ! Util.isMacOS() ) {
+			if( ! SystemUtils.isMacOS() ) {
 				try {
 					this.hideLatch.await();
 				} catch (InterruptedException e) {
@@ -31,7 +28,7 @@ public class NativeSplashStartupService implements StartupProgressTrackerService
 				this.applicationContext.applicationRunning();
 			}
 		} else if( state == DefaultProgressState.WORKBENCH_GUI_SHOWN ) {
-			if( ! Util.isMacOS() ) {
+			if( ! SystemUtils.isMacOS() ) {
 				this.hideLatch.countDown();
 			} else {
 				this.applicationContext.applicationRunning();
