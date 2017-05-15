@@ -235,6 +235,7 @@ public class ContentProposalPopup implements IContentAssistListener {
 				s.showingProperty().addListener((x, o, n) -> {
 					if (!n) {
 						this.future.complete(Optional.ofNullable(this.chosenProposal));
+						this.stage.clean();
 					}
 				});
 
