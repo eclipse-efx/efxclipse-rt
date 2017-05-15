@@ -1,5 +1,6 @@
 package org.eclipse.fx.text.ui.internal;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -38,15 +39,15 @@ public class SimpleHtmlViewer extends BorderPane {
 	public void setContent(HtmlString content) {
 		this.content.set(content);
 	}
-	
+
 	private WebView webView;
 	private WebEngine webEngine;
-		
+
 	private static String STYLE_INLINE = "<style>body{display: inline;}</style>"; //$NON-NLS-1$
 	private static String STYLE_NO_PADDING = "<style>body{padding: 0px}</style>"; //$NON-NLS-1$
-	
+
 	private boolean inline;
-	
+
 	@Override
 	protected double computePrefWidth(double height) {
 		if (inline && webEngine.getDocument() != null) {
@@ -56,7 +57,7 @@ public class SimpleHtmlViewer extends BorderPane {
 		}
 		return super.computePrefWidth(height);
 	}
-	
+
 	@Override
 	protected double computePrefHeight(double width) {
 		if (inline && webEngine.getDocument() != null) {
@@ -66,7 +67,7 @@ public class SimpleHtmlViewer extends BorderPane {
 		}
 		return super.computePrefHeight(width);
 	}
-	
+
 	private Region findFirstParentWithBackground(Node n) {
 		System.err.println("CHECKING " + n);
 		if (n == null) return null;
@@ -79,18 +80,18 @@ public class SimpleHtmlViewer extends BorderPane {
 		}
 		return findFirstParentWithBackground(n.getParent());
 	}
-	
+
 	public SimpleHtmlViewer() {
 		this(false, false);
 	}
-	
+
 	public static class WebBridge {
 		private HtmlString html;
-		
+
 		public WebBridge(HtmlString html) {
 			this.html = html;
 		}
-		
+
 		public void onLinkAction(String target, long screenX, long screenY) {
 			this.html.fireEvent(new LinkActionEvent(LinkActionEvent.LINK_ACTION, target, screenX, screenY));
 		}
@@ -98,12 +99,12 @@ public class SimpleHtmlViewer extends BorderPane {
 			this.html.fireEvent(new LinkActionEvent(LinkActionEvent.LINK_CONTEXT, target, screenX, screenY));
 		}
 	}
-	
+
 	private class WorkerStateChangeListener implements ChangeListener<Worker.State> {
 		@Override
 		public void changed(ObservableValue<? extends State> observable, State oldValue, State newValue) {
 			if (newValue == Worker.State.SUCCEEDED) {
-				
+
 				// install WebBridge
 				JSObject window = (JSObject) webEngine.executeScript("window"); //$NON-NLS-1$
 				window.setMember("java", new WebBridge(getContent())); //$NON-NLS-1$
@@ -126,25 +127,35 @@ public class SimpleHtmlViewer extends BorderPane {
 			}
 		}
 	}
-	
+
 	private WorkerStateChangeListener workerStateChangeListener = new WorkerStateChangeListener();
-	
+
 	// TODO 3.0.0 replace listeners with FXBindings
 	public SimpleHtmlViewer(boolean noPaddingInBody, boolean inline) {
 		this.inline = inline;
 		this.webView = new WebView();
 		this.webEngine = this.webView.getEngine();
-		
+
 		this.webView.setContextMenuEnabled(false);
-		
+
 		setCenter(this.webView);
-		
+
 		BiConsumer<Document, Color> applyBackground = (doc, col) -> {
 			if (doc == null || col == null) return;
-			String style = "background: rgb(" + Math.round(col.getRed() * 255) + ", " + Math.round(col.getGreen() * 255) + ", " + Math.round(col.getBlue() * 255) + ");"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+
+			String style = Objects.toString(((HTMLDocument)doc).getBody().getAttribute("style"),""); //$NON-NLS-1$ //$NON-NLS-2$
+			if( ! style.contains("background:") ) { //$NON-NLS-1$
+				style += "background: rgb(" + Math.round(col.getRed() * 255) + ", " + Math.round(col.getGreen() * 255) + ", " + Math.round(col.getBlue() * 255) + ");"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			}
+
+			if( ! style.contains("color:") ) { //$NON-NLS-1$
+				Color txtColor = col.invert();
+				style += " color: rgb(" + Math.round(txtColor.getRed() * 255) + ", " + Math.round(txtColor.getGreen() * 255) + ", " + Math.round(txtColor.getBlue() * 255) + ");";    //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$//$NON-NLS-4$
+			}
+
 			((HTMLDocument)doc).getBody().setAttribute("style", style); //$NON-NLS-1$
 		};
-		
+
 		Consumer<Document> updateSizes = (doc) -> {
 			if (inline) {
 				Integer width = (Integer) this.webEngine.executeScript("document.body.offsetWidth");
@@ -158,13 +169,13 @@ public class SimpleHtmlViewer extends BorderPane {
 				}
 			}
 		};
-		
+
 		AtomicReference<Color> curCol = new AtomicReference<>();
 		this.webEngine.documentProperty().addListener((x, o, n)-> {
 			applyBackground.accept(n, curCol.get());
 			updateSizes.accept(n);
 		});
-		
+
 		ChangeListener<? super Background> backgroundListener = (x1, o1, background) -> {
 			if (background == null) return;
 			if (background.getFills().size() > 0) {
@@ -184,22 +195,22 @@ public class SimpleHtmlViewer extends BorderPane {
 			}
 		};
 		parentProperty().addListener(parentListener);
-		
+
 		// install the Link Callbacks
 		webEngine.getLoadWorker().stateProperty().addListener(workerStateChangeListener);
-		
+
 		// bind the content
 		contentProperty().addListener((x, o, n) -> {
 			if (n != null) {
-				this.webEngine.loadContent("<html>"+(noPaddingInBody?STYLE_NO_PADDING:"")+(inline?STYLE_INLINE:"")+"<body>" + n.toString() + "</body></html>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$			
+				this.webEngine.loadContent("<html>"+(noPaddingInBody?STYLE_NO_PADDING:"")+(inline?STYLE_INLINE:"")+"<body>" + n.toString() + "</body></html>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 			}
 			else {
 				this.webEngine.load("about:blank"); //$NON-NLS-1$
 			}
-			
-			
+
+
 		});
-		
+
 		sceneProperty().addListener((x, o, n)->{
 			if (o != null) {
 				o.getWindow().setOnHidden(null);
@@ -219,5 +230,5 @@ public class SimpleHtmlViewer extends BorderPane {
 			}
 		});
 	}
-	
+
 }
