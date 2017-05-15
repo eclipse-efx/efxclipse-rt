@@ -21,9 +21,9 @@ import javafx.scene.Node;
 @SuppressWarnings("restriction")
 public interface ICompletionProposal {
 	/**
-	 * @return the label to display
+	 * @return node representing the completion
 	 */
-	public CharSequence getLabel();
+	public Node getContentNode();
 
 	/**
 	 * @return the hover information to show

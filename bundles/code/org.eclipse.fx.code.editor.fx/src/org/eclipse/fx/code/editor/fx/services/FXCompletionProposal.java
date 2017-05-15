@@ -6,10 +6,13 @@ import java.util.function.Supplier;
 import org.eclipse.fx.code.editor.services.CompletionProposal;
 import org.eclipse.fx.text.ui.contentassist.ICompletionProposal;
 import org.eclipse.fx.text.ui.contentassist.IContextInformation;
+import org.eclipse.fx.ui.controls.Util;
+import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.jface.text.IDocument;
 
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 
 @SuppressWarnings("restriction")
 public class FXCompletionProposal<T extends CompletionProposal> implements ICompletionProposal {
@@ -58,6 +61,14 @@ public class FXCompletionProposal<T extends CompletionProposal> implements IComp
 	}
 
 	@Override
+	public Node getContentNode() {
+		CharSequence v = getLabel();
+		if( v instanceof StyledString ) {
+			return Util.toNode((StyledString) v);
+		}
+		return new Label(v != null ? v.toString() : "<unknown>");
+	}
+
 	public CharSequence getLabel() {
 		if( label == null ) {
 			label = labelComputer.apply(this.proposal);

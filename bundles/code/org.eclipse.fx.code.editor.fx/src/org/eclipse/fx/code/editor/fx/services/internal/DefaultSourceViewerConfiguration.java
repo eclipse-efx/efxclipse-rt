@@ -48,6 +48,8 @@ import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.source.AnnotationPresenter;
 import org.eclipse.fx.text.ui.source.ISourceViewer;
 import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
+import org.eclipse.fx.ui.controls.Util;
+import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.CustomQuickLink;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLink;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLinkable;
@@ -67,6 +69,7 @@ import javafx.beans.property.SimpleSetProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 
 @SuppressWarnings("restriction")
 public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration {
@@ -91,12 +94,12 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	private final IContextInformationValidator contextInformationValidator;
 
 	private final AppMemento appMemento;
-	
+
 	private final static String KEY_HOVER_WINDOW_WIDTH = DefaultSourceViewerConfiguration.class.getName() + ".hoverWindowWidth";
 	private final static String KEY_HOVER_WINDOW_HEIGHT = DefaultSourceViewerConfiguration.class.getName() + ".hoverWindowHeight";
 	private final static String KEY_PROPOSAL_WINDOW_WIDTH = DefaultSourceViewerConfiguration.class.getName() + ".proposalWindowWidth";
 	private final static String KEY_PROPOSAL_WINDOW_HEIGHT = DefaultSourceViewerConfiguration.class.getName() + ".proposalWindowHeight";
-	
+
 	@Inject
 	public DefaultSourceViewerConfiguration(
 			ThreadSynchronize threadSynchronize,
@@ -307,8 +310,12 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		}
 
 		@Override
-		public CharSequence getLabel() {
-			return this.proposal.getLabel();
+		public Node getContentNode() {
+			CharSequence label = this.proposal.getLabel();
+			if( label instanceof StyledString ) {
+				return Util.toNode((StyledString) label);
+			}
+			return new Label(label != null ? label.toString() : "<unknown>");
 		}
 
 		@Override
@@ -429,7 +436,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		double height = appMemento.get(KEY_HOVER_WINDOW_HEIGHT, 400d);
 		return new Point2D(width, height);
 	}
-	
+
 	@Override
 	public void storeHoverWindowSize(Point2D size) {
 		if (appMemento != null) {
@@ -437,7 +444,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			appMemento.put(KEY_HOVER_WINDOW_HEIGHT, size.getY());
 		}
 	}
-	
+
 	@Override
 	public Point2D getProposalWindowSize() {
 		if (appMemento == null) return super.getProposalWindowSize();
@@ -445,7 +452,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		double height = appMemento.get(KEY_PROPOSAL_WINDOW_HEIGHT, 400d);
 		return new Point2D(width, height);
 	}
-	
+
 	@Override
 	public void storeProposalWindowSize(Point2D size) {
 		if (appMemento != null) {

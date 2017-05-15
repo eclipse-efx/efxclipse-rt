@@ -12,6 +12,7 @@ package org.eclipse.fx.text.ui.contentassist;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -37,15 +38,15 @@ public class ContentAssistant implements IContentAssistant {
 	private final IContextInformationValidator validator;
 
 	private boolean directlyApplySingleMatch;
-	
+
 	private LazyInitReference<ContentProposalPopup> fProposalPopup = new LazyInitReference<>();
-	
+
 	public ContentAssistant(IContextInformationValidator validator, ThreadSynchronize threadSynchnronize, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
 		this.validator = validator;
 		this.threadSynchnronize = threadSynchnronize;
 		this.proposalComputer = proposalComputer;
 	}
-	
+
 	@Override
 	public void configureWindowSize(Supplier<Point2D> windowSizeRetriever, Consumer<Point2D> windowSizePersister) {
 		this.fProposalPopup.init(r -> r.configureWindowSize(windowSizeRetriever, windowSizePersister));
@@ -85,27 +86,27 @@ public class ContentAssistant implements IContentAssistant {
 
 				Point2D coords = this.fViewer.getTextWidget().localToScreen(p);
 
-				Optional<ICompletionProposal> chosenProposal = this.fProposalPopup.get().displayProposals(proposals, this.fViewer.getTextWidget().getCaretOffset(), coords);
+				CompletableFuture<Optional<ICompletionProposal>> chosenProposal = this.fProposalPopup.get().displayProposals(proposals, this.fViewer.getTextWidget().getCaretOffset(), coords);
 
-				chosenProposal.ifPresent(proposal->{
-					IDocument document = this.fViewer.getDocument();
-					// apply the proposal
-					proposal.apply(document);
-					TextSelection selection = proposal.getSelection(document);
-					if( selection.length > 0 ) {
-						this.fViewer.getTextWidget().setCaretOffset(selection.offset +selection.length);
-					}
+				chosenProposal.thenAccept( v -> {
+					v.ifPresent(proposal->{
+						IDocument document = this.fViewer.getDocument();
+						// apply the proposal
+						proposal.apply(document);
+						TextSelection selection = proposal.getSelection(document);
+						if( selection.length > 0 ) {
+							this.fViewer.getTextWidget().setCaretOffset(selection.offset +selection.length);
+						}
 
-					this.fViewer.getTextWidget().setSelection(selection);
+						this.fViewer.getTextWidget().setSelection(selection);
 
-					if (proposal.getContextInformation() != null) {
-						showContextInformation(proposal.getContextInformation(), this.fViewer.getTextWidget().getCaretOffset());
-					}
-
+						if (proposal.getContextInformation() != null) {
+							showContextInformation(proposal.getContextInformation(), this.fViewer.getTextWidget().getCaretOffset());
+						}
+						this.fViewer.getTextWidget().layout();
+					});
 				});
 			}
-
-			this.fViewer.getTextWidget().layout();
 
 			return true;
 		}
