@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.core.FilesystemService;
+import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.fx.core.FilesystemService.Kind;
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.Util;
@@ -33,7 +34,7 @@ public class FolderItem extends PathItem {
 	public FolderItem(ProjectNavigatorItem parent, Path path, BiFunction<Path, FolderItem, PathItem> pathItemFactory) {
 		super(parent,path);
 		this.pathItemFactory = pathItemFactory;
-		Util.lookupService(FilesystemService.class).observePath(path, this::handleFilesystemMod);
+		ServiceUtils.getService(FilesystemService.class).ifPresent(s -> s.observePath(path, this::handleFilesystemMod));
 	}
 	
 	private void handleFilesystemMod(Kind kind, Path path) {

@@ -15,7 +15,7 @@ import org.eclipse.fx.code.editor.configuration.EditorGModel;
 import org.eclipse.fx.code.editor.configuration.LanguageDef;
 import org.eclipse.fx.code.editor.configuration.text.ConfigurationModelProvider;
 import org.eclipse.fx.code.editor.services.URIProvider;
-import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.URLUtils;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.osgi.service.component.annotations.Component;
 
@@ -80,12 +80,12 @@ public class LangsConfigurationModelProvider implements ConfigurationModelProvid
 	}
 
 	private static final Optional<Function<Input<?>, URL>> prefix(String prefix, String url) {
-		return Util.createUrl(url, true).map( u -> new SuffixFunction(prefix,u));
+		return URLUtils.createUrl(url, true).map( u -> new SuffixFunction(prefix,u));
 	}
 
 	private static final Optional<Function<Input<?>, URL>> javaSupport() {
-		Optional<URL> javaBase = Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/java.json", true);
-		Optional<URL> moduleInfo = Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/jmod.json", true);
+		Optional<URL> javaBase = URLUtils.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/java.json", true);
+		Optional<URL> moduleInfo = URLUtils.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/jmod.json", true);
 		if( ! javaBase.isPresent() || ! moduleInfo.isPresent() ) {
 			return null;
 		}

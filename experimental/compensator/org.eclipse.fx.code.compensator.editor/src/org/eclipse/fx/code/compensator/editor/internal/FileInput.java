@@ -25,8 +25,8 @@ import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.TextEditor;
 import org.eclipse.fx.code.compensator.editor.URIProvider;
 import org.eclipse.fx.code.compensator.editor.services.ContentTypeDetector;
+import org.eclipse.fx.core.IOUtils;
 import org.eclipse.fx.core.URI;
-import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.di.Service;
 
 public class FileInput implements Input<String>, ContentTypeProvider, URIProvider {
@@ -49,7 +49,7 @@ public class FileInput implements Input<String>, ContentTypeProvider, URIProvide
 	public String getData() {
 		if( data == null ) {
 			try {
-				data = Util.slurpFileContent(path);
+				data = IOUtils.slurpFileContent(path);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
