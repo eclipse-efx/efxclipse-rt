@@ -30,6 +30,7 @@ import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.core.operation.CancelableOperation;
+import org.eclipse.fx.core.text.TextUtil;
 import org.eclipse.fx.core.update.UpdateService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.component.annotations.Component;
@@ -136,16 +137,19 @@ public class UpdateServiceImpl implements UpdateService {
 		}
 	}
 
-//Why is that not allowed???
+	// Why is that not allowed???
 	@NonNull
 	static Status fromStatus(@NonNull IStatus s) {
 		switch (s.getSeverity()) {
 		case IStatus.CANCEL:
-			return Status.status(Status.State.CANCEL,s.getCode(),Util.notNull(s.getMessage(),"<unknown>"),s.getException()); //$NON-NLS-1$
+			return Status.status(Status.State.CANCEL, s.getCode(), TextUtil.notNull(s.getMessage(), "<unknown>"), //$NON-NLS-1$
+					s.getException());
 		case IStatus.ERROR:
-			return Status.status(Status.State.ERROR,s.getCode(),Util.notNull(s.getMessage(),"<unknown>"),s.getException()); //$NON-NLS-1$
+			return Status.status(Status.State.ERROR, s.getCode(), TextUtil.notNull(s.getMessage(), "<unknown>"), //$NON-NLS-1$
+					s.getException());
 		case IStatus.WARNING:
-			return Status.status(Status.State.WARNING,s.getCode(),Util.notNull(s.getMessage(),"<unknown>"),s.getException()); //$NON-NLS-1$
+			return Status.status(Status.State.WARNING, s.getCode(), TextUtil.notNull(s.getMessage(), "<unknown>"), //$NON-NLS-1$
+					s.getException());
 		default:
 			return Status.ok();
 		}
