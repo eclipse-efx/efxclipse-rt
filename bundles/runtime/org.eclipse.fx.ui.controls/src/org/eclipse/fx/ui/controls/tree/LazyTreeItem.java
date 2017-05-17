@@ -26,6 +26,7 @@ import javafx.scene.control.TreeItem;
  */
 public class LazyTreeItem<T> extends TreeItem<T> {
 	private boolean hasLoaded;
+	private Function<TreeItem<T>, List<TreeItem<T>>> listCreator;
 
 	/**
 	 * Create a lazy tree item
@@ -38,21 +39,43 @@ public class LazyTreeItem<T> extends TreeItem<T> {
 	public LazyTreeItem(T value,
 			Function<TreeItem<T>, List<TreeItem<T>>> listCreator) {
 		super(value);
+		this.listCreator = listCreator;
 		getChildren().add(new TreeItem<>());
 
 		expandedProperty().addListener((o) -> {
 			if (isExpanded()) {
 				if (!this.hasLoaded) {
-					List<TreeItem<T>> list = listCreator.apply(this);
-					if( list instanceof ObservableList<?> ) {
-						getChildren().clear();
-						Bindings.bindContent(getChildren(), (ObservableList<TreeItem<T>>)list);
-					} else {
-						getChildren().setAll(list);
-					}
-					this.hasLoaded = true;
+					loadItems();
 				}
 			}
 		});
+	}
+
+	private void loadItems() {
+		List<TreeItem<T>> list = this.listCreator.apply(this);
+		if( list instanceof ObservableList<?> ) {
+			Bindings.unbindContent(getChildren(), (ObservableList<TreeItem<T>>)list);
+			getChildren().clear();
+			Bindings.bindContent(getChildren(), (ObservableList<TreeItem<T>>)list);
+		} else {
+			getChildren().setAll(list);
+		}
+		this.hasLoaded = true;
+	}
+
+	/**
+	 * Refresh the content in the item
+	 *
+	 * @since 3.0
+	 */
+	public void refresh() {
+		List<TreeItem<T>> list = this.listCreator.apply(this);
+		if( list instanceof ObservableList<?> ) {
+			getChildren().clear();
+			Bindings.bindContent(getChildren(), (ObservableList<TreeItem<T>>)list);
+		} else {
+			getChildren().setAll(list);
+		}
+		this.hasLoaded = true;
 	}
 }
