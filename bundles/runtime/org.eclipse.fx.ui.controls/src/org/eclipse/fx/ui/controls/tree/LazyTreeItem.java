@@ -50,7 +50,7 @@ public class LazyTreeItem<T> extends TreeItem<T> {
 					} else {
 						getChildren().setAll(list);
 					}
-					
+					this.hasLoaded = true;
 				}
 			}
 		});
