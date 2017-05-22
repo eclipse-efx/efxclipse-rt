@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.fx.target.rcp4.feature"
-      label="RCP e4 Target Platform Feature"
+      label="e(fx)clipse - RCP e4 Target Platform Feature"
       version="3.0.0.qualifier"
       provider-name="Eclipse.org">
 

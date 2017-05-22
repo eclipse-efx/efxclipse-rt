@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.fx.runtime.e4fx.feature"
-      label="minimal e4 application framework feature"
+      label="e(fx)clipse - minimal e4 application framework feature"
       version="3.0.0.qualifier"
       provider-name="Eclipse.org">
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.fx.runtime.e4fx.p2.feature"
-      label="Feature"
+      label="e(fx)clipse - p2 extension feature"
       version="3.0.0.qualifier"
       provider-name="Eclipse.org">
 

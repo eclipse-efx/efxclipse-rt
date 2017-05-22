@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.fx.code.target.feature"
-      label="Code editing target platform"
+      label="e(fx)clipse - Code Editing - Code editing target platform"
       version="3.0.0.qualifier"
       provider-name="Eclipse.org">
 
