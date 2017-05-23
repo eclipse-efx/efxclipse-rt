@@ -83,6 +83,7 @@ import org.eclipse.fx.ui.services.restart.RestartService;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultProgressState;
 import org.eclipse.fx.ui.workbench.base.internal.CommandEventDispatcher;
+import org.eclipse.fx.ui.workbench.base.internal.EFX_ResourceHandler;
 import org.eclipse.fx.ui.workbench.base.internal.LoggerProviderImpl;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.restart.RestartPreferenceUtil;
@@ -411,7 +412,7 @@ public abstract class AbstractE4Application {
 		String resourceHandler = getArgValue(IWorkbench.MODEL_RESOURCE_HANDLER, appContext, false, eclipseContext);
 
 		if (resourceHandler == null) {
-			resourceHandler = "bundleclass://org.eclipse.e4.ui.workbench/" + ResourceHandler.class.getName(); //$NON-NLS-1$
+			resourceHandler = "bundleclass://org.eclipse.fx.ui.workbench.base/" + EFX_ResourceHandler.class.getName(); //$NON-NLS-1$
 		}
 
 		IContributionFactory factory = eclipseContext.get(IContributionFactory.class);
