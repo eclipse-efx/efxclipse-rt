@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.IntStream;
 
+import org.eclipse.fx.core.geom.Size;
 import org.eclipse.fx.core.text.TextUtil;
 import org.eclipse.fx.ui.controls.Util;
 
@@ -17,20 +19,28 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class SingleTextStyledLineRenderer extends BaseStyledLineRenderer {
 	private final LayoutPane node;
+	private double minX = -1;
+	private double maxX = -1;
+	
+	private int startCharIndex = -1;
+	private int endCharIndex = -1;
+	private double shiftX = 0;
 
 	public SingleTextStyledLineRenderer() {
 		this.node = new LayoutPane();
 	}
 
 	@Override
-	public void setVisibleRange(double minX, double width) {
-		// TODO Auto-generated method stub
-
+	public void setVisibleRange(double minX, double maxX) {
+		this.minX = minX;
+		this.maxX = maxX;
+		rebuildText();
 	}
 
 	@Override
@@ -41,7 +51,7 @@ public class SingleTextStyledLineRenderer extends BaseStyledLineRenderer {
 
 	@Override
 	public Node getNode() {
-		return node;
+		return this.node;
 	}
 
 
@@ -98,34 +108,82 @@ public class SingleTextStyledLineRenderer extends BaseStyledLineRenderer {
 				}
 			}
 		}
-
-		Arrays.fill(this.tabReplace, ' ');
+		
+		if( this.minX != -1 && this.maxX != -1 ) {
+			DivisionResult v = charInfo(this.minX, this.normal);
+			this.startCharIndex = v.integer;
+			this.shiftX = v.remainder * Util.getSize(this.normal, 'A').width * -1;
+			
+			v = charInfo(this.maxX, this.normal);
+			this.endCharIndex = v.integer;
+			
+			this.node.setClip(new Rectangle(0,0,this.maxX-this.minX,Util.getSize(this.normal, 'A').height));
+		} else {
+			this.startCharIndex = -1;
+			this.endCharIndex = -1;
+			this.shiftX = 0;
+			if( this.node.getClip() != null ) {
+				this.node.setClip(null);	
+			}
+		}
 
 		List<Node> l = new ArrayList<>();
-		l.addAll(createTextNodes(normalTextColors, this.originalText, this.tabReplace, this.normal));
-		l.addAll(createTextNodes(boldTextColors, this.originalText, this.tabReplace, this.bold));
-		l.addAll(createTextNodes(italicTextColors, this.originalText, this.tabReplace, this.italic));
-		l.addAll(createTextNodes(italicBoldTextColors, this.originalText, this.tabReplace, this.boldItalic));
-
-		l.stream().forEach( n -> System.err.println(n));
+		l.addAll(createTextNodes(this.startCharIndex, this.endCharIndex, normalTextColors, this.originalText, this.tabReplace, this.normal));
+		l.addAll(createTextNodes(this.startCharIndex, this.endCharIndex, boldTextColors, this.originalText, this.tabReplace, this.bold));
+		l.addAll(createTextNodes(this.startCharIndex, this.endCharIndex, italicTextColors, this.originalText, this.tabReplace, this.italic));
+		l.addAll(createTextNodes(this.startCharIndex, this.endCharIndex, italicBoldTextColors, this.originalText, this.tabReplace, this.boldItalic));
 
 		this.node.getChildren().setAll(l);
 	}
 
-	private static List<Text> createTextNodes(Map<Paint, RangeSet<Integer>> textColorRanges, char[] text, char[] tabReplace, Font font) {
+	private static List<Text> createTextNodes(int startCharIndex, int endCharIndex, Map<Paint, RangeSet<Integer>> textColorRanges, char[] text, char[] tabReplace, Font font) {
 		List<Text> nodes = new ArrayList<>();
-
+		
 		for( Entry<Paint, RangeSet<Integer>> e : textColorRanges.entrySet() ) {
 			char[] txt = TextUtil.replace(text, ' ', ( idx, ch ) -> {
-				return ch != '\t' && ! e.getValue().contains(idx);
+				return ch != '\t' && ! e.getValue().contains(Integer.valueOf(idx));
 			});
-			Text tNode = new Text(String.valueOf(TextUtil.replaceAll(txt, '\r', tabReplace)));
-			tNode.setFont(font);
-			tNode.setFill(e.getKey());
-			nodes.add(tNode);
+			
+			char[] cs = TextUtil.replaceAll(txt, '\t', tabReplace);
+			if( startCharIndex != -1 && endCharIndex != -1 ) {
+				cs = Arrays.copyOfRange(cs, startCharIndex, Math.min(endCharIndex+1, cs.length));
+			}
+			
+			// Do not append empty nodes
+			if( ! isEmpty(cs) ) {
+				Text tNode = new Text(String.valueOf(cs));
+				tNode.setFont(font);
+				tNode.setFill(e.getKey());
+				nodes.add(tNode);				
+			}
 		}
 
 		return nodes;
+	}
+	
+	private static boolean isEmpty(char[] cs) {
+		for( int i = 0; i < cs.length; i++ ) {
+			if( cs[i] != ' ' ) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	static DivisionResult charInfo(double x, Font font) {
+		Size w = Util.getSize(font, 'A');
+		double charIdx = x / w.width;
+		return new DivisionResult((int)charIdx, charIdx - (int)charIdx);
+	}
+	
+	static class DivisionResult {
+		final int integer;
+		final double remainder;
+		
+		public DivisionResult(int integer, double remainder) {
+			this.integer = integer;
+			this.remainder = remainder;
+		}
 	}
 
 	class LayoutPane extends Region {
@@ -137,12 +195,12 @@ public class SingleTextStyledLineRenderer extends BaseStyledLineRenderer {
 		@Override
 		protected void layoutChildren() {
 			refreshLayout();
-			getChildren().forEach( c -> c.resizeRelocate(0, 0, c.prefWidth(-1), c.prefHeight(-1)));
+			getChildren().forEach( c -> c.resizeRelocate(SingleTextStyledLineRenderer.this.shiftX, 0, c.prefWidth(-1), c.prefHeight(-1)));
 		}
 
 		@Override
 		protected double computeMinHeight(double width) {
-			return Util.getSize(normal, ' ').height;
+			return Util.getSize(SingleTextStyledLineRenderer.this.normal, ' ').height;
 		}
 
 		@Override

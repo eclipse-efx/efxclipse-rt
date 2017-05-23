@@ -7,7 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 
 public interface StyledLineRenderer {
-	public void setVisibleRange(double minX, double width);
+	public void setVisibleRange(double minX, double maxX);
 
 	public void setFont(String family, double size);
 	public Subscription setBold(Range range);

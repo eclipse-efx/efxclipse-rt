@@ -27,7 +27,7 @@ public class SingleTextGradientStyledLineRenderer extends BaseStyledLineRenderer
 	}
 
 	@Override
-	public void setVisibleRange(double minX, double width) {
+	public void setVisibleRange(double minX, double maxX) {
 		// TODO Auto-generated method stub
 
 	}
@@ -95,7 +95,6 @@ public class SingleTextGradientStyledLineRenderer extends BaseStyledLineRenderer
 //		stops.add(new Stop(100,Color.BLUE));
 //		System.err.println("width: " + w);
 		LinearGradient lg = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
-		System.err.println(lg);
 
 		List<Text> nodes = new ArrayList<>(4);
 		if( ! normalFont.isEmpty() ) {
@@ -130,7 +129,7 @@ public class SingleTextGradientStyledLineRenderer extends BaseStyledLineRenderer
 			return ch != '\t' && ! rangeSet.contains(Integer.valueOf(idx));
 		});
 
-		Text tNode = new Text(String.valueOf(TextUtil.replaceAll(txt, '\r', tabReplace)));
+		Text tNode = new Text(String.valueOf(TextUtil.replaceAll(txt, '\t', tabReplace)));
 		tNode.setFont(font);
 		return tNode;
 	}

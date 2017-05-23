@@ -40,6 +40,10 @@ public class StyledLine extends Region {
 		getManagedChildren().forEach( c -> c.resizeRelocate(0, 0, c.prefWidth(-1), c.prefHeight(-1)));
 	}
 
+	public void setVisibleRange(double minX, double maxX) {
+		this.renderer.setVisibleRange(minX, maxX);
+	}
+	
 	public void setText(AnnotatedString<String> string) {
 
 		Map<List<String>, SegmentNode> map = new HashMap<>();

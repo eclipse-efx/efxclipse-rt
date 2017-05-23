@@ -36,6 +36,7 @@ public class TestStyledLine extends Application {
 		{
 			StyledLine l = new StyledLine(new SingleTextStyledLineRendererFactory());
 			l.setFont("Courier New", 40);
+//			l.setVisibleRange(30, 1000);
 			l.setText(ss);
 			p.getChildren().add(l);
 		}
