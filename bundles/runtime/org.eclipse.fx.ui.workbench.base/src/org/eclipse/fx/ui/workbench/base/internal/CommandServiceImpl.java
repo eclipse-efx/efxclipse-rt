@@ -19,6 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import org.eclipse.core.commands.ParameterizedCommand;
@@ -61,6 +62,7 @@ public class CommandServiceImpl implements CommandService {
 	private final ObjectSerializer serializer;
 	@NonNull
 	private final AdapterService adapterService;
+	private boolean disposed;
 
 	/**
 	 * Create a new instance
@@ -80,14 +82,25 @@ public class CommandServiceImpl implements CommandService {
 		this.serializer = serializer;
 		this.adapterService = adapterService;
 	}
+	
+	@PreDestroy
+	void dispose() {
+		this.disposed = true;
+	}
 
 	@Override
 	public boolean exists(@NonNull String commandId) {
+		if( this.disposed ) {
+			throw new IllegalStateException("Service is disposed");
+		}
 		return this.commandService.getCommand(commandId) != null;
 	}
 
 	@Override
 	public boolean canExecute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
+		if( this.disposed ) {
+			throw new IllegalStateException("Service is disposed");
+		}
 		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(this.adapterService,this.serializer,parameters));
 		return this.handlerService.canExecute(cmd);
 	}
@@ -95,6 +108,9 @@ public class CommandServiceImpl implements CommandService {
 	@SuppressWarnings({ "unchecked" })
 	@Override
 	public <O> Optional<O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
+		if( this.disposed ) {
+			throw new IllegalStateException("Service is disposed");
+		}
 		ParameterizedCommand cmd = this.commandService.createCommand(commandId, mapToString(this.adapterService,this.serializer,parameters));
 		return Optional.ofNullable((O) this.handlerService.executeHandler(cmd));
 	}
@@ -135,6 +151,9 @@ public class CommandServiceImpl implements CommandService {
 
 	@Override
 	public <O> Optional<Command<O>> createCommand(@NonNull String commandId) {
+		if( this.disposed ) {
+			throw new IllegalStateException("Service is disposed");
+		}
 		org.eclipse.core.commands.Command command = this.commandService.getCommand(commandId);
 		if (command == null || !command.isDefined()) {
 			return Optional.empty();
