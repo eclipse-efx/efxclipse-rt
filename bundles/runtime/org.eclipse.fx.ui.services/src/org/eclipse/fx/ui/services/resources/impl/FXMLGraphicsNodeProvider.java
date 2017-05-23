@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,6 +23,8 @@ import javafx.scene.Node;
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.ui.services.resources.GraphicNodeProvider;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Component;
 
@@ -44,8 +48,13 @@ public class FXMLGraphicsNodeProvider implements GraphicNodeProvider {
 	@Override
 	public Node getGraphicNode(URI uri) throws IOException {
 		if( uri.isPlatformPlugin() ) {
-			Bundle b = org.eclipse.core.runtime.Platform.getBundle(uri.segment(1));
-			if( b != null ) {
+			BundleContext context = FrameworkUtil.getBundle(FXMLGraphicsNodeProvider.class).getBundleContext();
+			Optional<Bundle> bundleOp = Stream.of(context.getBundles())
+				.filter( b -> b.getSymbolicName().equals(uri.segment(1)))
+				.findFirst();
+			
+			if( bundleOp.isPresent() ) {
+				Bundle b = bundleOp.get();
 				StringBuilder sb = new StringBuilder();
 				for (int i = 2; i < uri.segmentCount(); i++) {
 					if (sb.length() != 0) {

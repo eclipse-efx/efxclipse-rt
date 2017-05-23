@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.services.startup;
 
-import org.eclipse.equinox.app.IApplication;
-import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.fx.core.app.Application;
 import org.eclipse.fx.core.app.ApplicationContext;
 import org.eclipse.fx.core.app.ApplicationInstance;
 
@@ -22,7 +19,7 @@ import org.eclipse.fx.core.app.ApplicationInstance;
 public interface StartupProgressTrackerService {
 	/**
 	 * Return value of
-	 * {@link StartupProgressTrackerService#osgiApplicationLaunched(IApplicationContext)}
+	 * {@link StartupProgressTrackerService#applicationLaunched(ApplicationContext)}
 	 */
 	public enum OSGiRV {
 		/**
