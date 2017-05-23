@@ -11,6 +11,7 @@
 package org.eclipse.fx.core;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Optional;
 
@@ -35,6 +36,24 @@ public class URLUtils {
 			return new URL(url);
 		} catch (MalformedURLException e) {
 			throw new IllegalArgumentException(e);
+		}
+	}
+
+	/**
+	 * Transform an {@link URI} to an {@link URL}
+	 *
+	 * @param uri
+	 *            the uri
+	 * @return the url
+	 * @throws IllegalStateException
+	 *             if the uri can not be converted
+	 * @since 3.0.0
+	 */
+	public static URL toURL(URI uri) {
+		try {
+			return uri.toURL();
+		} catch (MalformedURLException e) {
+			throw new IllegalStateException(e);
 		}
 	}
 
