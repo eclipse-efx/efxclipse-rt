@@ -22,8 +22,8 @@ xml {
 		}
 		rule __xml_tag {
 			default xml_tag {
-				pattern "</" 2 containing "[\\w|-]"
-				pattern "<" containing "[\\w|-]"
+				pattern "</" 2 containing "\\S"
+				pattern "<" containing "\\S"
 			}
 			xml_property_value {
 				single_line '"' => '"'
@@ -33,7 +33,7 @@ xml {
 				character [ "=" ]
 			}
 			xml_property_name {
-				pattern "\\w" containing "\\w"
+				pattern "\\w" containing "[\\w|\\.|-|:]"
 			}
 		}
 		rule __xml_decl {
