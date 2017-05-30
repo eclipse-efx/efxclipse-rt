@@ -13,15 +13,17 @@ package org.eclipse.fx.core.property;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.fx.core.Status;
-import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.Status.State;
+import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.ThreadSynchronize;
 
-import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -37,6 +39,7 @@ public class StatusAggregator implements ValidationStatusPropertyOwner {
 	private static Predicate<Status> WARNING_ERROR = s -> s.getState() == State.ERROR || s.getState() == State.WARNING;
 
 	private final AtomicBoolean validationScheduled = new AtomicBoolean();
+	private final ThreadSynchronize threadSync;
 
 	/**
 	 * Create a status aggregator
@@ -46,6 +49,12 @@ public class StatusAggregator implements ValidationStatusPropertyOwner {
 	 */
 	public StatusAggregator(ValidationStatusPropertyOwner... properties) {
 		Stream.of(properties).forEach(this::register);
+		Optional<ThreadSynchronize> serviceOptional = ServiceUtils.getService(ThreadSynchronize.class);
+		if (serviceOptional.isPresent()) {
+			this.threadSync = serviceOptional.get();
+		} else {
+			this.threadSync = null;
+		}
 	}
 
 	/**
@@ -70,7 +79,11 @@ public class StatusAggregator implements ValidationStatusPropertyOwner {
 		if (this.validationScheduled.getAndSet(true)) {
 			return;
 		}
-		Platform.runLater(this::_validate);
+		if (this.threadSync != null) {
+			this.threadSync.asyncExec(this::_validate);
+		} else {
+			_validate();
+		}
 	}
 
 	@Override
@@ -80,7 +93,7 @@ public class StatusAggregator implements ValidationStatusPropertyOwner {
 
 	@Override
 	public void validate() {
-		this.list.stream().forEach( ValidationStatusPropertyOwner::validate );
+		this.list.stream().forEach(ValidationStatusPropertyOwner::validate);
 		_validate();
 	}
 
