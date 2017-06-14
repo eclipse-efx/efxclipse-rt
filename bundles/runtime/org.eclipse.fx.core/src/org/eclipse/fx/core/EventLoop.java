@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
@@ -29,6 +30,8 @@ import org.eclipse.fx.core.log.LoggerCreator;
 public class EventLoop implements ThreadQueue {
 	AtomicReference<Runnable> runnableRef = new AtomicReference<>();
 
+	private volatile AtomicInteger spinningEventLoop = new AtomicInteger();
+	
 	private final Thread thread = new Thread() {
 		@Override
 		public void run() {
@@ -96,6 +99,9 @@ public class EventLoop implements ThreadQueue {
 	 */
 	@SuppressWarnings("null")
 	public boolean dispatch() {
+		if( this.spinningEventLoop.get() > 0 && ! isCurrent() ) {
+			return false;
+		}
 		ArrayList<Runnable> list;
 		synchronized (this.tasks) {
 			list = new ArrayList<>(this.tasks);
@@ -110,7 +116,13 @@ public class EventLoop implements ThreadQueue {
 				}
 			}
 		};
-		this.service.submit(executable);
+		
+		if( isCurrent() ) {
+			executable.run();
+		} else {
+			this.service.submit(executable);	
+		}
+		
 
 		synchronized (this.tasks) {
 			return !this.tasks.isEmpty();
@@ -126,11 +138,13 @@ public class EventLoop implements ThreadQueue {
 
 	@Override
 	public <T> void spinWhile(BlockCondition<T> condition) {
+		this.spinningEventLoop.incrementAndGet();
 		while( condition.isBlocked() ) {
 			if( ! dispatch() ) {
 				sleep();
 			}
 		}
+		this.spinningEventLoop.decrementAndGet();
 	}
 //
 //	public static void main(String[] args) {
