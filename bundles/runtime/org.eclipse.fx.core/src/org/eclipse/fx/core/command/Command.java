@@ -183,6 +183,10 @@ public interface Command<T> {
 					evaluate();
 				});
 			}
+			
+			{
+				evaluate();
+			}
 
 			@Override
 			public void evaluate() {
