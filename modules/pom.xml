@@ -15,6 +15,7 @@
 		<module>org.eclipse.fx.core.di.context</module>
 		<module>org.eclipse.fx.core.databinding</module>
 		<module>org.eclipse.fx.core.fxml</module>
+		<module>org.eclipse.fx.core.guice</module>
 	</modules>
 
 	<repositories>
