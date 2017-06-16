@@ -38,6 +38,25 @@
 
 	<build>
 		<plugins>
+			<!-- plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-testing-maven-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<bndruns>
+						<bndrun>test.bndrun</bndrun>
+					</bndruns>
+					<failOnChanges>false</failOnChanges>
+				</configuration>
+				<executions>
+					<execution>
+						<id>testing</id>
+						<goals>
+							<goal>testing</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin-->
 			<plugin>
 				<groupId>biz.aQute.bnd</groupId>
 				<artifactId>bnd-maven-plugin</artifactId>
@@ -65,9 +84,9 @@
 				</configuration>
 			</plugin>
 
-			<!-- The following configuration is required because bnd-maven-plugin
-				generates the manifest to target/classes/META-INF/MANIFEST.MF but the normal
-				maven-jar-plugin does not use it. If the jar-plugin is patched to pick up
+			<!-- The following configuration is required because bnd-maven-plugin 
+				generates the manifest to target/classes/META-INF/MANIFEST.MF but the normal 
+				maven-jar-plugin does not use it. If the jar-plugin is patched to pick up 
 				the manifest from this location, then the following config is not needed. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -92,34 +111,14 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.4</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<failOnError>false</failOnError>
-					<tags>
-						<tag>
-							<name>noimplement</name>
-							<placement>a</placement>
-							<head>@noimplement This API is only supposed to be referenced</head>
-						</tag>
-						<tag>
-							<name>noreference</name>
-							<placement>a</placement>
-							<head>@noreference This API is not finalized and should be treated as an implementation detail</head>
-						</tag>
-					</tags>
-				</configuration>
-			</plugin-->
+			<!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+				<version>2.10.4</version> <executions> <execution> <id>attach-javadocs</id> 
+				<goals> <goal>jar</goal> </goals> </execution> </executions> <configuration> 
+				<failOnError>false</failOnError> <tags> <tag> <name>noimplement</name> <placement>a</placement> 
+				<head>@noimplement This API is only supposed to be referenced</head> </tag> 
+				<tag> <name>noreference</name> <placement>a</placement> <head>@noreference 
+				This API is not finalized and should be treated as an implementation detail</head> 
+				</tag> </tags> </configuration> </plugin -->
 		</plugins>
 	</build>
 	<profiles>

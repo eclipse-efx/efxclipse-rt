@@ -44,4 +44,26 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+	<!-- build>
+		<plugins>
+			<plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-testing-maven-plugin</artifactId>
+				<configuration>
+					<resolve>true</resolve>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build-->
 </project>
