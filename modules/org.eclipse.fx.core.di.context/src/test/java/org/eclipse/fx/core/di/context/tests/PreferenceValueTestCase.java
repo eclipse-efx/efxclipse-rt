@@ -364,7 +364,7 @@ public class PreferenceValueTestCase {
 		node.putDouble("simpleDouble", 1.0d); //$NON-NLS-1$
 		node.putFloat("simpleFloat", 1.f); //$NON-NLS-1$
 		node.putInt("simpleInt", 1); //$NON-NLS-1$
-		node.putLong("simpleLong", 1l); //$NON-NLS-1$
+		node.putLong("simpleLong", 1l); //$NON-NLS-1$ 
 		String sValue = UUID.randomUUID().toString();
 		node.put("simpleString", sValue); //$NON-NLS-1$
 		try {
