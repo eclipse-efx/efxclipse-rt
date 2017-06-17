@@ -16,6 +16,8 @@
 		<module>org.eclipse.fx.core.databinding</module>
 		<module>org.eclipse.fx.core.fxml</module>
 		<module>org.eclipse.fx.core.guice</module>
+		<module>org.eclipse.fx.ui.panes</module>
+		<module>org.eclipse.fx.ui.controls</module>
 	</modules>
 
 	<repositories>
