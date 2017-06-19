@@ -1,0 +1,3032 @@
+package javafx {
+
+	boolean = true | false;
+	string = @STRING;
+
+	/**
+	 * No whitespace is allowed between the number and units if provided.
+	 * Sizes can either be a percentage or a length with units. If units are not specified then specified the 'px' is assumed. Some units are relative and others absolute.
+	 *
+	 * Relative
+	 * <ul>
+	 * <li>px: pixels, relative to the viewing device</li>
+	 * <li>em: the 'font-size' of the relevant font</li>
+	 * <li>ex: the 'x-height' of the relevant font</li>
+	 * </ul>
+	 * Absolute
+	 * <ul>
+	 * <li>in: inches - 1 inch is equal to 2.54 centimeters.</li>
+	 * <li>cm: centimeters</li>
+	 * <li>mm: millimeters</li>
+	 * <li>pt: points - the points used by CSS 2.1 are equal to 1/72nd of an inch.</li>
+	 * <li>pc: picas - 1 pica is equal to 12 points.</li>
+	 * </ul>
+	 * Percentages
+	 * These are a percentage of some length, they are context sensitive so what they are relative to depends on where they are specified. Each property that supports a percentage should specify if percentage is supported and if it is what it is relative to.
+	 */
+	length = @NUM ~ [ px | mm | cm | in | pt | pc | em | ex ]?;
+
+	size = <length> | <percentage>;
+
+	/**
+	 * No whitespace is allowed between the number and the percent symbol.
+	 * These are a percentage of some length, typically to the width or height of a node.
+	 */
+	percentage = @NUM ~ %;
+
+	/**
+	 * No whitespace is allowed between the number and units.
+	 * An angle is a <number> with one of the following units.
+	 * <ul>
+	 * <li>deg: angle in degrees - all other angle units are converted to degrees.</li>
+	 * <li>rad: angle in radians</li>
+	 * <li>grad: angle in gradians</li>
+	 * <li>turn: angle in turns</li>
+	 * </ul>
+	 */
+	angle = @NUM ~ [ deg | rad | grad | turn ];
+
+	/**
+	 * A point is an {x,y} coordinate.
+	 */
+	point = [ [ <length> <length> ] | [ <percentage> | <percentage> ] ];
+
+	/**
+	 * Stops are per W3C color-stop syntax.
+	 * In a series of <color-stop>, stop distance values must all be <percentage> or <length>. Furthermore, if <length> values are used, then the distance value for first and last stop in the series must be specified. This restriction may be removed in a future release.
+	 *
+	 * "red, white 70%, blue" is valid since the distance for red and blue is assumed to be 0% and 100%, respectively.
+	 * "red 10, white, blue 90" is valid. Because distance for red and blue is 10 and 90, respectively, the distance for white can be calculated.
+	 * "red, white 70, blue" is not valid since distance units do not agree.
+	 * "red, white, blue" is valid. The stops are distributed evenly between 0% and 100%.
+	 */
+	color-stop = [ <color> [ <percentage> | <length>]? ];
+
+	/**
+	 * <address> can be an absolute URI, for example:
+	 * url(http://example.com)
+	 * url('http://example.com')
+	 * url("http://example.com")
+	 * or it can be relative to the location of the CSS file.
+	 */
+	uri = @URL;
+
+	/**
+	 * JavaFX CSS currently supports the DropShadow and InnerShadow effects from the JavaFX platform. See the class documentation in javafx.scene.effect for further details about the semantics of the various effect parameters.
+	 */
+	effect = <effect-dropshadow> | <effect-innershadow>;
+	blur-type = [ gaussian | one-pass-box | three-pass-box | two-pass-box ];
+	/**
+	 * A high-level effect that renders a shadow of the given content behind the content.
+	 * TODO params
+	 */
+	effect-dropshadow = dropshadow( <blur-type>, <color>, @NUM, @NUM, @NUM, @NUM
+	);
+	/**
+	 * A high-level effect that renders a shadow inside the edges of the given content.
+	 * TODO params
+	 */
+	effect-innershadow = innershadow( <blur-type>, <color>, @NUM, @NUM, @NUM, @NUM);
+
+	/**
+	 * The string name of the font family. An actual font family name available on the system can be used, or one of the following generic family names can be used:
+	 */
+	font-family = <string> | serif | sans-serif | cursive | fantasy | monospace;
+	/**
+	 * The size of the font, using the <size> syntax.
+	 */
+	font-size = <size>;
+	/**
+	 * The font's style, using the following syntax:
+	 */
+	font-style = normal | italic | oblique;
+	/**
+	 * The font's weight, using the following syntax:
+	 */
+	font-weight = normal | bold | bolder | lighter | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+	/**
+	 * This font shorthand property can be used in place of the above properties. It uses the following syntax:
+	 */
+	font = [ <font-style> || <font-weight> ]? <font-size> <font-family>;
+
+	/**
+	 * @named-color
+	 */
+	color = <named-color> | <looked-up-color> | <rgb-color> | <hsb-color> | <color-function>;
+
+
+	/**
+	 * CSS supports a bunch of named constant colors. Named colors can be specified with just their unquoted name for example:<br />
+	 * <code>
+	 * .button {<br />
+     * &nbsp;&nbsp;&nbsp;&nbsp;-fx-background-color: red;<br />
+     * }
+	 * </code><br />
+	 *
+	 * The named colors that are available in CSS are:
+	 *
+	 * <table summary="property table" class="html4colortable">
+     * <tbody>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% aliceblue;"></span>
+     *     </td>
+     *     <td>aliceblue = #f0f8ff</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% antiquewhite;"></span>
+     *     </td>
+     *     <td>antiquewhite = #faebd7</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% aqua;"></span>
+     *     </td>
+     *     <td>aqua = #00ffff</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% aquamarine;"></span>
+     *     </td>
+     *     <td>aquamarine = #7fffd4</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% azure;"></span>
+     *     </td>
+     *     <td>azure = #f0ffff</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% beige;"></span>
+     *     </td>
+     *     <td>beige = #f5f5dc</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% bisque;"></span>
+     *     </td>
+     *     <td>bisque = #ffe4c4</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% black;"></span>
+     *     </td>
+     *     <td>black = #000000</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% blanchedalmond;"></span>
+     *     </td>
+     *     <td>blanchedalmond = #ffebcd</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% blue;"></span>
+     *     </td>
+     *     <td>blue = #0000ff</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% blueviolet;"></span>
+     *     </td>
+     *     <td>blueviolet = #8a2be2</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% brown;"></span>
+     *     </td>
+     *     <td>brown = #a52a2a</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% burlywood;"></span>
+     *     </td>
+     *     <td>burlywood = #deb887</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% cadetblue;"></span>
+     *     </td>
+     *     <td>cadetblue = #5f9ea0</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% chartreuse;"></span>
+     *     </td>
+     *     <td>chartreuse = #7fff00</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% chocolate;"></span>
+     *     </td>
+     *     <td>chocolate = #d2691e</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% coral;"></span>
+     *     </td>
+     *     <td>coral = #ff7f50</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% cornflowerblue;"></span>
+     *     </td>
+     *     <td>cornflowerblue = #6495ed</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% cornsilk;"></span>
+     *     </td>
+     *     <td>cornsilk = #fff8dc</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% crimson;"></span>
+     *     </td>
+     *     <td>crimson = #dc143c</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% cyan;"></span>
+     *     </td>
+     *     <td>cyan = #00ffff</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkblue;"></span>
+     *     </td>
+     *     <td>darkblue = #00008b</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkcyan;"></span>
+     *     </td>
+     *     <td>darkcyan = #008b8b</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkgoldenrod;"></span>
+     *     </td>
+     *     <td>darkgoldenrod = #b8860b</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkgray;"></span>
+     *     </td>
+     *     <td>darkgray = #a9a9a9</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkgreen;"></span>
+     *     </td>
+     *     <td>darkgreen = #006400</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkgrey;"></span>
+     *     </td>
+     *     <td>darkgrey = #a9a9a9</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkkhaki;"></span>
+     *     </td>
+     *     <td>darkkhaki = #bdb76b</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkmagenta;"></span>
+     *     </td>
+     *     <td>darkmagenta = #8b008b</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkolivegreen;"></span>
+     *     </td>
+     *     <td>darkolivegreen = #556b2f</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkorange;"></span>
+     *     </td>
+     *     <td>darkorange = #ff8c00</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkorchid;"></span>
+     *     </td>
+     *     <td>darkorchid = #9932cc</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkred;"></span>
+     *     </td>
+     *     <td>darkred = #8b0000</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darksalmon;"></span>
+     *     </td>
+     *     <td>darksalmon = #e9967a</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkseagreen;"></span>
+     *     </td>
+     *     <td>darkseagreen = #8fbc8f</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkslateblue;"></span>
+     *     </td>
+     *     <td>darkslateblue = #483d8b</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkslategray;"></span>
+     *     </td>
+     *     <td>darkslategray = #2f4f4f</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkslategrey;"></span>
+     *     </td>
+     *     <td>darkslategrey = #2f4f4f</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkturquoise;"></span>
+     *     </td>
+     *     <td>darkturquoise = #00ced1</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% darkviolet;"></span>
+     *     </td>
+     *     <td>darkviolet = #9400d3</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% deeppink;"></span>
+     *     </td>
+     *     <td>deeppink = #ff1493</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% deepskyblue;"></span>
+     *     </td>
+     *     <td>deepskyblue = #00bfff</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% dimgray;"></span>
+     *     </td>
+     *     <td>dimgray = #696969</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% dimgrey;"></span>
+     *     </td>
+     *     <td>dimgrey = #696969</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% dodgerblue;"></span>
+     *     </td>
+     *     <td>dodgerblue = #1e90ff</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% firebrick;"></span>
+     *     </td>
+     *     <td>firebrick = #b22222</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% floralwhite;"></span>
+     *     </td>
+     *     <td>floralwhite = #fffaf0</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% forestgreen;"></span>
+     *     </td>
+     *     <td>forestgreen = #228b22</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% fuchsia;"></span>
+     *     </td>
+     *     <td>fuchsia = #ff00ff</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% gainsboro;"></span>
+     *     </td>
+     *     <td>gainsboro = #dcdcdc</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% ghostwhite;"></span>
+     *     </td>
+     *     <td>ghostwhite = #f8f8ff</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% gold;"></span>
+     *     </td>
+     *     <td>gold = #ffd700</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% goldenrod;"></span>
+     *     </td>
+     *     <td>goldenrod = #daa520</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% gray;"></span>
+     *     </td>
+     *     <td>gray = #808080</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% green;"></span>
+     *     </td>
+     *     <td>green = #008000</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% greenyellow;"></span>
+     *     </td>
+     *     <td>greenyellow = #adff2f</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% grey;"></span>
+     *     </td>
+     *     <td>grey = #808080</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% honeydew;"></span>
+     *     </td>
+     *     <td>honeydew = #f0fff0</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% hotpink;"></span>
+     *     </td>
+     *     <td>hotpink = #ff69b4</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% indianred;"></span>
+     *     </td>
+     *     <td>indianred = #cd5c5c</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% indigo;"></span>
+     *     </td>
+     *     <td>indigo = #4b0082</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% ivory;"></span>
+     *     </td>
+     *     <td>ivory = #fffff0</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% khaki;"></span>
+     *     </td>
+     *     <td>khaki = #f0e68c</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lavender;"></span>
+     *     </td>
+     *     <td>lavender = #e6e6fa</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lavenderblush;"></span>
+     *     </td>
+     *     <td>lavenderblush = #fff0f5</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lawngreen;"></span>
+     *     </td>
+     *     <td>lawngreen = #7cfc00</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lemonchiffon;"></span>
+     *     </td>
+     *     <td>lemonchiffon = #fffacd</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightblue;"></span>
+     *     </td>
+     *     <td>lightblue = #add8e6</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightcoral;"></span>
+     *     </td>
+     *     <td>lightcoral = #f08080</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightcyan;"></span>
+     *     </td>
+     *     <td>lightcyan = #e0ffff</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightgoldenrodyellow;"></span>
+     *     </td>
+     *     <td>lightgoldenrodyellow = #fafad2</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightgray;"></span>
+     *     </td>
+     *     <td>lightgray = #d3d3d3</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightgreen;"></span>
+     *     </td>
+     *     <td>lightgreen = #90ee90</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightgrey;"></span>
+     *     </td>
+     *     <td>lightgrey = #d3d3d3</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightpink;"></span>
+     *     </td>
+     *     <td>lightpink = #ffb6c1</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightsalmon;"></span>
+     *     </td>
+     *     <td>lightsalmon = #ffa07a</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightseagreen;"></span>
+     *     </td>
+     *     <td>lightseagreen = #20b2aa</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightskyblue;"></span>
+     *     </td>
+     *     <td>lightskyblue = #87cefa</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightslategray;"></span>
+     *     </td>
+     *     <td>lightslategray = #778899</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightslategrey;"></span>
+     *     </td>
+     *     <td>lightslategrey = #778899</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightsteelblue;"></span>
+     *     </td>
+     *     <td>lightsteelblue = #b0c4de</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lightyellow;"></span>
+     *     </td>
+     *     <td>lightyellow = #ffffe0</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% lime;"></span>
+     *     </td>
+     *     <td>lime = #00ff00</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% limegreen;"></span>
+     *     </td>
+     *     <td>limegreen = #32cd32</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% linen;"></span>
+     *     </td>
+     *     <td>linen = #faf0e6</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% magenta;"></span>
+     *     </td>
+     *     <td>magenta = #ff00ff</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% maroon;"></span>
+     *     </td>
+     *     <td>maroon = #800000</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% mediumaquamarine;"></span>
+     *     </td>
+     *     <td>mediumaquamarine = #66cdaa</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% mediumblue;"></span>
+     *     </td>
+     *     <td>mediumblue = #0000cd</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% mediumorchid;"></span>
+     *     </td>
+     *     <td>mediumorchid = #ba55d3</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% mediumpurple;"></span>
+     *     </td>
+     *     <td>mediumpurple = #9370db</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% mediumseagreen;"></span>
+     *     </td>
+     *     <td>mediumseagreen = #3cb371</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% mediumslateblue;"></span>
+     *     </td>
+     *     <td>mediumslateblue = #7b68ee</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% mediumspringgreen;"></span>
+     *     </td>
+     *     <td>mediumspringgreen = #00fa9a</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% mediumturquoise;"></span>
+     *     </td>
+     *     <td>mediumturquoise = #48d1cc</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% mediumvioletred;"></span>
+     *     </td>
+     *     <td>mediumvioletred = #c71585</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% midnightblue;"></span>
+     *     </td>
+     *     <td>midnightblue = #191970</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% mintcream;"></span>
+     *     </td>
+     *     <td>mintcream = #f5fffa</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% mistyrose;"></span>
+     *     </td>
+     *     <td>mistyrose = #ffe4e1</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% moccasin;"></span>
+     *     </td>
+     *     <td>moccasin = #ffe4b5</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% navajowhite;"></span>
+     *     </td>
+     *     <td>navajowhite = #ffdead</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% navy;"></span>
+     *     </td>
+     *     <td>navy = #000080</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% oldlace;"></span>
+     *     </td>
+     *     <td>oldlace = #fdf5e6</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% olive;"></span>
+     *     </td>
+     *     <td>olive = #808000</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% olivedrab;"></span>
+     *     </td>
+     *     <td>olivedrab = #6b8e23</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% orange;"></span>
+     *     </td>
+     *     <td>orange = #ffa500</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% orangered;"></span>
+     *     </td>
+     *     <td>orangered = #ff4500</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% orchid;"></span>
+     *     </td>
+     *     <td>orchid = #da70d6</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% palegoldenrod;"></span>
+     *     </td>
+     *     <td>palegoldenrod = #eee8aa</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% palegreen;"></span>
+     *     </td>
+     *     <td>palegreen = #98fb98</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% paleturquoise;"></span>
+     *     </td>
+     *     <td>paleturquoise = #afeeee</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% palevioletred;"></span>
+     *     </td>
+     *     <td>palevioletred = #db7093</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% papayawhip;"></span>
+     *     </td>
+     *     <td>papayawhip = #ffefd5</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% peachpuff;"></span>
+     *     </td>
+     *     <td>peachpuff = #ffdab9</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% peru;"></span>
+     *     </td>
+     *     <td>peru = #cd853f</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% pink;"></span>
+     *     </td>
+     *     <td>pink = #ffc0cb</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% plum;"></span>
+     *     </td>
+     *     <td>plum = #dda0dd</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% powderblue;"></span>
+     *     </td>
+     *     <td>powderblue = #b0e0e6</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% purple;"></span>
+     *     </td>
+     *     <td>purple = #800080</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% red;"></span>
+     *     </td>
+     *     <td>red = #ff0000</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% rosybrown;"></span>
+     *     </td>
+     *     <td>rosybrown = #bc8f8f</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% royalblue;"></span>
+     *     </td>
+     *     <td>royalblue = #4169e1</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% saddlebrown;"></span>
+     *     </td>
+     *     <td>saddlebrown = #8b4513</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% salmon;"></span>
+     *     </td>
+     *     <td>salmon = #fa8072</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% sandybrown;"></span>
+     *     </td>
+     *     <td>sandybrown = #f4a460</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% seagreen;"></span>
+     *     </td>
+     *     <td>seagreen = #2e8b57</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% seashell;"></span>
+     *     </td>
+     *     <td>seashell = #fff5ee</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% sienna;"></span>
+     *     </td>
+     *     <td>sienna = #a0522d</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% silver;"></span>
+     *     </td>
+     *     <td>silver = #c0c0c0</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% skyblue;"></span>
+     *     </td>
+     *     <td>skyblue = #87ceeb</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% slateblue;"></span>
+     *     </td>
+     *     <td>slateblue = #6a5acd</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% slategray;"></span>
+     *     </td>
+     *     <td>slategray = #708090</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% slategrey;"></span>
+     *     </td>
+     *     <td>slategrey = #708090</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% snow;"></span>
+     *     </td>
+     *     <td>snow = #fffafa</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% springgreen;"></span>
+     *     </td>
+     *     <td>springgreen = #00ff7f</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% steelblue;"></span>
+     *     </td>
+     *     <td>steelblue = #4682b4</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% tan;"></span>
+     *     </td>
+     *     <td>tan = #d2b48c</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% teal;"></span>
+     *     </td>
+     *     <td>teal = #008080</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% thistle;"></span>
+     *     </td>
+     *     <td>thistle = #d8bfd8</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% tomato;"></span>
+     *     </td>
+     *     <td>tomato = #ff6347</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% turquoise;"></span>
+     *     </td>
+     *     <td>turquoise = #40e0d0</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% violet;"></span>
+     *     </td>
+     *     <td>violet = #ee82ee</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% wheat;"></span>
+     *     </td>
+     *     <td>wheat = #f5deb3</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% white;"></span>
+     *     </td>
+     *     <td>white = #ffffff</td>
+     *   </tr>
+     *   <tr>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% whitesmoke;"></span>
+     *     </td>
+     *     <td>whitesmoke = #f5f5f5</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% yellow;"></span>
+     *     </td>
+     *     <td>yellow = #ffff00</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% yellowgreen;"></span>
+     *     </td>
+     *     <td>yellowgreen = #9acd32</td>
+     *     <td><span style="display:block;width:16px;height:16px;border:2px solid black;background: none repeat scroll 0% 50% transparent;"></span>
+     *     </td>
+     *     <td>transparent = rgba(0,0,0,0)</td>
+     *   </tr>
+     * </tbody>
+     * </table>
+	 */
+	named-color = 	/** @color(2,2,2) */ aliceblue 		| anitquewhite 		| aqua 					| aquamarine 		|
+					azure 			| beige 			| bisque 				| black 			|
+					blanchedalmond 	| blue 				| blueviolet 			| brown 			|
+					burlywood 		| cadetblue 		| chartreuse 			| chocolate 		|
+					coral 			| cornflowerblue 	| cornsilk 				| crimson 			|
+					cyan 			| darkblue 			| darkcyan 				| darkgoldenrod 	|
+					darkgray 		| darkgreen 		| darkgrey 				| darkkhaki			|
+					darkmagenta 	| darkolivegreen 	| darkorange 			| darkorchid 		|
+					darkred 		| darksalmon 		| darkseagreen 			| darkslateblue 	|
+					darkslategray 	| darkslategrey 	| darkturquoise 		| darkviolet 		|
+					deeppink 		| deepskyblue 		| dimgray 				| dimgrey 			|
+					dodgerblue		| firebrick			| floralwhite 			| forestgreen 		|
+					fuchsia			| gainsboro 		| ghostwhite 			| gold 				|
+					goldenrod		| gray 				| green 				| greenyellow 		|
+					grey			| honeydew 			| hotpink 				| indianred 		|
+					indigo			| ivory 			| khaki 				| lavender 			|
+					lavenderblush 	| lawngreen 		| lemonchiffon 			| lightblue 		|
+					lightcoral 		| lightcyan 		| lightgoldenrodyellow 	| lightgray 		|
+					lightgreen 		| lightgrey 		| lightpink 			| lightsalmon 		|
+					lightseagreen 	| lightskyblue 		| lightslategray 		| lightslategrey 	|
+					lightsteelblue  | lightyellow 		| lime 					| limegreen 		|
+					linen 			| magenta 			| maroon 				| mediumaquamarine 	|
+					mediumblue 		| mediumorchid 		| mediumpurple 			| mediumseagreen 	|
+					mediumslateblue | mediumspringgreen | mediumturquoise 		| mediumvioletred 	|
+					midnightblue 	| mintcream 		| mistyrose 			| moccasin 			|
+					navajowhite		| navy 				| oldlace 				| olive 			|
+					olivedrab 		| orange 			| orangered 			| orchid 			|
+					palegoldenrod 	| palegreen 		| paleturquoise 		| palevioletred 	|
+					papayawhip 		| peachpuff 		| peru  				| pink 				|
+					plum 			| powderblue 		| purple 				| red 				|
+					rosybrown 		| royalblue 		| saddlebrown 			| salmon 			|
+					sandybrown 		| seagreen 			| seashell 				| sienna 			|
+					silver 			| skyblue 			| slateblue 			| slategray 		|
+					slategrey 		| snow 				| springgreen 			| steelblue 		|
+					tan 			| teal 				| thistle 				| tomato 			|
+					turquoise 		| violet 			| wheat 				| white 			|
+					whitesmoke 		| yellow 			| yellowgreen 			| transparent
+					;
+
+//	annotated-named-color-1 = 	/** @color #123456 */ aliceblue |
+//								/** @color #123456 */ antiquewhite;
+//
+//	annotated-named-color-2 =	@Color(#123456) aliceblue |
+//								@Color(#123456) antiquewhite;
+//
+//	annotated-named-color-3 =	@Alias(#123456) aliceblue |
+//								@Alias(#123456) antiquewhite;
+//
+//	annotated-named-color-4 =	@Color @Alias(#123456) aliceblue |
+//								@Color @Alias(#123456) antiquewhite
+
+	/**
+	 * <p>
+	 * With looked-up colors you can refer to any other color property that is set on the current node or any of its parents. This is a very powerful feature, as it allows a generic palette of colors to be specified on the scene then used thoughout the application. If you want to change one of those palette colors you can do so at any level in the scene tree and it will affect that node and all its decendents. Looked-up colors are not looked up until they are applied, so they are live and react to any style changes that might occur, such as replacing a palette color at runtime with the "style" property on a node.
+	 * </p>
+	 * <p>
+	 * In the following example, all background color of all buttons uses the looked up color "abc".
+	 * </p>
+	 * <p>
+	 * <code>
+	 * .root { abc: #f00 }
+	 * </code>
+	 * </p>
+	 * <p>
+	 * <code>
+	 * .button { -fx-background-color: abc }
+	 * </code>
+	 * </p>
+	 */
+	looked-up-color = reference_to_other_color_property; // TODO howto implement?!
+
+	/**
+	 * The format of an RGB value in hexadecimal notation is a ‘#’ immediately followed by either three or six hexadecimal characters. The three-digit RGB notation (#rgb) is converted into six-digit form (#rrggbb) by replicating digits, not by adding zeros. For example, #fb0 expands to #ffbb00. This ensures that white (#ffffff) can be specified with the short notation (#fff) and removes any dependencies on the color depth of the display.
+	 */
+	hashcolor = $#[0123456789ABCDEFabcdef]{6}$ | $#[0123456789ABCDEFabcdef]{3}$;
+
+	/**
+	 * The RGB color model is used in numerical color specifications.
+	 */
+	rgb-color = /** lala */<hashcolor> | /** dada */<rgb> | <rgba>;
+
+	/**
+	 * The format of an RGB value in the functional notation is ‘rgb(’ followed by a comma-separated list of three numerical values (either three decimal integer values or three percentage values) followed by ‘)’. The integer value 255 corresponds to 100%, and to F or FF in the hexadecimal notation: rgb(255,255,255) = rgb(100%,100%,100%) = #FFF. White space characters are allowed around the numerical values.
+	 */
+	rgb = rgb(/** didi */@INT(0->255), @INT(0->255), @INT(0->255) | <percentage>, <percentage>, <percentage>);
+
+	/**
+	 * <p>
+	 * This is an extension of the RGB color model to include an ‘alpha’ value that specifies the opacity of a color. This is accomplished via a functional syntax of the form rgba(...) form that takes a fourth parameter which is the alpha value. The alpha value must be a number in the range 0.0 (representing completely transparent) and 1.0 (completely opaque). As with the rgb() function, the red, green, and blue values may be decimal integers or percentages. The following examples all specify the same color:
+	 * </p>
+	 * <code>.label { -fx-text-fill: rgb(255,0,0) }</code><br />
+     * <code>.label { -fx-text-fill: rgba(255,0,0,1)}</code><br />
+     * <code>.label { -fx-text-fill: rgb(100%,0%,0%) }</code><br />
+     * <code>.label { -fx-text-fill: rgba(100%,0%,0%,1) }</code>
+	 */
+	rgba = rgba(@INT(0->255), @INT(0->255), @INT(0->255), @NUM(.0->1.0) | <percentage>, <percentage>, <percentage>, @NUM(.0->1.0));
+
+	/**
+	 * Colors can be specified using the HSB (sometimes called HSV) color model
+	 */
+	hsb-color = <hsb> | <hsba>;
+
+	/**
+	 * The first number is hue, a number in the range 0 to 360 degrees. The second number is saturation, a percentage in the range 0% to 100%. The third number is brightness, also a percentage in the range 0% to 100%.
+	 */
+	hsb = hsb(@NUM(.0->360.0), <percentage>, <percentage>);
+
+	/**
+	 * The first number is hue, a number in the range 0 to 360 degrees. The second number is saturation, a percentage in the range 0% to 100%. The third number is brightness, also a percentage in the range 0% to 100%.
+	 * The fourth parameter at the end which is a alpha value in the range 0.0 to 1.0, specifying completely transparent and completely opaque, respectively
+	 */
+	hsba = hsba(@NUM(.0->360.0), <percentage>, <percentage>, @NUM(.0->1.0));
+
+	/**
+	 * JavaFX supports some color computation functions. These compute new colors from input colors at the time the color style is applied. This enables a color theme to be specified using a single base color and to have variant colors computed from that base color. There are two color functions: derive() and ladder().
+	 */
+	color-function = <ladder> | <derive>;
+
+	/**
+	 * The ladder function interpolates between colors. The effect is as if a gradient is created using the stops provided, and then the brightness of the provided <color> is used to index a color value within that gradient. At 0% brightness, the color at the 0.0 end of the gradient is used; at 100% brightness, the color at the 1.0 end of the gradient is used; and at 50% brightness, the color at 0.5, the midway point of the gradient, is used. Note that no gradient is actually rendered. This is merely an interpolation function that results in a single color.
+	 */
+	ladder = ladder(<color>, <color-stop> [, <color-stop>]+);
+
+	/**
+	 * The derive function takes a color and computes a brighter or darker version of that color. The second parameter is the brightness offset, ranging from -100% to 100%. Positive percentages indicate brighter colors and negative percentages indicate darker colors. A value of -100% means completely black, 0% means no change in brightness, and 100% means completely white.
+	 */
+	derive = derive(<color>, <percentage>);
+
+	/**
+	 * Paint values can either be a solid color specified in one of the color syntaxes or they can be a linear or radial gradient.
+	 */
+	paint = <color> | <linear-gradient> | <radial-gradient>;
+	side-or-corner = [left | right] || [top | bottom];
+
+	/**
+	 * <p>
+	 * Linear gradient creates a gradient going though all the stop colors along the line between the "from" <point> and the "to" <point>. If the points are percentages, then they are relative to the size of the area being filled. Percentage and length sizes can not be mixed in a single gradient function.
+	 * </p>
+	 * <p>
+	 * If neither repeat nor reflect are given, then the CycleMethod defaults "NO_CYCLE".
+	 * </p>
+	 * <p>
+	 * If neither [from <point> to <point>] nor [ to <side-or-corner> ] are given, then the gradient direction defaults to 'to bottom'.
+	 * </p>
+	 * <p>
+	 * Stops are per W3C color-stop syntax and are normalized accordingly.
+	 * </p>
+	 * <p>
+	 * This example will create a gradient from top left to bottom right of the filled area with red at the top left corner and black at the bottom right.
+	 * </p>
+	 * <p>
+	 * <code>linear-gradient(to bottom right, red, black)</code>
+	 * </p>
+	 * <p>
+	 * This is equivalent to:
+	 * </p>
+	 * <p>
+	 * <code>
+	 * linear-gradient(from 0% 0% to 100% 100%, red 0%, black 100%)
+	 * </code>
+	 * </p>
+	 * <p>
+	 * This more complex example will create a 50px high bar at the top with a 3 color gradient with white underneath for the rest of the filled area.
+	 * </p>
+	 * <p>
+	 * <code>
+	 * linear-gradient(from 0px 0px to 0px 50px, gray, darkgray 50%, dimgray 99%, white)
+	 * </code>
+	 * </p>
+	 */
+	linear-gradient = linear-gradient( [ [from <point> to <point>] | [ to <side-or-corner>], ]? [ [ repeat | reflect ], ]? <color-stop>[, <color-stop>]+);
+	/**
+	 * <p>
+	 * If neither repeat nor reflect are given, then the CycleMethod defaults "NO_CYCLE".
+	 * </p>
+	 * <p>
+	 * <p>
+	 * Stops are per W3C color-stop syntax and are normalized accordingly.
+	 * </p>
+	 * <p>
+	 * Following are examples of the use of radial-gradient:
+	 * </p>
+	 * <code>radial-gradient(radius 100%, red, darkgray, black)</code><br />
+	 * <code>radial-gradient(focus-angle 45deg, focus-distance 20%, center 25% 25%, radius 50%, reflect, gray, darkgray 75%, dimgray)</code>
+	 */
+	radial-gradient = radial-gradient([ focus-angle <angle>, ]? [ focus-distance <percentage>, ]? [ center <point>, ]? radius [ <length> | <percentage> ] [ [ repeat | reflect ], ]? <color-stop>[, <color-stop>]+);
+
+	alignment = [ top-left | top-center | top-right | center-left | center | center-right bottom-left | bottom-center | bottom-right | baseline-left | baseline-center | baseline-right ];
+
+	package scene {
+		blend-mode = [ add | blue | color-burn | color-dodge | darken | difference | exclusion | green | hard-light | lighten | multiply | overlay | red | screen | soft-light | src-atop | src-in | src-out | src-over ];
+		cursor = [ null | crosshair | default | hand | move | e-resize | h-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize | v-resize | text | wait ] | <uri>;
+		visibility-rule = [ visible | hidden | collapse | inherit ];
+
+		/**
+		 * Base class for scene graph nodes. A scene graph is a set of tree data structures
+ 		 * where every item has zero or one parent, and each item is either
+ 		 * a "leaf" with zero sub-items or a "branch" with zero or more sub-items.
+		 */
+		Node {
+			/**
+			 * The mode used to blend this individual node into the scene behind it
+			 */
+			-fx-blend-mode <blend-mode> default: null;
+			/**
+			 * Defines the mouse cursor for this Node and subnodes
+			 */
+			-fx-cursor <cursor> default: null;
+			/**
+			 * Specifies an effect to apply to this Node
+			 */
+			-fx-effect <effect> default: null;
+			/**
+			 * Specifies whether this Node should be a part of focus traversal cycle
+			 */
+			-fx-focus-traversable <boolean> default: null;
+			/**
+			 * Opacity can be thought of conceptually as a postprocessing operation. Conceptually, after the node (including its descendants) is rendered into an RGBA offscreen image, the opacity setting specifies how to blend the offscreen rendering into the current composite rendering.
+			 */
+			-fx-opacity @NUM(.0->1.0) default: 1.0;
+			/**
+			 * This is the angle of the rotation in degrees. Zero degrees is at 3 o'clock (directly to the right). Angle values are positive clockwise. Rotation is about the center.
+			 */
+			-fx-rotate @NUM default: 0;
+			/**
+			 * Defines the factor by which coordinates are scaled about the center of the
+     		 * object along the X axis of this Node.
+			 */
+			-fx-scale-x @NUM default: 1;
+			/**
+			 * Defines the factor by which coordinates are scaled about the center of the
+     		 * object along the Y axis of this Node.
+			 */
+			-fx-scale-y @NUM default: 1;
+			/**
+			 * Defines the factor by which coordinates are scaled about the center of the
+     		 * object along the Z axis of this Node.
+			 */
+			-fx-scale-z @NUM default: 1;
+			/**
+			 * Defines the x coordinate of the translation that is added to this Node's
+     		 * transform.
+			 */
+			-fx-translate-x @NUM default: 0;
+			/**
+			 * Defines the y coordinate of the translation that is added to this Node's
+     		 * transform.
+			 */
+			-fx-translate-y @NUM default: 0;
+			/**
+			 * Defines the z coordinate of the translation that is added to this Node's
+     		 * transform.
+			 */
+			-fx-translate-z @NUM default: 0;
+			visibility <visibility-rule> default: visible;
+
+			/**
+			 * applies when the disabled variable is true
+			 */
+			:disabled
+			/**
+			 * applies when the focused variable is true
+			 */
+			:focused
+			/**
+			 * applies when the hover variable is true
+			 */
+			:hover
+			/**
+			 * applies when the pressed variable is true
+			 */
+			:pressed
+			/**
+			 * apples when the mnemonic affordance (typically an underscore) should be shown.
+			 */
+			:show-mnemonic
+		}
+		/**
+		 * The base class for all nodes that have children in the scene graph.
+		 */
+		Parent extends Node {
+		}
+		/**
+		 * A Group node contains a list of children that are rendered in order whenever this node is rendered.
+		 */
+		Group extends Parent {
+		}
+
+		package image {
+			/**
+			 * The ImageView is a Node used for painting images loaded with Image class.
+			 */
+			ImageView extends Node {
+				/**
+				 * Url to image
+				 */
+				-fx-image <uri> default: null;
+			}
+		}
+		package layout {
+			bg-position = [ [ [ <size> | left | center | right ] [ <size> | top | center | bottom ]? ] | [ [ center | [ left | right ] <size>? ] || [ center | [ top | bottom ] <size>? ] ] ];
+			repeat-style = repeat-x | repeat-y | [repeat | space | round | stretch | no-repeat] [repeat | space | round | stretch | no-repeat]?; // NOTE: rewritten from  <repeat-style> = repeat-x | repeat-y | [repeat | space | round | stretch | no-repeat]{1,2} since we do not support {} yet
+			bg-size = [ <size> | auto ] [ <size> | auto ]? | cover | contain | stretch; // Note: rewritten from = [ <size> | auto ]{1,2} | cover | contain | stretch since we do not support {} yet
+
+			border-style = <dash-style> [phase @NUM]? [centered | inside | outside]? [line-join [miter @NUM | bevel | round]]? [line-cap [square | butt | round]]?;
+			dash-style = [ none | solid | dotted | dashed | <segments> ];
+			segments = segments( @NUM, @NUM [, @NUM]*);
+
+			//TODO REMOVE if attribute references are available
+
+			/**
+			 * <p>
+			 * A Region is a Node (extending from Parent) with backgrounds and borders that are styleable via CSS. A Region is typically a rounded rectangle, though this can be modified through CSS to be an arbitrary shape. Regions can contain other Region objects (sub-regions) or they can contain sub-controls. All Regions have the same set of CSS properties as described below.
+			 * </p>
+			 * <p>
+			 * Each Region consists of several layers, painted from bottom to top, in this order:
+			 * <ol>
+    		 * <li>background fills</li>
+    		 * <li>background images</li>
+    		 * <li>contents</li>
+    		 * <li>border strokes</li>
+    		 * <li>border images</li>
+    		 * </ol>
+    		 * </p>
+    		 * <p>
+    		 * The background and border mechanisms are patterned after the CSS 3 draft backgrounds and borders module.
+    		 * See [4] for a detailed description.
+    		 * </p>
+    		 * <p>
+    		 * Background fills are specified with the properties -fx-background-color, -fx-background-radius
+    		 * and -fx-background-insets. The -fx-background-color property is a series of one or more
+    		 * comma-separated <paint> values. The number of values in the series determines the number of
+    		 * background rectangles that are painted. Background rectangles are painted in the order specified
+    		 * using the given <paint> value. Each background rectangle can have different radii and insets.
+    		 * The -fx-background-radius and -fx-background-insets properties are series of comma-separated
+    		 * values (or sets of values). The radius and insets values used for a particular background are
+    		 * the found in the corresponding position in the -fx-background-radius and -fx-background-insets
+    		 * series. For example, suppose a series of three values is given for the -fx-background-color property.
+    		 * A series of three values should also be specified for the -fx-background-radius and -fx-background-insets
+    		 * properties. The first background will be painted using the first radius value and first insets value,
+    		 * the second background will be painted with the second radius value and second insets value, and so forth.
+    		 * </p>
+    		 * <p>
+    		 * Note also that properties such as -fx-background-radius and -fx-background-insets can contain a series
+    		 * of values or sets of four values. A set of values is separated by whitespace, whereas the values or
+    		 * sets-of-values in a series are separated by commas. For -fx-background-radius, a single value indicates
+    		 * that the value should be used for the radius of all four corners of the background rectangle. A set of
+    		 * four values indicates that different radius values are to be used for the top-left, top-right,
+    		 * bottom-right, and bottom-left corners, in that order. Similarly, the -fx-background-insets property
+    		 * can also contain a series of values or sets of values. A set of four values for -fx-background-insets
+    		 * indicates that different insets are to be used for the top, right, bottom, and left edges of the rectangle,
+    		 * in that order.
+    		 * </p>
+    		 * <p>
+    		 * Background images are specified with the properties -fx-background-image, -fx-background-repeat,
+    		 * -fx-background-position and -fx-background-size. The number of images in the series of -fx-background-image
+    		 * values determines the number of background images that are painted. The -fx-background-repeat,
+    		 * -fx-background-position, and -fx-background-size properties each can contain a series of values.
+    		 * For each item in the -fx-background-image series, the corresponding items in the -fx-background-repeat,
+    		 * -fx-background-position, and -fx-background-size properties are applied to that background image.
+    		 * </p>
+    		 * <p>
+    		 * Stroked borders are specified with the properties -fx-border-color, -fx-border-style, -fx-border-width,
+    		 * -fx-border-radius and -fx-border-insets. Each property contains a series of items. The number of items
+    		 * in the-fx- border-color property determines the number of borders that are painted. Each border in
+    		 * the series is painted using information from the corresponding series item of the -fx-border-style,
+    		 * -fx-border-width, -fx-border-radius, and -fx-border-insets properties.
+    		 * </p>
+    		 * <p>
+    		 * Image borders are specified with the properties -fx-border-image-source, -fx-border-image-repeat,
+    		 * -fx-border-image-slice, -fx-border-image-width and -fx-border-image-insets. Each property contains
+    		 * a series of items. The number of items in the -fx-border-image-source property determines the number
+    		 * of images that are painted. Each image in the series is painted using information from the corresponding
+    		 * series items of the -fx-border-image-repeat, -fx-border-image-slice, -fx-border-image-width, and
+    		 * -fx-border-image-insets properties.
+    		 * </p>
+    		 * <p>
+    		 * The region's contents are a sequence of nodes, like any other container. The contents are set
+    		 * programmatically and cannot be set via CSS.
+    		 * </p>
+			 */
+			Region extends Parent {
+
+				// BACKGROUND FILLS (see CSS Backgrounds and Borders Module Level 3: Backgrounds)
+				/**
+				 * A series of paint values separated by commas.
+				 */
+				-fx-background-color <paint> [, <paint>]* default: null;
+				/**
+				 * A series of size values or sets of four size values, separated by commas. A single size
+				 * value means all insets are the same. Otherwise, the four values for each inset are given in
+				 * the order top, right, bottom, left. Each comma-separated value or set of values in the
+				 * series applies to the corresponding background color.
+				 */
+				-fx-background-insets [<size> | <size> <size> <size> <size>] [ , [ <size> | <size> <size> <size> <size>] ]* default: null;
+				// BACKGROUND IMAGES (see CSS Backgrounds and Borders Module Level 3: Background Image)
+
+				/**
+				 * A series of radius values or sets of four radius values, separated by commas. A single
+				 * radius value means the radius of all four corners is the same. Otherwise, the four values
+				 * in the set determine the radii of the top-left, top-right, bottom-right, and bottom-left corners,
+				 * in that order. Each comma-separated value or set of values in the series applies to the
+				 * corresponding background color.
+				 */
+				-fx-background-radius [<size> | <size> <size> <size> <size>] [ , [ <size> | <size> <size> <size> <size>] ]* default: null;
+
+				/**
+				 * A series of image URIs separated by commas.
+				 */
+				-fx-background-image <uri> [ , <uri> ]* default: null;
+				/**
+				 * A series of <bg-position> values separated by commas. Each bg-position item in the series
+				 * applies to the corresponding image in the background-image series.
+				 */
+				-fx-background-position <bg-position> [ , <bg-position> ]* default: null;
+				/**
+				 * A series of <repeat-style> values separated by commas. Each repeat-style item in the series
+				 * applies to the corresponding image in the background-image series.
+				 */
+				-fx-background-repeat <repeat-style> [ , <repeat-style> ]* default: null;
+				/**
+				 * A series of <bg-size> values separated by commas. Each bg-size item in the series
+				 * applies to the corresponding image in the background-image series.
+				 */
+				-fx-background-size <bg-size> [ , <bg-size> ]*;
+				// STROKED BORDERS (see CSS Backgrounds and Borders Module Level 3: Borders)
+				/**
+				 * A series of paint values or sets of four paint values, separated by commas. For each item in
+				 * the series, if a single paint value is specified, then that paint is used as the border for
+				 * all sides of the region; and if a set of four paints is specified, they are used for the top,
+				 * right, bottom, and left borders of the region, in that order. If the border is not rectangular,
+				 * only the first paint value in the set is used.
+				 */
+				-fx-border-color [<paint> | <paint> <paint> <paint> <paint>] [ , [<paint> | <paint> <paint> <paint> <paint>] ]*;
+				/**
+				 * A series of inset or sets of four inset values, separated by commas. For each item in the series,
+				 * a single inset value means that all insets are the same; and if a set of four inset values is
+				 * specified, they are used for the top, right, bottom, and left edges of the region, in that order.
+				 * Each item in the series of insets applies to the corresponding item in the series of border colors.
+				 */
+				-fx-border-insets [<size> | <size> <size> <size> <size>] [ , [ <size> | <size> <size> <size> <size>] ]*;
+				/**
+				 * A series of radius or sets of four radius values, separated by commas. For each item in the series,
+				 * a single radius value means that all corner radii are the same; and if a set of four radius values
+				 * is specified, they are used as the radii of the top-left, top-right, bottom-right, and bottom-left
+				 * corners, in that order. Each item in the series of radii applies to the corresponding item in the
+				 * series of border colors.
+				 */
+				-fx-border-radius [<size> | <size> <size> <size> <size>] [ , [ <size> | <size> <size> <size> <size>] ]*;
+				/**
+				 * A series of border style values, separated by commas. Each item in the series applies to the
+				 * corresponding item in the series of border colors.
+				 * The segments dash-style defines a sequence representing the lengths of the dash segments.
+				 * Alternate entries in the sequence represent the lengths of the opaque and transparent segments of
+				 * the dashes. This corresponds to the strokeDashArray variable of Shape.
+				 * The optional phase parameter defines the point in the dashing pattern that will correspond to the
+				 * beginning of the stroke. This corresponds to the strokeDashOffset variable of Shape.
+				 */
+				-fx-border-style <border-style> [ , <border-style> ]*;
+				/**
+				 * A series of width or sets of four width values, separated by commas. For each item in the series,
+				 * a single width value means that all border widths are the same; and if a set of four width values
+				 * is specified, they are used for the top, right, bottom, and left border widths, in that order.
+				 * If the border is not rectangular, only the first width value is used. Each item in the series
+				 * of widths applies to the corresponding item in the series of border colors.
+				 */
+				-fx-border-width [<size> | <size> <size> <size> <size>] [ , [ <size> | <size> <size> <size> <size>] ]*;
+				// BORDER IMAGES (see CSS Backgrounds and Borders Module Level 3: Border Images)
+				/**
+				 * A series of image URIs, separated by commas.
+				 */
+				-fx-border-image-source <uri> [ , <uri>]*;
+				/**
+				 * A series of inset or sets of four inset values, separated by commas. For each item in the series,
+				 * a single inset value means that all insets are the same; and if a set of four inset values is specified,
+				 * they are used for the top, right, bottom, and left edges of the region, in that order. Each item in the
+				 * series of insets applies to the corresponding image in the series of border images.
+				 */
+				-fx-border-image-insets [<size> | <size> <size> <size> <size>] [ , [ <size> | <size> <size> <size> <size> ] ]*;
+				/**
+				 * A series of repeat-style values, separated by commas. Each item in the series applies to the corresponding image in the series
+				 * of border images.
+				 */
+				-fx-border-image-repeat <repeat-style> [ , <repeat-style> ]*;
+				/**
+				 * A series of image slice values or sets of four values, separated by commas. Each item in the series applies to the corresponding
+				 * image in the series of border images. For each item in the series, if four values are given, they specify the size of the top, right,
+				 * bottom, and left slices. This effectively divides the image into nine regions: an upper left corner, a top edge, an upper right corner,
+				 * a right edge, a lower right corner, a bottom edge, a lower left corner, a left edge and a middle. If one value is specified, this value
+				 * is used for the slice values for all four edges. If 'fill' is present, the middle slice is preserved, otherwise it is discarded.
+				 * Percentage values may be used here, in which case the values are considered proportional to the source image.
+				 */
+				-fx-border-image-slice [<size> | <size> <size> <size> <size> ] fill? [ , [ <size> | <size><size> <size> <size> <size> ] fill? ]*;
+				/**
+				 * A series of width or sets of four width values, separated by commas. For each item in the series, a single width
+				 * value means that all border widths are the same; and if a set of four width values is specified, they are used
+				 * for the top, right, bottom, and left border widths, in that order. If the border is not rectangular, only the
+				 * first width value is used. Each item in the series of widths applies to the corresponding item in the series of border
+				 * images. Percentage values may be used here, in which case the values are considered proportional to the border image area.
+				 */
+				-fx-border-image-width [<size> | <size> <size> <size> <size>] [ , [ <size> | <size> <size> <size> <size>] ]*;
+				//Other
+				/**
+				 * A sets of four padding values, separated by commas. For each item in the series, a single padding value means that all
+				 * padding are the same; and if a set of four padding values is specified, they are used for the top, right, bottom, and left
+				 * edges of the region, in that order.
+				 */
+				-fx-padding <size> | <size> <size> <size> <size>;
+				/**
+				 * If true means the shape centered within the region's width and height, otherwise the shape is positioned at its source
+				 * position. Has no effect if a shape string is not specified.
+				 */
+				-fx-position-shape <boolean> default: true;
+				/**
+				 * If true means the shape is scaled to fit the size of the region, otherwise the shape is at its source size, and its position
+				 * depends on the value of the position-shape property. Has no effect if a shape string is not specified.
+				 */
+				-fx-scale-shape <boolean> default: true;
+				/**
+				 * An SVG path string. By specifying a shape here the region takes on that shape instead of a rectangle or rounded rectangle.
+				 * The syntax of this path string is specified in
+				 */
+				-fx-shape <string>;
+				/**
+				 * Defines whether this region rounds position/spacing and ceils size values to pixel boundaries when laying out its children.
+				 */
+				-fx-snap-to-pixel <boolean> default: true;
+				/**
+				 * This property is set by specifying -fx-background-color, optionally -fx-background-insets, and optionally -fx-background-radius.
+				 * In order to set the background fill to null, specify the style "-fx-background-color: null;". There is no shorthand notation for
+				 * -fx-background-fills at this time.
+				 */
+				-fx-background-fills <-fx-background-color> [ <-fx-background-insets> || <-fx-background-radius> ] default: null;
+				/**
+				 * This property is set by specifying -fx-background-image, optionally -fx-background-position, optionally -fx-background-repeat,
+				 * and optionally -fx-background-size. There is no shorthand notation for -fx-background-images at this time.
+				 */
+				-fx-background-images <-fx-background-image> [ <-fx-background-position> || <-fx-background-repeat> || <-fx-background-size> ] default: null;
+				/**
+				 * This property is set by specifying -fx-border-color with the optional -fx-border-insets, -fx-border-radius, -fx-border-style and
+				 * -fx-border-width. There is no shorthand notation for -fx-stroke-borders at this time.
+				 */
+				-fx-stroke-borders <-fx-border-color> [ <-fx-border-insets> || <-fx-border-radius> || <-fx-border-style> || <-fx-border-width> ] default: null;
+				/**
+				 * This property set by specifying -fx-border-image-source with the optional -fx-border-image-insets, -fx-border-image-repeat,
+				 * -fx-border-image-slice and -fx-border-image-width. There is no shorthand notation for -fx-image-borders at this time.
+				 */
+				-fx-image-borders <-fx-border-image-source> [ <-fx-border-image-insets> || <-fx-border-image-repeat> || <-fx-border-image-slice> || <-fx-border-image-width> ] default: null;
+				/**
+				 * The preferred width of the region
+				 */
+				-fx-pref-width <size> default:-1.0;
+				/**
+				 * The preferred height of the region
+				 */
+				-fx-pref-height <size> default:-1.0;
+				/**
+				 * The min width of the region
+				 */
+				-fx-min-width <size> default:-1.0;
+				/**
+				 * The min height of the region
+				 */
+				-fx-min-height <size> default:-1.0;
+				/**
+				 * The max width of the region
+				 */
+				-fx-max-width <size> default:-1.0;
+				/**
+				 * The max height of the region
+				 */
+				-fx-max-height <size> default:-1.0;
+			}
+			/**
+			 * Base class for layout panes which need to expose the children list as public
+ 			 * so that users of the subclass can freely add/remove children.
+			 */
+			Pane extends Region {
+
+			}
+			/**
+			 * AnchorPane allows the edges of child nodes to be anchored to an offset from
+ 			 * the anchor pane's edges.  If the anchor pane has a border and/or padding set, the
+ 			 * offsets will be measured from the inside edge of those insets.
+			 */
+			AnchorPane extends Pane {
+
+			}
+			/**
+			 * BorderPane lays out children in top, left, right, bottom, and center positions.
+			 */
+			BorderPane extends Pane {
+
+			}
+			/**
+			 * FlowPane lays out its children in a flow that wraps at the flowpane's boundary.
+			 */
+			FlowPane extends Pane {
+				/**
+				 * The amount of horizontal space between each node in a horizontal flowpane
+     			 * or the space between columns in a vertical flowpane.
+				 */
+				-fx-hgap <size> default: 0;
+				/**
+				 * The amount of vertical space between each node in a vertical flowpane
+     			 * or the space between rows in a horizontal flowpane.
+				 */
+				-fx-vgap <size> default: 0;
+				/**
+				 * The overall alignment of the flowpane's content within its width and height.
+				 */
+				-fx-alignment <alignment> default: top-left;
+				/**
+				 * The horizontal alignment of nodes within each column of a vertical flowpane.
+     			 * The property is ignored for horizontal flowpanes.
+				 */
+				-fx-column-halignment [ left | center | right ] default: center;
+				/**
+				 * The vertical alignment of nodes within each row of a horizontal flowpane.
+     			 * If this property is set to VPos.BASELINE, then the flowpane will always
+     			 * resize children to their preferred heights, rather than expanding heights
+     			 * to fill the row height.
+     			 * The property is ignored for vertical flowpanes.
+				 */
+				-fx-row-valignment [ top | center | baseline | bottom ] default: center;
+				/**
+				 * The orientation of this flowpane.
+     			 * A horizontal flowpane lays out children left to right, wrapping at the
+     			 * flowpane's width boundary.   A vertical flowpane lays out children top to
+     			 * bottom, wrapping at the flowpane's height.
+     			 * The default is horizontal.
+				 */
+				-fx-orientation [ horizontal | vertical ] default: horizontal;
+			}
+			/**
+			 * GridPane lays out its children within a flexible grid of rows and columns.
+ 			 * If a border and/or padding is set, then its content will be layed out within
+ 			 * those insets.
+			 */
+			GridPane extends Pane {
+				/**
+				 * The width of the horizontal gaps between columns.
+				 */
+				-fx-hgap <size> default: 0;
+				/**
+				 * The alignment of of the grid within the gridpane's width and height.
+				 */
+				-fx-vgap <size> default: 0;
+				/**
+				 * The alignment of of the grid within the gridpane's width and height.
+				 */
+				-fx-alignment <alignment> default: top-left;
+				/**
+				 * For debug purposes only: controls whether lines are displayed to show the gridpane's rows and columns.
+				 */
+				-fx-grid-lines-visible <boolean> default: false;
+			}
+			/**
+			 * HBox lays out its children in a single horizontal row.
+ 			 * If the hbox has a border and/or padding set, then the contents will be layed
+ 			 * out within those insets.
+			 */
+			HBox extends Pane {
+				/**
+				 * The overall alignment of children within the hbox's width and height.
+     			 * If the vertical alignment value is BASELINE, then children will always be
+     			 * resized to their preferred heights and the fillHeight property will be
+     			 * ignored.
+				 */
+				-fx-spacing <size> default 0;
+				/**
+				 * Whether or not resizable children will be resized to fill the full height of the hbox
+     			 * or be kept to their preferred height and aligned according to the <code>alignment</code>
+     			 * vpos value.   Note that if the hbox vertical alignment is set to BASELINE, then this
+     			 * property will be ignored and children will be resized to their preferred heights.
+				 */
+				-fx-alignment <alignment> default: top-left;
+				/**
+				 * Whether or not resizable children will be resized to fill the full height of the hbox
+     			 * or be kept to their preferred height and aligned according to the <code>alignment</code>
+     			 * vpos value.   Note that if the hbox vertical alignment is set to BASELINE, then this
+     			 * property will be ignored and children will be resized to their preferred heights.
+				 */
+				-fx-fill-height <boolean> default: false;
+			}
+			/**
+			 * StackPane lays out its children in a back-to-front stack.
+			 */
+			StackPane extends Pane {
+				/**
+				 * The default alignment of children within the stackpane's width and height.
+     			 * This may be overridden on individual children by setting the child's
+     			 * alignment constraint.
+				 */
+				-fx-alignment <alignment> default: top-left;
+			}
+			/**
+			 * TilePane lays out its children in a grid of uniformly sized "tiles".
+			 */
+			TilePane extends Pane {
+				/**
+				 * The orientation of this tilepane.
+     			 * A horizontal tilepane lays out children in tiles, left to right, wrapping
+     			 * tiles at the tilepane's width boundary.   A vertical tilepane lays out
+     			 * children in tiles, top to bottom, wrapping at the tilepane's height.
+				 */
+				-fx-orientation [ horizontal | vertical ] default: horizontal;
+				/**
+				 * <p>
+				 * The preferred number of rows for a vertical tilepane.
+     			 * </p>
+     			 * <p>
+     			 * This property is ignored for a horizontal tilepane.
+     			 * </p>
+				 */
+				-fx-pref-rows @INT default: 5;
+				/**
+				 * <p>
+				 * The preferred number of columns for a horizontal tilepane.
+				 * </p>
+				 * <p>
+			     * This property is ignored for a vertical tilepane.
+			     * </p>
+				 */
+				-fx-pref-columns @INT default: 5;
+				/**
+				 * The preferred width of each tile.
+				 */
+				-fx-pref-tile-width <size> default: -1;
+				/**
+				 * The preferred height of each tile.
+				 */
+				-fx-pref-tile-height <size> default:-1;
+				/**
+				 * The amount of horizontal space between each tile in a row.
+				 */
+				-fx-hgap <size> default: 0;
+				/**
+				 * The amount of vertical space between each tile in a column.
+				 */
+				-fx-vgap <size> default: 0;
+				/**
+				 * The overall alignment of the tilepane's content within its width and height.
+				 */
+				-fx-alignment <alignment> default: top-left;
+				/**
+				 * The default alignment of each child within its tile.
+				 */
+				-fx-tile-alignment <alignment> default: center;
+			}
+			/**
+			 * Sets the vertical grow priority for the child when contained by an vbox.
+			 */
+			VBox extends Pane {
+				/**
+				 * The amount of vertical space between each child in the vbox.
+				 */
+				-fx-spacing <size> default: 0;
+				/**
+				 * The overall alignment of children within the vbox's width and height.
+				 */
+				-fx-alignment <alignment> default: top-left;
+				/**
+				 *  Whether or not resizable children will be resized to fill the full width of the vbox
+     			 * or be kept to their preferred width and aligned according to the <code>alignment</code>
+     			 * hpos value.
+				 */
+				-fx-fill-width <boolean> default: true;
+			}
+		}
+		package shape {
+			/**
+			 * The Shape class provides definitions of common properties for
+ 			 * objects that represent some form of geometric shape.
+			 */
+			Shape extends Node {
+				/**
+				 * Defines parameters to fill the interior of an Shape
+     			 * using the settings of the Paint context.
+     			 * The default value is BLACK for all shapes except
+     			 * Line, Polyline, and Path. The default value is null for
+     			 * those shapes.
+				 */
+				-fx-fill <paint> default: BLACK;
+				/**
+				 * Defines whether antialiasing hints are used or not for this Shape.
+				 */
+				-fx-smooth <boolean> default: true;
+				/**
+				 * Defines parameters of a stroke that is drawn around the outline of
+     			 * a Shape using the settings of the specified Paint.
+     			 * The default value is {@code null} for all shapes except
+     			 * Line, Polyline, and Path. The default value is BLACK for
+     			 * those shapes.
+				 */
+				-fx-stroke <paint> default: null;
+				/**
+				 * Defines the direction (inside, centered, or outside) that the strokeWidth
+     			 * is applied to the boundary of the shape.
+				 */
+				-fx-stroke-type [ inside | outside | centered ] default: centered;
+				/**
+				 * Defines the array representing the lengths of the dash segments.
+     			 * Alternate entries in the array represent the user space lengths
+     			 * of the opaque and transparent segments of the dashes.
+     			 * As the pen moves along the outline of the {@code Shape} to be stroked,
+     			 * the user space distance that the pen travels is accumulated.
+     			 * The distance value is used to index into the dash array.
+     			 * The pen is opaque when its current cumulative distance maps
+     			 * to an even element of the dash array and transparent otherwise.
+     			 * An empty strokeDashArray indicates a solid line with no spaces.
+				 */
+				-fx-stroke-dash-array <size> [<size>]+ default: null;
+				/**
+				 * Defines a distance specified in user coordinates that represents
+     			 * an offset into the dashing pattern. In other words, the dash phase
+     			 * defines the point in the dashing pattern that will correspond
+     			 * to the beginning of the stroke.
+				 */
+				-fx-stroke-dash-offset @NUM default: 0;
+				/**
+				 * The end cap style of this Shape as one of the following
+     			 * values that define possible end cap styles:
+     			 * BUTT, StrokeLineCap.ROUND,
+     			 * and  SQUARE.
+				 */
+				-fx-stroke-line-cap [ square | butt | round ] default: square;
+				/**
+				 * Defines the decoration applied where path segments meet.
+     			 * The value must have one of the following values:
+     			 * MITER, BEVEL and ROUND.
+				 */
+				-fx-stroke-line-join [ miter | bevel | round ]  default: miter;
+				/**
+				 * Defines the limit for the MITER line join style.
+     			 * A value of less than 1.0 will be treated as 1.0.
+				 */
+				-fx-stroke-miter-limit @NUM default: 10;
+				/**
+				 * Defines a square pen line width. A value of 0.0 specifies a hairline
+     			 * stroke. A value of less than 0.0 will be treated as 0.0.
+				 */
+				-fx-stroke-width <size> default: 1;
+			}
+			/**
+			 * The Arc class represents a 2D arc object, defined by a center point,
+ 			 * start angle (in degrees), angular extent (length of the arc in degrees),
+ 			 * and an arc type (OPEN, CHORD,
+ 			 * or ROUND).
+			 */
+			Arc extends Shape {
+
+			}
+			/**
+			 * The Circle class creates a new circle
+ 			 * with the specified radius and center location measured in pixels
+			 */
+			Circle extends Shape {
+
+			}
+			/**
+			 * The CubiCurve class defines a cubic B&eacute;zier parametric curve segment
+ 			 * in (x,y) coordinate space. Drawing a curve that intersects both the specified
+ 			 * coordinates (startX, startY) and (endX, enfY), using the
+ 			 * specified points (controlX1, controlY1) and (controlX2, controlY2)
+ 			 * as B&eacute;zier control points.
+			 */
+			CubicCurve extends Shape {
+
+			}
+			/**
+			 * The Ellipse class creates a new ellipse
+ 			 * with the specified size and location in pixels
+			 */
+			Ellipse extends Shape {
+
+			}
+			/**
+			 * This Line represents a line segment in (x,y)
+ 			 * coordinate space.
+			 */
+			Line extends Shape {
+
+			}
+			/**
+			 * The Path class represents a simple shape
+ 			 * and provides facilities required for basic construction
+ 			 * and management of a geometric path.
+			 */
+			Path extends Shape {
+
+			}
+			/**
+			 * Creates a polygon, defined by an array of x,y coordinates. The Polygon
+ 			 * class is similar to the Polyline class, except that the Polyline class
+ 			 * is not automatically closed.
+			 */
+			Polygon extends Shape {
+
+			}
+			/**
+			 * The Quadcurve class defines a quadratic B&eacute;zier parametric curve
+ 			 * segment in (x,y) coordinate space. Drawing a curve that intersects both the
+ 			 * specified coordinates (startX, startY) and (endX, enfY),
+ 			 * using the specified point (controlX, controlY)
+ 			 * as B&eacute;zier control point.
+			 */
+			QuadCurve extends Shape {
+
+			}
+			/**
+			 * The Rectangle class defines a rectangle
+ 			 * with the specified size and location. By default the rectangle
+ 			 * has sharp corners. Rounded corners can be specified using
+ 			 * the arcWidth and arcHeight variables.
+			 */
+			Rectangle extends Shape {
+				/**
+				 * Defines the horizontal diameter of the arc
+     			 * at the four corners of the rectangle.
+				 */
+				-fx-arc-height <size> default: 0;
+				/**
+				 * Defines the vertical diameter of the arc
+     			 * at the four corners of the rectangle.
+				 */
+				-fx-arc-width <size> default: 0;
+			}
+			/**
+			 * The SVGPath class represents a simple shape that is constructed by
+ 			 * parsing SVG path data from a String.
+			 */
+			SVGPath extends Shape {
+
+			}
+		}
+		package text {
+			/**
+			 * <p>
+			 * The Text class defines a node that displays a text.
+ 			 * </p>
+ 			 * <p>
+ 			 * Paragraphs are separated by '\n' and the text is wrapped on
+ 			 * paragraph boundaries.
+ 			 * </p>
+			 */
+			Text extends shape.Shape {
+				/**
+				 * Defines the font of text.
+				 */
+				-fx-font <font> default: DEFAULT;
+				/**
+				 * The string name of the font family. An actual font family name available on the system can be used, or one of the following generic family names can be used:
+				 * <ul>
+				 * <li>'serif' (e.g., Times)</li>
+				 * <li>'sans-serif' (e.g., Helvetica)</li>
+				 * <li>'cursive' (e.g., Zapf-Chancery)</li>
+				 * <li>'fantasy' (e.g., Western)</li>
+				 * <li>'monospace' (e.g., Courier)</li>
+				 */
+				-fx-font-family <font-family> default: null; 	/* INHERITED */
+				/**
+				 *  The size of the font, using the <size> syntax.
+				 */
+				-fx-font-size <font-size> default: null;  		/* INHERITED */
+				/** The font's style */
+				-fx-font-style <font-style> default: null;  	/* INHERITED */
+				/** The font's weight */
+				-fx-font-weight <font-weight> default: null;  	/* INHERITED */
+				/**
+				 * <p>
+				 * Specifies a requested font smoothing type : gray or LCD.
+     			 * </p>
+     			 * <p>
+     			 * The width of the bounding box is defined by the widest row.
+     			 * </p>
+     			 * <p>
+     			 * Note: LCD mode doesn't apply in numerous cases, such as various
+     			 * compositing modes, where effects are applied and very large glyphs.
+     			 * </p>
+				 */
+				-fx-font-smoothing-type [ gray | lcd ] default: gray;
+				/**
+				 * Defines if each line of text should have a line through it.
+				 */
+				-fx-strikethrough <boolean> default: false;
+				/**
+				 * <p>
+				 * Defines horizontal text alignment in the bounding box.
+     			 * </p>
+     			 * <p>
+     			 * The width of the bounding box is defined by the widest row.
+     			 * </p>
+     			 * <p>
+     			 * Note: In the case of a single line of text, where the width of the
+     			 * node is determined by the width of the text, the alignment setting
+     			 * has no effect.
+     			 * </p>
+				 */
+				-fx-text-alignment [ left | center | right | justify ] default: left;
+				/**
+				 * <p>
+				 * Defines the origin of text coordinate system in local coordinates.
+				 * </p>
+				 * <p>
+     			 * Note: in case multiple rows are rendered BASELINE and
+     			 * TOP define the origin of the top row while
+     			 * BOTTOM defines the origin of the bottom row.
+     			 * </p>
+				 */
+				-fx-text-origin [ baseline | top | bottom ]  default: baseline;
+				/**
+				 * Defines if each line of text should have a line below it.
+				 */
+				-fx-underline <boolean> default: false;
+				/**
+				 * Defines how the bounds are calculated
+				 */
+				-fx-bounds-type [ logical | visual | logical_vertical_center ] default: logical;
+			}
+		}
+		package web {
+			/**
+			 * WebView is a Node that manages a WebEngine and displays its content. The associated WebEngine is
+			 * created automatically at construction time and cannot be changed afterwards. WebView handles
+			 * mouse and some keyboard events, and manages scrolling automatically, so there's no need to put it
+			 * into a ScrollPane.
+			 */
+			WebView extends Parent styleclass web-view {
+				/**
+				 * Specifies whether context menu is enabled.
+				 */
+				-fx-context-menu-enabled <boolean> default: true;
+				/**
+				 * Specifies a requested font smoothing type : gray or LCD.
+				 */
+				-fx-font-smoothing-type [ gray | lcd ] default: lcd;
+				/**
+				 * Specifies scale factor applied to font.
+				 */
+				-fx-font-scale @NUM default: 1;
+				/**
+				 * Minimum width property.
+				 */
+				-fx-min-width <size> default: 0;
+				/**
+				 * Minimum height property.
+				 */
+				-fx-min-height <size> default: 0;
+				/**
+				 * Preferred width property.
+				 */
+				-fx-pref-width <size> default: 800;
+				/**
+				 * Preferred height property.
+				 */
+				-fx-pref-height <size> default: 800;
+				/**
+				 * Maximum width property.
+				 */
+				-fx-max-width <size> default: DOUBLE_MAX;
+				/**
+				 * Maximum height property.
+				 */
+				-fx-max-height <size> default: DOUBLE_MAX;
+			}
+		}
+		package control {
+			/**
+			 * Base class for all user interface controls. A "Control" is a node in the
+ 			 * scene graph which can be manipulated by the user. Controls provide
+ 			 * additional variables and behaviors beyond those of Node to support
+ 			 * common user interactions in a manner which is consistent and predictable
+ 			 * for the user.
+			 */
+			Control extends layout.Region {
+				/**
+				 * The class name of the Control's Skin.
+				 */
+        		-fx-skin <string> default: null;
+        	}
+        	/**
+        	 * A Labeled Control is one which has as part of its user interface
+ 			 * a textual content associated with it. For example, a Button displays
+ 			 * text, as does a Label, a Tooltip, and many
+ 			 * other controls.
+        	 */
+        	Labeled extends Control {
+        		/**
+        		 * Specifies how the text and graphic within the Labeled should be
+     			 * aligned when there is empty space within the Labeled.
+        		 */
+        		-fx-alignment [ top-left | top-center | top-right | center-left | center | center-right bottom-left | bottom-center | bottom-right | baseline-left | baseline-center | baseline-right ] default: top-level;
+        		/**
+        		 * <p>
+        		 * Specifies the behavior for lines of text <em>when text is multiline</em>
+        		 * </p>
+     			 * Unlike contentDisplayProperty which affects the graphic and text, this setting
+     			 * only affects multiple lines of text relative to the text bounds.
+        		 */
+        		-fx-text-alignment [ left | center | right | justify ] default: left;
+        		/**
+        		 * Specifies the behavior to use if the text of the Labeled
+     			 * exceeds the available space for rendering the text.
+        		 */
+        		-fx-text-overrun [ center-ellipsis | center-word-ellipsis | clip | ellipsis | leading-ellipsis | leading-word-ellipsis | word-ellipsis ] default: ellipsis;
+        		/**
+        		 * If a run of text exceeds the width of the Labeled, then this variable
+     			 * indicates whether the text should wrap onto another line.
+        		 */
+        		-fx-wrap-text <boolean> default: false;
+        		/**
+        		 * The default font to use for text in the Labeled. If the Label's text is
+     			 * rich text then this font may or may not be used depending on the font
+     			 * information embedded in the rich text, but in any case where a default
+     			 * font is required, this font will be used.
+        		 */
+        		-fx-font <font> default: null;
+        		-fx-font-family <font-family> default: null; 	/* INHERITED */
+				-fx-font-size <font-size> default: null;  		/* INHERITED */
+				-fx-font-style <font-style> default: null;  	/* INHERITED */
+				-fx-font-weight <font-weight> default: null;  	/* INHERITED */
+
+        		/**
+        		 * Whether all text should be underlined.
+        		 */
+        		-fx-underline <boolean> default: false;
+        		/**
+        		 * Image url
+        		 */
+        		-fx-graphic <uri> default: null;
+        		/**
+        		 * Specifies the positioning of the graphic relative to the text.
+        		 */
+        		-fx-content-display [ top | right | bottom | left | center | right | graphic-only | text-only ] default: left;
+        		/**
+        		 * The amount of space between the graphic and text
+        		 */
+        		-fx-graphic-text-gap <size> default: 4;
+        		/**
+        		 * <p>
+        		 * The padding around the Labeled's text and graphic content.
+        		 * </p>
+        		 * <p>
+     			 * By default labelPadding is Insets.EMPTY and cannot be set to null.
+     			 * </p>
+     			 * Subclasses may add nodes outside this padding and inside the Labeled's padding.
+        		 */
+        		-fx-label-padding <size> | <size> <size> <size> <size> default: 0;
+        		/**
+        		 * The Paint used to fill the text.
+        		 */
+        		-fx-text-fill <paint> default: BLACK;
+        		/**
+        		 * Specifies the string to display for the ellipsis when text is truncated.
+     			 *
+     			 * <table border="0" cellpadding="0" cellspacing="0"><tr><th>Examples</th></tr>
+     			 *   <tr class="altColor"><td align="right">"..."</td>        <td>- Default value for most locales</td>
+     			 *   <tr class="rowColor"><td align="right">" . . . "</td>    <td></td>
+     			 *   <tr class="altColor"><td align="right">" [...] "</td>    <td></td>
+     			 *   <tr class="rowColor"><td align="right">"&#92;u2026"</td> <td>- The Unicode ellipsis character '&hellip;'</td>
+     			 *   <tr class="altColor"><td align="right">""</td>           <td>- No ellipsis, just display the truncated string</td>
+     			* </table>
+     			*
+     			* <p>Note that not all fonts support all Unicode characters.</p>
+        		 */
+        		-fx-ellipsis-string <string> default: "...";
+        	}
+        	/**
+        	 * <p>An accordion is a group of {@link TitledPane TitlePanes}.  Only one TitledPane can be opened at
+ 			 * a time.</p>
+        	 */
+        	Accordion extends Control styleclass accordion {
+				substructure Desktop {
+					TitledPane styleclass first-titled-pane
+				}
+			}
+			/**
+			 * Base class for button-like UI Controls, including Hyperlinks, Buttons,
+ 			 * ToggleButtons, CheckBoxes, and RadioButtons. The primary contribution of
+ 			 * ButtonBase is providing a consistent API for handling the concept of button
+ 			 * "arming". In UIs, a button will typically only "fire" if some user gesture
+ 			 * occurs while the button is "armed". For example, a Button may be armed if
+ 			 * the mouse is pressed and the Button is enabled and the mouse is over the
+ 			 * button. In such a situation, if the mouse is then released, then the Button
+ 			 * is "fired", meaning its action takes place.
+			 */
+        	ButtonBase extends Labeled {
+        		/**
+        		 * applies when the armed variable is true
+        		 */
+        		:armed
+        	}
+        	/**
+        	 * Abstract base class for ComboBox-like controls. A ComboBox typically has
+ 			 * a button that, when clicked, will pop up some means of allowing a user
+ 			 * to select one or more values (depending on the implementation). This base
+ 			 * class makes no assumptions about what happens when the show() and
+ 			 * hide() methods are called, however commonly this results in either
+ 			 * a popup or dialog appearing that allows for the user to provide the
+ 			 * required information.
+        	 */
+        	ComboBoxBase extends Control styleclass combo-box-base {
+        		/**
+        		 * applies when the editable variable is true
+        		 */
+        		:editable
+        		/**
+        		 * applies when the showing variable is true
+        		 */
+        		:showing
+        		/**
+        		 * applies when the armed variable is true
+        		 */
+        		:armed
+        		substructure Desktop {
+        			layout.StackPane styleclass arrow-button {
+        				layout.StackPane styleclass arrow
+        			}
+        		}
+        	}
+        	/**
+        	 * A simple button control.  The button control can contain
+ 			 * text and/or a graphic.  A button control has three different modes</p>
+ 			 * <ul>
+ 			 * <li> Normal: A normal push button. </li>
+ 			 * <li> Default: A default Button is the button that receives a keyboard VK_ENTER press, if no other node in the scene consumes it.</li>
+ 			 * <li> Cancel: A Cancel Button is the button that receives a keyboard VK_ESC press, if no other node in the scene consumes it.</li>
+ 			 * </ul>
+        	 */
+        	Button extends ButtonBase styleclass button {
+        		/**
+        		 * applies if this Button receives VK_ESC if the event is not otherwise consumed
+        		 */
+        		:cancel
+        		/**
+        		 * applies if this Button receives VK_ENTER if the event is not otherwise consumed
+        		 */
+        		:default
+        	}
+        	/**
+        	 * <p>
+        	 * The Cell API is used for virtualized controls such as ListView,
+ 			 * TreeView, and TableView.
+ 			 * </p>
+ 			 * A Cell is a Labeled Control, and is used to render a single
+ 			 * "row" inside  a ListView, TreeView or TableView. Cells are also used for each
+ 			 * individual 'cell' inside a TableView (i.e. each row/column intersection). See
+ 			 * the JavaDoc for each control separately for more detail.
+        	 */
+        	Cell extends Labeled styleclass cell {
+        		/**
+        		 * The cell size. For vertical ListView or a TreeView or TableView this is the height, for a horizontal ListView this is the width.
+        		 */
+        		-fx-cell-size <size> default: 15;
+        		/**
+        		 * applies when the empty variable is true
+        		 */
+        		:empty
+        		/**
+        		 * applies when the empty variable is false
+        		 */
+        		:filled
+        		/**
+        		 * applies when the selected variable is true
+        		 */
+        		:selected
+
+        		substructure Desktop {
+        			Labeled styleclass text
+        		}
+        	}
+        	/**
+        	 *  A tri-state selection Control typically skinned as a box with a checkmark or
+ 			 * tick mark when checked. A CheckBox control can be in one of three states:
+ 			 * <ul>
+ 			 *  <li><em>checked</em>: indeterminate == false, checked == true</li>
+ 			 *  <li><em>unchecked</em>: indeterminate == false, checked == false</li>
+ 			 *  <li><em>undefined</em>: indeterminate == true</li>
+ 			 * </ul>
+        	 */
+        	CheckBox extends ButtonBase
+        		styleclass check-box {
+
+        		/**
+        		 * applies when the selected variable is true
+        		 */
+        		:selected
+        		/**
+        		 * applies when the indeterminate variable is false
+        		 */
+        		:determinated
+        		/**
+        		 * applies when the indeterminate variable is true
+        		 */
+        		:indeterminated
+
+				substructure Desktop {
+					layout.Region styleclass box {
+						layout.Region styleclass mark
+					}
+				}
+
+        	}
+        	/**
+        	 * A MenuItem that can be toggled between selected and unselected states.
+ 			 * It is intended that CheckMenuItem be used in conjunction with the
+ 			 * Menu or ContextMenu controls.
+        	 */
+        	CheckMenuItem extends Control styleclass check-menu-item {
+        		/**
+        		 * applies if this item is selected
+        		 */
+        		:selected
+        	}
+        	/**
+        	 * The ChoiceBox is used for presenting the user with a relatively small set of
+ 			 * predefined choices from which they may choose. The ChoiceBox, when "showing",
+ 			 * will display to the user these choices and allow them to pick exactly one
+ 			 * choice. When not showing, the current choice is displayed.
+        	 */
+        	ChoiceBox extends Control styleclass choice-box {
+        		substructure Desktop {
+        			layout.Region styleclass open-button {
+        				layout.Region styleclass arrow
+        			}
+        		}
+        	}
+        	/**
+        	 * ColorPicker control allows the user to select a color from either a standard
+ 			 * palette of colors with a simple one click selection OR define their own custom color.
+        	 */
+        	ColorPicker extends ComboBoxBase styleclass color-picker {
+        		-fx-color-label-visible <boolean> default: true;
+        		substructure Desktop {
+        			Label styleclass color-display-node
+        			layout.StackPane styleclass arrow-button {
+        				layout.StackPane styleclass arrow
+        			}
+        		}
+        	}
+        	/**
+        	 * An implementation of the ComboBoxBase abstract class for the most common
+ 			 * form of ComboBox, where a popup list is shown to users providing them with
+ 			 * a choice that they may select from. For more information around the general
+ 			 * concepts and API of ComboBox, refer to the ComboBoxBase class
+ 			 * documentation.
+        	 */
+        	ComboBox styleclass combo-box  {
+        		substructure Desktop {
+        			/**
+        			 * a ListCell instance used to show the selection in the button area of a non-editable ComboBox
+        			 */
+        			ListCell styleclass list-cell
+        			TextField styleclass text-input
+        			PopupControl styleclass combo-box-popup {
+        				ListView styleclass list-view {
+        					ListCell styleclass list-cell
+        				}
+        			}
+        		}
+        	}
+        	/**
+        	 * An HTML like label which can be a graphic and/or text which responds to rollovers and clicks.
+ 			 * When a hyperlink is clicked/pressed isVisited becomes true.  A Hyperlink behaves
+ 			 * just like a Button.  When a hyperlink is pressed and released
+ 			 * a ActionEvent is sent, and your application can perform some action based on this event.
+        	 */
+        	Hyperlink extends ButtonBase styleclass hyperlink {
+        		/**
+        		 * applies when the visited variable is true
+        		 */
+        		:visited
+
+        		substructure Desktop {
+        			Label styleclass label
+        		}
+        	}
+        	/**
+        	 * An implementation of Cell which contains an index property which maps
+ 			 * into the data model underlying the visualization. Despite this,
+ 			 * IndexedCell should not be instantiated directly in a cell factory
+ 			 * (refer to Cell for more details on what a cell factory is).
+ 			 * Instead of creating IndexedCell directly, you should
+ 			 * instead make use of the control-specific cell implementations (for example,
+ 			 * ListCell, TreeCell) TableRow and TableCell).
+ 			 * For more information about using and customizing cells, refer to the
+ 			 * {@link Cell} API documentation.
+        	 */
+        	IndexedCell extends Cell styleclass indexed-cell {
+        		/**
+        		 * applies if this cell's index is even
+        		 */
+        		:even
+        		/**
+        		 * applies if this cell's index is odd
+        		 */
+        		 :odd
+        	}
+        	/**
+        	 * Label is a non-editable text control. A Label is useful for displaying
+ 			 * text that is required to fit within a specific space, and thus may need
+ 			 * to use an ellipsis or truncation to size the string to fit. Labels also are
+ 			 * useful in that they can have mnemonics which, if used, will send focus to
+ 			 * the Control listed as the target of the <code>labelFor</code> property.
+        	 */
+        	Label extends Labeled styleclass label {
+
+        	}
+        	/**
+        	 * The Cell type used within ListView instances. In addition
+ 			 * to the API defined on Cell and IndexedCell, the ListCell is more
+ 			 * tightly bound to a ListView, allowing for better support of editing events,
+ 			 * etc.
+        	 */
+        	ListCell extends IndexedCell styleclass list-cell {
+
+        	}
+        	/**
+        	 *  A ListView displays a horizontal or vertical list of items from which the
+ 			 * user may select, or with which the user may interact. A ListView is able to
+ 			 * have its generic type set to represent the type of data in the backing model.
+ 			 * Doing this has the benefit of making various methods in the ListView, as well
+ 			 * as the supporting classes (mentioned below), type-safe. In addition, making
+ 			 * use of the generic supports substantially simplifies development of applications
+ 			 * making use of ListView, as all modern IDEs are able to auto-complete far
+ 			 * more successfully with the additional type information.
+        	 */
+        	ListView extends Control styleclass list-view {
+        		/**
+        		 * The orientation of the ListView - this can either be horizontal
+     			 * or vertical.
+        		 */
+        		-fx-orientation [ horizontal | vertical ] default: horizontal;
+        		/**
+        		 * applies if this ListView is horizontal
+        		 */
+				:horizontal
+				/**
+				 * applies if this ListView is vertical
+				 */
+				:vertical
+        	}
+        	/**
+        	 * A popup menu of actionable items which is displayed to the user only upon request.
+ 			 * When a menu is visible, in most use cases, the user can select one menu item
+ 			 * before the menu goes back to its hidden state. This means the menu is a good
+ 			 * place to put important functionality that does not necessarily need to be
+ 			 * visible at all times to the user.
+        	 */
+        	Menu extends Control styleclass menu {
+        		/**
+        		 * applies if this Menu is showing
+        		 */
+        		:showing
+        	}
+        	/**
+        	 * A MenuBar control traditionally is placed at the very top of the user
+ 			 * interface, and embedded within it are Menu Menus.
+        	 */
+        	MenuBar extends Control styleclass menu-bar {
+        		/**
+        		 * Use the system menu bar if the current platform supports it.
+        		 */
+        		-fx-use-system-menu-bar <boolean> default: false;
+        		substructure Desktop {
+        			layout.HBox styleclass container {
+        				MenuButton styleclass menu
+        			}
+        		}
+        	}
+        	/**
+        	 * MenuButton is a button which, when clicked or pressed, will show a
+ 			 * ContextMenu
+        	 */
+        	MenuButton extends ButtonBase styleclass menu-button {
+        		/**
+        		 * applies if the openVertically variable is true
+        		 */
+        		:openvertically
+        		/**
+        		 * applies if the showing variable is true
+        		 */
+        		:showing
+        	}
+        	/**
+        	 * MenuItem is intended to be used in conjunction with Menu to provide
+ 			 * options to users. MenuItem serves as the base class for the bulk of JavaFX menus
+ 			 * API.
+        	 */
+        	MenuItem extends Control styleclass menu-item {
+        		//TODO on desktops the Item is a Button!!!!
+        		-fx-text-fill <paint> default: black;
+        		substructure Desktop {
+        			Label styleclass label
+        			layout.StackPane styleclass right-container {
+        				layout.Region styleclass arrow
+        			}
+        		}
+        	}
+        	/**
+        	 * A Pagination control is used for navigation between pages of a single content,
+ 			 * which has been divided into smaller parts.
+        	 */
+        	Pagination extends Control styleclass pagination {
+        		/**
+        		 * maximum number of page indicators.
+        		 */
+        		-fx-max-page-indicator-count @NUM default: 10;
+        		/**
+        		 * page arrows visible
+        		 */
+        		-fx-arrows-visible <boolean> default: true;
+        		/**
+        		 * tooltips visible
+        		 */
+        		-fx-tooltip-visible <boolean> default: true;
+        		/**
+        		 * page information visible
+        		 */
+        		-fx-page-information-visible <boolean> default: true;
+        		/**
+        		 * page alignment
+        		 */
+        		-fx-page-information-alignment [top | bottom | left | right] default: true;
+        		-fx-arrow-button-gap <size> default: 4;
+
+        		substructure Desktop {
+        			layout.StackPane styleclass page
+        			layout.StackPane styleclass pagination-control {
+        				Button styleclass leftArrowButton {
+        					layout.StackPane styleclass leftArrow
+        				}
+        				Button styleclass rightArrowButton {
+        					layout.StackPane styleclass rightArrow
+        				}
+        				ToggleButton styleclass bullet-button
+        				ToggleButton styleclass number-button
+        				ToggleButton styleclass page-information
+        			}
+        		}
+        	}
+        	/**
+        	 * Text field that masks entered characters.
+        	 */
+        	PasswordField extends TextField styleclass password-field {
+
+        	}
+        	/**
+        	 * An extension of PopupWindow
+        	 */
+        	PopupControl extends Control {
+
+        	}
+        	/**
+        	 * A specialization of the ProgressIndicator which is represented as a
+ 			 * horizontal bar.
+        	 */
+        	ProgressBar extends ProgressIndicator styleclass progress-bar {
+        		-fx-indeterminate-bar-length @NUM default: 60;
+        		-fx-indeterminate-bar-escape <boolean> default: true;
+        		-fx-indeterminate-bar-flip <boolean> default: true;
+        		-fx-indeterminate-bar-animation-time @NUM default: 2.0;
+        		-fx-indeterminate-segment-count @INT default: 8;
+        		-fx-spin-enabled <boolean> default: false;
+        		substructure Desktop {
+        			layout.StackPane styleclass track {
+        				layout.Region styleclass bar
+        			}
+        		}
+        	}
+        	/**
+        	 * A circular control which is used for indicating progress, either
+ 			 * infinite (aka indeterminate) or finite.
+        	 */
+        	ProgressIndicator extends Control styleclass progress-indicator {
+        		// -fx-skin ????
+        		/**
+        		 * fill of the progressbar
+        		 */
+        		-fx-progress-color <paint> default: dodgerblue;
+        		/**
+        		 * applies if the indeterminate variable is false
+        		 */
+        		:determinate
+        		/**
+        		 * applies if the indeterminate variable is true
+        		 */
+        		:indetermindate
+
+        		substructure Desktop {
+        			layout.StackPane styleclass indicator
+        			layout.StackPane styleclass progress
+        			text.Text styleclass percentage
+        			layout.StackPane styleclass tick
+        		}
+
+        	}
+        	/**
+        	 * RadioButtons create a series of items where only one item can be
+ 			 * selected.  RadioButtons are a specialized ToggleButton.
+ 			 * When a RadioButton is pressed and released a javafx.event.ActionEvent
+ 			 * is sent. Your application can perform some action based
+ 			 * on this event by implementing an javafx.event.EventHandler to
+ 			 * process the javafx.event.ActionEvent.
+        	 */
+        	RadioButton extends ToggleButton styleclass radio-button {
+        		substructure Desktop {
+        			layout.Region styleclass radio {
+        				layout.Region styleclass dot
+        			}
+        			Label styleclass label
+        		}
+        	}
+        	/**
+        	 * A RadioMenuItem is a MenuItem that can be toggled (it uses
+ 			 * the Toggle mixin).
+        	 */
+        	RadioMenuItem extends Control {
+        		/**
+        		 * applies if this item is selected
+        		 */
+        		:selected
+        	}
+        	/**
+        	 * Either a horizontal or vertical bar with increment and decrement buttons and
+ 		     * a "thumb" with which the user can interact.
+        	 */
+        	ScrollBar extends Control styleclass scroll-bar {
+        		/**
+        		 * he orientation of the ScrollBar
+        		 */
+        		-fx-orientation [ horizontal | vertical ] horizontal;
+        		/**
+        		 * The amount by which to adjust the scrollbar if the track of the bar is
+     			 * clicked.
+        		 */
+        		-fx-block-increment @NUM default: 10;
+        		/**
+        		 * The amount by which to adjust the ScrollBar when the increment or
+     			 * decrement methods are called.
+        		 */
+        		-fx-unit-increment @NUM default: 1;
+        		/**
+        		 * applies if this ScrollBar is vertical
+        		 */
+        		:vertical
+        		/**
+        		 * applies if this ScrollBar is horizontal
+        		 */
+        		:horizontal
+
+        		substructure Desktop {
+        			layout.StackPane styleclass decrement-button {
+        				layout.StackPane styleclass decrement-arrow
+        			}
+        			layout.StackPane styleclass track
+        			layout.StackPane styleclass thumb
+        			layout.StackPane styleclass increment-button {
+        				layout.StackPane styleclass increment-arrow
+        			}
+        		}
+        	}
+        	/**
+        	 * A Control that provides a scrolled, clipped viewport of its contents. It
+ 			 * allows the user to scroll the content around either directly (panning) or
+ 			 * by using scroll bars. The ScrollPane allows specification of the scroll
+ 			 * bar policy, which determines when scroll bars are displayed: always, never,
+ 			 * or only when they are needed. The scroll bar policy can be specified
+ 			 * independently for the horizontal and vertical scroll bars.
+        	 */
+        	ScrollPane extends Control styleclass scroll-pane {
+        		/**
+        		 * If true and if the contained node is a Resizable, then the node will be
+     			 * kept resized to match the width of the ScrollPane's viewport. If the
+     			 * contained node is not a Resizable, this value is ignored.
+        		 */
+        		-fx-fit-to-width <boolean> default: false;
+        		/**
+        		 * If true and if the contained node is a Resizable, then the node will be
+     			 * kept resized to match the height of the ScrollPane's viewport. If the
+     			 * contained node is not a Resizable, this value is ignored.
+        		 */
+        		-fx-fit-to-height <boolean> default: false;
+        		/**
+        		 * Specifies whether the user should be able to pan the viewport by using
+     			 * the mouse. If mouse events reach the ScrollPane (that is, if mouse
+     			 * events are not blocked by the contained node or one of its children)
+     			 * then pannable is consulted to determine if the events should be
+     			 * used for panning.
+        		 */
+        		-fx-pannable <boolean> default: false;
+        		/**
+        		 * Specifies the policy for showing the horizontal scroll bar.
+        		 */
+        		-fx-hbar-policy [ never | always | as-needed ] default: always;
+        		/**
+        		 * Specifies the policy for showing the vertical scroll bar.
+        		 */
+        		-fx-vbar-policy [ never | always | as-needed ] default: always;
+        		/**
+        		 * applies if this ScrollPane is pannable
+        		 */
+        		:pannable
+        		/**
+        		 * applies if this ScrollPane is fitToWidth
+        		 */
+        		:fitToWidth
+        		/**
+        		 * applies if this ScrollPane is fitToHeight
+        		 */
+        		:fitToHeight
+        		substructure Desktop {
+        			ScrollBar styleclass scroll-bar//:vertical
+        			ScrollBar styleclass scroll-bar//:horizontal
+        			layout.StackPane styleclass corner
+        		}
+        	}
+        	/**
+        	 *  A horizontal or vertical separator line
+        	 */
+        	Separator extends Control styleclass separator {
+        		/**
+        		 * The orientation
+        		 */
+        		-fx-orientation [ horizontal | vertical ] default:horizontal;
+        		/**
+        		 * For vertical separators, specifies the horizontal position of the
+     			 * separator line within the separator control's space. Ignored for
+     			 * horizontal separators.
+        		 */
+        		-fx-halignment [ left | center | right ] default: center;
+        		/**
+        		 * For horizontal separators, specifies the vertical alignment of the
+     			 * separator line within the separator control's space. Ignored for
+     			 * vertical separators.
+        		 */
+        		-fx-valignment [ top | center | baseline | bottom ] default: center;
+        		/**
+        		 * applies if this Separator is horizontal
+        		 */
+        		:horizontal
+        		/**
+        		 * applies if this Separator is vertical
+        		 */
+        		:vertical
+        		substructure Desktop {
+        			layout.Region styleclass line
+        		}
+        	}
+        	/**
+        	 * The Slider Control is used to display a continuous or discrete range of
+ 			 * valid numeric choices and allows the user to interact with the control. It is
+ 			 * typically represented visually as having a "track" and a "knob" or "thumb"
+ 			 * which is dragged within the track. The Slider can optionally show tick marks
+ 			 * and labels indicating the different slider position values.
+        	 */
+        	Slider extends Control styleclass slider {
+        		/**
+        		 * The orientation
+        		 */
+        		-fx-orientation [ horizontal | vertical ] default: horizontal;
+        		/**
+        		 *  Indicates that the labels for tick marks should be shown
+        		 */
+        		-fx-show-tick-labels <boolean> default: false;
+        		/**
+        		 * Specifies whether the Skin implementation should show tick marks.
+        		 */
+        		-fx-show-tick-marks <boolean> default: false;
+        		/**
+        		 * he unit distance between major tick marks.
+        		 */
+        		-fx-major-tick-unit @NUM default: 25;
+        		/**
+        		 * The number of minor ticks to place between any two major ticks.
+        		 */
+        		-fx-minor-tick-count @NUM default: 3;
+
+				/**
+				 * Indicates whether the value of the Slider should always
+     			 * be aligned with the tick marks. This is honored even if the tick marks
+     			 * are not shown.
+				 */
+				-fx-snap-to-ticks <boolean> default: false;
+				/**
+				 * The amount by which to adjust the slider if the track of the slider is
+     			 * clicked.
+				 */
+				-fx-block-increment @INT default: 10;
+				/**
+				 * applies if this Slider is horizontal
+				 */
+				:horizontal
+				/**
+				 * applies if this Slider is vertical
+				 */
+				:vertical
+
+        		substructure Desktop {
+        			charts.NumberAxis styleclass axis
+        			layout.Region styleclass track
+        			layout.Region styleclass thumb
+        		}
+        	}
+        	/**
+        	 * The SplitMenuButton, like the MenuButton is closely associated with
+ 			 * the concept of selecting a MenuItem from a menu
+        	 */
+        	SplitMenuButton extends ButtonBase styleclass split-menu-button {
+
+        	}
+        	/**
+        	 * A control that has two or more sides, each separated by a divider, which can be
+ 			 * dragged by the user to give more space to one of the sides, resulting in
+ 			 * the other side shrinking by an equal amount.
+        	 */
+        	SplitPane extends Control styleclass split-pane {
+        		/**
+        		 * The orientation
+        		 */
+        		-fx-orientation [ horizontal | vertical ] default: horizontal;
+        		/**
+        		 * applies if this Slider is horizontal
+        		 */
+        		:horizontal
+        		/**
+        		 * applies if this Slider is vertical
+        		 */
+        		:vertical
+
+        		substructure Desktop {
+        			layout.StackPane styleclass split-pane-divider {
+        				layout.StackPane styleclass vertical-grabber
+        				layout.StackPane styleclass horizontal-grabber
+        			}
+        		}
+        	}
+        	/**
+        	 * A control that allows switching between a group of Tabs
+        	 */
+        	TabPane extends Control styleclass tab-pane {
+        		/**
+        		 * The minimum width of the tabs in the TabPane.  This can be used to limit
+     			 * the length of text in tabs to prevent truncation.  Setting the min equal
+     			 * to the max will fix the width of the tab.  By default the min equals to the max.
+        		 */
+        		-fx-tab-min-width @INT default: 0;
+        		/**
+        		 * Specifies the maximum width of a tab.  This can be used to limit
+     			 * the length of text in tabs.  If the tab text is longer than the maximum
+     			 * width the text will be truncated.  Setting the max equal
+     			 * to the min will fix the width of the tab.  By default the min equals to the max
+        		 */
+        		-fx-tab-max-width @INT default: DOUBLE_MAX;
+        		/**
+        		 * The minimum height of the tabs in the TabPane.  This can be used to limit
+     			 * the height in tabs. Setting the min equal to the max will fix the height
+     			 * of the tab.  By default the min equals to the max.
+        		 */
+        		-fx-tab-min-height @INT default: 0;
+        		/**
+        		 * The maximum height if the tabs in the TabPane.  This can be used to limit
+     			 * the height in tabs. Setting the max equal to the min will fix the height
+     			 * of the tab.  By default the min equals to the max.
+        		 */
+        		-fx-tab-max-height @INT default: DOUBLE_MAX;
+        		/**
+        		 * Animation when the tab is added
+        		 */
+        		-fx-open-tab-animation [ none | grow ] default: none;
+        		/**
+        		 * Animation when the tab is removed
+        		 */
+        		-fx-close-tab-animation [ none | grow ] default: none;
+        		/**
+        		 * applies if the side is top
+        		 */
+        		:top
+        		/**
+        		 * applies if the side is right
+        		 */
+        		:right
+        		/**
+        		 * applies if the side is bottom
+        		 */
+        		:bottom
+        		/**
+        		 * applies if the side is left
+        		 */
+        		:left
+        		substructure Desktop {
+        			layout.StackPane styleclass tab-header-area {
+        				layout.StackPane styleclass headers-region
+        				layout.StackPane styleclass tab-header-background
+        				layout.StackPane styleclass control-buttons-tab {
+        					layout.Pane styleclass tab-down-button {
+        						layout.StackPane styleclass arrow
+        					}
+        				}
+        				Tab styleclass tab {
+        					Label styleclass tab-label
+        					layout.StackPane styleclass tab-close-button
+        				}
+        			}
+        			layout.StackPane styleclass tab-content-area
+        		}
+        	}
+        	/**
+        	 * A tab in a TabPane
+        	 */
+        	Tab {}
+        	/**
+        	 * The TableView control is designed to visualize an unlimited number of rows
+ 			 * of data, broken out into columns.
+        	 */
+        	TableView extends Control styleclass table-view {
+        		/**
+        		 * The table column header size.
+        		 */
+        		-fx-size <size> default: 20;
+        		/**
+        		 * applies if this TableView's selection model is cell selection
+        		 */
+        		:cell-selection
+        		/**
+        		 * applies if this TableView's selection model is row selection
+        		 */
+        		:row-selection
+
+        		substructure Desktop {
+        			layout.Region styleclass column-resize-line
+        			layout.Region styleclass column-overlay
+        			layout.StackPane styleclass placeholder
+        			layout.StackPane styleclass column-header-background {
+        				layout.Region styleclass nested-column-header {
+        					layout.Region styleclass column-header
+        				}
+        				layout.Region styleclass filler
+        				layout.StackPane styleclass show-hide-columns-button {
+        					layout.StackPane styleclass show-hide-column-image
+        				}
+        				layout.StackPane styleclass column-drag-header {
+        					Label styleclass label
+        				}
+        			}
+        		}
+        	}
+        	/**
+        	 * Text input component that allows a user to enter multiple lines of
+ 			 * plain text.
+        	 */
+        	TextArea extends TextInputControl styleclass text-area {
+        		-fx-pref-column-count @INT default:40;
+        		substructure Desktop {
+        			ScrollPane styleclass scroll-pane {
+        				layout.Region styleclass content
+        			}
+        		}
+        	}
+        	/**
+        	 * Base class for text input controls.
+        	 */
+        	TextInputControl extends Control {
+        		-fx-font <font> default: null;
+        		-fx-font-family <font-family> default: null; 	/* INHERITED */
+				-fx-font-size <font-size> default: null;  		/* INHERITED */
+				-fx-font-style <font-style> default: null;  	/* INHERITED */
+				-fx-font-weight <font-weight> default: null;  	/* INHERITED */
+        		-fx-text-fill <paint> default: black;
+        		-fx-prompt-text-fill <paint> default: gray;
+        		-fx-highlight-fill <paint> default: dodgerblue;
+        		-fx-highlight-text-fill <paint> default: white;
+        		-fx-display-caret <boolean> default: true;
+        		/**
+        		 * applies if this TextInputControl is not editable
+        		 */
+        		:readonly
+        	}
+        	/**
+        	 * Text input component that allows a user to enter a single line of
+ 			 * unformatted text.
+        	 */
+        	TextField extends TextInputControl styleclass text-field {
+        		/**
+        		 * Specifies how the text should be aligned when there is empty
+     			 * space within the TextField.
+        		 */
+        		-fx-alignment [
+        			top-left | top-center | top-right | center-left |
+        			center | center-right | bottom-left | bottom-center | bottom-right | baseline-left | baseline-center | baseline-right
+        		] default: center-left;
+        		-fx-pref-column-count @INT default: 12;
+        	}
+        	/**
+        	 * A TitledPane is a panel with a title that can be opened and closed.
+        	 */
+        	TitledPane extends Labeled styleclass titled-pane {
+        		/**
+        		 * Specifies how the TitledPane should open and close.
+        		 */
+        		-fx-animated <boolean> default:true;
+        		/**
+        		 * Specifies if the TitledPane can be collapsed.
+        		 */
+        		-fx-collapsible <boolean> default:true;
+        		/**
+        		 * applies if this TitledPane is expanded
+        		 */
+        		:expanded
+        		/**
+        		 * applies if this TitledPane is collapsed
+        		 */
+        		:collapsed
+        		substructure Desktop {
+        			layout.HBox styleclass title {
+        				Label styleclass text
+        				layout.StackPane styleclass arrow-button {
+        					layout.StackPane styleclass arrow
+        				}
+        			}
+        			layout.StackPane styleclass content
+        		}
+        	}
+        	/**
+        	 * A ToggleButton is a specialized control which has the ability to be
+ 			 * selected.
+        	 */
+        	ToggleButton extends ButtonBase styleclass toggle-button {
+        		/**
+        		 * applies if this ToggleButton is selected
+        		 */
+        		:selected
+        	}
+        	/**
+        	 * A ToolBar is a control which displays items horizontally
+ 			 * or vertically.
+        	 */
+        	ToolBar extends Control styleclass tool-bar {
+        		/**
+        		 * The orientation
+        		 */
+        		-fx-orientation [ horizontal | vertical ] default: horizontal;
+        		-fx-spacing <size> default 0;
+        		-fx-alignment <alignment> default: top-left;
+        		/**
+        		 * applies if this ToolBar is horizontal
+        		 */
+        		:horizontal
+        		/**
+        		 * applies if this ToolBar is vertical
+        		 */
+        		:vertical
+        		substructure Desktop {
+        			layout.StackPane styleclass tool-bar-overflow-button {
+        				layout.StackPane styleclass arrow
+        			}
+        		}
+        	}
+        	/**
+        	 * Tooltips are common UI elements which are typically used for showing
+ 			 * additional information about a Control when the Control is hovered over by
+ 			 * the mouse
+        	 */
+        	Tooltip extends PopupControl styleclass tooltip {
+        		/**
+        		 * Specifies the behavior for lines of text <em>when text is multiline</em>.
+        		 */
+        		-fx-text-alignment [ left | center | right | justify ] default: left;
+        		/**
+        		 * Specifies the behavior to use if the text of the {@code Tooltip}
+     			 * exceeds the available space for rendering the text.
+        		 */
+        		-fx-text-overrun [ center-ellipsis | center-word-ellipsis | clip | ellipsis | leading-ellipsis | leading-word-ellipsis | word-ellipsis ] default: ellipsis;
+        		/**
+        		 * If a run of text exceeds the width of the Tooltip, then this variable
+     			 * indicates whether the text should wrap onto another line.
+        		 */
+        		-fx-wrap-text <boolean> default: false;
+        		/**
+        		 * Image url
+        		 */
+        		-fx-graphic <uri> default: null;
+        		/**
+        		 * Specifies the positioning of the graphic relative to the text.
+        		 */
+        		-fx-content-display [ top | right | bottom | left | center | right | graphic-only | text-only ] default: left;
+        		/**
+        		 * The amount of space between the graphic and text
+        		 */
+        		-fx-graphic-text-gap <size> default: 4;
+        		/**
+        		 * The default font to use for text in the Tooltip.
+        		 */
+        		-fx-font <font> default: null;
+        		-fx-font-family <font-family> default: null; 	/* INHERITED */
+				-fx-font-size <font-size> default: null;  		/* INHERITED */
+				-fx-font-style <font-style> default: null;  	/* INHERITED */
+				-fx-font-weight <font-weight> default: null;  	/* INHERITED */
+				//TODO At runtime the tip is represented as a label so it inherits ALL attributes
+				//     from Label
+				-fx-text-fill <paint> default: null;
+        		substructure Desktop {
+        			Label styleclass label
+        			layout.StackPane styleclass page-corner
+        		}
+        	}
+        	/**
+        	 * The Cell type used with the TreeView control.
+        	 */
+        	TreeCell extends IndexedCell styleclass tree-cell {
+        		/**
+        		 * The amout of space to multiply by the treeItem.level to get the left margin
+        		 */
+        		-fx-indent <size> default: 10;
+        		/**
+        		 * applies if this cell is expanded
+        		 */
+        		:expanded
+        		/**
+        		 * applies if this cell is not expanded
+        		 */
+        		:collapsed
+        	}
+        	/**
+        	 * The TreeView control provides a view on to a tree root (of type
+ 			 * TreeItem).
+        	 */
+        	TreeView extends Control styleclass tree-view {
+
+        	}
+		}
+		package charts {
+			/**
+			 * AreaChart - Plots the area between the line that connects the data points and
+ 			 * the 0 line on the Y axis.
+			 */
+	    	AreaChart extends XYChart {
+
+	    	}
+	    	/**
+	    	 * A chart that plots bars indicating data values for a category. The bars can be vertical or horizontal depending on
+ 			 * which axis is a category axis.
+	    	 */
+	    	BarChart extends XYChart {
+	    		/**
+	    		 * gap between bars
+	    		 */
+	    		-fx-bar-gap @NUM default: 4;
+	    		/**
+	    		 * The gap to leave between bars in separate categories
+	    		 */
+	    		-fx-category-gap @NUM default: 10;
+	    	}
+	    	/**
+	    	 * Chart type that plots bubbles for the data points in a series. The extra value property of Data is used to represent
+ 			 * the radius of the bubble it should be a java.lang.Number.
+	    	 */
+	    	BubbleChart extends XYChart {
+
+	    	}
+	    	/**
+	    	 * Base class for all charts. It has 3 parts the title, legend and chartContent. The chart content is populated by the
+ 			 * specific subclass of Chart.
+	    	 */
+	    	Chart extends layout.Region {
+	    		/**
+	    		 * the side of the chart where the legend should be displayed
+	    		 */
+	    		-fx-legend-side [top|left|right|bottom] default: bottom;
+	    		/**
+	    		 * When true the chart will display a legend if the chart implementation supports a legend.
+	    		 */
+	    		-fx-legend-visible <boolean> default:true;
+	    		/**
+	    		 * The side of the chart where the title is displayed
+	    		 */
+	    		-fx-title-side [top|left|right|bottom] default: top;
+	    	}
+	    	/**
+	    	 * Line Chart plots a line connecting the data points in a series. The data points
+ 			 * themselves can be represented by symbols optionally. Line charts are usually used
+ 			 * to view data trends over time or category.
+	    	 */
+	    	LineChart extends XYChart {
+	    		/**
+	    		 * Indicates whether symbols for data points will be created or not.
+	    		 */
+	    		-fx-create-symbols <boolean> default: true;
+	    	}
+	    	/**
+	    	 * Chart type that plots symbols for the data points in a series.
+	    	 */
+	    	ScatterChart extends XYChart {
+
+	    	}
+	    	/**
+	    	 * Displays a PieChart. The chart content is populated by pie slices based on
+ 			 * data set on the PieChart.
+	    	 */
+	    	PieChart extends Chart {
+	    		/**
+	    		 * When true we start placing slices clockwise from the startAngle
+	    		 */
+	    		-fx-clockwise <boolean> default: true;
+	    		/**
+	    		 * When true pie slice labels are drawn
+	    		 */
+	    		-fx-pie-label-visible <boolean> default: true;
+	    		/**
+	    		 * The length of the line from the outside of the pie to the slice labels.
+	    		 */
+	    		-fx-label-line-length <size> default: 20;
+	    		/**
+	    		 * The angle to start the first pie slice at
+	    		 */
+	    		-fx-start-angle @NUM default: 0;
+
+	    		substructure Desktop {
+	    			/** Where <i> is the index of the data and <j> is the series’ color index.
+	    			 * If the data value is negative, the "negative" style class is added.
+	    			 */
+	    			Node styleclass chart-pie data[i] default-color[j]
+	    			shape.Path styleclass chart-pie-label-line
+	    			text.Text styleclass chart-pie-label
+
+	    			// TODO find out what a LegendItem is -> seems that it is missing from oracles css docs
+	    			// /** Each item in the legend has the style class "pie-legend-symbol" plus the style class of the corresponding data item */
+	    			// LegendItem styleclass pie-legend-symbol
+	    		}
+	    	}
+	    	/**
+	    	 * Chart base class for all 2 axis charts. It is responsible for drawing the two
+ 			 * axes and the plot content. It contains a list of all content in the plot and
+ 			 * implementations of XYChart can add nodes to this list that need to be rendered.
+	    	 */
+	    	XYChart extends Chart {
+	    		/**
+	    		 *  If true then alternative vertical columns will have fills
+	    		 */
+	    		-fx-alternative-column-fill-visible <boolean> default: true;
+	    		/**
+	    		 * If true then alternative horizontal rows will have fills
+	    		 */
+	    		-fx-alternative-row-fill-visible <boolean> default: true;
+	    		/**
+	    		 * True if horizontal grid lines should be drawn
+	    		 */
+	    		-fx-horizontal-grid-lines-visible <boolean> default: true;
+	    		/**
+	    		 * If this is true and the horizontal axis has both positive and negative values then a additional axis line
+     			 * will be drawn at the zero point
+	    		 */
+	    		-fx-horizontal-zero-line-visible <boolean> default: true;
+	    		/**
+	    		 * True if vertical grid lines should be drawn
+	    		 */
+	    		-fx-vertical-grid-lines-visible <boolean> default: true;
+	    		/**
+	    		 * If this is true and the vertical axis has both positive and negative values then a additional axis line
+     			 * will be drawn at the zero point
+	    		 */
+	    		-fx-vertical-zero-line-visible <boolean> default: true;
+
+	    		substructure Desktop {
+	    			Group styleclass plot-content
+	    			layout.Region styleclass chart-plot-background
+	    			shape.Path styleclass chart-alternative-column-fill
+	    			shape.Path styleclass chart-alternative-row-fill
+	    			shape.Path styleclass chart-vertical-grid-lines
+	    			shape.Path styleclass chart-horizontal-grid-lines
+	    			shape.Line styleclass chart-vertical-zero-line
+	    			shape.Line styleclass chart-horizontal-zero-line
+	    		}
+	    	}
+	    	/**
+	    	 * Base class for all axes in JavaFX that represents an axis drawn on a chart area.
+	    	 */
+	    	Axis extends layout.Region styleclass axis {
+	    		/**
+	    		 * The side of the plot which this axis is being drawn on
+	    		 */
+	    		-fx-side 	[top|left|right|bottom] default: null;
+	    		/**
+	    		 * The length of tick mark lines
+	    		 */
+				-fx-tick-length <size> default: 8;
+				/**
+				 * The font for all tick labels
+				 */
+				-fx-tick-label-font <font> default: 8;
+				-fx-tick-label-font-family <font-family> default: system; 	/* INHERITED */
+				-fx-tick-label-font-size <font-size> default: 8;  			/* INHERITED */
+				-fx-tick-label-font-style <font-style> default: null;  		/* INHERITED */
+				-fx-tick-label-font-weight <font-weight> default: null;  	/* INHERITED */
+
+				/**
+				 * The fill for all tick labels
+				 */
+				-fx-tick-label-fill <paint> default: 8;
+				/**
+				 * The gap between tick labels and the tick mark lines
+				 */
+				-fx-tick-label-gap <size> default: 8;
+				/**
+				 * true if tick marks should be displayed
+				 */
+				-fx-tick-mark-visible <boolean> default: true;
+				/**
+				 * true if tick mark labels should be displayed
+				 */
+				-fx-tick-labels-visible <boolean> default: true;
+
+				substructure Desktop {
+					text.Text styleclass axis-label
+					shape.Path styleclass axis-tick-mark
+				}
+	    	}
+	    	/**
+	    	 * A axis who's data is defined as Numbers. It can also draw minor
+ 			 * tick-marks between the major ones.
+	    	 */
+	    	ValueAxis extends Axis styleclass axis {
+	    		/**
+	    		 * The length of minor tick mark lines. Set to 0 to not display minor tick marks.
+	    		 */
+	    		-fx-minor-tick-length <size> default: 5;
+	    		/**
+	    		 * The number of minor tick divisions to be displayed between each major tick mark.
+     			 * The number of actual minor tick marks will be one less than this.
+	    		 */
+				-fx-minor-tick-count <size> default: 5;
+				/**
+				 * true if minor tick marks should be displayed
+				 */
+				-fx-minor-tick-visible <boolean> default: true;
+
+				substructure Desktop {
+					shape.Path styleclass axis-minor-tick-mark
+				}
+	    	}
+	    	/**
+	    	 * A axis class that plots a range of numbers with major tick marks every "tickUnit". You can use any Number type with
+ 			 * this axis, Long, Double, BigDecimal etc.
+	    	 */
+	    	NumberAxis extends ValueAxis styleclass axis {
+	    		/**
+	    		 * The value between each major tick mark in data units.
+	    		 */
+	    		-fx-tick-unit @NUM default: 5;
+	    	}
+	    	/**
+	    	 * A axis implementation that will works on string categories where each
+ 			 * value as a unique category(tick mark) along the axis.
+	    	 */
+	    	CategoryAxis extends Axis styleclass axis {
+	    		/**
+	    		 * The margin between the axis start and the first tick-mark
+	    		 */
+	    		-fx-start-margin @NUM default: 5;
+	    		/**
+	    		 * The margin between the axis start and the first tick-mark
+	    		 */
+				-fx-end-margin @NUM default: 5;
+				/**
+				 * If this is true then half the space between ticks is left at the start and end
+				 */
+				-fx-gap-start-and-end <boolean> default: true;
+	    	}
+	    	/**
+	    	 * A chart legend that displays a list of items with symbols in a box
+	    	 */
+	    	Legend extends layout.Region styleclass chart-legend {
+
+	    		substructure Desktop {
+	    			control.Label styleclass chart-legend-item
+	    			Node styleclass chart-legend-item-symbol
+	    		}
+	    	}
+		}
+	}
+}

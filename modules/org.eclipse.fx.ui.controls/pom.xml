@@ -27,5 +27,11 @@
 			<artifactId>org.eclipse.fx.ui.panes</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.rt</groupId>
+			<artifactId>org.eclipse.fx.css.jfx8</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 </project>
