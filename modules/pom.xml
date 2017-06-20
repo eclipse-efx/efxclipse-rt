@@ -22,6 +22,7 @@
 		<module>org.eclipse.fx.css.jfx8</module>
 		<module>org.eclipse.fx.core.log4j</module>
 		<module>org.eclipse.fx.core.p2</module>
+		<module>org.eclipse.fx.core.junit</module>
 	</modules>
 
 	<repositories>
