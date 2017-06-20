@@ -35,6 +35,8 @@
 		<!-- module>org.eclipse.fx.json.schema</module -->
 		<module>javax.annotation.jre</module>
 		<module>javax.xml.jre</module>
+		<module>org.eclipse.fx.ui.services</module>
+		<!-- module>org.eclipse.fx.ui.di.interopt</module -->
 	</modules>
 
 	<repositories>
