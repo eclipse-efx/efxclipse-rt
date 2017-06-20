@@ -51,9 +51,9 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 	@NonNull
 	protected WidgetState state = WidgetState.IN_SETUP;
 
-	private WPropertyChangeHandler<? extends WWidget<M>> propertyChangeHandler;
+	private WPropertyChangeHandler propertyChangeHandler;
 
-	private Set<WPropertyChangeEvent<@NonNull WWidget<M>>> currentPropertyChanges = new HashSet<>();
+	private Set<WPropertyChangeEvent<?>> currentPropertyChanges = new HashSet<>();
 
 	/**
 	 * @return the widget
@@ -201,7 +201,7 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 	 * @return <code>true</code> if property is currently changeing
 	 */
 	protected boolean isPropertyChangeInProgress(@NonNull String propertyName) {
-		for( WPropertyChangeEvent<@NonNull WWidget<M>> e : this.currentPropertyChanges ) {
+		for( WPropertyChangeEvent<?> e : this.currentPropertyChanges ) {
 			if( propertyName.equals(e.propertyname) ) {
 				return true;
 			}
@@ -219,7 +219,7 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 	 */
 	protected final void fireChange(@NonNull String propertyName, @Nullable Object newValue) {
 		if (this.propertyChangeHandler != null) {
-			WPropertyChangeEvent<@NonNull WWidget<M>> e = new WPropertyChangeEvent<@NonNull WWidget<M>>(this, propertyName, newValue);
+			WPropertyChangeEvent<@NonNull WWidget<?>> e = new WPropertyChangeEvent<@NonNull WWidget<?>>(this, propertyName, newValue);
 			try {
 				this.currentPropertyChanges.add(e);
 				this.propertyChangeHandler.propertyObjectChanged(e);
