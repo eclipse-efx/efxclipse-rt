@@ -33,6 +33,7 @@
 		<module>org.eclipse.fx.ui.dialogs</module>
 		<module>org.eclipse.fx.ui.animation</module>
 		<!-- module>org.eclipse.fx.json.schema</module -->
+		<module>javax.annotation.jre</module>
 	</modules>
 
 	<repositories>
