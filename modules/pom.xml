@@ -39,6 +39,7 @@
 		<!-- module>org.eclipse.fx.ui.di.interopt</module -->
 		<module>org.eclipse.fx.ui.keybindings</module>
 		<module>org.eclipse.fx.ui.keybindings.e4</module>
+		<module>org.eclipse.fx.ui.theme</module>
 	</modules>
 
 	<repositories>
