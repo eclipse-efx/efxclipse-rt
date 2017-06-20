@@ -49,6 +49,9 @@
 		<module>org.eclipse.fx.ui.workbench.renderers.base</module>
 		<module>org.eclipse.fx.ui.workbench.renderers.fx</module>
 		<module>org.eclipse.fx.ui.workbench.renderers.fx.nl</module>
+		
+		<module>org.eclipse.fx.text</module>
+		<module>org.eclipse.fx.text.compat</module>
 	</modules>
 
 	<repositories>
