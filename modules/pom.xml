@@ -28,6 +28,7 @@
 		<module>org.eclipse.fx.core.slf4j</module>
 		<module>org.eclipse.fx.emf.edit.ui</module>
 		<module>org.eclipse.fx.osgi</module>
+		<module>org.eclipse.fx.formats.svg</module>
 	</modules>
 
 	<repositories>
