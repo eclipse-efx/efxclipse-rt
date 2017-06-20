@@ -27,6 +27,7 @@
 		<module>org.eclipse.fx.ui.di</module>
 		<module>org.eclipse.fx.core.slf4j</module>
 		<module>org.eclipse.fx.emf.edit.ui</module>
+		<module>org.eclipse.fx.osgi</module>
 	</modules>
 
 	<repositories>
