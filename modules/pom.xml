@@ -32,6 +32,7 @@
 		<module>org.eclipse.fx.formats.svg</module>
 		<module>org.eclipse.fx.ui.databinding</module>
 		<module>org.eclipse.fx.ui.dialogs</module>
+		<module>org.eclipse.fx.ui.dialogs.nl</module>
 		<module>org.eclipse.fx.ui.animation</module>
 		<!-- module>org.eclipse.fx.json.schema</module -->
 		<module>javax.annotation.jre</module>
@@ -42,6 +43,7 @@
 		<module>org.eclipse.fx.ui.keybindings.e4</module>
 		<module>org.eclipse.fx.ui.theme</module>
 		<module>org.eclipse.fx.ui.keybindings.generic</module>
+		
 	</modules>
 
 	<repositories>
