@@ -71,7 +71,7 @@ public class EventProcessor {
 	 * @param <R>
 	 *            the renderer type
 	 */
-	public static <C extends MUIElement, M extends MElementContainer<C>, R extends BaseRenderer<M, ?> & ChildrenHandler<M, C>> void attachChildProcessor(IEventBroker eventBroker, final R renderer) {
+	public static <C extends MUIElement, M extends MElementContainer<C>, R extends BaseRenderer</* javac bug M*/?, ?> & ChildrenHandler<M, C>> void attachChildProcessor(IEventBroker eventBroker, final R renderer) {
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, new EventHandler() {
 
 			@SuppressWarnings({ "unchecked" })
