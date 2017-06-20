@@ -30,6 +30,7 @@
 		<module>org.eclipse.fx.osgi</module>
 		<module>org.eclipse.fx.formats.svg</module>
 		<module>org.eclipse.fx.ui.databinding</module>
+		<module>org.eclipse.fx.ui.dialogs</module>
 	</modules>
 
 	<repositories>
