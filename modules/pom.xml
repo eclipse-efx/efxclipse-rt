@@ -18,6 +18,7 @@
 		<module>org.eclipse.fx.core.guice</module>
 		<module>org.eclipse.fx.ui.panes</module>
 		<module>org.eclipse.fx.ui.controls</module>
+		<module>org.eclipse.fx.ui.controls.nl</module>
 		<module>org.eclipse.fx.emf.databinding</module>
 		<module>org.eclipse.fx.css.jfx8</module>
 		<module>org.eclipse.fx.core.log4j</module>
