@@ -25,6 +25,7 @@
 		<module>org.eclipse.fx.core.junit</module>
 		<module>org.eclipse.fx.osgi.util</module>
 		<module>org.eclipse.fx.ui.di</module>
+		<module>org.eclipse.fx.core.slf4j</module>
 	</modules>
 
 	<repositories>
