@@ -45,6 +45,8 @@
 		<module>org.eclipse.fx.ui.keybindings.generic</module>
 		<module>org.eclipse.fx.ui.workbench.services</module>
 		<module>org.eclipse.fx.ui.workbench.base</module>
+		<module>org.eclipse.fx.ui.workbench.fx</module>
+		<module>org.eclipse.fx.ui.workbench.renderers.base</module>
 	</modules>
 
 	<repositories>
