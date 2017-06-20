@@ -52,6 +52,7 @@
 		
 		<module>org.eclipse.fx.text</module>
 		<module>org.eclipse.fx.text.compat</module>
+		<module>org.eclipse.fx.text.ui</module>
 	</modules>
 
 	<repositories>
