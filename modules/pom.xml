@@ -37,6 +37,7 @@
 		<module>javax.xml.jre</module>
 		<module>org.eclipse.fx.ui.services</module>
 		<!-- module>org.eclipse.fx.ui.di.interopt</module -->
+		<module>org.eclipse.fx.ui.keybindings</module>
 	</modules>
 
 	<repositories>
