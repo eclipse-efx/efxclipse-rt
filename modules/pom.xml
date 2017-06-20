@@ -23,6 +23,8 @@
 		<module>org.eclipse.fx.core.log4j</module>
 		<module>org.eclipse.fx.core.p2</module>
 		<module>org.eclipse.fx.core.junit</module>
+		<module>org.eclipse.fx.osgi.util</module>
+		<module>org.eclipse.fx.ui.di</module>
 	</modules>
 
 	<repositories>
