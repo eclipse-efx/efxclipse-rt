@@ -1,1 +1,0 @@
-API extracted/ported/copied from from JFace & e4
