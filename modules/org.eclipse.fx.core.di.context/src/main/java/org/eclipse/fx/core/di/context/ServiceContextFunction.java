@@ -37,7 +37,7 @@ public abstract class ServiceContextFunction<S> extends ContextFunction {
 	 * @param properties
 	 *            the properties
 	 */
-	protected void registerService(S service, Map<String, Object> properties) {
+	protected void _registerService(S service, Map<String, Object> properties) {
 		this.registry.registerObject(getOSGiServiceRank(properties), service);
 	}
 
@@ -47,7 +47,7 @@ public abstract class ServiceContextFunction<S> extends ContextFunction {
 	 * @param service
 	 *            the service
 	 */
-	protected void unregisterService(S service) {
+	protected void _unregisterService(S service) {
 		this.registry.unregisterObject(service);
 	}
 }

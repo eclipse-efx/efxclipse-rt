@@ -16,13 +16,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class AnnotationModelContextFunction extends InputBasedContextFunction<IAnnotationModel, AnnotationModelTypeProvider> {
 
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
-	@Override
 	protected void registerService(AnnotationModelTypeProvider service, Map<String, Object> properties) {
-		super.registerService(service, properties);
+		super._registerService(service, properties);
 	}
 
-	@Override
 	protected void unregisterService(AnnotationModelTypeProvider service) {
-		super.unregisterService(service);
+		super._unregisterService(service);
 	}
 }

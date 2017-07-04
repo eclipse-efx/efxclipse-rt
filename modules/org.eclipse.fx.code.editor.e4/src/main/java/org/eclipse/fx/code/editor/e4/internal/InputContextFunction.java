@@ -25,11 +25,11 @@ public class InputContextFunction extends TypeProviderContextFunction<String,Inp
 
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
 	public void registerService(InputTypeProvider service, java.util.Map<String,Object> properties) {
-		super.registerService(service, properties);
+		super._registerService(service, properties);
 	}
 
 	public void unregisterService(InputTypeProvider service) {
-		super.unregisterService(service);
+		super._unregisterService(service);
 	}
 
 	@Override

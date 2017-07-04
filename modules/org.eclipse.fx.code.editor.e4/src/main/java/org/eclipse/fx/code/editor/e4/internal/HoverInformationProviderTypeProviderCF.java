@@ -16,14 +16,12 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.code.editor.services.HoverInformationProvider"})
 public class HoverInformationProviderTypeProviderCF extends InputBasedContextFunction<HoverInformationProvider, HoverInformationProviderTypeProvider> {
 
-	@Override
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
 	public void registerService(HoverInformationProviderTypeProvider service, Map<String, Object> properties) {
-		super.registerService(service, properties);
+		super._registerService(service, properties);
 	}
 
-	@Override
 	public void unregisterService(HoverInformationProviderTypeProvider service) {
-		super.unregisterService(service);
+		super._unregisterService(service);
 	}
 }

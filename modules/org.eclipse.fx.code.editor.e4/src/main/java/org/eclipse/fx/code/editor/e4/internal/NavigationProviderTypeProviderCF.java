@@ -16,14 +16,12 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(service=IContextFunction.class, property={"service.context.key=org.eclipse.fx.code.editor.services.NavigationProvider"})
 public class NavigationProviderTypeProviderCF extends InputBasedContextFunction<NavigationProvider, NavigationProviderTypeProvider> {
 
-	@Override
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE, policy=ReferencePolicy.DYNAMIC, policyOption=ReferencePolicyOption.GREEDY)
 	public void registerService(NavigationProviderTypeProvider service, Map<String, Object> properties) {
-		super.registerService(service, properties);
+		super._registerService(service, properties);
 	}
 
-	@Override
 	public void unregisterService(NavigationProviderTypeProvider service) {
-		super.unregisterService(service);
+		super._unregisterService(service);
 	}
 }
