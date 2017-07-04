@@ -14,24 +14,23 @@ import java.util.Map;
 
 import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.fx.code.editor.e4.InputBasedContextFunction;
-import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
-import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenterTypeProvider;
+import org.eclipse.fx.code.editor.fx.services.PresentationReconcilerTypeProvider;
+import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
-@SuppressWarnings("restriction")
-@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter"})
-public class CompletionProposalPresenterTypeProviderContextFunction extends InputBasedContextFunction<CompletionProposalPresenter, CompletionProposalPresenterTypeProvider> {
+@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.text.ui.presentation.PresentationReconciler"})
+public class PresentationReconcilerContextFunction extends InputBasedContextFunction<PresentationReconciler, PresentationReconcilerTypeProvider> {
 
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
-	public void registerService(CompletionProposalPresenterTypeProvider service, Map<String, Object> properties) {
-		super.registerService(service, properties);
+	public void registerService(PresentationReconcilerTypeProvider service, Map<String, Object> properties) {
+		super._registerService(service, properties);
 	}
 
-	public void unregisterService(CompletionProposalPresenterTypeProvider service) {
-		super.unregisterService(service);
+	public void unregisterService(PresentationReconcilerTypeProvider service) {
+		super._unregisterService(service);
 	}
 }

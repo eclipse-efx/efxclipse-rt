@@ -25,11 +25,11 @@ public class EditorContextMenuProviderTypeProviderContextFunction extends InputB
 
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
 	public void registerService(EditorContextMenuProviderTypeProvider service, Map<String, Object> properties) {
-		super.registerService(service, properties);
+		super._registerService(service, properties);
 	}
 
 	public void unregisterService(EditorContextMenuProviderTypeProvider service) {
-		super.unregisterService(service);
+		super._unregisterService(service);
 	}
 
 	@Override

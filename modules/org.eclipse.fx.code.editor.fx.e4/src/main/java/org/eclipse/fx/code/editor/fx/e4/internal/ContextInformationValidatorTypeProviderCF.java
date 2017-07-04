@@ -17,10 +17,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class ContextInformationValidatorTypeProviderCF extends InputBasedContextFunction<IContextInformationValidator, ContextInformationValidatorTypeProvider> {
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
 	public void registerService(ContextInformationValidatorTypeProvider service, Map<String, Object> properties) {
-		super.registerService(service, properties);
+		super._registerService(service, properties);
 	}
 
 	public void unregisterService(ContextInformationValidatorTypeProvider service) {
-		super.unregisterService(service);
+		super._unregisterService(service);
 	}
 }

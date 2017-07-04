@@ -50,14 +50,12 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOpenerTypeProvider> {
 
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
-	@Override
 	public void registerService(EditorOpenerTypeProvider service, Map<String, Object> properties) {
-		super.registerService(service, properties);
+		super._registerService(service, properties);
 	}
 
-	@Override
 	public void unregisterService(EditorOpenerTypeProvider service) {
-		super.unregisterService(service);
+		super._unregisterService(service);
 	}
 
 	@Override

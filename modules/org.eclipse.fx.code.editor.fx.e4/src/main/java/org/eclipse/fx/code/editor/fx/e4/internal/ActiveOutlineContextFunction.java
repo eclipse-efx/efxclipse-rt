@@ -34,14 +34,12 @@ public class ActiveOutlineContextFunction extends ServiceContextFunction<Outline
 	private Map<Input<?>, Outline> outlineCache = new WeakHashMap<>();
 
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
-	@Override
 	protected void registerService(OutlineTypeProviderService service, Map<String, Object> properties) {
-		super.registerService(service, properties);
+		super._registerService(service, properties);
 	}
 
-	@Override
 	protected void unregisterService(OutlineTypeProviderService service) {
-		super.unregisterService(service);
+		super._unregisterService(service);
 	}
 
 	@Override
