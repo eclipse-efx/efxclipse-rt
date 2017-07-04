@@ -55,6 +55,7 @@
 		<module>org.eclipse.fx.text.ui</module>
 		<module>org.eclipse.fx.code.editor</module>
 		<module>org.eclipse.fx.code.editor.configuration</module>
+		<module>org.eclipse.fx.code.editor.fx</module>
 	</modules>
 
 	<repositories>
