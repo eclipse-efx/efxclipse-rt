@@ -17,13 +17,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(service=IContextFunction.class,property="service.context.key=org.eclipse.fx.code.editor.configuration.text.DynamicScannerRuleCalculator")
 public class DynamicScannerRuleCalculatorCF extends InputBasedContextFunction<DynamicScannerRuleCalculator,DynamicScannerRuleCalculatorTypeProvider> {
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
-	@Override
 	protected void registerService(DynamicScannerRuleCalculatorTypeProvider service, Map<String, Object> properties) {
-		super.registerService(service, properties);
+		super._registerService(service, properties);
 	}
 
-	@Override
 	protected void unregisterService(DynamicScannerRuleCalculatorTypeProvider service) {
-		super.unregisterService(service);
+		super._unregisterService(service);
 	}
 }
