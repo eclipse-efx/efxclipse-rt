@@ -25,9 +25,6 @@
 		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/runtime-nightly</download-publish-path>
 		<eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</eclipse-repo.url>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/efxclipse/org.eclipse.efxclipse.git</tycho.scmUrl>
-		<!-- 4.6.0 http://download.eclipse.org/eclipse/updates/4.6/R-4.6-201606061100/ -->
-		<!-- 4.7M5 http://download.eclipse.org/eclipse/updates/4.7milestones/ -->
-		<platform-repository>http://download.eclipse.org/eclipse/updates/4.6/R-4.6.2-201611241400/</platform-repository>
 	</properties>
 
 	<modules>
@@ -126,9 +123,9 @@
 	<repositories>
 		<repository>
 			<!-- Important changing this requires to publish the platform bundles to maven -->
-			<id>neon</id>
+			<id>oxygen.0</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/eclipse/updates/4.6/R-4.6.2-201611241400/</url>
+			<url>http://download.eclipse.org/eclipse/updates/4.7/R-4.7-201706120950/</url>
 		</repository>
 		<!-- repository>
 			<id>orbit-antlr</id>
@@ -138,7 +135,7 @@
 		<repository>
 			<id>orbit</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/</url>
+			<url>http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository/</url>
 		</repository>
 		<repository>
 			<id>xtext</id>
