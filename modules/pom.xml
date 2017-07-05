@@ -65,6 +65,7 @@
 		<module>org.eclipse.fx.code.editor.configuration.text.fx</module>
 		<module>org.eclipse.fx.code.editor.langs.contrib</module>
 		<module>org.eclipse.fx.code.editor.langs.themes</module>
+		<module>org.eclipse.fx.code.editor.asciidoc</module>
 	</modules>
 
 	<repositories>
