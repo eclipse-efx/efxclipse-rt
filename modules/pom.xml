@@ -60,6 +60,7 @@
 		<module>org.eclipse.fx.code.editor.fx.e4</module>
 		<module>org.eclipse.fx.code.editor.fx.themes</module>
 		<module>org.eclipse.fx.code.editor.configuration.text</module>
+		<module>org.eclipse.fx.code.editor.langs</module>
 	</modules>
 
 	<repositories>
