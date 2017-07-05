@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.eclipse.fx.osgi.util
 Bundle-Version: 3.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.inject;version="1.0.0",
+ org.eclipse.core.runtime.preferences;version="3.3.0",
  org.eclipse.equinox.app;version="1.1.0";resolution:=optional,
  org.eclipse.fx.core;version="3.0.0",
  org.eclipse.fx.core.databinding;version="3.0.0";resolution:=optional,
@@ -12,6 +13,7 @@ Import-Package: javax.inject;version="1.0.0",
  org.osgi.framework.wiring;version="1.0.0",
  org.osgi.service.component.annotations;version="1.2.0";resolution:=optional,
  org.osgi.service.event;version="1.3.0";resolution:=optional,
+ org.osgi.service.prefs;version="1.1.1",
  org.osgi.service.url;version="1.0.0"
 Export-Package: org.eclipse.fx.osgi.util;version="3.0.0"
 Bundle-Vendor: %Bundle-Vendor
@@ -19,4 +21,5 @@ Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolu
  org.eclipse.core.databinding.observable;bundle-version="1.4.1";resolution:=optional,
  org.eclipse.equinox.common;bundle-version="3.7.0"
 Bundle-ActivationPolicy: lazy
-Service-Component: OSGI-INF/services/org.eclipse.fx.osgi.util.internal.FileLocatorURLResolver.xml
+Service-Component: OSGI-INF/services/org.eclipse.fx.osgi.util.internal.FileLocatorURLResolver.xml,
+ OSGI-INF/services/org.eclipse.fx.osgi.util.internal.MementoStoreImpl.xml
