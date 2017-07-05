@@ -1,0 +1,22 @@
+Import-Package: \
+	!javafx.*, \
+	*
+-runee: JavaSE-1.8
+-exportcontents: org.eclipse.fx.ui.controls, \
+ org.eclipse.fx.ui.controls.dialog, \
+ org.eclipse.fx.ui.controls.dnd, \
+ org.eclipse.fx.ui.controls.filesystem, \
+ org.eclipse.fx.ui.controls.form, \
+ org.eclipse.fx.ui.controls.image, \
+ org.eclipse.fx.ui.controls.list, \
+ org.eclipse.fx.ui.controls.markers, \
+ org.eclipse.fx.ui.controls.media, \
+ org.eclipse.fx.ui.controls.paint, \
+ org.eclipse.fx.ui.controls.sceneviewer, \
+ org.eclipse.fx.ui.controls.stage, \
+ org.eclipse.fx.ui.controls.styledtext, \
+ org.eclipse.fx.ui.controls.styledtext.model, \
+ org.eclipse.fx.ui.controls.table, \
+ org.eclipse.fx.ui.controls.tabpane, \
+ org.eclipse.fx.ui.controls.tree, \
+ org.eclipse.fx.ui.controls.vectorgraphics
