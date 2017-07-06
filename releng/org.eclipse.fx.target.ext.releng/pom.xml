@@ -3,14 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<name>e(fx)clipse build</name>
+	<name>e(fx)clipse external bundle build</name>
 
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
 
 	<groupId>org.eclipse.fx</groupId>
-	<artifactId>releng</artifactId>
+	<artifactId>ext.releng</artifactId>
 	<version>3.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
@@ -21,120 +21,47 @@
 		<mockito-version>1.8.4</mockito-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform-version>[3.7,3.8)</platform-version>
-		<efx_shared_runtime>http://download.eclipse.org/efxclipse/runtime-shared-nightly/site/</efx_shared_runtime>
-		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/runtime-nightly</download-publish-path>
-		<eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</eclipse-repo.url>
-		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/efxclipse/org.eclipse.efxclipse.git</tycho.scmUrl>
+		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/targets-nightly</download-publish-path>
 	</properties>
 
 	<modules>
-		<!-- Core Modules -->
-		<module>../../bundles/runtime/org.eclipse.fx.osgi.util</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.log4j</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.slf4j</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.fxml</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.guice</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.databinding</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.p2</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.di</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.di.context</module>
-
-		<!-- UI Modules -->
-		<module>../../bundles/runtime/org.eclipse.fx.ui.databinding</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.di</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.di.interopt</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.animation</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.panes</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.controls</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.controls.nl</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.services</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.dialogs</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.dialogs.nl</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.mobile</module>
-		<!-- EMF -->
-		<module>../../bundles/runtime/org.eclipse.fx.emf.edit.ui</module>
-		<module>../../bundles/runtime/org.eclipse.fx.emf.databinding</module>
-
-		<!-- e4 -->
-		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings.generic</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings.e4</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.base</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.base</module>
-
-		<module>../../bundles/runtime/org.eclipse.fx.ui.theme</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.fx</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.fx</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.fx.nl</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.services</module>
-
-		<!-- Format Conversion -->
-		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
-
-		<module>../../bundles/runtime/javax.annotation.jre</module>
-		<module>../../bundles/runtime/javax.xml.jre</module>
-
-		<!-- Code -->
-		<module>../../bundles/code/org.eclipse.fx.text</module>
-		<module>../../bundles/code/org.eclipse.fx.text.compat</module>
-		<module>../../bundles/code/org.eclipse.fx.text.ui</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.configuration</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.configuration.text</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.configuration.text.e4</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.configuration.text.fx</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.e4</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.fx</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.fx.e4</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.fx.themes</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.langs</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.langs.contrib</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.langs.themes</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.asciidoc</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.asciidoc.fx</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.asciidoc.fx.e4</module>
-
-		<module>../../bundles/runtime/org.eclipse.fx.core.junit</module>
-
-		<!-- Features -->
-		<module>../runtime/org.eclipse.fx.core.feature</module>
-		<module>../runtime/org.eclipse.fx.runtime.feature</module>
-		<module>../runtime/org.eclipse.fx.runtime.e4fx.feature</module>
-		<module>../runtime/org.eclipse.fx.runtime.e4fx.p2.feature</module>
-		<module>../runtime/org.eclipse.fx.nl.feature</module>
-		<module>../runtime/org.eclipse.fx.target.feature</module>
-		<module>../runtime/org.eclipse.fx.target.rcp.feature</module>
-		<module>../runtime/org.eclipse.fx.target.rcp4.feature</module>
-
-		<module>../code/org.eclipse.fx.code.langs.feature</module>
-		<module>../code/org.eclipse.fx.code.base.feature</module>
-		<module>../code/org.eclipse.fx.code.target.feature</module>
-
-		<module>../org.eclipse.fx.updatesite</module>
-		<!--  module>../org.eclipse.fx.runtime.doc</module-->
-
-		<!-- Tests -->
-		<module>../../bundles/runtime/org.eclipse.fx.core.di.context.tests</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.tests</module>
+		<module>../runtime/org.eclipse.fx.target.ext.feature</module>
+		<module>../runtime/org.eclipse.fx..slf4j.target.feature</module>
+		<module>../code/org.eclipse.fx.code.target.ext.feature</module>
+		<module>../org.eclipse.fx.target.ext.updatesite</module>
 	</modules>
 
 	<repositories>
 		<repository>
-			<!-- Only needed for SWT deps -->
+			<!-- Important changing this requires to publish the platform bundles to maven -->
 			<id>oxygen.0</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/eclipse/updates/4.7/R-4.7-201706120950/</url>
 		</repository>
 		<repository>
-			<id>base.target</id>
+			<id>orbit</id>
 			<layout>p2</layout>
-			<url>file:/Users/tomschindl/Documents/e-workspaces/efxclipse-master-rt/git/efxclipse-rt/releng/org.eclipse.fx.target.ext.updatesite/target/site</url>
+			<url>http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository/</url>
 		</repository>
 		<repository>
-			<id>efx-shared-runtime</id>
+			<id>xtext</id>
 			<layout>p2</layout>
-			<url>${efx_shared_runtime}</url>
+			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.12.0</url>
+		</repository>
+		<repository>
+			<id>mwe</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.1</url>
+		</repository>
+		<repository>
+			<id>xpand</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/xpand</url>
+		</repository>
+		<repository>
+			<id>emf</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/modeling/emf/emf/updates/2.13</url>
 		</repository>
 	</repositories>
 
