@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Memento;
 import org.eclipse.fx.core.ObjectSerializer;
+import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.observable.FXObservableUtil;
+import org.eclipse.fx.core.observable.FXObservableUtil.Instance;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.scene.control.TableColumn;
@@ -52,10 +55,12 @@ public class TableUtil {
 	}
 
 	private static final double DEFAULT = Double.NEGATIVE_INFINITY;
-	
+
 	private static final int VISIBLE_DEFAULT = 0;
 	private static final int VISIBLE_YES = 1;
 	private static final int VISIBLE_NO = 2;
+	
+	private static final String AUTOCAPTURE_KEY = "autoCapture"; //$NON-NLS-1$
 
 	/**
 	 * Restore the state of the {@link TableView} and use the
@@ -105,11 +110,11 @@ public class TableUtil {
 					c.setPrefWidth(val);
 				}
 			}
-			
-			if( isPropertySet(properties, TableView_Properties.COLUMN_VISIBLE ) ) {
+
+			if (isPropertySet(properties, TableView_Properties.COLUMN_VISIBLE)) {
 				int val = m.get(key(key, TableView_Properties.COLUMN_VISIBLE), VISIBLE_DEFAULT);
-				if( val != VISIBLE_DEFAULT ) {
-					c.setVisible( val == VISIBLE_YES );
+				if (val != VISIBLE_DEFAULT) {
+					c.setVisible(val == VISIBLE_YES);
 				}
 			}
 		}
@@ -177,16 +182,16 @@ public class TableUtil {
 
 		for (TableColumn<S, ?> c : view.getColumns()) {
 			String key = nodeToIdMap.get(c);
-			if( key == null ) {
+			if (key == null) {
 				continue;
 			}
-			
+
 			if (isPropertySet(properties, TableView_Properties.COLUMN_WIDTH)) {
-				m.put( key(key, TableView_Properties.COLUMN_WIDTH), c.getWidth());
+				m.put(key(key, TableView_Properties.COLUMN_WIDTH), c.getWidth());
 			}
-			
-			if( isPropertySet(properties, TableView_Properties.COLUMN_VISIBLE) ) {
-				m.put( key(key, TableView_Properties.COLUMN_VISIBLE), c.isVisible() ? VISIBLE_YES : VISIBLE_NO );
+
+			if (isPropertySet(properties, TableView_Properties.COLUMN_VISIBLE)) {
+				m.put(key(key, TableView_Properties.COLUMN_VISIBLE), c.isVisible() ? VISIBLE_YES : VISIBLE_NO);
 			}
 		}
 		if (isPropertySet(properties, TableView_Properties.COLUMN_ORDER)) {
@@ -194,11 +199,88 @@ public class TableUtil {
 		}
 		return view;
 	}
-	
+
+	/**
+	 * Enabled automatic capturing of property changes and use the
+	 * {@link TableColumn#getId()} for the lookup
+	 * 
+	 * @param view
+	 *            the view
+	 * @param m
+	 *            the memento
+	 * @param properties
+	 *            list of properties to restore or empty to restore all possible
+	 *            properties
+	 * @return subscription object who can be disposed to end the capturing
+	 */
+	public static <S> Subscription enableAutomaticCaptureing(TableView<S> view, Memento m, TableView_Properties... properties) {
+		return enableAutomaticCaptureing(view, m, TableColumn::getId, properties);
+	}
+
+	/**
+	 * Enabled automatic capturing of property changes
+	 * 
+	 * @param view
+	 *            the view
+	 * @param m
+	 *            the memento
+	 * @param columnKeyProvider
+	 *            function used to compute the id for a column
+	 * @param properties
+	 *            list of properties to restore or empty to restore all possible
+	 *            properties
+	 * @return subscription object who can be disposed to end the capturing
+	 */
+	public static <S> Subscription enableAutomaticCaptureing(TableView<S> view, Memento m, Function<TableColumn<S, ?>, String> columnKeyProvider, TableView_Properties... properties) {
+		if( view.getProperties().containsKey(AUTOCAPTURE_KEY) ) {
+			((FXObservableUtil.Instance)view.getProperties().get(AUTOCAPTURE_KEY)).dispose();
+		}
+		FXObservableUtil.Instance i = new FXObservableUtil.Instance();
+		for (TableColumn<S, ?> c : view.getColumns()) {
+			captureColumnState(i, m, c, columnKeyProvider, properties);
+		}
+
+		if (isPropertySet(properties, TableView_Properties.COLUMN_ORDER)) {
+			i.onChange(view.getColumns(), c -> {
+				while (c.next()) {
+					c.getAddedSubList().forEach(cc -> captureColumnState(i, m, cc, columnKeyProvider, properties));
+					c.getRemoved().forEach(cc -> {
+						if( cc == null ) {
+							return;
+						}
+						Subscription.disposeIfExists((Subscription) cc.getProperties().get(TableView_Properties.COLUMN_WIDTH));
+						Subscription.disposeIfExists((Subscription) cc.getProperties().get(TableView_Properties.COLUMN_VISIBLE));
+					});
+				}
+
+				m.put("column_order", view.getColumns().stream().map(columnKeyProvider).collect(Collectors.toList()), ObjectSerializer.JAXB_SERIALIZER); //$NON-NLS-1$
+			});
+		}
+
+		view.getProperties().put(AUTOCAPTURE_KEY, i);
+		return () -> {
+			FXObservableUtil.Instance r = (Instance) view.getProperties().get(AUTOCAPTURE_KEY);
+			if( r == i ) {
+				view.getProperties().remove(AUTOCAPTURE_KEY);
+				i.dispose();
+			}
+		};
+	}
+
+	private static <S> void captureColumnState(FXObservableUtil.Instance i, Memento m, TableColumn<S, ?> c, Function<TableColumn<S, ?>, String> columnKeyProvider, TableView_Properties... properties) {
+		if (isPropertySet(properties, TableView_Properties.COLUMN_WIDTH)) {
+			c.getProperties().put(TableView_Properties.COLUMN_WIDTH, i.onChange(c.widthProperty(), v -> m.put(key(columnKeyProvider.apply(c), TableView_Properties.COLUMN_WIDTH), v.doubleValue())));
+		}
+
+		if (isPropertySet(properties, TableView_Properties.COLUMN_VISIBLE)) {
+			c.getProperties().put(TableView_Properties.COLUMN_VISIBLE, i.onChange(c.visibleProperty(), v -> m.put(key(columnKeyProvider.apply(c), TableView_Properties.COLUMN_VISIBLE), v.booleanValue() ? VISIBLE_YES : VISIBLE_NO)));
+		}
+	}
+
 	private static @NonNull String key(String key, Enum<?> property) {
 		return key + "_" + property.name(); //$NON-NLS-1$
 	}
-	
+
 	private static boolean isPropertySet(TableView_Properties[] properties, TableView_Properties property) {
 		return properties.length == 0 || Arrays.asList(properties).contains(property);
 	}
