@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Modifier;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.util.BuilderFactory;
@@ -99,6 +100,11 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 						public N getNode() {
 							return d.node;
 						}
+						
+						@Override
+						public @NonNull Map<String, Object> getNamespace() {
+							return d.namspace;
+						}
 					};
 				}
 			};
@@ -160,6 +166,11 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 						public C getController() {
 							return data.getController();
 						}
+						
+						@Override
+						public @NonNull Map<String, Object> getNamespace() {
+							return data.getNamespace();
+						}
 					};
 				}
 			};
@@ -183,6 +194,11 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 						@Override
 						public N getNode() {
 							return d.node;
+						}
+						
+						@Override
+						public @NonNull Map<String, Object> getNamespace() {
+							return d.namspace;
 						}
 					};
 				}
@@ -223,6 +239,11 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 					public N getNode() {
 						return d.node;
 					}
+					
+					@Override
+					public @NonNull Map<String, Object> getNamespace() {
+						return d.namspace;
+					}
 				};
 			}
 		};
@@ -262,6 +283,11 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 					@Override
 					public N getNode() {
 						return d.node;
+					}
+					
+					@Override
+					public @NonNull Map<String, Object> getNamespace() {
+						return d.namspace;
 					}
 				};
 			}
