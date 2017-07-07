@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.di;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -85,5 +86,11 @@ public interface FXMLBuilder<N> {
 		 */
 		@Nullable
 		public C getController();
+		
+		/**
+		 * @return map of fx:id to real nodes
+		 */
+		@NonNull
+		public Map<String,Object> getNamespace();
 	}
 }

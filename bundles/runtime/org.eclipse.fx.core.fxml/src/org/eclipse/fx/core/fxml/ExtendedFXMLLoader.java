@@ -12,6 +12,7 @@ package org.eclipse.fx.core.fxml;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXMLLoader;
@@ -159,6 +160,12 @@ public class ExtendedFXMLLoader {
 					public C getController() {
 						return (C) d.getController();
 					}
+					
+					@Override
+					public @NonNull Map<String, Object> getNamespace() {
+						//TODO We should enhance the API
+						throw new UnsupportedOperationException("Accessing the namespace is not possible for precompiled code");
+					}
 				};
 			} else {
 				throw new IOException("Unable to get url for path '" + path + "'"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -180,6 +187,11 @@ public class ExtendedFXMLLoader {
 					@Override
 					public C getController() {
 						return loader.getController();
+					}
+					
+					@Override
+					public @NonNull Map<String, Object> getNamespace() {
+						return loader.getNamespace();
 					}
 				};
 			}
@@ -211,5 +223,11 @@ public class ExtendedFXMLLoader {
 		 */
 		@Nullable
 		public C getController();
+		
+		/**
+		 * @return map of fx:id to real nodes
+		 */
+		@NonNull
+		public Map<String,Object> getNamespace();
 	}
 }
