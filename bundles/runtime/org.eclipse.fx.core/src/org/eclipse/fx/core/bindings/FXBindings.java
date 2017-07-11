@@ -402,7 +402,7 @@ public class FXBindings {
 				target.addAll(list);
 			}
 		} else {
-			threadSync.asyncExec(() -> {
+			threadSync.syncExec(() -> {
 				if (target instanceof ObservableList<?>) {
 					((ObservableList<T>) target).setAll(list);
 				} else {
@@ -434,7 +434,7 @@ public class FXBindings {
 			sourceList.addListener(l);
 		} else {
 			fl = change -> {
-				threadSync.asyncExec(() -> l.onChanged(change));
+				threadSync.syncExec(() -> l.onChanged(change));
 			};
 			sourceList.addListener(fl);
 		}
@@ -446,7 +446,7 @@ public class FXBindings {
 				if (threadSync == null) {
 					sourceList.removeListener(fl);
 				} else {
-					threadSync.asyncExec(fl, sourceList::removeListener);
+					threadSync.syncExec(() -> sourceList.removeListener(fl));
 				}
 			}
 		};
@@ -489,7 +489,7 @@ public class FXBindings {
 				this.l = l;
 			} else {
 				ListChangeListener<E> ll = change -> {
-					threadSync.asyncExec(() -> l.onChanged(change));
+					threadSync.syncExec(() -> l.onChanged(change));
 				};
 				this.l = ll;
 			}
@@ -531,7 +531,7 @@ public class FXBindings {
 					}
 				}
 			} else {
-				threadSync.asyncExec(() -> {
+				threadSync.syncExec(() -> {
 					if (padding == 0) {
 						if (target instanceof ObservableList<?>) {
 							((ObservableList<T>) target).setAll(list);
@@ -583,7 +583,7 @@ public class FXBindings {
 			if (this.threadSync == null) {
 				this.sourceList.remove(this.l);
 			} else {
-				this.threadSync.asyncExec(this.l, this.sourceList::remove);
+				this.threadSync.syncExec(() -> this.sourceList.removeListener(this.l));
 			}
 
 		}
