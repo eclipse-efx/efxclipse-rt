@@ -23,6 +23,8 @@ import javafx.util.Duration;
  * {@code node} at regular interval but uses {@link Scale#xProperty()},
  * {@link Scale#yProperty()} and {@link Scale#zProperty()}
  * </p>
+ * 
+ * @since 3.1.0
  */
 public class ScaleTransition extends Transition {
 	private double startX = Double.NaN;
