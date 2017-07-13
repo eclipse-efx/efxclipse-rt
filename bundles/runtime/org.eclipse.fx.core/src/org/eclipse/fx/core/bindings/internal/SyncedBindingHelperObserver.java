@@ -33,7 +33,7 @@ public class SyncedBindingHelperObserver implements InvalidationListener {
 
     @Override
     public void invalidated(Observable observable) {
-        this.thread.asyncExec(()->syncedInvalidated(observable));
+        this.thread.syncExec(()->syncedInvalidated(observable));
     }
 
     private void syncedInvalidated(Observable observable) {
