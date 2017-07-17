@@ -25,6 +25,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.impl.MenuPackageImpl;
 import org.eclipse.fx.ui.keybindings.KeySequence;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
+import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuItem;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
 
@@ -111,6 +112,9 @@ public abstract class BaseMenuItemRenderer<N> extends BaseItemRenderer<MMenuItem
 					IEclipseContext context = getModelContext(menuElement);
 					if (context != null && (widget.getWidgetState() == WidgetState.CREATED || widget.getWidgetState() == WidgetState.IN_SETUP)) {
 						widget.setHandled(canExecute(menuElement, context));
+						if( menuElement.getTags().contains(TAG_HIDE_ON_DISABLE) ) {
+							BaseMenuItemRenderer.this.eventBroker.send(Constants.UPDATE_VISIBLE_WHEN_RESULT, menuElement);
+						}
 					}
 				} catch (Throwable t) {
 					// TODO Log it

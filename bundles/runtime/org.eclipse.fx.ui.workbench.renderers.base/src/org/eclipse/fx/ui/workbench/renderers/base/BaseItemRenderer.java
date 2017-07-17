@@ -53,6 +53,16 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 	 */
 	public static final String VISIBLE_WHEN_RESULT = "VISIBLE_WHEN_RESULT"; //$NON-NLS-1$
 	
+	/**
+	 * Tag to mark items who are hidden if they are disabled
+	 */
+	public static final String TAG_HIDE_ON_DISABLE = "hideOnDisable"; //$NON-NLS-1$
+	
+	/**
+	 * Eventbroker to use
+	 */
+	protected IEventBroker eventBroker;
+	
 	@SuppressWarnings("null")
 	@PostConstruct
 	final void init(@NonNull IEventBroker broker) {
@@ -75,7 +85,7 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 	 * @param broker the event broker
 	 */
 	protected void do_init(@NonNull IEventBroker broker) {
-		// nothing by default
+		this.eventBroker = broker;
 	}
 	
 	/**
