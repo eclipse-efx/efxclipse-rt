@@ -40,4 +40,4 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.core.internal.JAXBObjectSeri
  OSGI-INF/services/org.eclipse.fx.core.cache.internal.SimpleMapCacheFactory.xml
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
- com.google.guava;bundle-version="15.0.0"
+ com.google.guava;bundle-version="21.0.0"
