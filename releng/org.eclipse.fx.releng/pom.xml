@@ -22,6 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform-version>[3.7,3.8)</platform-version>
 		<efx_shared_runtime>http://download.eclipse.org/efxclipse/runtime-shared-nightly/site/</efx_shared_runtime>
+		<efx_ext_site>http://download.eclipse.org/efxclipse/targets-nightly/site/</efx_ext_site>
 		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/runtime-nightly</download-publish-path>
 		<eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</eclipse-repo.url>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/efxclipse/org.eclipse.efxclipse.git</tycho.scmUrl>
@@ -129,7 +130,7 @@
 		<repository>
 			<id>base.target</id>
 			<layout>p2</layout>
-			<url>file:/Users/tomschindl/Documents/e-workspaces/efxclipse-master-rt/git/efxclipse-rt/releng/org.eclipse.fx.target.ext.updatesite/target/site</url>
+			<url>${efx_ext_site}</url>
 		</repository>
 		<repository>
 			<id>efx-shared-runtime</id>
