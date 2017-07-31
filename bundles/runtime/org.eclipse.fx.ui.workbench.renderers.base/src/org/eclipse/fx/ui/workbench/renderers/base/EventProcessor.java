@@ -15,6 +15,8 @@ import java.util.Collection;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.menu.MItem;
+import org.eclipse.e4.ui.model.application.ui.menu.MMenuItem;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.ui.services.Constants;
@@ -159,6 +161,17 @@ public class EventProcessor {
 
 							if (current == null) {
 								current = Boolean.valueOf(element.isVisible());
+							}
+							
+							if( element.getTags().contains(BaseItemRenderer.TAG_HIDE_ON_DISABLE) ) {
+								if( element instanceof MItem ) {
+									MItem i = (MItem) element;
+									Object renderer = element.getRenderer();
+									if( renderer instanceof BaseItemRenderer ) {
+										visibleWhen = visibleWhen && i.isEnabled()
+												&& ((BaseItemRenderer) renderer).canExecute(element, ((BaseItemRenderer) renderer).getModelContext(element));
+									}
+								}
 							}
 
 							boolean newVisibility = element.isVisible() && visibleWhen;

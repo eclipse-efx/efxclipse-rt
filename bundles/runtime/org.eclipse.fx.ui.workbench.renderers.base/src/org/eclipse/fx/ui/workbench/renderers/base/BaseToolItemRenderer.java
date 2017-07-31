@@ -17,6 +17,7 @@ import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
+import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolItem;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
 
@@ -58,6 +59,9 @@ public abstract class BaseToolItemRenderer<N> extends BaseItemRenderer<MToolItem
 					IEclipseContext context = getModelContext(toolbarElement);
 					if (context != null && (widget.getWidgetState() == WidgetState.CREATED || widget.getWidgetState() == WidgetState.IN_SETUP)) {
 						widget.setHandled(canExecute(toolbarElement, context));
+						if( toolbarElement.getTags().contains(TAG_HIDE_ON_DISABLE) ) {
+							BaseToolItemRenderer.this.eventBroker.send(Constants.UPDATE_VISIBLE_WHEN_RESULT, toolbarElement);
+						}
 					}
 				} catch (Throwable t) {
 					// TODO Log it

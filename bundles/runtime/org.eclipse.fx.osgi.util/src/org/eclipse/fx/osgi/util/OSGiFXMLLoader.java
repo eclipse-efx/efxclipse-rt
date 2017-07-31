@@ -13,6 +13,7 @@ package org.eclipse.fx.osgi.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXMLLoader;
@@ -432,14 +433,14 @@ public class OSGiFXMLLoader {
 		if (stream != null) {
 			O value = loader.load(stream);
 			if (value != null) {
-				return new FXMLData<O, C>(value, (C) loader.getController());
+				return new FXMLData<O, C>(value, (C) loader.getController(), loader.getNamespace());
 			}
 			throw new IOException("Unable to construct UI from FXML '" + url + "'"); //$NON-NLS-1$//$NON-NLS-2$
 		} else if (url != null) {
 			try (InputStream in = url.openStream()) {
 				O value = loader.load(in);
 				if (value != null) {
-					return new FXMLData<O, C>(value, (C) loader.getController());
+					return new FXMLData<O, C>(value, (C) loader.getController(), loader.getNamespace());
 				}
 				throw new IOException("Unable to construct UI from FXML '" + url + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			}
@@ -468,10 +469,17 @@ public class OSGiFXMLLoader {
 		 */
 		@Nullable
 		public final C controller;
+		
+		/**
+		 * Nodes mapped to their fx:id
+		 */
+		@NonNull
+		public final Map<String, Object> namspace;
 
-		FXMLData(@NonNull N node, @Nullable C controller) {
+		FXMLData(@NonNull N node, @Nullable C controller, @NonNull Map<String, Object> namspace) {
 			this.node = node;
 			this.controller = controller;
+			this.namspace = namspace;
 		}
 	}
 }
