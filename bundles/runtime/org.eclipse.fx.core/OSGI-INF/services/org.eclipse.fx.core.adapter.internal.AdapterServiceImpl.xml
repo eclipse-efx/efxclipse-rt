@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.core.adapter.internal.AdapterServiceImpl">
-   <implementation class="org.eclipse.fx.core.adapter.internal.AdapterServiceImpl"/>
    <service>
       <provide interface="org.eclipse.fx.core.adapter.AdapterService"/>
    </service>
-   <reference bind="setValueSerializer" cardinality="0..1" interface="org.eclipse.fx.core.ValueSerializer" name="ValueSerializer" policy="static" policy-option="greedy" unbind="unsetValueSerializer"/>
-   <reference bind="registerAdapterProviderService" cardinality="0..n" interface="org.eclipse.fx.core.adapter.AdapterProvider" name="registerAdapterProviderService" policy="static" policy-option="greedy" unbind="unregisterAdapterProviderService"/>
+   <reference bind="setValueSerializer" cardinality="0..1" interface="org.eclipse.fx.core.ValueSerializer" name="ValueSerializer" policy-option="greedy" unbind="unsetValueSerializer"/>
+   <reference bind="registerAdapterProviderService" cardinality="0..n" interface="org.eclipse.fx.core.adapter.AdapterProvider" name="registerAdapterProviderService" policy-option="greedy" unbind="unregisterAdapterProviderService"/>
+   <implementation class="org.eclipse.fx.core.adapter.internal.AdapterServiceImpl"/>
 </scr:component>
