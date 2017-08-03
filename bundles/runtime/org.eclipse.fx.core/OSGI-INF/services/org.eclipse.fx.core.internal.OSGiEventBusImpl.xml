@@ -3,6 +3,6 @@
    <service>
       <provide interface="org.eclipse.fx.core.event.GlobalEventBus"/>
    </service>
-   <reference bind="registerMessageService" cardinality="1..1" interface="org.osgi.service.event.EventAdmin" name="registerMessageService" policy="static" unbind="unregisterMessageService"/>
+   <reference bind="registerMessageService" interface="org.osgi.service.event.EventAdmin" name="registerMessageService" unbind="unregisterMessageService"/>
    <implementation class="org.eclipse.fx.core.internal.OSGiEventBusImpl"/>
 </scr:component>
