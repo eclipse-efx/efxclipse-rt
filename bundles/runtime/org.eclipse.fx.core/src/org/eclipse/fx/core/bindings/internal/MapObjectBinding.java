@@ -30,30 +30,36 @@ public class MapObjectBinding<A, B> extends ObjectBinding<B> {
 		bind(this.source);
 	}
 
-
 	@SuppressWarnings("null")
 	@Override
 	protected B computeValue() {
-		if (this.next != null) {
-			unbind(this.next);
-		}
+		clearNextReference();
 		A sourceVal = this.source.getValue();
 		if (sourceVal != null) {
 			ObservableValue<B> apply = this.map.apply(sourceVal);
 			this.next = apply;
 			bind(this.next);
 			return apply.getValue();
-		}
-		else {
+		} else {
 			return (B) null;
 		}
 	}
 
-	@Override
-	public void dispose() {
+	private void clearNextReference() {
 		if (this.next != null) {
 			unbind(this.next);
+			this.next = null;
 		}
+	}
+
+	@Override
+	protected void onInvalidating() {
+		clearNextReference();
+	}
+
+	@Override
+	public void dispose() {
+		clearNextReference();
 		unbind(this.source);
 		super.dispose();
 	}
