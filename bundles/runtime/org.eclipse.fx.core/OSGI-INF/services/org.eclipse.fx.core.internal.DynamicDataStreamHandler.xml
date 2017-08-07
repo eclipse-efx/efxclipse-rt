@@ -3,6 +3,6 @@
    <service>
       <provide interface="org.eclipse.fx.core.URLStreamHandler"/>
    </service>
-   <reference bind="registerURLDynamicDataStreamHandler" cardinality="0..n" interface="org.eclipse.fx.core.URLDynamicDataStreamHandler" name="registerURLDynamicDataStreamHandler" policy="static" policy-option="greedy" unbind="unregisterURLDynamicDataStreamHandler"/>
+   <reference bind="registerURLDynamicDataStreamHandler" cardinality="0..n" interface="org.eclipse.fx.core.URLDynamicDataStreamHandler" name="registerURLDynamicDataStreamHandler" policy-option="greedy" unbind="unregisterURLDynamicDataStreamHandler"/>
    <implementation class="org.eclipse.fx.core.internal.DynamicDataStreamHandler"/>
 </scr:component>

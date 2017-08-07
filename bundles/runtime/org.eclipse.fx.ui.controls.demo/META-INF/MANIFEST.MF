@@ -4,9 +4,9 @@ Bundle-Name: Demo
 Bundle-SymbolicName: org.eclipse.fx.ui.controls.demo
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.eclipse.fx.core;version="3.0.0",
- org.eclipse.fx.core.observable;version="3.0.0",
+Import-Package: org.eclipse.fx.core;version="3.1.0",
+ org.eclipse.fx.core.observable;version="3.1.0",
  org.osgi.service.component.annotations
 Service-Component: OSGI-INF/org.eclipse.fx.ui.controls.demo.impl.ScaledImageViewer.xml
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.fx.ui.controls;bundle-version="3.0.0"
+Require-Bundle: org.eclipse.fx.ui.controls;bundle-version="3.1.0"
