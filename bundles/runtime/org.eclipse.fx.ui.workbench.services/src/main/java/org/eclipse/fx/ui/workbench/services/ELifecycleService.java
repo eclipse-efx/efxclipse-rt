@@ -13,10 +13,12 @@ package org.eclipse.fx.ui.workbench.services;
 import java.lang.annotation.Annotation;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Service to register lifecycle handlers on model elements
@@ -52,7 +54,7 @@ public interface ELifecycleService {
 	 * @param context
 	 *            the context
 	 * @return <code>true</code> if validation succeeded
-	 * @deprecated use {@link #validateAnnotation(Class, MUIElement, IEclipseContext, IEclipseContext)}
+	 * @deprecated use {@link #validateAnnotation(Class, MApplicationElement, IEclipseContext, IEclipseContext)}
 	 */
 	@Deprecated
 	public boolean validateAnnotation(@NonNull Class<? extends Annotation> annotationClass, @NonNull MUIElement element, @NonNull IEclipseContext context);
@@ -71,9 +73,9 @@ public interface ELifecycleService {
 	 * @return <code>true</code> if validation succeeded
 	 * @since 3.1.0
 	 */
-	public default boolean validateAnnotation(@NonNull Class<? extends Annotation> annotationClass, @NonNull MUIElement element, @NonNull IEclipseContext context, @NonNull IEclipseContext localContext) {
+	public default boolean validateAnnotation(@NonNull Class<? extends Annotation> annotationClass, @NonNull MApplicationElement element, @NonNull IEclipseContext context, @Nullable IEclipseContext localContext) {
 		LoggerCreator.createLogger(getClass()).error("The service implementation should have implemented this method appropriately"); //$NON-NLS-1$
-		return validateAnnotation(annotationClass, element, context);
+		return validateAnnotation(annotationClass, (MUIElement)element, context);
 	}
 
 }
