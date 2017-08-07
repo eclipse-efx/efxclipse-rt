@@ -64,6 +64,11 @@ public class LifecycleServiceImpl implements ELifecycleService {
 	public boolean validateAnnotation(Class<? extends Annotation> annotationClass, MUIElement element, IEclipseContext context) {
 		return validateLifecycleAnnotation(annotationClass, getContextForParent(element), context, element);
 	}
+	
+	@Override
+	public boolean validateAnnotation(@NonNull Class<? extends Annotation> annotationClass, @NonNull MUIElement element, @NonNull IEclipseContext context, @NonNull IEclipseContext localContext) {
+		return validateLifecycleAnnotation(annotationClass, context, localContext, element);
+	}
 
 	private static boolean validateLifecycleAnnotation(Class<? extends Annotation> clazz, IEclipseContext parentContext, IEclipseContext partContext, MUIElement part) {
 		// If the object itself is a contribution we can check the
