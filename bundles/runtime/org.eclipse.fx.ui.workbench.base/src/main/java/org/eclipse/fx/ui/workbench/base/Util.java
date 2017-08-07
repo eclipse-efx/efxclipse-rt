@@ -13,7 +13,12 @@ package org.eclipse.fx.ui.workbench.base;
 import java.util.Map;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
+import org.eclipse.fx.ui.workbench.services.ELifecycleService;
+import org.eclipse.fx.ui.workbench.services.lifecycle.annotation.InitContext;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Utility methods
@@ -44,6 +49,14 @@ public class Util {
 		}
 
 		model.setContext(context);
+		
+		ELifecycleService service = context.get(ELifecycleService.class);
+		if( service != null ) {
+			MApplication app = context.get(MApplication.class);
+			IEclipseContext appContext = app != null ? app.getContext() : null;
+			IEclipseContext localContext = appContext != null ? appContext.getActiveChild() : null;
+			service.validateAnnotation(InitContext.class, (MApplicationElement) model, context, localContext );
+		}
 	}
 
 	private static void populateModelInterfaces(MContext contextModel, IEclipseContext context, Class<?>[] interfaces) {
