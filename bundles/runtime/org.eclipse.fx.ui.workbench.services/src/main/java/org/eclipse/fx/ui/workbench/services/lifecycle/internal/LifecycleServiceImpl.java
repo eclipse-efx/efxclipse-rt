@@ -21,12 +21,14 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.MContribution;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.fx.ui.workbench.services.ELifecycleService;
 import org.eclipse.fx.ui.workbench.services.lifecycle.LifecycleAddon;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Implementation of a {@link ELifecycleService}
@@ -66,11 +68,11 @@ public class LifecycleServiceImpl implements ELifecycleService {
 	}
 	
 	@Override
-	public boolean validateAnnotation(@NonNull Class<? extends Annotation> annotationClass, @NonNull MUIElement element, @NonNull IEclipseContext context, @NonNull IEclipseContext localContext) {
+	public boolean validateAnnotation(@NonNull Class<? extends Annotation> annotationClass, @NonNull MApplicationElement element, @NonNull IEclipseContext context, @Nullable IEclipseContext localContext) {
 		return validateLifecycleAnnotation(annotationClass, context, localContext, element);
 	}
 
-	private static boolean validateLifecycleAnnotation(Class<? extends Annotation> clazz, IEclipseContext parentContext, IEclipseContext partContext, MUIElement part) {
+	private static boolean validateLifecycleAnnotation(Class<? extends Annotation> clazz, IEclipseContext parentContext, IEclipseContext partContext, MApplicationElement part) {
 		// If the object itself is a contribution we can check the
 		// lifecycle stuff as well on the contribution
 		if( part instanceof MContribution ) {
