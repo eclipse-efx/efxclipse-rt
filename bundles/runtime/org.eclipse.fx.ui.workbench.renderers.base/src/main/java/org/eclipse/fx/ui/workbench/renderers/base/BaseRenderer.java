@@ -31,7 +31,6 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.internal.workbench.ContributionsAnalyzer;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
-import org.eclipse.e4.ui.model.application.ui.MCoreExpression;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.MUILabel;
@@ -734,9 +733,9 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @return <code>true</code> if visible
 	 */
 	public static boolean checkVisibleWhen(MUIElement item, IEclipseContext context) {
-		if (item.getVisibleWhen() != null && item.getVisibleWhen() instanceof MCoreExpression) {
+		if (item.getVisibleWhen() != null) {
 			ExpressionContext exprContext = new ExpressionContext(context.getActiveLeaf());
-			boolean value = ContributionsAnalyzer.isVisible((MCoreExpression) item.getVisibleWhen(), exprContext);
+			boolean value = ContributionsAnalyzer.isVisible(item.getVisibleWhen(), exprContext);
 			item.getTransientData().put(CURRENT_VISIBLE_WHEN, Boolean.valueOf(value));
 			return value;
 		}
