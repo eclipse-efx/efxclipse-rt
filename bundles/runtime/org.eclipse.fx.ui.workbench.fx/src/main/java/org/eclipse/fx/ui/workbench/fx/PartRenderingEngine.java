@@ -424,7 +424,10 @@ public class PartRenderingEngine implements IPresentationEngine {
 				element.setRenderer(null);
 			} else {
 				ElementRenderer<@NonNull MUIElement, Object> r = getRenderer(element);
-				r.destroyRenderingContext(element);
+				// Renderer might be NULL eg for MDynamicMenuContribution
+				if( r != null ) {
+					r.destroyRenderingContext(element);	
+				}
 			}
 		}
 	}
