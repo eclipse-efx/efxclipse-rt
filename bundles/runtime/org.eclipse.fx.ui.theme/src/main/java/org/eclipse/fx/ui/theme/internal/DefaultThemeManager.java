@@ -58,6 +58,8 @@ public class DefaultThemeManager implements ThemeManager {
 	private final @NonNull ObservableMap<@NonNull String, @NonNull Theme> unmodifiableThemes = FXCollections.unmodifiableObservableMap(this.themes);
 	private String currentThemeId;
 	ObservableList<Scene> managedScenes = FXCollections.observableArrayList();
+	
+	private final ListChangeListener<? super @NonNull URL> listener = this::handleStylesheetUrlChange;
 
 	private static final String THEMED_KEY = "themed"; //$NON-NLS-1$
 
@@ -134,7 +136,7 @@ public class DefaultThemeManager implements ThemeManager {
 	}
 
 	private void unsetTheme(Theme theme) {
-		theme.getStylesheetURL().removeListener(this::handleStylesheetUrlChange);
+		theme.getStylesheetURL().removeListener(this.listener);
 
 		Collection<Theme> availableThemes = getAvailableThemes().values();
 
@@ -157,7 +159,7 @@ public class DefaultThemeManager implements ThemeManager {
 	}
 
 	private void setTheme(Theme theme) {
-		theme.getStylesheetURL().addListener(this::handleStylesheetUrlChange);
+		theme.getStylesheetURL().addListener(this.listener);
 		for (Scene scene : this.managedScenes) {
 			applyThemeToScene(theme, scene);
 		}
