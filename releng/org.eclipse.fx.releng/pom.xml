@@ -30,73 +30,68 @@
 
 	<modules>
 		<!-- Core Modules -->
-		<module>../../bundles/runtime/org.eclipse.fx.osgi.util</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.log4j</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.slf4j</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.fxml</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.guice</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.databinding</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.p2</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.di</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.di.context</module>
+		<module>../../modules/core/org.eclipse.fx.osgi.util</module>
+		<module>../../modules/core/org.eclipse.fx.core.log4j</module>
+		<module>../../modules/core/org.eclipse.fx.core.slf4j</module>
+		<module>../../modules/core/org.eclipse.fx.core</module>
+		<module>../../modules/core/org.eclipse.fx.core.fxml</module>
+		<module>../../modules/core/org.eclipse.fx.core.guice</module>
+		<module>../../modules/core/org.eclipse.fx.core.databinding</module>
+		<module>../../modules/core/org.eclipse.fx.core.p2</module>
+		<module>../../modules/core/org.eclipse.fx.core.di</module>
+		<module>../../modules/core/org.eclipse.fx.core.di.context</module>
+		<module>../../modules/core/org.eclipse.fx.emf.databinding</module>
+		<module>../../modules/core/org.eclipse.fx.formats.svg</module>
+		<module>../../modules/core/javax.annotation.jre</module>
+		<module>../../modules/core/javax.xml.jre</module>
+		<module>../../modules/core/org.eclipse.fx.core.junit</module>
 
 		<!-- UI Modules -->
-		<module>../../bundles/runtime/org.eclipse.fx.ui.databinding</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.di</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.di.interopt</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.animation</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.panes</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.controls</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.controls.nl</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.services</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.dialogs</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.dialogs.nl</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.mobile</module>
-		<!-- EMF -->
-		<module>../../bundles/runtime/org.eclipse.fx.emf.edit.ui</module>
-		<module>../../bundles/runtime/org.eclipse.fx.emf.databinding</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.databinding</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.di</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.di.interopt</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.animation</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.panes</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.controls</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.controls.nl</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.services</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.dialogs</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.dialogs.nl</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.mobile</module>
+		<module>../../modules/ui/org.eclipse.fx.emf.edit.ui</module>
 
 		<!-- e4 -->
-		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings.generic</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings.e4</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.base</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.base</module>
-
-		<module>../../bundles/runtime/org.eclipse.fx.ui.theme</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.fx</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.fx</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.fx.nl</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.services</module>
-
-		<!-- Format Conversion -->
-		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
-
-		<module>../../bundles/runtime/javax.annotation.jre</module>
-		<module>../../bundles/runtime/javax.xml.jre</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.keybindings</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.keybindings.generic</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.keybindings.e4</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.workbench.base</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.workbench.renderers.base</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.theme</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.workbench.fx</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.workbench.renderers.fx</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.workbench.renderers.fx.nl</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.workbench.services</module>
 
 		<!-- Code -->
-		<module>../../bundles/code/org.eclipse.fx.text</module>
-		<module>../../bundles/code/org.eclipse.fx.text.compat</module>
-		<module>../../bundles/code/org.eclipse.fx.text.ui</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.configuration</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.configuration.text</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.configuration.text.e4</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.configuration.text.fx</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.e4</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.fx</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.fx.e4</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.fx.themes</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.langs</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.langs.contrib</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.langs.themes</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.asciidoc</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.asciidoc.fx</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.asciidoc.fx.e4</module>
+		<module>../../modules/code/org.eclipse.fx.text</module>
+		<module>../../modules/code/org.eclipse.fx.text.compat</module>
+		<module>../../modules/code/org.eclipse.fx.text.ui</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.configuration</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.configuration.text</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.configuration.text.e4</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.configuration.text.fx</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.e4</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.fx</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.fx.e4</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.fx.themes</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.langs</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.langs.contrib</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.langs.themes</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.asciidoc</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.asciidoc.fx</module>
+		<module>../../modules/code/org.eclipse.fx.code.editor.asciidoc.fx.e4</module>
 
-		<module>../../bundles/runtime/org.eclipse.fx.core.junit</module>
 
 		<!-- Features -->
 		<module>../runtime/org.eclipse.fx.core.feature</module>
@@ -116,8 +111,8 @@
 		<!--  module>../org.eclipse.fx.runtime.doc</module-->
 
 		<!-- Tests -->
-		<module>../../bundles/runtime/org.eclipse.fx.core.di.context.tests</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core.tests</module>
+		<module>../../modules/core/org.eclipse.fx.core.di.context.tests</module>
+		<module>../../modules/core/org.eclipse.fx.core.tests</module>
 	</modules>
 
 	<repositories>
