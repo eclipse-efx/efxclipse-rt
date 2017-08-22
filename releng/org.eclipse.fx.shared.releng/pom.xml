@@ -29,8 +29,8 @@
 
 	<modules>
 		<!-- Bundles -->
-		<module>../../bundles/runtime/org.eclipse.fx.osgi</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench3</module>
+		<module>../../modules/core/org.eclipse.fx.osgi</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.workbench3</module>
 
 		<!-- Features -->
 		<module>../runtime/org.eclipse.fx.core.shared.feature</module>
