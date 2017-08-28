@@ -43,6 +43,7 @@ public class E4MainThreadApplication extends E4Application {
 				public void idle(boolean implicitExit) {
 					jfxStop();
 					PlatformImpl.removeListener(this);
+					SHUTDOWN_LATCH.countDown();
 				}
 
 				@Override
@@ -50,12 +51,16 @@ public class E4MainThreadApplication extends E4Application {
 					// nothing to do
 				}
 			});
-
+			updateStartupState(DefaultProgressState.JAVAFX_INITIALIZED_LAUNCHER_THREAD);
 			PlatformImpl.startup(() -> {
-				JFXRealm.createDefault();
-				jfxStart(getApplicationContext(), null, null);
-				updateStartupState(DefaultProgressState.JAVAFX_INITIALIZED_LAUNCHER_THREAD);
+				try {
+					JFXRealm.createDefault();
+					jfxStart(getApplicationContext(), null, null);
+				} catch( Throwable t ) {
+					t.printStackTrace();
+				}
 			});
+			SHUTDOWN_LATCH.await();
 		} else {
 			Thread t = new Thread() {
 				@Override
