@@ -63,6 +63,11 @@
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/modeling/emf/emf/updates/2.13</url>
 		</repository>
+		<repository>
+			<id>m2e</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/technology/m2e/releases</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
