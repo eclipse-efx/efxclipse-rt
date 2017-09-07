@@ -1,0 +1,25 @@
+Bundle-ActivationPolicy: lazy
+-snapshot: ${osgi.qualifier}
+Import-Package: \
+	!javafx.*, \
+	*
+-runee: JavaSE-1.8
+-exportcontents: \
+  org.eclipse.fx.core, \
+  org.eclipse.fx.core.adapter, \
+  org.eclipse.fx.core.app, \
+  org.eclipse.fx.core.array, \
+  org.eclipse.fx.core.bindings, \
+  org.eclipse.fx.core.cache, \
+  org.eclipse.fx.core.command, \
+  org.eclipse.fx.core.event, \
+  org.eclipse.fx.core.function, \
+  org.eclipse.fx.core.geom, \
+  org.eclipse.fx.core.log, \
+  org.eclipse.fx.core.modulesystem, \
+  org.eclipse.fx.core.observable, \
+  org.eclipse.fx.core.operation, \
+  org.eclipse.fx.core.preferences, \
+  org.eclipse.fx.core.property, \
+  org.eclipse.fx.core.text, \
+  org.eclipse.fx.core.update

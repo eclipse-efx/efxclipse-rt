@@ -1,34 +1,54 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<name>e(fx)clipse - Runtime - Core</name>
-	<groupId>org.eclipse.fx.runtime</groupId>
-	<artifactId>org.eclipse.fx.core</artifactId>
-	<packaging>eclipse-plugin</packaging>
-
 	<parent>
-		<groupId>org.eclipse.fx</groupId>
-		<artifactId>releng</artifactId>
-		<relativePath>../../../releng/org.eclipse.fx.releng/pom.xml</relativePath>
-		<version>3.1.0-SNAPSHOT</version>
+		<groupId>org.eclipse.fx.rt</groupId>
+		<artifactId>core</artifactId>
+		<version>4.0.0-SNAPSHOT</version>
 	</parent>
+	<artifactId>org.eclipse.fx.core</artifactId>
+	<packaging>jar</packaging>
 
-	<build>
-		<resources>
-			<!-- to ensure that the feature lookup of the ui test works -->
-			<resource>
-				<directory>.</directory>
-				<includes>
-					<include>META-INF/</include>
-				</includes>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-source-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+	<dependencies>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>org.eclipse.jdt.annotation</artifactId>
+			<version>${dep.org.eclipse.jdt.annotation}</version>
+		</dependency>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>${dep.javax.inject}</version>
+		</dependency>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>com.google.guava</artifactId>
+			<version>${dep.com.google.guava}</version>
+		</dependency>
 
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>org.apache.commons.lang</artifactId>
+			<version>${dep.org.apache.commons.lang}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.framework</artifactId>
+			<version>${dep.org.osgi.framework}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.component.annotations</artifactId>
+			<version>${dep.org.osgi.service.component.annotations}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.event</artifactId>
+			<version>${dep.org.osgi.service.event}</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 </project>
