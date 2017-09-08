@@ -154,6 +154,10 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.fx.code.langs.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.fx.code.target.ext.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.xtext"
          download-size="0"
