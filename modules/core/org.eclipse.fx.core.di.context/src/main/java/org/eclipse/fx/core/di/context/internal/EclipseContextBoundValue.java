@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.contexts.RunAndTrack;
 import org.eclipse.e4.core.di.annotations.Optional;
+// FIXME Replace with EventBus
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.fx.core.Callback;
 import org.eclipse.fx.core.Subscription;

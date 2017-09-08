@@ -27,6 +27,9 @@
 		<dep.org.osgi.service.component.annotations>1.3.0</dep.org.osgi.service.component.annotations>
 		<dep.org.osgi.service.event>1.3.1</dep.org.osgi.service.event>
 		<dep.org.apache.commons.lang>2.6.0</dep.org.apache.commons.lang>
+		<dep.org.eclipse.core.context>1.6.0</dep.org.eclipse.core.context>
+		<dep.org.eclipse.e4.core.services>2.1.0</dep.org.eclipse.e4.core.services>
+		<dep.org.eclipse.core.databinding.observable>1.6.100</dep.org.eclipse.core.databinding.observable>
 	</properties>
 	
 	<repositories>
