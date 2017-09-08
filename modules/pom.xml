@@ -30,6 +30,7 @@
 		<dep.org.eclipse.core.context>1.6.0</dep.org.eclipse.core.context>
 		<dep.org.eclipse.e4.core.services>2.1.0</dep.org.eclipse.e4.core.services>
 		<dep.org.eclipse.core.databinding.observable>1.6.100</dep.org.eclipse.core.databinding.observable>
+		<dep.org.eclipse.core.databinding.property>1.6.100</dep.org.eclipse.core.databinding.property>
 	</properties>
 	
 	<repositories>
