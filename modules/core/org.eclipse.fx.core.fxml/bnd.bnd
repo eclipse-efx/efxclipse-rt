@@ -1,0 +1,8 @@
+Bundle-ActivationPolicy: lazy
+-snapshot: ${osgi.qualifier}
+Import-Package: \
+	!javafx.*, \
+	*
+-runee: JavaSE-1.8
+-exportcontents: \
+  org.eclipse.fx.core.fxml
