@@ -34,6 +34,7 @@
 		<dep.org.eclipse.jdt.annotation>2.1.100</dep.org.eclipse.jdt.annotation>
 		<dep.com.google.inject>3.0.0</dep.com.google.inject>
 		<dep.junit>4.12</dep.junit>
+		<dep.org.apache.log4j>1.2.15</dep.org.apache.log4j>
 	</properties>
 	
 	<repositories>
