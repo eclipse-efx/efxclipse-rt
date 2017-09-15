@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.workbench.base.internal;
 
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.eclipse.e4.ui.internal.workbench.ModelAssembler;
 import org.eclipse.e4.ui.internal.workbench.ModelFragmentComparator;
@@ -27,7 +28,9 @@ public class EFX_ModelAssembler extends ModelAssembler {
 	
 	@Override
 	public void processFragments(Set<ModelFragmentWrapper> fragmentList) {
-		super.processFragments(fragmentList);
+		TreeSet<ModelFragmentWrapper> c = new TreeSet<>(new EFX_ModelFragmentComparator());
+		c.addAll(fragmentList);
+		super.processFragments(c);
 	}
 	
 	static class EFX_ModelFragmentComparator extends ModelFragmentComparator {
