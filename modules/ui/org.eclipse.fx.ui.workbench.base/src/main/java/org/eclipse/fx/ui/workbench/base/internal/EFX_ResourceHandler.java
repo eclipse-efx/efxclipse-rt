@@ -1,3 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2009, 2016 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *     Tristan Hume - <trishume@gmail.com> -
+ *     		Fix for Bug 2369 [Workbench] Would like to be able to save workspace without exiting
+ *     		Implemented workbench auto-save to correctly restore state in case of crash.
+ *     Terry Parker <tparker@google.com> - Bug 416673
+ *     Lars Vogel <Lars.Vogel@vogella.com> - Bug 393171
+ ******************************************************************************/
 package org.eclipse.fx.ui.workbench.base.internal;
 
 import java.io.File;
