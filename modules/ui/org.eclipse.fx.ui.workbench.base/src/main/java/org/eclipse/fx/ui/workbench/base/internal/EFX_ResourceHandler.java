@@ -186,7 +186,7 @@ public class EFX_ResourceHandler implements IModelResourceHandler {
 		MApplication appElement = (MApplication) this.resource.getContents().get(0);
 
 		this.context.set(MApplication.class, appElement);
-		ModelAssembler contribProcessor = ContextInjectionFactory.make(ModelAssembler.class,
+		ModelAssembler contribProcessor = ContextInjectionFactory.make(EFX_ModelAssembler.class,
 				this.context);
 		contribProcessor.processModel(initialModel);
 
