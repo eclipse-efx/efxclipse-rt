@@ -10,13 +10,12 @@
 *******************************************************************************/
 package org.eclipse.fx.code.editor.fx;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.fx.code.editor.Input;
-import org.eclipse.fx.code.editor.LocalSourceFileInput;
 import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
+import org.eclipse.fx.code.editor.fx.services.EditorContextMenuProvider;
 import org.eclipse.fx.code.editor.fx.services.internal.DefaultSourceViewerConfiguration;
 import org.eclipse.fx.code.editor.services.BehaviorContributor;
 import org.eclipse.fx.code.editor.services.EditorOpener;
@@ -25,16 +24,18 @@ import org.eclipse.fx.code.editor.services.NavigationProvider;
 import org.eclipse.fx.code.editor.services.ProposalComputer;
 import org.eclipse.fx.code.editor.services.SearchProvider;
 import org.eclipse.fx.core.ThreadSynchronize;
+import org.eclipse.fx.core.event.SimpleEventBus;
 import org.eclipse.fx.text.rules.CombinedWordRule;
 import org.eclipse.fx.text.rules.JavaLikeWordDetector;
+import org.eclipse.fx.text.ui.TextAttribute;
 import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.rules.DefaultDamagerRepairer;
 import org.eclipse.fx.text.ui.source.AnnotationPresenter;
-import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.rules.IPredicateRule;
 import org.eclipse.jface.text.rules.IRule;
+import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.IWhitespaceDetector;
 import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
@@ -44,6 +45,8 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.source.IAnnotationModel;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.Control;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -147,11 +150,10 @@ public class SimpleSourceTextEditorBuilder {
 
 	public TextEditor build(ThreadSynchronize threadSynchronize, BorderPane pane, IDocument document, Input<?> input, IAnnotationModel annotationModel) {
 		TextEditor editor = new TextEditor();
-		editor.setInput(input);
-		editor.setDocument(document);
+//		editor.setInput(input);
+//		editor.setDocument(document);
 
 		List<String> contentTypes = new ArrayList<String>();
-
 		if (singleLineCommentStart.isEmpty()) {
 			contentTypes.add("__" + languageName + "_singlelinecomment");
 		}
@@ -172,9 +174,18 @@ public class SimpleSourceTextEditorBuilder {
 			contentTypes.add("__" + languageName + "_string");
 		}
 
-		editor.setPartitioner(new FastPartitioner(new PartitionerImpl(this), contentTypes.toArray(new String[0])));
-		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(threadSynchronize, input, new ReconcilerImpl(this), null, proposalComputer, annotationModel, annotationPresenter, hoverInformationProvider, completionProposalPresenter, searchProvider, navigationProvider, editorOpener, behaviorContributor, null));
-
+		FastPartitioner partitioner = new FastPartitioner(new PartitionerImpl(this), contentTypes.toArray(new String[0]));
+		ReconcilerImpl reconciler = new ReconcilerImpl(this);
+		DefaultSourceViewerConfiguration c = new DefaultSourceViewerConfiguration(threadSynchronize, input, reconciler, null, proposalComputer, annotationModel, annotationPresenter, hoverInformationProvider, completionProposalPresenter, searchProvider, navigationProvider, editorOpener, behaviorContributor, null);
+		
+		editor.initUI(pane,new SimpleEventBus(),new EditorContextMenuProvider() {
+			
+			@Override
+			public void attacheMenu(Control styledText, Type type) {
+				// TODO Auto-generated method stub
+				
+			}
+		},null,null,document,c,partitioner,input,new SimpleObjectProperty<>(),new SimpleObjectProperty<>(1.0));
 		return editor;
 	}
 
@@ -227,6 +238,12 @@ public class SimpleSourceTextEditorBuilder {
 
 	static class ReconcilerImpl extends PresentationReconciler {
 		public ReconcilerImpl(SimpleSourceTextEditorBuilder textEditorBuilder) {
+			{
+				DefaultDamagerRepairer dr = new DefaultDamagerRepairer(new CodeRuleScanner(textEditorBuilder));
+				setDamager(dr, "__dftl_partition_content_type");
+				setRepairer(dr, "__dftl_partition_content_type");				
+			}
+			
 			if (textEditorBuilder.singleLineCommentStart.isEmpty()) {
 				DefaultDamagerRepairer dr = new DefaultDamagerRepairer(new NoRuleRuleScanner(textEditorBuilder.languageName + "_comment"));
 				setDamager(dr, "__" + textEditorBuilder.languageName + "_singlelinecomment");
@@ -261,13 +278,13 @@ public class SimpleSourceTextEditorBuilder {
 
 	static class NoRuleRuleScanner extends RuleBasedScanner {
 		public NoRuleRuleScanner(String defaultTokenName) {
-			setDefaultReturnToken(new Token(defaultTokenName));
+			setDefaultReturnToken(new Token(new TextAttribute(defaultTokenName)));
 		}
 	}
 
 	static class CodeRuleScanner extends RuleBasedScanner {
 		public CodeRuleScanner(SimpleSourceTextEditorBuilder textEditorBuilder) {
-			Token defaultToken = new Token(textEditorBuilder.languageName + "_default");
+			Token defaultToken = new Token(new TextAttribute(textEditorBuilder.languageName + "_default"));
 
 			IRule[] rules = new IRule[2];
 			rules[0] = new WhitespaceRule(new IWhitespaceDetector() {
@@ -281,7 +298,7 @@ public class SimpleSourceTextEditorBuilder {
 			JavaLikeWordDetector wordDetector = new JavaLikeWordDetector();
 			CombinedWordRule combinedWordRule = new CombinedWordRule(wordDetector, defaultToken);
 
-			Token keywordToken = new Token(textEditorBuilder.languageName + "_keyword");
+			Token keywordToken = new Token(new TextAttribute(textEditorBuilder.languageName + "_keyword"));
 			CombinedWordRule.WordMatcher wordRule = new CombinedWordRule.WordMatcher();
 
 			for (String keyword : textEditorBuilder.keywordList) {
@@ -294,6 +311,12 @@ public class SimpleSourceTextEditorBuilder {
 
 			setRules(rules);
 			setDefaultReturnToken(defaultToken);
+		}
+		
+		@Override
+		public IToken nextToken() {
+			IToken nextToken = super.nextToken();
+			return nextToken;
 		}
 	}
 
