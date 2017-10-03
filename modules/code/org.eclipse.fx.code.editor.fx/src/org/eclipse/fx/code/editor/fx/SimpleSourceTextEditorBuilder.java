@@ -154,23 +154,23 @@ public class SimpleSourceTextEditorBuilder {
 //		editor.setDocument(document);
 
 		List<String> contentTypes = new ArrayList<String>();
-		if (singleLineCommentStart.isEmpty()) {
+		if (!singleLineCommentStart.isEmpty()) {
 			contentTypes.add("__" + languageName + "_singlelinecomment");
 		}
 
-		if (singleLineDocCommentStart.isEmpty()) {
+		if (!singleLineDocCommentStart.isEmpty()) {
 			contentTypes.add("__" + languageName + "_singlelinedoccomment");
 		}
 
-		if (multiLineComment.isEmpty()) {
+		if (!multiLineComment.isEmpty()) {
 			contentTypes.add("__" + languageName + "_multilinecomment");
 		}
 
-		if (multiLineDocComment.isEmpty()) {
+		if (!multiLineDocComment.isEmpty()) {
 			contentTypes.add("__" + languageName + "_multilinedoccomment");
 		}
 
-		if (stringIdentifier.isEmpty()) {
+		if (!stringIdentifier.isEmpty()) {
 			contentTypes.add("__" + languageName + "_string");
 		}
 
@@ -197,35 +197,35 @@ public class SimpleSourceTextEditorBuilder {
 		public PartitionerImpl(SimpleSourceTextEditorBuilder textEditorBuilder) {
 			List<IPredicateRule> rules = new ArrayList<>();
 
-			if (textEditorBuilder.singleLineCommentStart.isEmpty()) {
+			if (!textEditorBuilder.singleLineCommentStart.isEmpty()) {
 				Token token = new Token("__" + textEditorBuilder.languageName + "_singlelinecomment");
 				for (String s : textEditorBuilder.singleLineCommentStart) {
 					rules.add(new SingleLineRule(s, null, token));
 				}
 			}
 
-			if (textEditorBuilder.singleLineDocCommentStart.isEmpty()) {
+			if (!textEditorBuilder.singleLineDocCommentStart.isEmpty()) {
 				Token token = new Token("__" + textEditorBuilder.languageName + "_singlelinedoccomment");
 				for (String s : textEditorBuilder.singleLineDocCommentStart) {
 					rules.add(new SingleLineRule(s, null, token));
 				}
 			}
 
-			if (textEditorBuilder.multiLineComment.isEmpty()) {
+			if (!textEditorBuilder.multiLineComment.isEmpty()) {
 				Token token = new Token("__" + textEditorBuilder.languageName + "_multilinecomment");
 				for (MultiLine m : textEditorBuilder.multiLineComment) {
 					rules.add(new MultiLineRule(m.start, m.end, token));
 				}
 			}
 
-			if (textEditorBuilder.multiLineDocComment.isEmpty()) {
+			if (!textEditorBuilder.multiLineDocComment.isEmpty()) {
 				Token token = new Token("__" + textEditorBuilder.languageName + "_multilinedoccomment");
 				for (MultiLine m : textEditorBuilder.multiLineDocComment) {
 					rules.add(new MultiLineRule(m.start, m.end, token));
 				}
 			}
 
-			if (textEditorBuilder.stringIdentifier.isEmpty()) {
+			if (!textEditorBuilder.stringIdentifier.isEmpty()) {
 				Token token = new Token("__" + textEditorBuilder.languageName + "_string");
 				for (Character c : textEditorBuilder.stringIdentifier) {
 					rules.add(new SingleLineRule(c.toString(), c.toString(), token, textEditorBuilder.stringEscapeChar));
@@ -244,31 +244,31 @@ public class SimpleSourceTextEditorBuilder {
 				setRepairer(dr, "__dftl_partition_content_type");				
 			}
 			
-			if (textEditorBuilder.singleLineCommentStart.isEmpty()) {
+			if (!textEditorBuilder.singleLineCommentStart.isEmpty()) {
 				DefaultDamagerRepairer dr = new DefaultDamagerRepairer(new NoRuleRuleScanner(textEditorBuilder.languageName + "_comment"));
 				setDamager(dr, "__" + textEditorBuilder.languageName + "_singlelinecomment");
 				setRepairer(dr, "__" + textEditorBuilder.languageName + "_singlelinecomment");
 			}
 
-			if (textEditorBuilder.singleLineDocCommentStart.isEmpty()) {
+			if (!textEditorBuilder.singleLineDocCommentStart.isEmpty()) {
 				DefaultDamagerRepairer dr = new DefaultDamagerRepairer(new NoRuleRuleScanner(textEditorBuilder.languageName + "_doccomment"));
 				setDamager(dr, "__" + textEditorBuilder.languageName + "_singlelinedoccomment");
 				setRepairer(dr, "__" + textEditorBuilder.languageName + "_singlelinedoccomment");
 			}
 
-			if (textEditorBuilder.multiLineComment.isEmpty()) {
+			if (!textEditorBuilder.multiLineComment.isEmpty()) {
 				DefaultDamagerRepairer dr = new DefaultDamagerRepairer(new NoRuleRuleScanner(textEditorBuilder.languageName + "_comment"));
 				setDamager(dr, "__" + textEditorBuilder.languageName + "_multilinecomment");
 				setRepairer(dr, "__" + textEditorBuilder.languageName + "_multilinecomment");
 			}
 
-			if (textEditorBuilder.multiLineDocComment.isEmpty()) {
+			if (!textEditorBuilder.multiLineDocComment.isEmpty()) {
 				DefaultDamagerRepairer dr = new DefaultDamagerRepairer(new NoRuleRuleScanner(textEditorBuilder.languageName + "_doccomment"));
 				setDamager(dr, "__" + textEditorBuilder.languageName + "_multilinedoccomment");
 				setRepairer(dr, "__" + textEditorBuilder.languageName + "_multilinedoccomment");
 			}
 
-			if (textEditorBuilder.stringIdentifier.isEmpty()) {
+			if (!textEditorBuilder.stringIdentifier.isEmpty()) {
 				DefaultDamagerRepairer dr = new DefaultDamagerRepairer(new NoRuleRuleScanner(textEditorBuilder.languageName + "_string"));
 				setDamager(dr, "__" + textEditorBuilder.languageName + "_string");
 				setRepairer(dr, "__" + textEditorBuilder.languageName + "_string");
