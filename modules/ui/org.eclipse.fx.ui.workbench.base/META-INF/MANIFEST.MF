@@ -47,5 +47,6 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.M
  OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.EObjectAdapterProvider.xml,
  OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.CommandServiceImplCF.xml,
  OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.AppMementoCF.xml,
- OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.TranslationServiceContextFunction.xml
+ OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.TranslationServiceContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.UncaughtExceptionSupport.xml
 Bundle-Vendor: Eclipse.org
