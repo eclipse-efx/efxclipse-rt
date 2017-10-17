@@ -39,6 +39,7 @@ import org.eclipse.fx.core.ServiceUtils.ServiceReference;
 import org.eclipse.fx.core.internal.sm.Component;
 import org.eclipse.fx.core.internal.sm.Component11;
 import org.eclipse.fx.core.internal.sm.Component12;
+import org.eclipse.fx.core.internal.sm.Component13;
 import org.eclipse.fx.core.internal.sm.Properties;
 import org.eclipse.fx.core.internal.sm.Property;
 import org.eclipse.fx.core.internal.sm.Reference;
@@ -360,8 +361,10 @@ public class JavaDSServiceProcessor {
 			JAXBContext jaxbContext;
 			if (data.contains("http://www.osgi.org/xmlns/scr/v1.1.0")) { //$NON-NLS-1$
 				jaxbContext = JAXBContext.newInstance(Component11.class);
-			} else {
+			} else if( data.contains("http://www.osgi.org/xmlns/scr/v1.2.0") ) { //$NON-NLS-1$
 				jaxbContext = JAXBContext.newInstance(Component12.class);
+			} else {
+				jaxbContext = JAXBContext.newInstance(Component13.class);
 			}
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
