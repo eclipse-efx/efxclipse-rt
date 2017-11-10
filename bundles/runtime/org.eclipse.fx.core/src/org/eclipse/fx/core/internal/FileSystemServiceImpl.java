@@ -13,7 +13,7 @@ package org.eclipse.fx.core.internal;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.ClosedWatchServiceException;
-import java.nio.file.FileSystems;
+import java.nio.file.FileSystem;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardWatchEventKinds;
@@ -62,7 +62,7 @@ public class FileSystemServiceImpl implements FilesystemService {
 	@Override
 	public Subscription observePath(Path path, BiConsumer<Kind, Path> consumer) {
 		if (this.thread == null || !this.thread.isAlive()) {
-			this.thread = new CheckThread();
+			this.thread = new CheckThread(path.getFileSystem());
 			this.thread.start();
 		}
 		try {
@@ -78,10 +78,10 @@ public class FileSystemServiceImpl implements FilesystemService {
 		private final Executor dispatcher = Executors.newCachedThreadPool();
 		private final Thread shutdownCleanup;
 
-		public CheckThread() {
+		public CheckThread(FileSystem fileSystem) {
 			setDaemon(true);
 			try {
-				this.watcher = FileSystems.getDefault().newWatchService();
+				this.watcher = fileSystem.newWatchService();
 			} catch (IOException e) {
 				throw new IllegalStateException();
 			}
