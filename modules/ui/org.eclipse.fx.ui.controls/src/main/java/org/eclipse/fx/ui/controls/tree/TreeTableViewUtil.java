@@ -38,7 +38,7 @@ import javafx.scene.control.TreeTableView;
  */
 public class TreeTableViewUtil {
 	/**
-	 * Properties of a {@link TreeTableView} one can capture in an memento
+	 * Properties of a {@link TreeTableView} one can capture in an {@link Memento}
 	 * 
 	 * @since 3.1.0
 	 */
@@ -64,6 +64,7 @@ public class TreeTableViewUtil {
 	private static final int VISIBLE_NO = 2;
 
 	private static final String AUTOCAPTURE_KEY = "autoCapture"; //$NON-NLS-1$
+	private static final @NonNull String COLUMN_ORDER_KEY = "column_order"; //$NON-NLS-1$
 
 	/**
 	 * Restore the state of the {@link TreeTableView} and use the
@@ -101,7 +102,7 @@ public class TreeTableViewUtil {
 		Map<TreeTableColumn<S, ?>, String> nodeToIdMap = idToNodeMap.entrySet().stream().collect(Collectors.toMap(Entry::getValue, Entry::getKey));
 
 		@SuppressWarnings({ "unchecked", "null" })
-		final @NonNull List<String> savedOrder = m.get("column_order", List.class, Collections.emptyList()); //$NON-NLS-1$
+		final @NonNull List<String> savedOrder = m.get(COLUMN_ORDER_KEY, List.class, Collections.emptyList());
 
 		view.getColumns().addListener((ListChangeListener<TreeTableColumn<S, ?>>) change -> {
 			change.reset();
@@ -135,7 +136,7 @@ public class TreeTableViewUtil {
 		if (isPropertySet(properties, TreeTableView_Properties.COLUMN_ORDER)) {
 			List<String> currentOrder = view.getColumns().stream().map(columnKeyProvider).collect(Collectors.toList());
 			@SuppressWarnings("unchecked")
-			List<String> restoredOrder = m.get("column_order", List.class, currentOrder); //$NON-NLS-1$
+			List<String> restoredOrder = m.get(COLUMN_ORDER_KEY, List.class, currentOrder);
 			if (!currentOrder.equals(restoredOrder)) {
 				// Unable to restore if the column count matches
 				if (restoredOrder != null && currentOrder.size() == restoredOrder.size()) {
@@ -308,8 +309,7 @@ public class TreeTableViewUtil {
 						});
 					}
 					if (c.wasPermutated() || c.wasAdded() && c.wasRemoved()) {
-						m.put("column_order", //$NON-NLS-1$
-								view.getColumns().stream().map(columnKeyProvider).collect(Collectors.toList()), ObjectSerializer.JAXB_SERIALIZER);
+						m.put(COLUMN_ORDER_KEY, view.getColumns().stream().map(columnKeyProvider).collect(Collectors.toList()), ObjectSerializer.JAXB_SERIALIZER);
 					}
 				}
 			});
