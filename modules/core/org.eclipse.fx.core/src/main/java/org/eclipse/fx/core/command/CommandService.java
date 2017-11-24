@@ -73,4 +73,10 @@ public interface CommandService {
 	 * @since 3.0
 	 */
 	public <O> Optional<Command<O>> createCommand(@NonNull String commandId);
+	
+	/**
+	 * @return check if the command-service is disposed
+	 * @since 3.1.0
+	 */
+	public boolean isDisposed();
 }
