@@ -68,6 +68,18 @@ public abstract class AbstractJFXApplication implements IApplication {
 		}
 	}
 
+	/**
+	 * Set value returned by
+	 * {@link AbstractJFXApplication#start(IApplicationContext)}
+	 * 
+	 * @param returnValue
+	 *            the value
+	 * @since 3.1.0
+	 */
+	public void setReturnValue(Object returnValue) {
+		this.returnValue = returnValue;
+	}
+
 	@Override
 	public final Object start(IApplicationContext context) throws Exception {
 		SELF = this;
@@ -108,7 +120,8 @@ public abstract class AbstractJFXApplication implements IApplication {
 	 * @see IApplication#start(IApplicationContext)
 	 * @see Application#start(Stage)
 	 */
-	protected abstract void jfxStart(@NonNull IApplicationContext applicationContext, @NonNull Application jfxApplication, @NonNull Stage primaryStage);
+	protected abstract void jfxStart(@NonNull IApplicationContext applicationContext,
+			@NonNull Application jfxApplication, @NonNull Stage primaryStage);
 
 	/**
 	 * Method called when the javafx application is shutdown
