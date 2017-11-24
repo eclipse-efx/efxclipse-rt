@@ -87,6 +87,11 @@ public class CommandServiceImpl implements CommandService {
 	void dispose() {
 		this.disposed = true;
 	}
+	
+	@Override
+	public boolean isDisposed() {
+		return this.disposed;
+	}
 
 	@Override
 	public boolean exists(@NonNull String commandId) {
@@ -165,7 +170,7 @@ public class CommandServiceImpl implements CommandService {
 
 	static class CommandImpl<O> implements Command<O> {
 		private final String commandId;
-		private CommandService commandService;
+		CommandService commandService;
 		private final IEclipseContext context;
 
 		private ReadOnlyBooleanWrapper enabledProperty = new ReadOnlyBooleanWrapper(this, "enabled"); //$NON-NLS-1$
@@ -181,9 +186,15 @@ public class CommandServiceImpl implements CommandService {
 
 		@PostConstruct
 		void init(IEventBroker eventBroker) {
-			eventBroker.subscribe(ScopedObjectFactory.KEYMODIFED_TOPIC, e -> recalculateState());
+			eventBroker.subscribe(ScopedObjectFactory.KEYMODIFED_TOPIC, e -> {
+				if( ! this.commandService.isDisposed() ) {
+					recalculateState();
+				}
+			});
 			eventBroker.subscribe(UIEvents.REQUEST_ENABLEMENT_UPDATE_TOPIC, e -> {
-				recalculateState();
+				if( ! this.commandService.isDisposed() ) {
+					recalculateState();
+				}
 			});
 			eventBroker.subscribe(UIEvents.Dirtyable.TOPIC_DIRTY, e -> recalculateState());
 			this.context.runAndTrack(new RunAndTrack() {
@@ -193,8 +204,11 @@ public class CommandServiceImpl implements CommandService {
 					context.get(IServiceConstants.ACTIVE_CONTEXTS);
 					context.get(IServiceConstants.ACTIVE_SELECTION);
 					context.get(IServiceConstants.ACTIVE_PART);
-					recalculateState();
-					return true;
+					if( ! CommandImpl.this.commandService.isDisposed() ) {
+						recalculateState();
+						return true;
+					}
+					return false;
 				}
 			});
 		}

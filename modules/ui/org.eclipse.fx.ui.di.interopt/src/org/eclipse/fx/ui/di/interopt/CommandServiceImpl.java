@@ -79,12 +79,10 @@ public class CommandServiceImpl implements CommandService {
 		this.context = context;
 		this.serializer = serializer;
 		this.adapterService = adapterService;
-		System.err.println("CREATED: " + context);
 	}
 	
 	@PreDestroy
 	void cleanup() {
-		System.err.println("DISPOSED!!!!");
 		this.diposed = true;
 	}
 
@@ -148,6 +146,11 @@ public class CommandServiceImpl implements CommandService {
 
 		return rv;
 	}
+	
+	@Override
+	public boolean isDisposed() {
+		return this.diposed;
+	}
 
 	@Override
 	public <O> Optional<Command<O>> createCommand(@NonNull String commandId) {
@@ -184,7 +187,9 @@ public class CommandServiceImpl implements CommandService {
 		void init(IEventBroker eventBroker) {
 //			eventBroker.subscribe(ScopedObjectFactory.KEYMODIFED_TOPIC, e -> recalculateState());
 			eventBroker.subscribe(UIEvents.REQUEST_ENABLEMENT_UPDATE_TOPIC, e -> {
-				recalculateState();
+				if( ! this.commandService.isDisposed() ) {
+					recalculateState();	
+				}
 			});
 			eventBroker.subscribe(UIEvents.Dirtyable.TOPIC_DIRTY, e -> recalculateState());
 			this.context.runAndTrack(new RunAndTrack() {
@@ -194,8 +199,11 @@ public class CommandServiceImpl implements CommandService {
 					context.get(IServiceConstants.ACTIVE_CONTEXTS);
 					context.get(IServiceConstants.ACTIVE_SELECTION);
 					context.get(IServiceConstants.ACTIVE_PART);
-					recalculateState();
-					return true;
+					if( ! CommandImpl.this.commandService.isDisposed() ) {
+						recalculateState();
+						return true;
+					}
+					return false;
 				}
 			});
 		}
@@ -213,7 +221,7 @@ public class CommandServiceImpl implements CommandService {
 
 		@SuppressWarnings({ "unchecked" })
 		void recalculateState() {
-			this.enabledProperty.set(this.commandService.canExecute(this.commandId, (Map<String, Object>) (Map<?, ?>) this.parameters));
+			this.enabledProperty.set(this.commandService.canExecute(this.commandId, (Map<String, Object>) (Map<?, ?>) this.parameters));				
 		}
 
 		@Override
