@@ -291,6 +291,7 @@ public class SashPane extends Region {
 	}
 
 	private void handleDragSash(MouseEvent e) {
+		e.consume();
 		Rectangle rectangle = new Rectangle(getWidth(), getHeight(), getInsets());
 
 		if (this.horizontal.get()) {
@@ -355,6 +356,7 @@ public class SashPane extends Region {
 	}
 
 	private void handlePressedSash(MouseEvent e) {
+		e.consume();
 		Sash sash = (Sash) e.getSource();
 
 		int sashIndex = -1;
