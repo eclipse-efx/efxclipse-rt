@@ -37,6 +37,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -225,6 +226,14 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				this.contentArea.getChildren().addAll(this.dataArea, this.menuGroup);
 				Node n = getWidget();
 				n.getStyleClass().add(RendererConstants.CSS_CLASS_PART_CONTENT);
+				
+				if( this.domElement.getTags().contains(BaseRenderer.SCROLLABLE) ) {
+					ScrollPane scroll = new ScrollPane(n);
+					scroll.setFitToHeight(true);
+					scroll.setFitToWidth(true);
+					n = scroll;
+				}
+				
 				this.dataArea.setCenter(n);
 			}
 			return this.contentArea;

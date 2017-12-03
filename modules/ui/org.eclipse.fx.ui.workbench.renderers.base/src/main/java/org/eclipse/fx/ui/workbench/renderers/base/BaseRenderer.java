@@ -79,6 +79,11 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	public static final String CONTEXT_DOM_ELEMENT = "fx.rendering.domElement"; //$NON-NLS-1$
 
 	private static final String RENDER_KEY = "_renderer"; //$NON-NLS-1$
+	
+	/**
+	 * Make rendered content scrollable
+	 */
+	public static final String SCROLLABLE = "fx_scrollable"; //$NON-NLS-1$
 
 	// /**
 	// * Key used to store the localized label in the context

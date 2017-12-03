@@ -38,8 +38,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
@@ -55,8 +53,6 @@ import com.google.common.base.Strings;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -67,6 +63,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
@@ -351,7 +348,16 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 					this.pane.setTop(box);
 				}
 
-				this.pane.setCenter(getWidget());
+				Node widget = getWidget();
+				
+				if( this.domainElement.getTags().contains(BaseRenderer.SCROLLABLE) ) {
+					ScrollPane scroll = new ScrollPane(widget);
+					scroll.setFitToWidth(true);
+					scroll.setFitToHeight(true);
+					widget = scroll;
+				}
+				
+				this.pane.setCenter(widget);
 			}
 
 			return this.pane;
@@ -590,6 +596,14 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		@Nullable
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 
+		@NonNull
+		private final MPartStack domainElement;
+
+		@Inject
+		public PaginationWidgetImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartStack domainElement) {
+			this.domainElement = domainElement;
+		}
+		
 		@Override
 		public void setMinMaxCallback(WCallback<WMinMaxState, Void> minMaxCallback) {
 			// TODO Auto-generated method stub
@@ -667,8 +681,15 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public Pagination getWidgetNode() {
-			return getWidget();
+		public Node getWidgetNode() {
+			Node widget = getWidget();
+			if( this.domainElement.getTags().contains(BaseRenderer.SCROLLABLE) ) {
+				ScrollPane scroll = new ScrollPane(widget);
+				scroll.setFitToWidth(true);
+				scroll.setFitToHeight(true);
+				widget = scroll;
+			}
+			return widget;
 		}
 
 		@Override
@@ -761,7 +782,15 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		List<@NonNull WStackItem<Object, Node>> items = new ArrayList<>();
 		@Nullable
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
+		
+		@NonNull
+		private final MPartStack domainElement;
 
+		@Inject
+		public StackPaneWidgetImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartStack domainElement) {
+			this.domainElement = domainElement;
+		}
+		
 		@Override
 		public void setMinMaxCallback(WCallback<WMinMaxState, Void> minMaxCallback) {
 			// TODO Auto-generated method stub
@@ -869,8 +898,15 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public StackPane getWidgetNode() {
-			return getWidget();
+		public Node getWidgetNode() {
+			Node widget = getWidget();
+			if( this.domainElement.getTags().contains(BaseRenderer.SCROLLABLE) ) {
+				ScrollPane scroll = new ScrollPane(widget);
+				scroll.setFitToWidth(true);
+				scroll.setFitToHeight(true);
+				widget = scroll;
+			}
+			return widget;
 		}
 
 		@Override

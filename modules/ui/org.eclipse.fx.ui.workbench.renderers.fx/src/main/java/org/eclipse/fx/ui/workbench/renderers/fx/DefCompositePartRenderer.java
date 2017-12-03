@@ -22,6 +22,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.SplitPane.Divider;
 import javafx.scene.input.MouseEvent;
@@ -82,6 +83,12 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 		BorderPane dataArea;
 		StackPane toolbarGroup;
 		Group menuGroup;
+		
+		private final MCompositePart domElement;
+		
+		public AbstractCompositePartImpl(MCompositePart domElement) {
+			this.domElement = domElement;
+		}
 
 		@Override
 		public void setToolbar(WToolBar<Node> toolbar) {
@@ -154,6 +161,14 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 				this.contentArea.getChildren().addAll(this.dataArea, this.menuGroup);
 				Node n = getWidget();
 				n.getStyleClass().add(RendererConstants.CSS_CLASS_PART_CONTENT);
+				
+				if( this.domElement.getTags().contains(BaseRenderer.SCROLLABLE) ) {
+					ScrollPane scroll = new ScrollPane(n);
+					scroll.setFitToHeight(true);
+					scroll.setFitToWidth(true);
+					n = scroll;
+				}
+				
 				this.dataArea.setCenter(n);
 			}
 			return this.contentArea;
@@ -223,6 +238,11 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 
 	static class WFixedSashImpl extends AbstractCompositePartImpl<GridLayoutPane> {
 		private StackPane overlayContainer;
+		
+		@Inject
+		public WFixedSashImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MCompositePart domElement) {
+			super(domElement);
+		}
 
 		@Override
 		public void setDialog(Object dialogNode) {
@@ -387,6 +407,11 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		private StackPane overlayContainer;
+		
+		@Inject
+		public WResizableSashImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MCompositePart domElement) {
+			super(domElement);
+		}
 
 		@Override
 		public void setDialog(Object dialogNode) {

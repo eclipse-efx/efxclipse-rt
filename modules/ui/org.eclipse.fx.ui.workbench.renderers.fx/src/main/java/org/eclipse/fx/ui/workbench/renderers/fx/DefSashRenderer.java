@@ -38,6 +38,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.SplitPane.Divider;
 import javafx.scene.layout.ColumnConstraints;
@@ -95,6 +96,14 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			}
 
 			return c;
+		}
+		
+		@NonNull
+		private final MPartSashContainer domainElement;
+
+		@Inject
+		public WFixedSashImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartSashContainer domainElement) {
+			this.domainElement = domainElement;
 		}
 
 		@Override
@@ -265,8 +274,15 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 
 		@Override
-		public GridPane getWidgetNode() {
-			return getWidget();
+		public Node getWidgetNode() {
+			Node widget = getWidget();
+			if( this.domainElement.getTags().contains(BaseRenderer.SCROLLABLE) ) {
+				ScrollPane scroll = new ScrollPane(widget);
+				scroll.setFitToWidth(true);
+				scroll.setFitToHeight(true);
+				widget = scroll;
+			}
+			return widget;
 		}
 
 		@Override
@@ -282,7 +298,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 	}
 
-	static class WResizableSashImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MPartSashContainer> implements WSash<Node> {
+	static class WResizableSashImpl extends WLayoutedWidgetImpl<SplitPane, Node, MPartSashContainer> implements WSash<Node> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		ChangeListener<Number> listener = new ChangeListener<Number>() {
@@ -304,6 +320,14 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 				}
 			}
 		};
+		
+		@NonNull
+		private final MPartSashContainer domainElement;
+
+		@Inject
+		public WResizableSashImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartSashContainer domainElement) {
+			this.domainElement = domainElement;
+		}
 
 		@Override
 		public void updateLayout() {
@@ -386,8 +410,15 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 
 		@Override
-		public SplitPane getWidgetNode() {
-			return getWidget();
+		public Node getWidgetNode() {
+			Node widget = getWidget();
+			if( this.domainElement.getTags().contains(BaseRenderer.SCROLLABLE) ) {
+				ScrollPane scroll = new ScrollPane(widget);
+				scroll.setFitToWidth(true);
+				scroll.setFitToHeight(true);
+				widget = scroll;
+			}
+			return widget;
 		}
 
 		private static void setResizableWithParent(WLayoutedWidget widget) {
@@ -486,6 +517,14 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 	static class WResizableSashImpl_2 extends WLayoutedWidgetImpl<SashPane, Node, MPartSashContainer> implements WSash<Node> {
 		private List<WLayoutedWidget<?>> items = new ArrayList<>();
 
+		@NonNull
+		private final MPartSashContainer domainElement;
+
+		@Inject
+		public WResizableSashImpl_2(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartSashContainer domainElement) {
+			this.domainElement = domainElement;
+		}
+		
 		@Override
 		public int getItemCount() {
 			SashPane p = getWidget();
@@ -579,7 +618,14 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 
 		@Override
 		public @NonNull Node getWidgetNode() {
-			return getWidget();
+			Node widget = getWidget();
+			if( this.domainElement.getTags().contains(BaseRenderer.SCROLLABLE) ) {
+				ScrollPane scroll = new ScrollPane(widget);
+				scroll.setFitToWidth(true);
+				scroll.setFitToHeight(true);
+				widget = scroll;
+			}
+			return widget;
 		}
 
 		@Override
