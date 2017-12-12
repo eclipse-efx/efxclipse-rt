@@ -2280,4 +2280,27 @@ public class FXBindings {
 			return binding;
 		}
 	}
+	
+	/**
+	 * wraps an observable value in a list binding.
+	 * <p>The resulting list contains at most one element - the content of the observable value. If the observable value is null, the list is empty.</p>
+	 * @param in
+	 * @return the ListBinding
+	 */
+	public static <T> ListBinding<T> toList(ObservableValue<T> in) {
+		return new ListBinding<T>() {
+			{
+				bind(in);
+			}
+			@Override
+			protected ObservableList<T> computeValue() {
+				T value = in.getValue();
+				if (value == null) {
+					return FXCollections.emptyObservableList();
+				} else {
+					return FXCollections.singletonObservableList(value);
+				}
+			}
+		};
+	}
 }
