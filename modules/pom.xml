@@ -5,6 +5,19 @@
 	<artifactId>parent</artifactId>
 	<version>4.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	
+	<properties>
+		<dep-org.eclipse.jdt.annotation>2.1.100</dep-org.eclipse.jdt.annotation>
+		<dep-org.eclipse.osgi>3.12.0</dep-org.eclipse.osgi>
+		<dep-javax.inject>1.0.0</dep-javax.inject>
+		<dep-org.eclipse.osgi.services>3.6.0</dep-org.eclipse.osgi.services>
+		<dep-com.google.guava>21.0.0</dep-com.google.guava>
+		<dep-org.apache.commons.lang>2.6.0</dep-org.apache.commons.lang>
+	</properties>
+	
+	<modules>
+		<module>core/org.eclipse.fx.core</module>
+	</modules>
 
 	<repositories>
 		<repository>
@@ -106,8 +119,7 @@
 						<tag>
 							<name>noreference</name>
 							<placement>a</placement>
-							<head>@noreference - This API is not finalized and should be
-								treated as an implementation detail</head>
+							<head>@noreference - This API is not finalized and should be treated as an implementation detail</head>
 						</tag>
 					</tags>
 				</configuration>

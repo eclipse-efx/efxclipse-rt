@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.core.cache.internal.SimpleMapCacheFactory">
-   <service>
-      <provide interface="org.eclipse.fx.core.cache.CacheFactory"/>
-   </service>
-   <implementation class="org.eclipse.fx.core.cache.internal.SimpleMapCacheFactory"/>
-</scr:component>
