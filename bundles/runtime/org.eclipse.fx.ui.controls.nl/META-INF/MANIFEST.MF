@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: NL Support
-Bundle-SymbolicName: org.eclipse.fx.ui.controls.nl;singleton:=true
-Bundle-Version: 3.0.0.qualifier
-Fragment-Host: org.eclipse.fx.ui.controls
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8

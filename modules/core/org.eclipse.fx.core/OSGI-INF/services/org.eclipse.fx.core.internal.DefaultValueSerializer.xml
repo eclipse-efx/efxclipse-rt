@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.core.internal.DefaultValueSerializer">
+   <service>
+      <provide interface="org.eclipse.fx.core.ValueSerializer"/>
+      <provide interface="org.eclipse.fx.core.RankedService"/>
+   </service>
+   <reference bind="registerProvider" cardinality="0..n" interface="org.eclipse.fx.core.ValueSerializer$ValueSerializeProvider" name="registerProvider" policy-option="greedy" unbind="unregisterProvider"/>
+   <implementation class="org.eclipse.fx.core.internal.DefaultValueSerializer"/>
+</scr:component>
