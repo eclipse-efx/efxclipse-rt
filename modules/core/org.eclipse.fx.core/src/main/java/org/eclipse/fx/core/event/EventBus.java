@@ -23,12 +23,14 @@ import org.eclipse.jdt.annotation.Nullable;
 public interface EventBus {
 	/**
 	 * Publish the event
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param event
 	 *            the event to publish
 	 * @param synchronous
-	 *            <code>true</code> returns after the event has been processed
-	 *            by all subscribers
+	 *            <code>true</code> returns after the event has been processed by
+	 *            all subscribers
 	 */
 	public <@Nullable T> void publish(Event<T> event, boolean synchronous);
 
@@ -40,22 +42,24 @@ public interface EventBus {
 	 * @param data
 	 *            the data to publish
 	 * @param synchronous
-	 *            <code>true</code> returns after the event has been processed
-	 *            by all subscribers
+	 *            <code>true</code> returns after the event has been processed by
+	 *            all subscribers
 	 */
 	@Deprecated
 	public void publish(String topic, Object data, boolean synchronous);
 
 	/**
 	 * Publish the event
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param topic
 	 *            the topic on which you want to publish the event
 	 * @param data
 	 *            the data to publish
 	 * @param synchronous
-	 *            <code>true</code> returns after the event has been processed
-	 *            by all subscribers
+	 *            <code>true</code> returns after the event has been processed by
+	 *            all subscribers
 	 * @since 2.2.0
 	 */
 	public default <T> void publish(Topic<T> topic, T data, boolean synchronous) {
@@ -64,7 +68,9 @@ public interface EventBus {
 
 	/**
 	 * Subscribe to an event topic
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param topic
 	 *            the topic
 	 * @param consumer
@@ -76,7 +82,9 @@ public interface EventBus {
 
 	/**
 	 * Subscribe to an event topic
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param topic
 	 *            the topic
 	 * @param consumer
@@ -90,7 +98,9 @@ public interface EventBus {
 
 	/**
 	 * Wrap a main data consumer as an event consumer
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param consumer
 	 *            the consumer
 	 * @return the event consumer

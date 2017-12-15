@@ -22,9 +22,9 @@ public class NumberUtils {
 	 * @param v
 	 *            the value to constraint
 	 * @param min
-	 *            the lower bound (only values >= 0 are applied)
+	 *            the lower bound (only values &gt;= 0 are applied)
 	 * @param max
-	 *            the upper bound (only values >= 0 are applied)
+	 *            the upper bound (only values &gt;= 0 are applied)
 	 * @return the value
 	 * @since 2.2.0
 	 */

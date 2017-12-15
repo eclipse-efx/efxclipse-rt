@@ -81,8 +81,7 @@ public interface Status {
 	 *
 	 * @param states
 	 *            the states
-	 * @return <code>true</code> if one of the states matches
-	 *         {@link #getState()}
+	 * @return <code>true</code> if one of the states matches {@link #getState()}
 	 */
 	public default boolean is(State... states) {
 		return Stream.of(states).anyMatch(s -> s == getState());
@@ -98,7 +97,9 @@ public interface Status {
 
 	/**
 	 * Create a new value status with {@link State#OK}
-	 *
+	 * 
+	 * @param <O>
+	 *            the value type
 	 * @param value
 	 *            the value
 	 * @return a status
@@ -129,7 +130,9 @@ public interface Status {
 
 	/**
 	 * Create a new status object
-	 *
+	 * 
+	 * @param <O>
+	 *            the value type
 	 * @param value
 	 *            the value
 	 *

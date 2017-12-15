@@ -74,6 +74,8 @@ public interface ValueObservable<T> {
 	}
 
 	/**
+	 * @param <T>
+	 *            the type
 	 * @return an object observable
 	 */
 	public static <@Nullable T> ValueObservable<T> createObservableObject() {
@@ -82,7 +84,9 @@ public interface ValueObservable<T> {
 
 	/**
 	 * Create an object observable
-	 *
+	 * 
+	 * @param <T>
+	 *            the type
 	 * @param value
 	 *            initial value
 	 * @return an object observable

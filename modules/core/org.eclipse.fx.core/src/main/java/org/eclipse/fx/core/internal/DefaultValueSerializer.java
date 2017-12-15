@@ -112,7 +112,7 @@ public class DefaultValueSerializer implements ValueSerializer, RankedService {
 			Calendar.Builder b = new Calendar.Builder();
 			b.setInstant(Date.from(Instant.parse(s)));
 			return b.build();
-		} , (v) -> v.toInstant().toString()));
+		}, (v) -> v.toInstant().toString()));
 		if (!SystemUtils.isOsgiEnv()) {
 			Map<Class<?>, TwoVal<?>> collect = ServiceUtils.getServiceList(ValueSerializeProvider.class).stream()
 					.collect(Collectors.toMap(p -> p.getType(), p -> new TwoVal<>(p::fromString, p::toString)));
@@ -127,7 +127,9 @@ public class DefaultValueSerializer implements ValueSerializer, RankedService {
 
 	/**
 	 * Register a provider
-	 *
+	 * 
+	 * @param <T>
+	 *            the serialized type
 	 * @param p
 	 *            the provider
 	 */

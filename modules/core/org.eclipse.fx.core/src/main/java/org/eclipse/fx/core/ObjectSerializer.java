@@ -39,7 +39,9 @@ public interface ObjectSerializer {
 
 	/**
 	 * Serialize a collection ({@link Set} and {@link List})
-	 *
+	 * 
+	 * @param <O>
+	 *            the value type
 	 * @param data
 	 *            the data
 	 * @param contentType
@@ -53,7 +55,9 @@ public interface ObjectSerializer {
 
 	/**
 	 * Deserialize an object from a string
-	 *
+	 * 
+	 * @param <O>
+	 *            the value type
 	 * @param clazz
 	 *            the type
 	 *
@@ -65,7 +69,11 @@ public interface ObjectSerializer {
 
 	/**
 	 * Deserialize collection content
-	 *
+	 * 
+	 * @param <O>
+	 *            the value type
+	 * @param <T>
+	 *            the collection type
 	 * @param type
 	 *            the collection type
 	 * @param contentType
@@ -75,7 +83,8 @@ public interface ObjectSerializer {
 	 * @return the collection
 	 * @since 2.3.0
 	 */
-	public default <O, T extends Collection<O>> T deserializeCollection(Class<T> type, Class<O> contentType, String value) {
+	public default <O, T extends Collection<O>> T deserializeCollection(Class<T> type, Class<O> contentType,
+			String value) {
 		return (T) deserialize(type, value);
 	}
 }

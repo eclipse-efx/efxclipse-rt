@@ -24,10 +24,14 @@ public class ReflectionUtil {
 
 	/**
 	 * Searches for a field in the given class and all of its super classes.
-	 * @param clazz Class to start the search for the field
-	 * @param name Name of the field
+	 * 
+	 * @param clazz
+	 *            Class to start the search for the field
+	 * @param name
+	 *            Name of the field
 	 * @return The field that was found
 	 * @throws NoSuchFieldException
+	 *             if the requested field is not found
 	 */
 	public static Field getField(Class<?> clazz, String name) throws NoSuchFieldException {
 		Class<?> searchClass = clazz;
@@ -46,10 +50,15 @@ public class ReflectionUtil {
 	}
 
 	/**
-	 * Utility method to set a field to a value. If the field is not accessible, it will be set to be accessible.
-	 * @param object Instance in which the value should be set
-	 * @param name Name of the field who's value should be set
-	 * @param value The value to be set
+	 * Utility method to set a field to a value. If the field is not accessible, it
+	 * will be set to be accessible.
+	 * 
+	 * @param object
+	 *            Instance in which the value should be set
+	 * @param name
+	 *            Name of the field who's value should be set
+	 * @param value
+	 *            The value to be set
 	 */
 	public static void setFieldValue(Object object, String name, Object value) {
 		try {
@@ -59,15 +68,20 @@ public class ReflectionUtil {
 			}
 			field.set(object, value);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			throw new RuntimeException("Could not set field value: " + object.getClass().getSimpleName() + "." + name, e); //$NON-NLS-1$ //$NON-NLS-2$
+			throw new RuntimeException("Could not set field value: " + object.getClass().getSimpleName() + "." + name, //$NON-NLS-1$ //$NON-NLS-2$
+					e);
 		}
 
 	}
 
 	/**
-	 * Utility method to read a field value. If the field is not accessible, it will be set to be accessible.
-	 * @param object Instance in which the value should be read
-	 * @param name Name of the field who's value should be read
+	 * Utility method to read a field value. If the field is not accessible, it will
+	 * be set to be accessible.
+	 * 
+	 * @param object
+	 *            Instance in which the value should be read
+	 * @param name
+	 *            Name of the field who's value should be read
 	 * @return The value of the field
 	 */
 	public static Object getFieldValue(Object object, String name) {
@@ -78,13 +92,17 @@ public class ReflectionUtil {
 			}
 			return field.get(object);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			throw new RuntimeException("Could not read field value: " + object.getClass().getSimpleName() + "." + name, e); //$NON-NLS-1$ //$NON-NLS-2$
+			throw new RuntimeException("Could not read field value: " + object.getClass().getSimpleName() + "." + name, //$NON-NLS-1$ //$NON-NLS-2$
+					e);
 		}
 	}
 
 	/**
-	 * Get a better description of a class (eg. what OSGi-Bundle, Jar, Java9 Module, ... it is found in)
-	 * @param cl the clazz
+	 * Get a better description of a class (eg. what OSGi-Bundle, Jar, Java9 Module,
+	 * ... it is found in)
+	 * 
+	 * @param cl
+	 *            the clazz
 	 * @return description
 	 */
 	public static String describeClass(Class<?> cl) {

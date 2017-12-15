@@ -18,7 +18,11 @@ package org.eclipse.fx.core.cache;
 public interface CacheFactory {
 	/**
 	 * Create a new cache instance
-	 *
+	 * 
+	 * @param <K>
+	 *            the key type
+	 * @param <V>
+	 *            the value type
 	 * @param configurationName
 	 *            the configuration name used to configure the cache instance
 	 * @return a new cache instance

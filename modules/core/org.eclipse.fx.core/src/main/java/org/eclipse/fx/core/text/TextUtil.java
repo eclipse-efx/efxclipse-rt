@@ -158,13 +158,11 @@ public class TextUtil {
 	 * Substitute template values (including child-properties) and format them
 	 *
 	 * The following examples are possible:
-	 * <p>
-	 *
+	 * 
 	 * <pre>
 	 * The name is ${person.firstname}.
 	 * The birthdate is ${person.birthdate,date,dd.MM.yyyy}.
 	 * </pre>
-	 * </p>
 	 *
 	 * @param template
 	 *            the template
@@ -213,7 +211,9 @@ public class TextUtil {
 
 	/**
 	 * Apply the consumer for each matched char
-	 *
+	 * 
+	 * @param <R>
+	 *            the result type
 	 * @param content
 	 *            the content
 	 * @param c
@@ -348,13 +348,13 @@ public class TextUtil {
 	 * <ul>
 	 * <li>{@link Triple#value1}: the new char array</li>
 	 * <li>{@link Triple#value2}: the indices the tabs have been found</li>
-	 * <li>{@link Triple#value3}: the new indices where a "tab" is starts
-	 * now</li>
+	 * <li>{@link Triple#value3}: the new indices where a "tab" is starts now</li>
 	 * </ul>
 	 *
 	 * @param source
 	 *            the source array
 	 * @param tabAdvance
+	 *            the number of advances
 	 * @return a triple with the values
 	 */
 	public static Triple<char[], int[], int[]> replaceTabBySpace(char[] source, int tabAdvance) {
@@ -450,8 +450,7 @@ public class TextUtil {
 	 *            the replacement character
 	 * @param predicate
 	 *            the predicate to decided if a character is replaced, first
-	 *            argument is the character index, second argument is the
-	 *            character
+	 *            argument is the character index, second argument is the character
 	 * @return transformed character array
 	 */
 	public static char[] replace(char[] source, char c, BiIntPredicate predicate) {
@@ -465,8 +464,8 @@ public class TextUtil {
 	private static String[] BASIC_STRING_CACHE = new String[256];
 
 	/**
-	 * Get the matching string for the char. The string object returned might be
-	 * the same instance.
+	 * Get the matching string for the char. The string object returned might be the
+	 * same instance.
 	 *
 	 * @param c
 	 *            the character

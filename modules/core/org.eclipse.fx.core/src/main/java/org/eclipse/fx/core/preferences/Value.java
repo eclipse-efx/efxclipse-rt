@@ -62,7 +62,7 @@ public interface Value<T> extends Adaptable {
 	 *
 	 * By default the following adapters are available:
 	 * <ul>
-	 * <li>Eclipse Databinding - {@link org.eclipse.core.databinding.observable.value.IObservableValue}</li>
+	 * <li>Eclipse Databinding - <code>org.eclipse.core.databinding.observable.value.IObservableValue</code></li>
 	 * <li>JavaFX property - {@link javafx.beans.property.Property}</li>
 	 * </ul>
 	 *
@@ -71,7 +71,6 @@ public interface Value<T> extends Adaptable {
 	 * @return the adapted type
 	 * @see Adaptable#adaptTo(Class)
 	 */
-	@SuppressWarnings("javadoc")
 	@Override
 	@Nullable
 	public <A> A adaptTo(@NonNull Class<A> adapt);
@@ -81,13 +80,12 @@ public interface Value<T> extends Adaptable {
 	 *
 	 * By default the following adapters are available:
 	 * <ul>
-	 * <li>Eclipse Databinding - {@link org.eclipse.core.databinding.observable.value.IObservableValue}</li>
+	 * <li>Eclipse Databinding - <code>org.eclipse.core.databinding.observable.value.IObservableValue</code></li>
 	 * <li>JavaFX property - {@link javafx.beans.property.Property}</li>
 	 * </ul>
 	 *
 	 * @see Adaptable#canAdaptTo(Class)
 	 */
 	@Override
-	@SuppressWarnings("javadoc")
 	public boolean canAdaptTo(@NonNull Class<?> adapt);
 }

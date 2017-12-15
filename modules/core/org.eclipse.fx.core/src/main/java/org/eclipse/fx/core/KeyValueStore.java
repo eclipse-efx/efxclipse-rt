@@ -41,8 +41,7 @@ public interface KeyValueStore<K, V> {
 	 *
 	 * @param key
 	 *            the key
-	 * @return <code>true</code> if there's a value (even a null) stored at this
-	 *         key
+	 * @return <code>true</code> if there's a value (even a null) stored at this key
 	 */
 	public boolean contains(K key);
 
@@ -61,7 +60,7 @@ public interface KeyValueStore<K, V> {
 	 */
 	public default Map<K, V> toMap() {
 		Map<K, V> map = new HashMap<>();
-		for( K k : getKeys() ) {
+		for (K k : getKeys()) {
 			map.put(k, get(k));
 		}
 		return map;
@@ -69,7 +68,11 @@ public interface KeyValueStore<K, V> {
 
 	/**
 	 * Create a store from the map
-	 *
+	 * 
+	 * @param <K>
+	 *            the key type
+	 * @param <V>
+	 *            the value type
 	 * @param map
 	 *            the map
 	 * @return a key value store backed by the map

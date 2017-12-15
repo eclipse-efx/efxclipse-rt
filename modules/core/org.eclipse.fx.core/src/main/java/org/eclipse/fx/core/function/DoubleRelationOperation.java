@@ -48,9 +48,9 @@ public interface DoubleRelationOperation {
 	 *
 	 * <pre>
 	 * <code>
-	 *  i < j
+	 *  i &lt; j
 	 * </code>
-	 * </pre>
+	 *  </pre>
 	 *
 	 * @param i
 	 *            the first operand
@@ -67,7 +67,7 @@ public interface DoubleRelationOperation {
 	 *
 	 * <pre>
 	 * <code>
-	 *  i <= j
+	 *  i &lt;= j
 	 * </code>
 	 * </pre>
 	 *
@@ -86,7 +86,7 @@ public interface DoubleRelationOperation {
 	 *
 	 * <pre>
 	 * <code>
-	 *  i > j
+	 *  i &gt; j
 	 * </code>
 	 * </pre>
 	 *
@@ -105,7 +105,7 @@ public interface DoubleRelationOperation {
 	 *
 	 * <pre>
 	 * <code>
-	 *  i >= j
+	 *  i &gt;= j
 	 * </code>
 	 * </pre>
 	 *

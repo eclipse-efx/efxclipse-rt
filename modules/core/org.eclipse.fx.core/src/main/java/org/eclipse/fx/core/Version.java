@@ -104,7 +104,7 @@ public abstract class Version implements Comparable<Version> {
 	 * Create a new version from the provided string
 	 * <p>
 	 * Required format:
-	 *
+	 * </p>
 	 * <pre>
 	 * version ::= major '.' minor '.' micro (('_'|'-'))qualifier)?
 	 * major ::= digit+
@@ -114,7 +114,6 @@ public abstract class Version implements Comparable<Version> {
 	 * digit ::= [0..9]
 	 * alpha ::= [a..zA..Z]
 	 * </pre>
-	 * </p>
 	 *
 	 * @param versionString
 	 *            the version string

@@ -26,7 +26,8 @@ import javafx.beans.value.ObservableValue;
 /**
  * allows chaining of binding operations
  *
- * @param <T> the stream type
+ * @param <T>
+ *            the stream type
  *
  * @since 3.0
  */
@@ -34,22 +35,30 @@ public interface BindingStream<T> {
 
 	/**
 	 * applies a mapping function to another observable value.
-	 *
+	 * 
+	 * @param <S>
+	 *            the target type
 	 * @param map
+	 *            the mapping function
 	 * @return the {@link BindingStream}
 	 */
 	<S> BindingStream<S> map(Function<T, ObservableValue<S>> map);
 
 	/**
-	 * applies a mapping function to a non observable value.
-	 * changes won't be tracked!
+	 * applies a mapping function to a non observable value. changes won't be
+	 * tracked!
+	 * 
+	 * @param <S>
+	 *            the target type
 	 * @param map
+	 *            the mapoing function
 	 * @return the {@link BindingStream}
 	 */
 	<S> BindingStream<S> mapNoObservable(Function<T, S> map);
 
 	/**
 	 * creates the {@link ObjectBinding}
+	 * 
 	 * @return the binding
 	 */
 	@Deprecated
@@ -57,25 +66,36 @@ public interface BindingStream<T> {
 
 	@Deprecated
 	<S> Property<S> toProperty(Function<T, Property<S>> map);
+
 	@Deprecated
 	<S> ObjectProperty<S> toObjectProperty(Function<T, ObjectProperty<S>> map);
+
 	@Deprecated
 	StringProperty toStringProperty(Function<T, StringProperty> map);
+
 	@Deprecated
 	DoubleProperty toDoubleProperty(Function<T, DoubleProperty> map);
+
 	@Deprecated
 	BooleanProperty toBooleanProperty(Function<T, BooleanProperty> map);
+
 	@Deprecated
 	FloatProperty toFloatProperty(Function<T, FloatProperty> map);
+
 	@Deprecated
 	LongProperty toLongProperty(Function<T, LongProperty> map);
+
 	@Deprecated
 	IntegerProperty toIntegerProperty(Function<T, IntegerProperty> map);
 
 	/**
 	 * Collect the stream
+	 * 
+	 * @param <R>
+	 *            the return type
 	 * @param collector
+	 *            the collector
 	 * @return the terminal type
 	 */
-	<R> R collect(FXCollector<T,R> collector);
+	<R> R collect(FXCollector<T, R> collector);
 }

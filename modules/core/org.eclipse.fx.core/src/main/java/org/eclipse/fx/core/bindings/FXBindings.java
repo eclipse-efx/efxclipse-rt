@@ -112,86 +112,89 @@ public class FXBindings {
 		}
 	}
 
-//	public static <E> ObservableList<ObservableList<E>> segmentedList(int segmentSize, ObservableList<E> list) {
-//		ObservableList<ObservableList<E>> rv = FXCollections.observableArrayList();
-//
-//		ObservableList<E> v = null;
-//		for( int i = 0; i < list.size(); i++ ) {
-//			if( i % segmentSize == 0 ) {
-//				rv.add(v = FXCollections.observableArrayList());
-//			}
-//			if( v != null ) {
-//				v.add(list.get(i));
-//			}
-//		}
-//
-//		list.addListener( (Change<? extends E> c) -> {
-//			while( c.next() ) {
-//				if( c.wasReplaced() || c.wasRemoved() ) {
-//					for( int i = 0; i < c.getAddedSize(); i++ ) {
-//						int ii = i + c.getFrom();
-//						int listIndex = ii / segmentSize;
-//						ObservableList<E> target;
-//						if( rv.size() == listIndex ) {
-//							rv.add(target = FXCollections.observableArrayList());
-//						} else {
-//							target = rv.get(listIndex);
-//						}
-//
-//						if( target.size() == ii % segmentSize ) {
-//							target.add(c.getAddedSubList().get(i));
-//						} else {
-//							target.set(ii % segmentSize, c.getAddedSubList().get(i));
-//						}
-//					}
-//
-//					if( c.getAddedSize() < c.getRemovedSize() ) {
-//						int removeIdx = -1;
-//						for( int i = 0; i < c.getRemovedSize() - c.getAddedSize(); i++ ) {
-//							int ii = i + c.getFrom() + c.getAddedSize();
-//							int listIndex = ii / segmentSize;
-//							if( removeIdx == -1 ) {
-//								if( ii % segmentSize == 0 ) {
-//									removeIdx = listIndex;
-//								} else {
-//									rv.get(listIndex).remove(ii % segmentSize);
-//								}
-//							}
-//						}
-//
-//						if( removeIdx != -1 ) {
-//							List<ObservableList<E>> subList = rv.subList(removeIdx, rv.size());
-//							List<ObservableList<E>> tmp = new ArrayList<>(subList);
-//							subList.clear();
-//							tmp.forEach( List::clear );
-//						}
-//					}
-//				} else if( c.wasAdded() ) {
-//					for( int i = 0; i < c.getAddedSize(); i++ ) {
-//						int ii = i + c.getFrom();
-//						int listIndex = ii / segmentSize;
-//						ObservableList<E> target;
-//						if( rv.size() == listIndex ) {
-//							rv.add(target = FXCollections.observableArrayList());
-//						} else {
-//							target = rv.get(listIndex);
-//						}
-//
-//						if( target.size() == ii % segmentSize ) {
-//							target.add(c.getAddedSubList().get(i));
-//						}
-//					}
-//				}
-//			}
-//		});
-//
-//		return rv;
-//	}
+	// public static <E> ObservableList<ObservableList<E>> segmentedList(int
+	// segmentSize, ObservableList<E> list) {
+	// ObservableList<ObservableList<E>> rv = FXCollections.observableArrayList();
+	//
+	// ObservableList<E> v = null;
+	// for( int i = 0; i < list.size(); i++ ) {
+	// if( i % segmentSize == 0 ) {
+	// rv.add(v = FXCollections.observableArrayList());
+	// }
+	// if( v != null ) {
+	// v.add(list.get(i));
+	// }
+	// }
+	//
+	// list.addListener( (Change<? extends E> c) -> {
+	// while( c.next() ) {
+	// if( c.wasReplaced() || c.wasRemoved() ) {
+	// for( int i = 0; i < c.getAddedSize(); i++ ) {
+	// int ii = i + c.getFrom();
+	// int listIndex = ii / segmentSize;
+	// ObservableList<E> target;
+	// if( rv.size() == listIndex ) {
+	// rv.add(target = FXCollections.observableArrayList());
+	// } else {
+	// target = rv.get(listIndex);
+	// }
+	//
+	// if( target.size() == ii % segmentSize ) {
+	// target.add(c.getAddedSubList().get(i));
+	// } else {
+	// target.set(ii % segmentSize, c.getAddedSubList().get(i));
+	// }
+	// }
+	//
+	// if( c.getAddedSize() < c.getRemovedSize() ) {
+	// int removeIdx = -1;
+	// for( int i = 0; i < c.getRemovedSize() - c.getAddedSize(); i++ ) {
+	// int ii = i + c.getFrom() + c.getAddedSize();
+	// int listIndex = ii / segmentSize;
+	// if( removeIdx == -1 ) {
+	// if( ii % segmentSize == 0 ) {
+	// removeIdx = listIndex;
+	// } else {
+	// rv.get(listIndex).remove(ii % segmentSize);
+	// }
+	// }
+	// }
+	//
+	// if( removeIdx != -1 ) {
+	// List<ObservableList<E>> subList = rv.subList(removeIdx, rv.size());
+	// List<ObservableList<E>> tmp = new ArrayList<>(subList);
+	// subList.clear();
+	// tmp.forEach( List::clear );
+	// }
+	// }
+	// } else if( c.wasAdded() ) {
+	// for( int i = 0; i < c.getAddedSize(); i++ ) {
+	// int ii = i + c.getFrom();
+	// int listIndex = ii / segmentSize;
+	// ObservableList<E> target;
+	// if( rv.size() == listIndex ) {
+	// rv.add(target = FXCollections.observableArrayList());
+	// } else {
+	// target = rv.get(listIndex);
+	// }
+	//
+	// if( target.size() == ii % segmentSize ) {
+	// target.add(c.getAddedSubList().get(i));
+	// }
+	// }
+	// }
+	// }
+	// });
+	//
+	// return rv;
+	// }
 
 	/**
 	 * Create a concatenated list similar to
 	 * {@link FXCollections#concat(ObservableList...)}
-	 *
+	 * 
+	 * @param <T>
+	 *            the item type
 	 * @param lists
 	 *            the source lists
 	 * @return an observable list who is synchronized with the source lists
@@ -204,8 +207,11 @@ public class FXBindings {
 	/**
 	 * allows to apply multiple functions before creating a Binding. useful for
 	 * feature paths
-	 *
+	 * 
+	 * @param <T>
+	 *            the item type
 	 * @param source
+	 *            the source observable
 	 * @return an ObjectBinding
 	 */
 	public static <T> BindingStream<T> bindStream(ObservableValue<T> source) {
@@ -214,7 +220,9 @@ public class FXBindings {
 
 	/**
 	 * Creates a binding depending on the value of the condition
-	 *
+	 * 
+	 * @param <T>
+	 *            the item type
 	 * @param condition
 	 *            the condition
 	 * @param then
@@ -232,7 +240,9 @@ public class FXBindings {
 
 	/**
 	 * Creates a binding depending on the value of the condition
-	 *
+	 * 
+	 * @param <T>
+	 *            the item type
 	 * @param condition
 	 *            the condition
 	 * @param then
@@ -249,8 +259,11 @@ public class FXBindings {
 
 	/**
 	 * Concatenates multiple observable lists together.
-	 *
+	 * 
+	 * @param <A>
+	 *            the element type
 	 * @param sources
+	 *            the source lists
 	 * @return the concatenated list binding
 	 */
 	@SafeVarargs
@@ -260,7 +273,9 @@ public class FXBindings {
 
 	/**
 	 * Concat all non-null and non empty values with the given delimiter
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param delimiter
 	 *            the delimiter to use
 	 * @param sources
@@ -274,9 +289,15 @@ public class FXBindings {
 
 	/**
 	 * Maps an observable value to another observable value
-	 *
+	 * 
+	 * @param <A>
+	 *            the source type
+	 * @param <B>
+	 *            the target type
 	 * @param source
+	 *            source observable
 	 * @param map
+	 *            mapping function
 	 * @return the mapped value binding
 	 */
 	public static <A, B> ObjectBinding<B> flatMap(ObservableValue<A> source, Function<A, ObservableValue<B>> map) {
@@ -285,9 +306,15 @@ public class FXBindings {
 
 	/**
 	 * Maps an observable value
-	 *
+	 * 
+	 * @param <A>
+	 *            the source type
+	 * @param <B>
+	 *            the target type
 	 * @param source
+	 *            source observable
 	 * @param map
+	 *            the mapping function
 	 * @return the mapped value binding
 	 */
 	public static <A, B> ObjectBinding<B> map(ObservableValue<A> source, Function<A, B> map) {
@@ -296,9 +323,15 @@ public class FXBindings {
 
 	/**
 	 * Maps an observable list
-	 *
+	 * 
+	 * @param <A>
+	 *            the source element type
+	 * @param <B>
+	 *            the target element type
 	 * @param source
+	 *            the source observable
 	 * @param map
+	 *            the mapping function
 	 * @return the mapped list binding
 	 */
 	public static <A, B> ListBinding<B> mapList(ObservableList<A> source, Function<A, B> map) {
@@ -307,9 +340,15 @@ public class FXBindings {
 
 	/**
 	 * Flat maps an observable list with observable lists
-	 *
+	 * 
+	 * @param <A>
+	 *            the source element type
+	 * @param <B>
+	 *            the target element type
 	 * @param source
+	 *            the source observable
 	 * @param map
+	 *            the mapping function
 	 * @return the flat mapped list binding
 	 */
 	public static <A, B> ListBinding<B> flatMapList(ObservableList<A> source, Function<A, ObservableList<B>> map) {
@@ -318,9 +357,15 @@ public class FXBindings {
 
 	/**
 	 * Flat maps an observable list with observable values
-	 *
+	 * 
+	 * @param <A>
+	 *            the source element type
+	 * @param <B>
+	 *            the target element type
 	 * @param source
+	 *            the source observable
 	 * @param map
+	 *            the mapping function
 	 * @return the flat mapped list binding
 	 */
 	public static <A, B> ListBinding<B> flatMapListValue(ObservableList<A> source,
@@ -330,10 +375,14 @@ public class FXBindings {
 
 	/**
 	 * allows to sync between threads
-	 *
+	 * 
+	 * @param <A>
+	 *            the type
 	 * @param source
+	 *            the source observable
 	 * @param thread
-	 * @return the synced list binding
+	 *            thread synchronize support
+	 * @return the synchronized list binding
 	 */
 	public static <A> ListBinding<A> syncList(ObservableList<A> source, ThreadSynchronize thread) {
 		return new SyncListBinding<>(source, thread);
@@ -341,29 +390,33 @@ public class FXBindings {
 
 	/**
 	 * allows to sync between threads
-	 *
+	 * 
+	 * @param <A>
+	 *            the value type
 	 * @param source
+	 *            the source observable
 	 * @param thread
-	 * @return the synced object binding
+	 *            the thread synchronizer
+	 * @return the synchronized object binding
 	 */
 	public static <A> ObjectBinding<A> sync(ObservableValue<A> source, ThreadSynchronize thread) {
 		return new SyncObjectBinding<>(source, thread);
 	}
 
 	/**
-	 * Bind the content to the source list to the target and apply the converter
-	 * in between
-	 *
+	 * Bind the content to the source list to the target and apply the converter in
+	 * between
+	 * 
+	 * @param <T>
+	 *            the target element type
+	 * @param <E>
+	 *            the source element type
 	 * @param target
 	 *            the target list
 	 * @param sourceList
 	 *            the source list
 	 * @param converterFunction
 	 *            the function used to convert
-	 * @param <T>
-	 *            the target type
-	 * @param <E>
-	 *            the source type
 	 * @return the subscription to dispose the binding
 	 */
 	public static <T, E> Subscription bindContent(List<T> target, ObservableList<E> sourceList,
@@ -372,12 +425,12 @@ public class FXBindings {
 	}
 
 	/**
-	 * Bind the content to the source list to the target and apply the converter
-	 * in between
+	 * Bind the content to the source list to the target and apply the converter in
+	 * between
 	 *
 	 * @param threadSync
-	 *            strategy to synchronize the target on a certain thread, might
-	 *            be <code>null</code>
+	 *            strategy to synchronize the target on a certain thread, might be
+	 *            <code>null</code>
 	 * @param target
 	 *            the target list
 	 * @param sourceList
@@ -590,9 +643,13 @@ public class FXBindings {
 	}
 
 	/**
-	 * Bind the content to the source list to the target with an optional
-	 * padding and apply the converter in between
-	 *
+	 * Bind the content to the source list to the target with an optional padding
+	 * and apply the converter in between
+	 * 
+	 * @param <T>
+	 *            the target element type
+	 * @param <E>
+	 *            the source element type
 	 * @param padding
 	 *            the initial padding
 	 * @param target
@@ -611,12 +668,16 @@ public class FXBindings {
 	}
 
 	/**
-	 * Bind the content to the source list to the target with an optional
-	 * padding and apply the converter in between
-	 *
+	 * Bind the content to the source list to the target with an optional padding
+	 * and apply the converter in between
+	 * 
+	 * @param <T>
+	 *            the target type
+	 * @param <E>
+	 *            the source type
 	 * @param threadSync
-	 *            strategy to synchronize the target on a certain thread, might
-	 *            be <code>null</code>
+	 *            strategy to synchronize the target on a certain thread, might be
+	 *            <code>null</code>
 	 * @param padding
 	 *            the initial padding
 	 * @param target
@@ -654,10 +715,17 @@ public class FXBindings {
 
 		/**
 		 * registers a converter
-		 *
+		 * 
+		 * @param <T>
+		 *            the target type
+		 * @param <S>
+		 *            the source type
 		 * @param sourceType
+		 *            the source type
 		 * @param targetType
+		 *            the target type
 		 * @param converter
+		 *            the converter
 		 */
 		public static <S, T> void registerConverter(Class<S> sourceType, Class<T> targetType,
 				Function<S, T> converter) {
@@ -666,9 +734,15 @@ public class FXBindings {
 
 		/**
 		 * retrieves a converter
-		 *
+		 * 
+		 * @param <T>
+		 *            the target type
+		 * @param <S>
+		 *            the source type
 		 * @param sourceType
+		 *            the source type
 		 * @param targetType
+		 *            the target type
 		 * @return the converter or <code>null</code> if none was found
 		 */
 		@SuppressWarnings("unchecked")
@@ -686,16 +760,24 @@ public class FXBindings {
 	}
 
 	/**
-	 * Bidirectional binding between two properties with conversion. The
-	 * conversion is looked up in the {@link ConverterRegistry} if no converter
-	 * is found a runtime exception is thrown
-	 *
+	 * Bidirectional binding between two properties with conversion. The conversion
+	 * is looked up in the {@link ConverterRegistry} if no converter is found a
+	 * runtime exception is thrown
+	 * 
+	 * @param <S>
+	 *            the source type
+	 * @param <T>
+	 *            the target type
 	 * @param target
+	 *            the target property
 	 * @param source
+	 *            the source property
 	 * @param targetType
+	 *            the target type
 	 * @param sourceType
-	 * @return a StatusBinding which can be used to watch conversion failures
-	 *         and to dispose the whole bidi binding
+	 *            the source type
+	 * @return a StatusBinding which can be used to watch conversion failures and to
+	 *         dispose the whole bidi binding
 	 */
 	public static <S, T> StatusBinding bindBidirectional(Property<T> target, Property<S> source, Class<T> targetType,
 			Class<S> sourceType) {
@@ -711,13 +793,21 @@ public class FXBindings {
 
 	/**
 	 * Bidirectional binding between two properties with conversion.
-	 *
+	 * 
+	 * @param <S>
+	 *            the source type
+	 * @param <T>
+	 *            the target type
 	 * @param target
+	 *            the target property
 	 * @param source
+	 *            the source property
 	 * @param targetToSource
+	 *            function to map from target to source
 	 * @param sourceToTarget
-	 * @return a StatusBinding which can be used to watch conversion failures
-	 *         and to dispose the whole bidi binding
+	 *            function to map from source to target
+	 * @return a StatusBinding which can be used to watch conversion failures and to
+	 *         dispose the whole bidi binding
 	 */
 	public static <S, T> StatusBinding bindBidirectional(Property<T> target, Property<S> source,
 			Function<T, S> targetToSource, Function<S, T> sourceToTarget) {
@@ -780,7 +870,9 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 *
+		 * 
+		 * @param <T>
+		 *            the target type
 		 * @param target
 		 *            the target
 		 * @param source
@@ -957,7 +1049,9 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 *
+		 * 
+		 * @param <T>
+		 *            the target type
 		 * @param target
 		 *            the target
 		 * @param source
@@ -1134,7 +1228,9 @@ public class FXBindings {
 		// ----------------------------------------------------------------------------------------------------------
 		/**
 		 * Bind a properties
-		 *
+		 * 
+		 * @param <T>
+		 *            the target type
 		 * @param target
 		 *            the target
 		 * @param source
@@ -1162,7 +1258,9 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 *
+		 * 
+		 * @param <T>
+		 *            the source type
 		 * @param target
 		 *            the target
 		 * @param source
@@ -1196,7 +1294,9 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 *
+		 * 
+		 * @param <T>
+		 *            the target type
 		 * @param target
 		 *            the target
 		 * @param source
@@ -1316,7 +1416,9 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 *
+		 * 
+		 * @param <T>
+		 *            the source type
 		 * @param target
 		 *            the target
 		 * @param source
@@ -1447,7 +1549,7 @@ public class FXBindings {
 		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static <S> StatusBinding bindBidirectional(IntegerProperty target, IntegerProperty source,
+		public static StatusBinding bindBidirectional(IntegerProperty target, IntegerProperty source,
 				IntUnaryOperator targetToSource, IntUnaryOperator sourceToTarget) {
 			return new BaseBidiPropertyBinding(target, source) {
 
@@ -1471,7 +1573,9 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 *
+		 * 
+		 * @param <T>
+		 *            the target type
 		 * @param target
 		 *            the target
 		 * @param source
@@ -1568,7 +1672,9 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 *
+		 * 
+		 * @param <T>
+		 *            the source type
 		 * @param target
 		 *            the target
 		 * @param source
@@ -1677,7 +1783,7 @@ public class FXBindings {
 		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static <S> StatusBinding bindBidirectional(DoubleProperty target, DoubleProperty source,
+		public static StatusBinding bindBidirectional(DoubleProperty target, DoubleProperty source,
 				DoubleUnaryOperator targetToSource, DoubleUnaryOperator sourceToTarget) {
 			return new BaseBidiPropertyBinding(target, source) {
 
@@ -1701,7 +1807,9 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 *
+		 * 
+		 * @param <T>
+		 *            the target type
 		 * @param target
 		 *            the target
 		 * @param source
@@ -1776,7 +1884,9 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 *
+		 * 
+		 * @param <T>
+		 *            the source type
 		 * @param target
 		 *            the target
 		 * @param source
@@ -1862,7 +1972,7 @@ public class FXBindings {
 		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static <S> StatusBinding bindBidirectional(FloatProperty target, FloatProperty source,
+		public static StatusBinding bindBidirectional(FloatProperty target, FloatProperty source,
 				DoubleUnaryOperator targetToSource, DoubleUnaryOperator sourceToTarget) {
 			return new BaseBidiPropertyBinding(target, source) {
 
@@ -1886,7 +1996,9 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 *
+		 * 
+		 * @param <T>
+		 *            the target type
 		 * @param target
 		 *            the target
 		 * @param source
@@ -1949,7 +2061,7 @@ public class FXBindings {
 		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static <S> StatusBinding bindBidirectional(LongProperty target, LongProperty source,
+		public static StatusBinding bindBidirectional(LongProperty target, LongProperty source,
 				LongUnaryOperator targetToSource, LongUnaryOperator sourceToTarget) {
 			return new BaseBidiPropertyBinding(target, source) {
 
@@ -1997,9 +2109,13 @@ public class FXBindings {
 		}
 
 		/**
-		 * Bind the content to the source list to the target with an optional
-		 * padding and apply the converter in between
-		 *
+		 * Bind the content to the source list to the target with an optional padding
+		 * and apply the converter in between
+		 * 
+		 * @param <T>
+		 *            the target type
+		 * @param <E>
+		 *            the source type
 		 * @param padding
 		 *            the initial padding
 		 * @param target
@@ -2011,8 +2127,7 @@ public class FXBindings {
 		 * @param paddingEntryFactory
 		 *            function to consult when filling padding slots
 		 * @return the binding
-		 * @see FXBindings#bindContent(int, List, ObservableList, Function,
-		 *      IntFunction)
+		 * @see FXBindings#bindContent(int, List, ObservableList, Function, IntFunction)
 		 */
 		public <T, E> Subscription onBindContent(int padding, List<T> target, ObservableList<E> sourceList,
 				Function<E, T> converterFunction, IntFunction<T> paddingEntryFactory) {
@@ -2022,19 +2137,19 @@ public class FXBindings {
 		}
 
 		/**
-		 * Bind the content to the source list to the target and apply the
-		 * converter in between
-		 *
+		 * Bind the content to the source list to the target and apply the converter in
+		 * between
+		 * 
+		 * @param <T>
+		 *            the target type
+		 * @param <E>
+		 *            the source type
 		 * @param target
 		 *            the target list
 		 * @param sourceList
 		 *            the source list
 		 * @param converterFunction
 		 *            the function used to convert
-		 * @param <T>
-		 *            the target type
-		 * @param <E>
-		 *            the source type
 		 * @return the subscription to dispose the binding
 		 * @see FXBindings#bindContent(List, ObservableList, Function)
 		 */
@@ -2045,12 +2160,16 @@ public class FXBindings {
 		}
 
 		/**
-		 * Bind the content to the source list to the target with an optional
-		 * padding and apply the converter in between
-		 *
+		 * Bind the content to the source list to the target with an optional padding
+		 * and apply the converter in between
+		 * 
+		 * @param <T>
+		 *            the target type
+		 * @param <E>
+		 *            the source type
 		 * @param threadSync
-		 *            strategy to synchronize the target on a certain thread,
-		 *            might be <code>null</code>
+		 *            strategy to synchronize the target on a certain thread, might be
+		 *            <code>null</code>
 		 * @param padding
 		 *            the initial padding
 		 * @param target
@@ -2062,8 +2181,8 @@ public class FXBindings {
 		 * @param paddingEntryFactory
 		 *            function to consult when filling padding slots
 		 * @return the binding
-		 * @see FXBindings#bindContent(ThreadSynchronize, int, List,
-		 *      ObservableList, Function, IntFunction)
+		 * @see FXBindings#bindContent(ThreadSynchronize, int, List, ObservableList,
+		 *      Function, IntFunction)
 		 */
 		public <T, E> Subscription onBindContent(ThreadSynchronize threadSync, int padding, List<T> target,
 				ObservableList<E> sourceList, Function<E, T> converterFunction, IntFunction<T> paddingEntryFactory) {
@@ -2073,22 +2192,22 @@ public class FXBindings {
 		}
 
 		/**
-		 * Bind the content to the source list to the target and apply the
-		 * converter in between
-		 *
+		 * Bind the content to the source list to the target and apply the converter in
+		 * between
+		 * 
+		 * @param <T>
+		 *            the target type
+		 * @param <E>
+		 *            the source type
 		 * @param threadSync
-		 *            strategy to synchronize the target on a certain thread,
-		 *            might be <code>null</code>
+		 *            strategy to synchronize the target on a certain thread, might be
+		 *            <code>null</code>
 		 * @param target
 		 *            the target list
 		 * @param sourceList
 		 *            the source list
 		 * @param converterFunction
 		 *            the function used to convert
-		 * @param <T>
-		 *            the target type
-		 * @param <E>
-		 *            the source type
 		 * @return the subscription to dispose the binding
 		 * @see FXBindings#bindContent(ThreadSynchronize, List, ObservableList,
 		 *      Function)
@@ -2101,8 +2220,11 @@ public class FXBindings {
 
 		/**
 		 * Concatenates multiple observable lists together.
-		 *
+		 * 
+		 * @param <A>
+		 *            the element type
 		 * @param sources
+		 *            the source lists
 		 * @return the concatenated list binding
 		 * @see FXBindings#concat(ObservableList...)
 		 */
@@ -2113,7 +2235,9 @@ public class FXBindings {
 
 		/**
 		 * Concat all non-null and non empty values with the given delimiter
-		 *
+		 * 
+		 * @param <T>
+		 *            the value type
 		 * @param delimiter
 		 *            the delimiter to use
 		 * @param sources
@@ -2129,9 +2253,15 @@ public class FXBindings {
 
 		/**
 		 * Maps an observable value to another observable value
-		 *
+		 * 
+		 * @param <A>
+		 *            the source type
+		 * @param <B>
+		 *            the target type
 		 * @param source
+		 *            the source observable
 		 * @param map
+		 *            the mapping function
 		 * @return the mapped value binding
 		 * @see FXBindings#flatMap(ObservableValue, Function)
 		 */
@@ -2142,9 +2272,15 @@ public class FXBindings {
 
 		/**
 		 * Flat maps an observable list with observable lists
-		 *
+		 * 
+		 * @param <A>
+		 *            the source type
+		 * @param <B>
+		 *            the target type
 		 * @param source
+		 *            the source observable
 		 * @param map
+		 *            the mapping function
 		 * @return the flat mapped list binding
 		 * @see FXBindings#flatMapList(ObservableList, Function)
 		 */
@@ -2155,9 +2291,15 @@ public class FXBindings {
 
 		/**
 		 * Flat maps an observable list with observable values
-		 *
+		 * 
+		 * @param <A>
+		 *            the source type
+		 * @param <B>
+		 *            the target type
 		 * @param source
+		 *            the source observable
 		 * @param map
+		 *            the mapping function
 		 * @return the flat mapped list binding
 		 * @see FXBindings#flatMapListValue(ObservableList, Function)
 		 */
@@ -2168,10 +2310,14 @@ public class FXBindings {
 
 		/**
 		 * allows to sync between threads
-		 *
+		 * 
+		 * @param <A>
+		 *            the source type
 		 * @param source
+		 *            the source observable value
 		 * @param thread
-		 * @return the synced list binding
+		 *            the thread synchronizer
+		 * @return the synchronized list binding
 		 * @see FXBindings#syncList(ObservableList, ThreadSynchronize)
 		 */
 		public <A> ListBinding<A> onSyncList(ObservableList<A> source, ThreadSynchronize thread) {
@@ -2181,10 +2327,14 @@ public class FXBindings {
 
 		/**
 		 * allows to sync between threads
-		 *
+		 * 
+		 * @param <A>
+		 *            the source type
 		 * @param source
+		 *            the source observable
 		 * @param thread
-		 * @return the synced object binding
+		 *            the thread synchronizer
+		 * @return the synchronized object binding
 		 * @see FXBindings#sync(ObservableValue, ThreadSynchronize)
 		 */
 		public <A> ObjectBinding<A> onSync(ObservableValue<A> source, ThreadSynchronize thread) {
@@ -2194,7 +2344,9 @@ public class FXBindings {
 
 		/**
 		 * Creates a binding depending on the value of the condition
-		 *
+		 * 
+		 * @param <T>
+		 *            the value type
 		 * @param condition
 		 *            the condition
 		 * @param then
@@ -2204,8 +2356,8 @@ public class FXBindings {
 		 *            the value held by the binding if the condition is
 		 *            <code>false</code>
 		 * @return the binding
-		 * @see FXBindings#tenaryBinding(ObservableBooleanValue,
-		 *      ObservableValue, ObservableValue)
+		 * @see FXBindings#tenaryBinding(ObservableBooleanValue, ObservableValue,
+		 *      ObservableValue)
 		 */
 		public <T> Binding<T> onTenaryBinding(ObservableBooleanValue condition, ObservableValue<T> then,
 				ObservableValue<T> _else) {
@@ -2215,7 +2367,9 @@ public class FXBindings {
 
 		/**
 		 * Creates a binding depending on the value of the condition
-		 *
+		 * 
+		 * @param <T>
+		 *            the value type
 		 * @param condition
 		 *            the condition
 		 * @param then
@@ -2234,7 +2388,11 @@ public class FXBindings {
 
 		/**
 		 * Maps an observable value
-		 *
+		 * 
+		 * @param <A>
+		 *            the source type
+		 * @param <B>
+		 *            the target type
 		 * @param source
 		 *            source value
 		 * @param map
@@ -2249,7 +2407,11 @@ public class FXBindings {
 
 		/**
 		 * Maps an observable list
-		 *
+		 * 
+		 * @param <A>
+		 *            the source type
+		 * @param <B>
+		 *            the target type
 		 * @param source
 		 *            source list
 		 * @param map
@@ -2264,7 +2426,11 @@ public class FXBindings {
 
 		/**
 		 * Collect the stream
-		 *
+		 * 
+		 * @param <R>
+		 *            the result type
+		 * @param <T>
+		 *            the source type
 		 * @param stream
 		 *            binding stream
 		 * @param collector
@@ -2280,11 +2446,18 @@ public class FXBindings {
 			return binding;
 		}
 	}
-	
+
 	/**
 	 * wraps an observable value in a list binding.
-	 * <p>The resulting list contains at most one element - the content of the observable value. If the observable value is null, the list is empty.</p>
+	 * <p>
+	 * The resulting list contains at most one element - the content of the
+	 * observable value. If the observable value is null, the list is empty.
+	 * </p>
+	 * 
+	 * @param <T>
+	 *            the type
 	 * @param in
+	 *            the observable value
 	 * @return the ListBinding
 	 */
 	public static <T> ListBinding<T> toList(ObservableValue<T> in) {
@@ -2292,6 +2465,7 @@ public class FXBindings {
 			{
 				bind(in);
 			}
+
 			@Override
 			protected ObservableList<T> computeValue() {
 				T value = in.getValue();

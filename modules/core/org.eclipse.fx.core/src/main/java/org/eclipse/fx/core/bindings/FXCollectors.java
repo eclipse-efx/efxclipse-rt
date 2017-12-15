@@ -12,7 +12,6 @@
 package org.eclipse.fx.core.bindings;
 
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.eclipse.fx.core.bindings.internal.BindingStreamImpl;
 import org.eclipse.fx.core.bindings.internal.BindingStreamImpl.StreamBinding;
@@ -42,7 +41,11 @@ import javafx.beans.property.StringProperty;
 public class FXCollectors {
 	/**
 	 * Construct a property
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
+	 * @param <S>
+	 *            the target type
 	 * @param map
 	 *            map the source to the property
 	 * @return the property
@@ -79,7 +82,11 @@ public class FXCollectors {
 
 	/**
 	 * Construct a property
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
+	 * @param <S>
+	 *            the target type
 	 * @param map
 	 *            map the source to the property
 	 * @return the property
@@ -116,7 +123,9 @@ public class FXCollectors {
 
 	/**
 	 * Construct a property
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
 	 * @param map
 	 *            map the source to the property
 	 * @return the property
@@ -151,7 +160,9 @@ public class FXCollectors {
 
 	/**
 	 * Construct a property
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
 	 * @param map
 	 *            map the source to the property
 	 * @return the property
@@ -186,7 +197,9 @@ public class FXCollectors {
 
 	/**
 	 * Construct a property
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
 	 * @param map
 	 *            map the source to the property
 	 * @return the property
@@ -221,7 +234,9 @@ public class FXCollectors {
 
 	/**
 	 * Construct a property
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
 	 * @param map
 	 *            map the source to the property
 	 * @return the property
@@ -256,7 +271,9 @@ public class FXCollectors {
 
 	/**
 	 * Construct a property
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
 	 * @param map
 	 *            map the source to the property
 	 * @return the property
@@ -291,7 +308,9 @@ public class FXCollectors {
 
 	/**
 	 * Construct a property
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
 	 * @param map
 	 *            map the source to the property
 	 * @return the property
@@ -326,6 +345,9 @@ public class FXCollectors {
 
 	/**
 	 * creates the {@link ObjectBinding}
+	 * 
+	 * @param <T>
+	 *            the target type
 	 * @return the collector
 	 */
 	public static <T> FXCollector<T, ObjectBinding<T>> toBinding() {
@@ -335,8 +357,13 @@ public class FXCollectors {
 	}
 
 	/**
-	 * create the {@link ObjectBinding} but replaces the null value with the provided value
-	 * @param nullReplacement the replacement for a null value
+	 * create the {@link ObjectBinding} but replaces the null value with the
+	 * provided value
+	 * 
+	 * @param <T>
+	 *            the target type
+	 * @param nullReplacement
+	 *            the replacement for a null value
 	 * @return the collector
 	 */
 	public static <T> FXCollector<T, ObjectBinding<T>> toBinding(T nullReplacement) {
@@ -347,6 +374,7 @@ public class FXCollectors {
 				{
 					bind(b);
 				}
+
 				@Override
 				protected T computeValue() {
 					return b.get() == null ? nullReplacement : b.get();

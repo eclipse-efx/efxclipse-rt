@@ -48,8 +48,8 @@ public class FXObservableUtil {
 	}
 
 	/**
-	 * Subscribe to invalidation events triggered by an {@link Observable} and
-	 * run the {@link Runnable}
+	 * Subscribe to invalidation events triggered by an {@link Observable} and run
+	 * the {@link Runnable}
 	 *
 	 * @param o
 	 *            the observable
@@ -67,7 +67,9 @@ public class FXObservableUtil {
 
 	/**
 	 * Subscribe to the value change of an {@link ObservableValue}
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param o
 	 *            the observable
 	 * @param l
@@ -81,7 +83,9 @@ public class FXObservableUtil {
 
 	/**
 	 * Subscribe to the value change of an {@link ObservableValue}
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param o
 	 *            the observable
 	 * @param l
@@ -96,7 +100,9 @@ public class FXObservableUtil {
 
 	/**
 	 * Subscribe to the list change of an {@link ObservableList}
-	 *
+	 * 
+	 * @param <E>
+	 *            the element type
 	 * @param o
 	 *            the observable
 	 * @param l
@@ -111,7 +117,9 @@ public class FXObservableUtil {
 
 	/**
 	 * Subscribe to the list change of an {@link ObservableSet}
-	 *
+	 * 
+	 * @param <E>
+	 *            the element type
 	 * @param o
 	 *            the observable
 	 * @param l
@@ -126,7 +134,11 @@ public class FXObservableUtil {
 
 	/**
 	 * Subscribe to the list change of an {@link ObservableMap}
-	 *
+	 * 
+	 * @param <K>
+	 *            the key type
+	 * @param <V>
+	 *            the value type
 	 * @param o
 	 *            the observable
 	 * @param l
@@ -177,8 +189,8 @@ public class FXObservableUtil {
 		}
 
 		/**
-		 * Subscribe to invalidation events triggered by an {@link Observable}
-		 * and run the {@link Runnable}
+		 * Subscribe to invalidation events triggered by an {@link Observable} and run
+		 * the {@link Runnable}
 		 *
 		 * @param o
 		 *            the observable
@@ -194,7 +206,9 @@ public class FXObservableUtil {
 
 		/**
 		 * Subscribe to the value change of an {@link ObservableValue}
-		 *
+		 * 
+		 * @param <T>
+		 *            the value type
 		 * @param o
 		 *            the observable
 		 * @param l
@@ -208,7 +222,9 @@ public class FXObservableUtil {
 
 		/**
 		 * Subscribe to the value change of an {@link ObservableValue}
-		 *
+		 * 
+		 * @param <T>
+		 *            the value type
 		 * @param o
 		 *            the observable
 		 * @param l
@@ -221,7 +237,9 @@ public class FXObservableUtil {
 
 		/**
 		 * Subscribe to the list change of an {@link ObservableList}
-		 *
+		 * 
+		 * @param <E>
+		 *            the element type
 		 * @param o
 		 *            the observable
 		 * @param l
@@ -236,7 +254,9 @@ public class FXObservableUtil {
 
 		/**
 		 * Subscribe to the list change of an {@link ObservableSet}
-		 *
+		 * 
+		 * @param <E>
+		 *            the element type
 		 * @param o
 		 *            the observable
 		 * @param l
@@ -251,7 +271,11 @@ public class FXObservableUtil {
 
 		/**
 		 * Subscribe to the list change of an {@link ObservableMap}
-		 *
+		 * 
+		 * @param <K>
+		 *            the key type
+		 * @param <V>
+		 *            the value type
 		 * @param o
 		 *            the observable
 		 * @param l

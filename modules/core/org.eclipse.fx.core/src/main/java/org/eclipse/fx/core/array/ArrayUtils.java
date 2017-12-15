@@ -35,7 +35,9 @@ import java.util.stream.StreamSupport;
 public class ArrayUtils {
 	/**
 	 * The target array to be filled
-	 *
+	 * 
+	 * @param <T>
+	 *            the array element type
 	 * @param array
 	 *            the array
 	 * @param s
@@ -49,7 +51,9 @@ public class ArrayUtils {
 
 	/**
 	 * The target array to be filled
-	 *
+	 * 
+	 * @param <T>
+	 *            the array element type
 	 * @param array
 	 *            the array
 	 * @param f
@@ -62,9 +66,11 @@ public class ArrayUtils {
 	}
 
 	/**
-	 * Show an ASCII art with the informations in the array ( - if cell is null,
-	 * x if cell is filled)
-	 *
+	 * Show an ASCII art with the informations in the array ( - if cell is null, x
+	 * if cell is filled)
+	 * 
+	 * @param <T>
+	 *            the array element type
 	 * @param array
 	 *            the array
 	 */
@@ -82,14 +88,14 @@ public class ArrayUtils {
 	/**
 	 * Transforms the given array into a key-value map using the following rules
 	 * <ul>
-	 * <li>keys start with a dash (-) e.g. <code>-path /tmp</code> transforms
-	 * into <code>{ path => /tmp }</code></li>
-	 * <li>a key without a value associates {@link Boolean#TRUE} with the key
-	 * e.g. <code>-console -consoleLog</code> transforms into
-	 * <code>{ console => true, consoleLog => true }</code></li>
-	 * <li>a key followed by multiple values associates an {@link List} with the
-	 * key e.g. <code>-path /tmp /private/tmp</code> transforms into
-	 * <code>{ path => [ /tmp, /private/tmp ] }</code></li>
+	 * <li>keys start with a dash (-) e.g. <code>-path /tmp</code> transforms into
+	 * <code>{ path =&gt; /tmp }</code></li>
+	 * <li>a key without a value associates {@link Boolean#TRUE} with the key e.g.
+	 * <code>-console -consoleLog</code> transforms into
+	 * <code>{ console =&gt; true, consoleLog =&gt; true }</code></li>
+	 * <li>a key followed by multiple values associates an {@link List} with the key
+	 * e.g. <code>-path /tmp /private/tmp</code> transforms into
+	 * <code>{ path =&gt; [ /tmp, /private/tmp ] }</code></li>
 	 * </ul>
 	 *
 	 * @param args
@@ -120,8 +126,7 @@ public class ArrayUtils {
 	}
 
 	/**
-	 * Create a character stream similar to
-	 * {@link Arrays#stream(int[], int, int)}
+	 * Create a character stream similar to {@link Arrays#stream(int[], int, int)}
 	 *
 	 * @param content
 	 *            the content
@@ -165,7 +170,9 @@ public class ArrayUtils {
 
 	/**
 	 * Convenience method to create a new array with the specified type
-	 *
+	 * 
+	 * @param <T>
+	 *            array element type
 	 * @param elementType
 	 *            the element type
 	 * @param length
@@ -181,7 +188,9 @@ public class ArrayUtils {
 	/**
 	 * Convenience method to create a new 2 dimensional array with the specified
 	 * type
-	 *
+	 * 
+	 * @param <T>
+	 *            array element type
 	 * @param elementType
 	 *            the element type
 	 * @param lengthLevel1
@@ -197,9 +206,11 @@ public class ArrayUtils {
 	}
 
 	/**
-	 * Shorthand method for {@link #createArray2Dim(Class, int, int)} with
-	 * length at level 2 equal to 0
-	 *
+	 * Shorthand method for {@link #createArray2Dim(Class, int, int)} with length at
+	 * level 2 equal to 0
+	 * 
+	 * @param <T>
+	 *            array element type
 	 * @param elementType
 	 *            the element type
 	 * @param lengthLevel1

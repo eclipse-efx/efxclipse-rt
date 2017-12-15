@@ -97,8 +97,8 @@ public interface AppMemento {
 	 * @param key
 	 *            the key
 	 * @param defaultValue
-	 *            the default value if the key does not exists, is
-	 *            <code>null</code> or not a {@link String}
+	 *            the default value if the key does not exists, is <code>null</code>
+	 *            or not a {@link String}
 	 * @return the value or the default value provided
 	 */
 	public @Nullable String get(@NonNull String key, @Nullable String defaultValue);
@@ -109,8 +109,8 @@ public interface AppMemento {
 	 * @param key
 	 *            the key
 	 * @param defaultValue
-	 *            the default value of the key does not exits, is
-	 *            <code>null</code> or not a boolean
+	 *            the default value of the key does not exits, is <code>null</code>
+	 *            or not a boolean
 	 * @return the value or the default value provided
 	 */
 	public boolean get(@NonNull String key, boolean defaultValue);
@@ -121,8 +121,8 @@ public interface AppMemento {
 	 * @param key
 	 *            the value
 	 * @param defaultValue
-	 *            the default value of the key does not exits, is
-	 *            <code>null</code> or not an int
+	 *            the default value of the key does not exits, is <code>null</code>
+	 *            or not an int
 	 * @return the value or the default value provided
 	 */
 	public int get(@NonNull String key, int defaultValue);
@@ -133,29 +133,33 @@ public interface AppMemento {
 	 * @param key
 	 *            the key
 	 * @param defaultValue
-	 *            the default value if the key does not exits, is
-	 *            <code>null</code> or not a double
+	 *            the default value if the key does not exits, is <code>null</code>
+	 *            or not a double
 	 * @return the value or the default value provided
 	 */
 	public double get(@NonNull String key, double defaultValue);
 
 	/**
 	 * Retrieve the deserialized object
-	 *
+	 * 
+	 * @param <O>
+	 *            the value type
 	 * @param key
 	 *            the key
 	 * @param clazz
 	 *            the type
 	 * @param defaultValue
-	 *            the default value if the key does not exits, is
-	 *            <code>null</code> or can not be deserialized
+	 *            the default value if the key does not exits, is <code>null</code>
+	 *            or can not be deserialized
 	 * @return the value or default value provided
 	 */
 	public <O> @Nullable O get(String key, Class<O> clazz, @Nullable O defaultValue);
 
 	/**
 	 * Retrieve the deserialized object as an optional
-	 *
+	 * 
+	 * @param <O>
+	 *            the value type
 	 * @param key
 	 *            the key
 	 * @param clazz

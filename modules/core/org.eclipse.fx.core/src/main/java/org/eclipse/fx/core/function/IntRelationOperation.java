@@ -46,7 +46,7 @@ public interface IntRelationOperation {
 	 *
 	 * <pre>
 	 * <code>
-	 *  i < j
+	 *  i &lt; j
 	 * </code>
 	 * </pre>
 	 *
@@ -65,7 +65,7 @@ public interface IntRelationOperation {
 	 *
 	 * <pre>
 	 * <code>
-	 *  i <= j
+	 *  i &lt;= j
 	 * </code>
 	 * </pre>
 	 *
@@ -84,7 +84,7 @@ public interface IntRelationOperation {
 	 *
 	 * <pre>
 	 * <code>
-	 *  i > j
+	 *  i &gt; j
 	 * </code>
 	 * </pre>
 	 *
@@ -103,7 +103,7 @@ public interface IntRelationOperation {
 	 *
 	 * <pre>
 	 * <code>
-	 *  i >= j
+	 *  i &gt;= j
 	 * </code>
 	 * </pre>
 	 *

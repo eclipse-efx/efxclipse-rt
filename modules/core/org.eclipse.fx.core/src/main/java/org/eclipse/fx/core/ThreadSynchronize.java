@@ -48,10 +48,12 @@ public interface ThreadSynchronize {
 	/**
 	 * Sync with the sync thread and provide a result when done
 	 * <p>
-	 * <b>WARNING: Using synchronized execute can easily lead to deadlocks. You
-	 * are better of using {@link #asyncExec(Callable)}</b>
+	 * <b>WARNING: Using synchronized execute can easily lead to deadlocks. You are
+	 * better of using {@link #asyncExec(Callable)}</b>
 	 * </p>
-	 *
+	 * 
+	 * @param <V>
+	 *            the value type
 	 * @param callable
 	 *            the callable to execute
 	 * @param defaultValue
@@ -62,7 +64,11 @@ public interface ThreadSynchronize {
 
 	/**
 	 * Execute the function in the UI-Thread
-	 *
+	 * 
+	 * @param <T>
+	 *            input type
+	 * @param <R>
+	 *            output type
 	 * @param value
 	 *            the value
 	 * @param function
@@ -81,8 +87,8 @@ public interface ThreadSynchronize {
 	 * Executes the runnable on the sync thread and blocks until the runnable is
 	 * finished
 	 * <p>
-	 * <b>WARNING: Using synchronized execute can easily lead to deadlocks. You
-	 * are better of using {@link #asyncExec(Runnable)}</b>
+	 * <b>WARNING: Using synchronized execute can easily lead to deadlocks. You are
+	 * better of using {@link #asyncExec(Runnable)}</b>
 	 * </p>
 	 *
 	 * @param runnable
@@ -93,7 +99,9 @@ public interface ThreadSynchronize {
 	/**
 	 * Schedules the runnable on the sync thread for execution and returns
 	 * immediately
-	 *
+	 * 
+	 * @param <V>
+	 *            the value type
 	 * @param callable
 	 *            the callable to execute
 	 * @return interface to the result of the callable
@@ -111,7 +119,9 @@ public interface ThreadSynchronize {
 
 	/**
 	 * Executes the consumer in the ui thread
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param value
 	 *            the value
 	 * @param consumer
@@ -135,7 +145,9 @@ public interface ThreadSynchronize {
 
 	/**
 	 * Schedule the execution of the callable
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param delay
 	 *            the delay
 	 * @param runnable
@@ -147,11 +159,13 @@ public interface ThreadSynchronize {
 	/**
 	 * Schedule a delayed execution on the provided property.
 	 * <p>
-	 * The consumer is called whenever the value of the property changes with
-	 * the provided delay. In case the value changes within the given delay the
+	 * The consumer is called whenever the value of the property changes with the
+	 * provided delay. In case the value changes within the given delay the
 	 * scheduled consumer execution is discarded.
 	 * </p>
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param delay
 	 *            the delay
 	 * @param property
@@ -188,7 +202,9 @@ public interface ThreadSynchronize {
 
 	/**
 	 * Schedule a delayed execution on the provided list of properties.
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param delay
 	 *            the delay
 	 * @param consumer
@@ -240,8 +256,7 @@ public interface ThreadSynchronize {
 	/**
 	 * Wraps a runnable so that it is called on the UI thread.
 	 * <p>
-	 * This is handy if you pass a {@link Runnable} as callback into some async
-	 * API
+	 * This is handy if you pass a {@link Runnable} as callback into some async API
 	 * </p>
 	 *
 	 * @param r
@@ -255,10 +270,11 @@ public interface ThreadSynchronize {
 	/**
 	 * Wraps a consumer so that it is called on the sync thread.
 	 * <p>
-	 * This is handy if you pass a {@link Consumer} as callback into some async
-	 * API
+	 * This is handy if you pass a {@link Consumer} as callback into some async API
 	 * </p>
-	 *
+	 * 
+	 * @param <T>
+	 *            value type
 	 * @param c
 	 *            the consumer to wrap
 	 * @return a new consumer who invokes the real consumer on the UI thread
@@ -270,10 +286,14 @@ public interface ThreadSynchronize {
 	/**
 	 * Wraps a bi-consumer so that it is called on the UI thread
 	 * <p>
-	 * This is handy if you pass a {@link BiConsumer} as callback into some
-	 * async API
+	 * This is handy if you pass a {@link BiConsumer} as callback into some async
+	 * API
 	 * </p>
-	 *
+	 * 
+	 * @param <T>
+	 *            the first input type
+	 * @param <U>
+	 *            the second input type
 	 * @param c
 	 *            the consumer to wrap
 	 * @return a new consumer who invokes the real consumer on the UI thread
@@ -284,7 +304,9 @@ public interface ThreadSynchronize {
 
 	/**
 	 * Wraps a supplier so that it is called on the UI thread
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param s
 	 *            the supplier
 	 * @return a new supplier who invokes the real supplier on the UI thread
@@ -316,7 +338,9 @@ public interface ThreadSynchronize {
 	/**
 	 * Block the Thread in a way that events are still processed until the given
 	 * condition is released
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param blockCondition
 	 *            the condition
 	 * @return the value
@@ -389,8 +413,8 @@ public interface ThreadSynchronize {
 
 	/**
 	 * <p>
-	 * Create a basic thread synchronization object who forces all executions on
-	 * the same arbitrary thread
+	 * Create a basic thread synchronization object who forces all executions on the
+	 * same arbitrary thread
 	 * </p>
 	 * <p>
 	 * A {@link ThreadSynchronize} like this is eg useful in JUnit-Test cases

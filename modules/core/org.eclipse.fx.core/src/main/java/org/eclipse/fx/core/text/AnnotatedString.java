@@ -193,7 +193,9 @@ public final class AnnotatedString<T> implements CharSequence {
 
 	/**
 	 * Create a builder to create an {@link AnnotatedString}
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param type
 	 *            the annotation type
 	 *

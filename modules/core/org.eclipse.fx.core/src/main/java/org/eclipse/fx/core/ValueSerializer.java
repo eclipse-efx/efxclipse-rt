@@ -65,12 +65,15 @@ import org.eclipse.jdt.annotation.NonNull;
  *
  * If you need to serialize deeper object graphs the {@link ObjectSerializer}
  * should be used
+ * 
  * @since 2.2.0
  */
 public interface ValueSerializer extends Predicate<Class<?>> {
 	/**
 	 * Create a value instance from a string
-	 *
+	 * 
+	 * @param <O>
+	 *            the value type
 	 * @param clazz
 	 *            the type the new instance
 	 * @param value

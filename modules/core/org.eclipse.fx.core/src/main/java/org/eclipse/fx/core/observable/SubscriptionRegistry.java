@@ -52,12 +52,16 @@ import javafx.collections.SetChangeListener;
  * <p>
  * Preferred useage is through a DI-Container:
  * </p>
- * <code><pre>
+ * 
+ * <pre>
+ * <code>
  * class Test {
  * 	{@literal @Inject}
  * 	SubscriptionRegistry registry;
  * }
- * </pre></code>
+ * </code>
+ * </pre>
+ * 
  * @deprecated use {@link FXObservableUtil.Instance}
  */
 @Deprecated
@@ -104,7 +108,9 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Subscribe to a change event triggered by an {@link ObservableValue}
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
 	 * @param o
 	 *            the observable
 	 * @param l
@@ -123,7 +129,9 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Subscribe to a change event triggered by an {@link ObservableValue}
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
 	 * @param o
 	 *            the observable
 	 * @param l
@@ -142,7 +150,9 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Subscribe to a change event triggered by an {@link ObservableList}
-	 *
+	 * 
+	 * @param <E>
+	 *            the element type
 	 * @param o
 	 *            the observable
 	 * @param l
@@ -160,7 +170,9 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Subscribe to the list change of an {@link ObservableSet}
-	 *
+	 * 
+	 * @param <E>
+	 *            the element type
 	 * @param o
 	 *            the observable
 	 * @param l
@@ -179,7 +191,11 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Subscribe to the list change of an {@link ObservableMap}
-	 *
+	 * 
+	 * @param <K>
+	 *            the key type
+	 * @param <V>
+	 *            the value type
 	 * @param o
 	 *            the observable
 	 * @param l
@@ -187,7 +203,7 @@ public class SubscriptionRegistry {
 	 * @return subscription used to unsubscribe
 	 * @see ObservableMap#addListener(MapChangeListener)
 	 */
-	public <K,V> Subscription onChange(ObservableMap<K,V> o, MapChangeListener<K, V> l) {
+	public <K, V> Subscription onChange(ObservableMap<K, V> o, MapChangeListener<K, V> l) {
 		Subscription subscription = FXObservableUtil.onChange(o, l);
 		this.subscriptions.add(subscription);
 		return () -> {
@@ -204,11 +220,13 @@ public class SubscriptionRegistry {
 		List<Subscription> c = new ArrayList<>(this.subscriptions);
 		this.subscriptions.clear();
 		Collections.reverse(c);
-		c.forEach( s -> {try {
-			s.dispose();
-		} catch (Throwable e) {
-			// skip
-		}} );
+		c.forEach(s -> {
+			try {
+				s.dispose();
+			} catch (Throwable e) {
+				// skip
+			}
+		});
 	}
 
 	/**
@@ -222,16 +240,24 @@ public class SubscriptionRegistry {
 	}
 
 	/**
-	 * Bidirectional binding between two properties with conversion. The
-	 * conversion is looked up in the {@link ConverterRegistry} if no converter
-	 * is found a runtime exception is thrown
-	 *
+	 * Bidirectional binding between two properties with conversion. The conversion
+	 * is looked up in the {@link ConverterRegistry} if no converter is found a
+	 * runtime exception is thrown
+	 * 
+	 * @param <T>
+	 *            the target type
+	 * @param <S>
+	 *            the source type
 	 * @param target
+	 *            the target property
 	 * @param source
+	 *            the source property
 	 * @param targetType
+	 *            the target type
 	 * @param sourceType
-	 * @return a StatusBinding which can be used to watch conversion failures
-	 *         and to dispose the whole bidi binding
+	 *            the source type
+	 * @return a StatusBinding which can be used to watch conversion failures and to
+	 *         dispose the whole bidi binding
 	 * @see FXBindings#bindBidirectional(Property, Property, Class, Class)
 	 */
 	public <S, T> StatusBinding onBindBidirectional(Property<T> target, Property<S> source, Class<T> targetType,
@@ -244,12 +270,20 @@ public class SubscriptionRegistry {
 	/**
 	 * Bidirectional binding between two properties with conversion.
 	 *
+	 * @param <T>
+	 *            the target type
+	 * @param <S>
+	 *            the source type
 	 * @param target
+	 *            the target property
 	 * @param source
+	 *            the source property
 	 * @param targetToSource
+	 *            map from target to source
 	 * @param sourceToTarget
-	 * @return a StatusBinding which can be used to watch conversion failures
-	 *         and to dispose the whole bidi binding
+	 *            map from source to target
+	 * @return a StatusBinding which can be used to watch conversion failures and to
+	 *         dispose the whole bidi binding
 	 * @see FXBindings#bindBidirectional(Property, Property, Function, Function)
 	 */
 	public <S, T> StatusBinding onBindBidirectional(Property<T> target, Property<S> source,
@@ -260,9 +294,13 @@ public class SubscriptionRegistry {
 	}
 
 	/**
-	 * Bind the content to the source list to the target with an optional
-	 * padding and apply the converter in between
-	 *
+	 * Bind the content to the source list to the target with an optional padding
+	 * and apply the converter in between
+	 * 
+	 * @param <T>
+	 *            the target type
+	 * @param <E>
+	 *            the source element type
 	 * @param padding
 	 *            the initial padding
 	 * @param target
@@ -274,8 +312,7 @@ public class SubscriptionRegistry {
 	 * @param paddingEntryFactory
 	 *            function to consult when filling padding slots
 	 * @return the binding
-	 * @see FXBindings#bindContent(int, List, ObservableList, Function,
-	 *      IntFunction)
+	 * @see FXBindings#bindContent(int, List, ObservableList, Function, IntFunction)
 	 */
 	public <T, E> Subscription onBindContent(int padding, List<T> target, ObservableList<E> sourceList,
 			Function<E, T> converterFunction, IntFunction<T> paddingEntryFactory) {
@@ -289,19 +326,19 @@ public class SubscriptionRegistry {
 	}
 
 	/**
-	 * Bind the content to the source list to the target and apply the converter
-	 * in between
-	 *
+	 * Bind the content to the source list to the target and apply the converter in
+	 * between
+	 * 
+	 * @param <T>
+	 *            the target type
+	 * @param <E>
+	 *            the source type
 	 * @param target
 	 *            the target list
 	 * @param sourceList
 	 *            the source list
 	 * @param converterFunction
 	 *            the function used to convert
-	 * @param <T>
-	 *            the target type
-	 * @param <E>
-	 *            the source type
 	 * @return the subscription to dispose the binding
 	 * @see FXBindings#bindContent(List, ObservableList, Function)
 	 */
@@ -316,12 +353,16 @@ public class SubscriptionRegistry {
 	}
 
 	/**
-	 * Bind the content to the source list to the target with an optional
-	 * padding and apply the converter in between
-	 *
+	 * Bind the content to the source list to the target with an optional padding
+	 * and apply the converter in between
+	 * 
+	 * @param <T>
+	 *            the target type
+	 * @param <E>
+	 *            the source element type
 	 * @param threadSync
-	 *            strategy to synchronize the target on a certain thread, might
-	 *            be <code>null</code>
+	 *            strategy to synchronize the target on a certain thread, might be
+	 *            <code>null</code>
 	 * @param padding
 	 *            the initial padding
 	 * @param target
@@ -348,22 +389,22 @@ public class SubscriptionRegistry {
 	}
 
 	/**
-	 * Bind the content to the source list to the target and apply the converter
-	 * in between
-	 *
+	 * Bind the content to the source list to the target and apply the converter in
+	 * between
+	 * 
+	 * @param <T>
+	 *            the target type
+	 * @param <E>
+	 *            the source type
 	 * @param threadSync
-	 *            strategy to synchronize the target on a certain thread, might
-	 *            be <code>null</code>
+	 *            strategy to synchronize the target on a certain thread, might be
+	 *            <code>null</code>
 	 * @param target
 	 *            the target list
 	 * @param sourceList
 	 *            the source list
 	 * @param converterFunction
 	 *            the function used to convert
-	 * @param <T>
-	 *            the target type
-	 * @param <E>
-	 *            the source type
 	 * @return the subscription to dispose the binding
 	 * @see FXBindings#bindContent(ThreadSynchronize, List, ObservableList,
 	 *      Function)
@@ -380,8 +421,11 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Concatenates multiple observable lists together.
-	 *
+	 * 
+	 * @param <A>
+	 *            the source type
 	 * @param sources
+	 *            the sources
 	 * @return the concatenated list binding
 	 * @see FXBindings#concat(ObservableList...)
 	 */
@@ -393,7 +437,9 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Concat all non-null and non empty values with the given delimiter
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
 	 * @param delimiter
 	 *            the delimiter to use
 	 * @param sources
@@ -409,9 +455,15 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Maps an observable value to another observable value
-	 *
+	 * 
+	 * @param <A>
+	 *            the source type
+	 * @param <B>
+	 *            the target type
 	 * @param source
+	 *            the source observable
 	 * @param map
+	 *            the mapping function
 	 * @return the mapped value binding
 	 * @see FXBindings#flatMap(ObservableValue, Function)
 	 */
@@ -423,9 +475,15 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Flat maps an observable list with observable lists
-	 *
+	 * 
+	 * @param <A>
+	 *            the source type
+	 * @param <B>
+	 *            the target type
 	 * @param source
+	 *            the source observable
 	 * @param map
+	 *            the mapping function
 	 * @return the flat mapped list binding
 	 * @see FXBindings#flatMapList(ObservableList, Function)
 	 */
@@ -437,9 +495,15 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Flat maps an observable list with observable values
-	 *
+	 * 
+	 * @param <A>
+	 *            the source type
+	 * @param <B>
+	 *            the target type
 	 * @param source
+	 *            the source observable
 	 * @param map
+	 *            the mapping function
 	 * @return the flat mapped list binding
 	 * @see FXBindings#flatMapListValue(ObservableList, Function)
 	 */
@@ -451,10 +515,14 @@ public class SubscriptionRegistry {
 
 	/**
 	 * allows to sync between threads
-	 *
+	 * 
+	 * @param <A>
+	 *            the type
 	 * @param source
+	 *            the source observable
 	 * @param thread
-	 * @return the synced list binding
+	 *            the thread synchronizer
+	 * @return the synchronized list binding
 	 * @see FXBindings#syncList(ObservableList, ThreadSynchronize)
 	 */
 	public <A> ListBinding<A> onSyncList(ObservableList<A> source, ThreadSynchronize thread) {
@@ -465,10 +533,14 @@ public class SubscriptionRegistry {
 
 	/**
 	 * allows to sync between threads
-	 *
+	 * 
+	 * @param <A>
+	 *            the type
 	 * @param source
+	 *            the source observable
 	 * @param thread
-	 * @return the synced object binding
+	 *            the thread synchronizer
+	 * @return the synchronized object binding
 	 * @see FXBindings#sync(ObservableValue, ThreadSynchronize)
 	 */
 	public <A> ObjectBinding<A> onSync(ObservableValue<A> source, ThreadSynchronize thread) {
@@ -479,7 +551,9 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Creates a binding depending on the value of the condition
-	 *
+	 * 
+	 * @param <T>
+	 *            the type
 	 * @param condition
 	 *            the condition
 	 * @param then
@@ -501,7 +575,9 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Creates a binding depending on the value of the condition
-	 *
+	 * 
+	 * @param <T>
+	 *            the type
 	 * @param condition
 	 *            the condition
 	 * @param then
@@ -521,7 +597,11 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Maps an observable value
-	 *
+	 * 
+	 * @param <A>
+	 *            the source type
+	 * @param <B>
+	 *            the target type
 	 * @param source
 	 *            source value
 	 * @param map
@@ -537,7 +617,11 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Maps an observable list
-	 *
+	 * 
+	 * @param <A>
+	 *            the source type
+	 * @param <B>
+	 *            the target type
 	 * @param source
 	 *            source list
 	 * @param map
@@ -553,7 +637,11 @@ public class SubscriptionRegistry {
 
 	/**
 	 * Collect the stream
-	 *
+	 * 
+	 * @param <T>
+	 *            the source type
+	 * @param <R>
+	 *            the target type
 	 * @param stream
 	 *            binding stream
 	 * @param collector

@@ -21,7 +21,9 @@ public class StreamUtils {
 	/**
 	 * Helper method allowing to insert temporary debug information in an
 	 * {@link Stream} mapping
-	 *
+	 * 
+	 * @param <T>
+	 *            the data type
 	 * @param data
 	 *            the data
 	 * @return the data
@@ -31,17 +33,18 @@ public class StreamUtils {
 		System.err.println(data);
 		return data;
 	}
-	
+
 	/**
-	 * Creates a {@link Stream} that iterates over the given list in reverse
-	 * order
+	 * Creates a {@link Stream} that iterates over the given list in reverse order
 	 * 
+	 * @param <T>
+	 *            the data type
 	 * @param list
 	 *            list
 	 * @return reverse list stream
 	 */
 	public static <T> Stream<T> reverse(List<T> list) {
 		int size = list.size();
-		return IntStream.range(0, size).mapToObj(i -> list.get(size - 1- i));
+		return IntStream.range(0, size).mapToObj(i -> list.get(size - 1 - i));
 	}
 }

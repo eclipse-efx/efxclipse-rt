@@ -22,7 +22,9 @@ import java.util.stream.Stream;
 public class ConcurrentUtils {
 	/**
 	 * Collect the return values of all the futures provided
-	 *
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param futures
 	 *            the futures the result is collected from
 	 * @return a future with the collected results
@@ -36,7 +38,11 @@ public class ConcurrentUtils {
 	/**
 	 * Collect the return value of all the futures and apply the transformation
 	 * method on it
-	 *
+	 * 
+	 * @param <O>
+	 *            the input value type
+	 * @param <T>
+	 *            the value type
 	 * @param transformer
 	 *            the transformation to apply
 	 * @param futures
@@ -51,9 +57,11 @@ public class ConcurrentUtils {
 	}
 
 	/**
-	 * Collect the returned lists of the the futures and combine them into a
-	 * flat list
-	 *
+	 * Collect the returned lists of the the futures and combine them into a flat
+	 * list
+	 * 
+	 * @param <T>
+	 *            the value type
 	 * @param futures
 	 *            the futures
 	 * @return a future holding the combined list of all future results
@@ -65,9 +73,13 @@ public class ConcurrentUtils {
 	}
 
 	/**
-	 * Collect the returned lists of the the futures and combine them into a
-	 * flat list and transform the entries
-	 *
+	 * Collect the returned lists of the the futures and combine them into a flat
+	 * list and transform the entries
+	 * 
+	 * @param <O>
+	 *            the input value type
+	 * @param <T>
+	 *            the value type
 	 * @param transformer
 	 *            the transformer
 	 * @param futures
@@ -82,11 +94,17 @@ public class ConcurrentUtils {
 	}
 
 	/**
-	 * Collect the result by transforming the stream of feature results into a
-	 * final result of all futures
+	 * Collect the result by transforming the stream of feature results into a final
+	 * result of all futures
 	 *
-	 * @param streamTransformer the transformer
-	 * @param futures the futures
+	 * @param <O>
+	 *            the input value type
+	 * @param <T>
+	 *            the value type
+	 * @param streamTransformer
+	 *            the transformer
+	 * @param futures
+	 *            the futures
 	 * @return a future hold the collection of all futures
 	 */
 	@SafeVarargs

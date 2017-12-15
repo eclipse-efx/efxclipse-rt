@@ -12,6 +12,9 @@ package org.eclipse.fx.core.text;
 
 import java.util.Vector;
 
+/**
+ * Default implementation of {@link TextContent}
+ */
 public class DefaultContent implements TextContent {
 	static class Compatibility {
 		public static int pow2(int n) {
@@ -52,7 +55,7 @@ public class DefaultContent implements TextContent {
 
 	/**
 	 * Creates a new DefaultContent and initializes it. A
-	 * <code>StyledTextContent</> will always have
+	 * <code>StyledTextContent</code> will always have
 	 * at least one empty line.
 	 */
 	public DefaultContent() {
@@ -849,11 +852,11 @@ public class DefaultContent implements TextContent {
 	 * <code>replaceLineCount</code> is the number of lines that are going to be
 	 * deleted, based on the change that occurs visually. For example:
 	 * <ul>
-	 * <li>(replaceText,newText) ==> (replaceLineCount,newLineCount)
-	 * <li>("","\n") ==> (0,1)
-	 * <li>("\n\n","a") ==> (2,0)
+	 * <li>(replaceText,newText) ==&gt; (replaceLineCount,newLineCount)
+	 * <li>("","\n") ==&gt; (0,1)
+	 * <li>("\n\n","a") ==&gt; (2,0)
 	 * </ul>
-	 * </p>
+	 * 
 	 *
 	 * @param start
 	 *            start offset of text to replace

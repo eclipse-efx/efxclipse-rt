@@ -42,7 +42,9 @@ public interface ThreadQueue {
 
 	/**
 	 * Spin the event loop while the condition is true
-	 *
+	 * 
+	 * @param <T>
+	 *            the type returned by condition
 	 * @param condition
 	 *            the condition
 	 */

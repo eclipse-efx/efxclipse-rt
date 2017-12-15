@@ -25,9 +25,11 @@ import java.util.function.BiFunction;
 public interface BiDoubleFunction<R> {
 	/**
 	 * Applies this function to the given arguments.
-	 *
+	 * 
 	 * @param t
+	 *            first parameter
 	 * @param u
+	 *            second parameter
 	 * @return the function result
 	 */
 	public R apply(double t, double u);

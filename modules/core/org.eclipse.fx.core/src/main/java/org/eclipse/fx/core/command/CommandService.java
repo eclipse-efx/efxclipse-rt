@@ -24,10 +24,14 @@ import org.eclipse.jdt.annotation.Nullable;
  * @noimplement
  */
 public interface CommandService {
-	public static final Topic<CommandInfo> TOPIC_COMMAND_NOT_HANDLED = new Topic<>("org/eclipse/fx/core/command/notHandled"); //$NON-NLS-1$
-	public static final Topic<CommandInfo> TOPIC_COMMAND_POST_EXECUTE_SUCCESS = new Topic<>("org/eclipse/fx/core/command/execute/post/success"); //$NON-NLS-1$
-	public static final Topic<Object> TOPIC_COMMAND_POST_EXECUTE_FAIL = new Topic<>("org/eclipse/fx/core/command/execute/post/fail"); //$NON-NLS-1$
-	public static final Topic<Object> TOPIC_COMMAND_PRE_EXECUTE = new Topic<>("org/eclipse/fx/core/command/execute/pre"); //$NON-NLS-1$
+	public static final Topic<CommandInfo> TOPIC_COMMAND_NOT_HANDLED = new Topic<>(
+			"org/eclipse/fx/core/command/notHandled"); //$NON-NLS-1$
+	public static final Topic<CommandInfo> TOPIC_COMMAND_POST_EXECUTE_SUCCESS = new Topic<>(
+			"org/eclipse/fx/core/command/execute/post/success"); //$NON-NLS-1$
+	public static final Topic<Object> TOPIC_COMMAND_POST_EXECUTE_FAIL = new Topic<>(
+			"org/eclipse/fx/core/command/execute/post/fail"); //$NON-NLS-1$
+	public static final Topic<Object> TOPIC_COMMAND_PRE_EXECUTE = new Topic<>(
+			"org/eclipse/fx/core/command/execute/pre"); //$NON-NLS-1$
 
 	public interface CommandInfo {
 
@@ -55,25 +59,30 @@ public interface CommandService {
 
 	/**
 	 * Execute the command
-	 *
+	 * 
+	 * @param <O>
+	 *            the result type
 	 * @param commandId
 	 *            the command id
 	 * @param parameters
 	 *            the parameters
 	 * @return the return value of the command
 	 */
-	public <O> Optional<O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters);
+	public <O> Optional<O> execute(@NonNull String commandId,
+			@NonNull Map<@NonNull String, @Nullable Object> parameters);
 
 	/**
 	 * Create a command for the provided id
-	 *
+	 * 
+	 * @param <O>
+	 *            the result type
 	 * @param commandId
 	 *            the command id
 	 * @return the command
 	 * @since 3.0
 	 */
 	public <O> Optional<Command<O>> createCommand(@NonNull String commandId);
-	
+
 	/**
 	 * @return check if the command-service is disposed
 	 * @since 3.1.0

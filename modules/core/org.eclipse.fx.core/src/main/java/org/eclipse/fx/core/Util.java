@@ -26,6 +26,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Class with static utility methods
+ * 
  * @deprecated use specific *Util classes (see methods for references)
  */
 @Deprecated
@@ -87,7 +88,9 @@ public class Util {
 
 	/**
 	 * Look up the service with the given type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param requestor
 	 *            the class requesting the service
 	 *
@@ -104,7 +107,9 @@ public class Util {
 
 	/**
 	 * Look up the service with the given type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param serviceClass
 	 *            the service class type
 	 * @return the service with the highest rank or <code>null</code>
@@ -113,12 +118,14 @@ public class Util {
 	 */
 	@Deprecated
 	public static <S> @Nullable S lookupService(@NonNull Class<S> serviceClass) {
-		return ServiceUtils._lookupService(null,serviceClass);
+		return ServiceUtils._lookupService(null, serviceClass);
 	}
 
 	/**
 	 * Lookup the service with the given type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param serviceClass
 	 *            the service class type
 	 * @return the service with the highest rank as an optional
@@ -132,7 +139,9 @@ public class Util {
 
 	/**
 	 * Look up the service with the given type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param requestor
 	 *            the class requesting the service
 	 *
@@ -149,7 +158,9 @@ public class Util {
 
 	/**
 	 * Look up all service with the given type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param requestor
 	 *            the class requesting the service
 	 *
@@ -160,13 +171,16 @@ public class Util {
 	 * @deprecated use {@link ServiceUtils#getServiceList(Class, Class)}
 	 */
 	@Deprecated
-	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor, @NonNull Class<S> serviceClass) {
+	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor,
+			@NonNull Class<S> serviceClass) {
 		return ServiceUtils.getServiceList(requestor, serviceClass);
 	}
 
 	/**
 	 * Look up all service with the given type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param serviceClass
 	 *            the service class type
 	 * @return the service with the highest rank or <code>null</code>
@@ -249,8 +263,8 @@ public class Util {
 	 * @param dir
 	 *            the directory to zip
 	 * @param zipFile
-	 *            the zip file or <code>null</code> if you want a temporary zip
-	 *            file to be created
+	 *            the zip file or <code>null</code> if you want a temporary zip file
+	 *            to be created
 	 * @return the directory
 	 * @throws IOException
 	 *             if somethings going wrong
@@ -288,12 +302,13 @@ public class Util {
 	 * @param v
 	 *            the value to constraint
 	 * @param min
-	 *            the lower bound (only values >= 0 are applied)
+	 *            the lower bound (only values &gt;= 0 are applied)
 	 * @param max
-	 *            the upper bound (only values >= 0 are applied)
+	 *            the upper bound (only values &gt;= 0 are applied)
 	 * @return the value
 	 * @since 2.2.0
-	 * @deprecated use {@link NumberUtils#unsignedConstraintValue(double, double, double)}
+	 * @deprecated use
+	 *             {@link NumberUtils#unsignedConstraintValue(double, double, double)}
 	 */
 	@Deprecated
 	public static double unsignedConstraintValue(double v, double min, double max) {
@@ -303,7 +318,9 @@ public class Util {
 	/**
 	 * Helper method allowing to insert temporary debug information in an
 	 * {@link Stream} mapping
-	 *
+	 * 
+	 * @param <T>
+	 *            the data type
 	 * @param data
 	 *            the data
 	 * @return the data
@@ -321,8 +338,8 @@ public class Util {
 	 * @param url
 	 *            the url
 	 * @param copyIfNeeded
-	 *            <code>true</code> if the url can not be converted to a local
-	 *            the content is copied to the local filesystem
+	 *            <code>true</code> if the url can not be converted to a local the
+	 *            content is copied to the local filesystem
 	 * @return the path
 	 * @since 2.2.0
 	 * @deprecated use {@link IOUtils#getLocalPath(URL, boolean)}

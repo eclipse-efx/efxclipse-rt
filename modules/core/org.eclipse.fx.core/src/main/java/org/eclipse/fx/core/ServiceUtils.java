@@ -62,7 +62,9 @@ public class ServiceUtils {
 
 	/**
 	 * Lookup the service with the given type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param serviceClass
 	 *            the service class type
 	 * @return the service with the highest rank as an optional
@@ -81,7 +83,9 @@ public class ServiceUtils {
 
 	/**
 	 * Look up the service with the given type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param requestor
 	 *            the class requesting the service
 	 *
@@ -103,7 +107,9 @@ public class ServiceUtils {
 
 	/**
 	 * Look up all service with the given type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param requestor
 	 *            the class requesting the service
 	 *
@@ -119,7 +125,9 @@ public class ServiceUtils {
 
 	/**
 	 * Look up all service with the given type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param serviceClass
 	 *            the service class type
 	 * @return the service with the highest rank or <code>null</code>
@@ -131,7 +139,9 @@ public class ServiceUtils {
 
 	/**
 	 * Look up the highest ranked service reference for the provided type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param clazz
 	 *            the service class type
 	 * @return the service reference with the highest rank as an optional
@@ -146,7 +156,9 @@ public class ServiceUtils {
 
 	/**
 	 * Look up the highest ranked service reference for the provided type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param requestor
 	 *            the requestor
 	 *
@@ -164,7 +176,9 @@ public class ServiceUtils {
 
 	/**
 	 * Look up all service references for the provided type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param clazz
 	 *            the service class type
 	 * @return list of service references
@@ -179,7 +193,9 @@ public class ServiceUtils {
 
 	/**
 	 * Look up all service references for the provided type
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param requestor
 	 *            the requestor
 	 *
@@ -197,7 +213,9 @@ public class ServiceUtils {
 
 	/**
 	 * Look up the service by its FQN-String name
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param serviceClass
 	 *            the FQN service class name
 	 * @return the highest ranked service as an optional

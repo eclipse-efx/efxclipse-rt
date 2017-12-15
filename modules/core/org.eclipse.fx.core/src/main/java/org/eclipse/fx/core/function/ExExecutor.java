@@ -116,7 +116,9 @@ public final class ExExecutor {
 	 * message</li>
 	 * <li>re-throw runtime exceptions as is</li>
 	 * </ul>
-	 *
+	 * 
+	 * @param <V>
+	 *            the result type
 	 * @param r
 	 *            the supplier
 	 * @param message
@@ -133,7 +135,9 @@ public final class ExExecutor {
 	 * <li>use the converter for checked exceptions</li>
 	 * <li>re-throw runtime exceptions as is</li>
 	 * </ul>
-	 *
+	 * 
+	 * @param <V>
+	 *            the result type
 	 * @param r
 	 *            the runnable
 	 * @param exceptionConverter
@@ -156,7 +160,9 @@ public final class ExExecutor {
 	/**
 	 * Execute the supplier and if an exception occurs handle the exception with
 	 * provides handler to provide a default value
-	 *
+	 * 
+	 * @param <V>
+	 *            the result type
 	 * @param r
 	 *            the supplier
 	 * @param exceptionHandler
@@ -176,7 +182,9 @@ public final class ExExecutor {
 	/**
 	 * Execute the supplier and if an exception occurs return an empty
 	 * {@link Optional}
-	 *
+	 * 
+	 * @param <V>
+	 *            the result type
 	 * @param r
 	 *            the supplier
 	 * @return the value
@@ -197,7 +205,9 @@ public final class ExExecutor {
 	 * message</li>
 	 * <li>re-throw runtime exceptions as is</li>
 	 * </ul>
-	 *
+	 * 
+	 * @param <T>
+	 *            the argument type
 	 * @param value
 	 *            the value to pass to the consumer
 	 * @param r
@@ -215,7 +225,9 @@ public final class ExExecutor {
 	 * <li>use the converter for checked exceptions</li>
 	 * <li>re-throw runtime exceptions as is</li>
 	 * </ul>
-	 *
+	 * 
+	 * @param <T>
+	 *            the argument type
 	 * @param value
 	 *            the value to pass to the consumer
 	 * @param r
@@ -239,6 +251,8 @@ public final class ExExecutor {
 	/**
 	 * Execute the consumer and log the exception if one occurs
 	 * 
+	 * @param <T>
+	 *            the argument type
 	 * @param value
 	 *            the value passed to the consumer
 	 * @param r
@@ -260,7 +274,11 @@ public final class ExExecutor {
 	 * message</li>
 	 * <li>re-throw runtime exceptions as is</li>
 	 * </ul>
-	 *
+	 * 
+	 * @param <V>
+	 *            the input type
+	 * @param <R>
+	 *            the result type
 	 * @param value
 	 *            the value to pass to the function
 	 * @param r
@@ -276,7 +294,11 @@ public final class ExExecutor {
 
 	/**
 	 * Execute the function and in case of an exception
-	 *
+	 * 
+	 * @param <V>
+	 *            the input type
+	 * @param <R>
+	 *            the result type
 	 * @param value
 	 *            the value to pass to the function
 	 * @param r
@@ -298,6 +320,10 @@ public final class ExExecutor {
 	 * Execute the function and in case of an exception return an empty
 	 * {@link Optional}
 	 * 
+	 * @param <V>
+	 *            the input type
+	 * @param <R>
+	 *            the result type
 	 * @param value
 	 *            the value to pass to the function
 	 * @param f
@@ -320,7 +346,11 @@ public final class ExExecutor {
 	 * <li>use the converter for checked exceptions</li>
 	 * <li>re-throw runtime exceptions as is</li>
 	 * </ul>
-	 *
+	 * 
+	 * @param <V>
+	 *            the input type
+	 * @param <R>
+	 *            the result type
 	 * @param value
 	 *            the value to pass to the function
 	 * @param r

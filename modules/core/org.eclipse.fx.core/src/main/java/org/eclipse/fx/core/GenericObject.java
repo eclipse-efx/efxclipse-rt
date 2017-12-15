@@ -29,6 +29,8 @@ public interface GenericObject {
 	/**
 	 * Get the the attribute handle
 	 * 
+	 * @param <T>
+	 *            the attribute type
 	 * @param attributeName
 	 *            the name of the attribute
 	 * @return the attribute or <code>null</code>
@@ -52,6 +54,8 @@ public interface GenericObject {
 	/**
 	 * Get the value for the attribute
 	 * 
+	 * @param <V>
+	 *            the value type
 	 * @param attributeName
 	 *            the name of the attribute
 	 * @return the value
@@ -108,6 +112,8 @@ public interface GenericObject {
 		public Class<T> getType();
 
 		/**
+		 * @param <R>
+		 *            the value type
 		 * @return the value
 		 */
 		public <R> @Nullable R getValue();

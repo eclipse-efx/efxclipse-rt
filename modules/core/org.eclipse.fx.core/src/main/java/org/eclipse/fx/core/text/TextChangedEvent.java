@@ -15,7 +15,6 @@ package org.eclipse.fx.core.text;
  *
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>
- * </p>
  *
  * @noreference
  */
@@ -51,7 +50,8 @@ public class TextChangedEvent {
 	 */
 	public final int newLineCount;
 
-	private TextChangedEvent(TextContent source, int offset, int replaceCharCount, int replaceLineCount, String newText, int newCharCount, int newLineCount) {
+	private TextChangedEvent(TextContent source, int offset, int replaceCharCount, int replaceLineCount, String newText,
+			int newCharCount, int newLineCount) {
 		this.source = source;
 		this.offset = offset;
 		this.replaceCharCount = replaceCharCount;
@@ -103,7 +103,8 @@ public class TextChangedEvent {
 
 	@Override
 	public String toString() {
-		return "TextChangedEvent(offset=" + this.offset + ", replaceCharCount=" + this.replaceCharCount + ", replaceText=" + (this.newText == null ? "null" : "\"" + this.newText + "\"") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
+		return "TextChangedEvent(offset=" + this.offset + ", replaceCharCount=" + this.replaceCharCount //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", replaceText=" + (this.newText == null ? "null" : "\"" + this.newText + "\"") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 	}
 
 }

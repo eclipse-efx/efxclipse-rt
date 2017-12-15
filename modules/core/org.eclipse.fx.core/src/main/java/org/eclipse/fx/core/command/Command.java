@@ -90,13 +90,15 @@ public interface Command<T> {
 
 	/**
 	 * Create a command who uses a supplier
-	 *
+	 * 
+	 * @param <T>
+	 *            the return value type
 	 * @param action
 	 *            the action
 	 * @return the command instance
 	 */
 	public static <T> Command<T> createCommand(Supplier<T> action) {
-		return createCommand((Function<Map<String,String>, T>) (m -> action.get()));
+		return createCommand((Function<Map<String, String>, T>) (m -> action.get()));
 	}
 
 	/**
@@ -107,7 +109,7 @@ public interface Command<T> {
 	 * @return the command instance
 	 */
 	public static Command<Void> createCommand(Runnable action) {
-		return createCommand( (Function<Map<String,String>, Void>) (m -> {
+		return createCommand((Function<Map<String, String>, Void>) (m -> {
 			action.run();
 			return null;
 		}));
@@ -115,11 +117,13 @@ public interface Command<T> {
 
 	/**
 	 * Create a command who uses the provided consumer
-	 * @param action the action
+	 * 
+	 * @param action
+	 *            the action
 	 * @return the command instance
 	 */
 	public static Command<Void> createCommand(Consumer<Map<String, String>> action) {
-		return createCommand((Function<Map<String,String>, Void>) (m -> {
+		return createCommand((Function<Map<String, String>, Void>) (m -> {
 			action.accept(m);
 			return null;
 		}));
@@ -127,7 +131,9 @@ public interface Command<T> {
 
 	/**
 	 * Create a simple command executing the provided function
-	 *
+	 * 
+	 * @param <T>
+	 *            the result type
 	 * @param action
 	 *            the action
 	 * @return the command instance
@@ -166,14 +172,17 @@ public interface Command<T> {
 
 	/**
 	 * Create a simple command executing the provided function
-	 *
+	 * 
+	 * @param <T>
+	 *            the result type
 	 * @param action
 	 *            the action
 	 * @param enabledCalculator
 	 *            predicate to calculate the enabled state
 	 * @return the command instance
 	 */
-	public static <T> Command<T> createCommand(Function<Map<String, String>, T> action, Predicate<Map<String, String>> enabledCalculator) {
+	public static <T> Command<T> createCommand(Function<Map<String, String>, T> action,
+			Predicate<Map<String, String>> enabledCalculator) {
 		return new Command<T>() {
 			private ReadOnlyBooleanWrapper enabled = new ReadOnlyBooleanWrapper(this, "enabled", true); //$NON-NLS-1$
 			private ObservableMap<String, String> parameters = FXCollections.observableMap(new HashMap<>());
@@ -183,7 +192,7 @@ public interface Command<T> {
 					evaluate();
 				});
 			}
-			
+
 			{
 				evaluate();
 			}

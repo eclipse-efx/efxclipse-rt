@@ -69,7 +69,7 @@ public class JavaDSServiceProcessor {
 
 		@Override
 		public S get() {
-			if( this.service == null ) {
+			if (this.service == null) {
 				try {
 					Class<?> serviceClass = Class.forName(this.c.getImplementation().getClazz());
 					S service = (S) serviceClass.newInstance();
@@ -85,9 +85,10 @@ public class JavaDSServiceProcessor {
 		@Override
 		public KeyValueStore<String, Object> getProperties() {
 			// TODO create the KeyValueStore lazy
-			if( this.properties == null ) {
-				this.properties = KeyValueStore.fromMap(this.c.getProperty().stream().collect(Collectors.toMap(Property::getName, Property::getValue)));
-				//TODO Implement Properties
+			if (this.properties == null) {
+				this.properties = KeyValueStore.fromMap(
+						this.c.getProperty().stream().collect(Collectors.toMap(Property::getName, Property::getValue)));
+				// TODO Implement Properties
 			}
 			// TODO Auto-generated method stub
 			return this.properties;
@@ -96,13 +97,16 @@ public class JavaDSServiceProcessor {
 		@Override
 		public int getRanking() {
 			Object object = getProperties().contains("service.ranking") ? getProperties().get("service.ranking") : null; //$NON-NLS-1$ //$NON-NLS-2$
-			return object == null ? 0 : object instanceof Integer ? ((Integer)object).intValue() : Integer.parseInt(object.toString());
+			return object == null ? 0
+					: object instanceof Integer ? ((Integer) object).intValue() : Integer.parseInt(object.toString());
 		}
 	}
 
 	/**
 	 * Retrieve all services for the given type ordered by their ranking
-	 *
+	 * 
+	 * @param <S>
+	 *            the service type
 	 * @param requestor
 	 *            the requestor
 	 * @param clazz
@@ -116,13 +120,36 @@ public class JavaDSServiceProcessor {
 		return INSTANCE._lookupServiceList(requestor, clazz);
 	}
 
-	public synchronized static <S> @NonNull List<@NonNull ServiceReference<@NonNull S>> lookupServiceReferenceList(Class<?> requestor, Class<S> clazz) {
+	/**
+	 * Retrieve all ServiceReferences for the given type ordered by their ranking
+	 * 
+	 * @param <S>
+	 *            the service type
+	 * @param requestor
+	 *            the requestor
+	 * @param clazz
+	 *            the class
+	 * @return service reference list
+	 */
+	public synchronized static <S> @NonNull List<@NonNull ServiceReference<@NonNull S>> lookupServiceReferenceList(
+			Class<?> requestor, Class<S> clazz) {
 		if (INSTANCE == null) {
 			INSTANCE = new JavaDSServiceProcessor();
 		}
 		return INSTANCE._lookupServiceReferenceList(requestor, clazz);
 	}
 
+	/**
+	 * Lookup all services
+	 * 
+	 * @param <S>
+	 *            the service type
+	 * @param requestor
+	 *            the requestor
+	 * @param serviceClass
+	 *            the service class
+	 * @return all services
+	 */
 	public static <S> @NonNull List<@NonNull S> lookupServiceList(@Nullable Class<?> requestor,
 			@NonNull String serviceClass) {
 		if (INSTANCE == null) {
@@ -130,7 +157,7 @@ public class JavaDSServiceProcessor {
 		}
 		Class<S> cl;
 		try {
-			cl = (Class<S>)(Class)Class.forName(serviceClass);
+			cl = (Class<S>) (Class) Class.forName(serviceClass);
 			return INSTANCE.lookupServiceList(null, cl);
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
@@ -138,23 +165,21 @@ public class JavaDSServiceProcessor {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked", "null" })
-	private synchronized <S> @NonNull List<@NonNull ServiceReference<@NonNull S>> _lookupServiceReferenceList(Class<?> requestor, Class<S> clazz) {
+	private synchronized <S> @NonNull List<@NonNull ServiceReference<@NonNull S>> _lookupServiceReferenceList(
+			Class<?> requestor, Class<S> clazz) {
 		List<ServiceReference<?>> list = this.serviceReferenceCache.get(clazz);
-		if( list != null ) {
-			return (List<ServiceReference<S>>)(List)list;
+		if (list != null) {
+			return (List<ServiceReference<S>>) (List) list;
 		}
 		initializeComponentCache();
 
 		List<Component> componentList = this.serviceList.get(clazz.getName());
 		if (componentList != null) {
-			List<ServiceReference<?>> referenceList = componentList
-				.stream()
-				.map(JavaServiceReference::new)
-				.sorted()
-				.collect(Collectors.toList());
+			List<ServiceReference<?>> referenceList = componentList.stream().map(JavaServiceReference::new).sorted()
+					.collect(Collectors.toList());
 			Collections.reverse(referenceList); // reverse the order so that highest is first
 			this.serviceReferenceCache.put(clazz, referenceList);
-			return (List<ServiceReference<S>>)(List)referenceList;
+			return (List<ServiceReference<S>>) (List) referenceList;
 		}
 		return Collections.emptyList();
 	}
@@ -167,7 +192,8 @@ public class JavaDSServiceProcessor {
 		}
 		initializeComponentCache();
 
-		List<@NonNull S> collect = _lookupServiceReferenceList(requestor, clazz).stream().map(ServiceReference::get).collect(Collectors.toList());
+		List<@NonNull S> collect = _lookupServiceReferenceList(requestor, clazz).stream().map(ServiceReference::get)
+				.collect(Collectors.toList());
 		this.serviceCache.put(clazz, collect);
 		return collect;
 	}
@@ -182,9 +208,8 @@ public class JavaDSServiceProcessor {
 
 	private static void logError(String message, Throwable t) {
 		System.err.println(JavaDSServiceProcessor.class.getSimpleName() + " - " + message); //$NON-NLS-1$
-		if( t != null ) {
-			try(StringWriter s = new StringWriter();
-					PrintWriter w = new PrintWriter(s);) {
+		if (t != null) {
+			try (StringWriter s = new StringWriter(); PrintWriter w = new PrintWriter(s);) {
 				t.printStackTrace(w);
 				System.err.println(JavaDSServiceProcessor.class.getSimpleName() + " - " + s); //$NON-NLS-1$
 			} catch (IOException e) {
@@ -213,9 +238,8 @@ public class JavaDSServiceProcessor {
 						String value = m.getMainAttributes().getValue("Service-Component"); //$NON-NLS-1$
 						if (value != null) {
 							Map<String, Component> collect = Stream.of(value.split(",")) //$NON-NLS-1$
-									.map(String::trim)
-									.map(e -> cl.getResource(e))
-									.map(this::handle).filter(c -> c != null)
+									.map(String::trim).map(e -> cl.getResource(e)).map(this::handle)
+									.filter(c -> c != null)
 									.collect(Collectors.toMap(c -> c.getImplementation().getClazz(), c -> c));
 							synchronized (collect) {
 								this.componentCache.putAll(collect);
@@ -226,7 +250,7 @@ public class JavaDSServiceProcessor {
 				this.serviceList = new HashMap<>();
 				this.componentCache.values().forEach(c -> {
 					this.serviceList.computeIfAbsent(c.getImplementation().getClazz(), i -> new ArrayList<>()).add(c);
-					if( c.getService() != null ) {
+					if (c.getService() != null) {
 						c.getService().getProvide().forEach(s -> {
 							this.serviceList.computeIfAbsent(s.getIface(), i -> new ArrayList<>()).add(c);
 						});
@@ -256,7 +280,7 @@ public class JavaDSServiceProcessor {
 			// Skip it
 		}
 
-		if( register == null &&  cl.getSuperclass() != Object.class ) {
+		if (register == null && cl.getSuperclass() != Object.class) {
 			register = getMethod(cl.getSuperclass(), name, serviceType);
 		}
 
@@ -282,7 +306,8 @@ public class JavaDSServiceProcessor {
 					case MULTIPLE: {
 						List<?> list = ServiceUtils.getServiceList(serviceInterface);
 						if (cardinality == ReferenceCardinality.AT_LEAST_ONE && list.isEmpty()) {
-							logError("Unsatisfied dependency '"+r.getIface()+"'. There must be at least one component providing this service", null);  //$NON-NLS-1$//$NON-NLS-2$
+							logError("Unsatisfied dependency '" + r.getIface() //$NON-NLS-1$
+									+ "'. There must be at least one component providing this service", null); //$NON-NLS-1$
 						} else {
 							list.stream().forEach(s -> invoke(bind, o, s, getProperties(s)));
 						}
@@ -292,7 +317,8 @@ public class JavaDSServiceProcessor {
 					case OPTIONAL: {
 						Optional<?> service = ServiceUtils.getService(serviceInterface);
 						if (ReferenceCardinality.MANDATORY == cardinality && !service.isPresent()) {
-							logError("Unsatisfied dependency '"+r.getIface()+"'. There must be at least one component providing this service", null);  //$NON-NLS-1$//$NON-NLS-2$
+							logError("Unsatisfied dependency '" + r.getIface() //$NON-NLS-1$
+									+ "'. There must be at least one component providing this service", null); //$NON-NLS-1$
 						} else {
 							Object s = service.get();
 							invoke(bind, o, s, getProperties(s));
@@ -318,27 +344,21 @@ public class JavaDSServiceProcessor {
 	private Map<String, Object> getProperties(Object serviceObject) {
 		Component component = this.componentCache.get(serviceObject.getClass().getName());
 		Map<String, Object> data = new HashMap<>();
-		if( component != null ) {
-			data.putAll(component.getProperty()
-				.stream()
-				.collect(Collectors.toMap( p -> p.getName(), p -> p.getValue())));
-			data.putAll(component.getProperties()
-				.stream()
-				.map( Properties::getEntry )
-				.map( e -> serviceObject.getClass().getClassLoader().getResource(e))
-				.map( eu -> {
-					try ( InputStream in =  eu.openStream() ) {
-						java.util.Properties p = new java.util.Properties();
-						p.load(in);
-						return p.entrySet();
-					} catch( Throwable t ) {
-						logError("Unable to load properties file", t); //$NON-NLS-1$
-					}
-					return null;
-				})
-				.filter( m -> m != null)
-				.flatMap( m -> m.stream())
-				.collect(Collectors.toMap( e -> e.getKey().toString(), e -> e.getValue())));
+		if (component != null) {
+			data.putAll(
+					component.getProperty().stream().collect(Collectors.toMap(p -> p.getName(), p -> p.getValue())));
+			data.putAll(component.getProperties().stream().map(Properties::getEntry)
+					.map(e -> serviceObject.getClass().getClassLoader().getResource(e)).map(eu -> {
+						try (InputStream in = eu.openStream()) {
+							java.util.Properties p = new java.util.Properties();
+							p.load(in);
+							return p.entrySet();
+						} catch (Throwable t) {
+							logError("Unable to load properties file", t); //$NON-NLS-1$
+						}
+						return null;
+					}).filter(m -> m != null).flatMap(m -> m.stream())
+					.collect(Collectors.toMap(e -> e.getKey().toString(), e -> e.getValue())));
 		}
 		return data;
 	}
@@ -361,7 +381,7 @@ public class JavaDSServiceProcessor {
 			JAXBContext jaxbContext;
 			if (data.contains("http://www.osgi.org/xmlns/scr/v1.1.0")) { //$NON-NLS-1$
 				jaxbContext = JAXBContext.newInstance(Component11.class);
-			} else if( data.contains("http://www.osgi.org/xmlns/scr/v1.2.0") ) { //$NON-NLS-1$
+			} else if (data.contains("http://www.osgi.org/xmlns/scr/v1.2.0")) { //$NON-NLS-1$
 				jaxbContext = JAXBContext.newInstance(Component12.class);
 			} else {
 				jaxbContext = JAXBContext.newInstance(Component13.class);
@@ -370,13 +390,10 @@ public class JavaDSServiceProcessor {
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			return (Component) jaxbUnmarshaller.unmarshal(new StringReader(data));
 		} catch (Throwable e) {
-			logError("Unable to load component '"+resource+"'", e);  //$NON-NLS-1$//$NON-NLS-2$
+			logError("Unable to load component '" + resource + "'", e); //$NON-NLS-1$//$NON-NLS-2$
 
 		}
 		return null;
 	}
-
-
-
 
 }
