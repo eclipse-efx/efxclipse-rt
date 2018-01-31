@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  * 
  */
 @RunWith(RealmRunner.class)
-public class AdapterFactoryTests {
+public class AdapterFactoryTest {
 	
 	@Test
 	public void convertObservableList() {
