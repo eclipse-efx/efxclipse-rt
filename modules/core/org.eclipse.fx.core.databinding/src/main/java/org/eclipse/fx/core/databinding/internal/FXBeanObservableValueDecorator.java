@@ -22,20 +22,22 @@ import org.eclipse.fx.core.databinding.IJFXBeanObservable;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
-
 /**
  * {@link IJFXBeanObservable} decorator for an {@link IObservableValue}.
  * 
  * @since 3.3
  */
-public class FXBeanObservableValueDecorator extends DecoratingObservableValue
-		implements IJFXBeanObservable {
+public class FXBeanObservableValueDecorator extends DecoratingObservableValue implements IJFXBeanObservable {
 	@Nullable
 	private PropertyDescriptor propertyDescriptor;
 
 	/**
+	 * Create a new decorator
+	 * 
 	 * @param decorated
+	 *            the decorated observable
 	 * @param propertyDescriptor
+	 *            the property descriptor
 	 */
 	public FXBeanObservableValueDecorator(@NonNull IObservableValue decorated,
 			@Nullable PropertyDescriptor propertyDescriptor) {

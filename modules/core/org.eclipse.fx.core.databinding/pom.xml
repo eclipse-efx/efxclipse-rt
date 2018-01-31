@@ -1,34 +1,39 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<name>e(fx)clipse - Runtime - Eclipse Core Databinding Support</name>
-	<groupId>org.eclipse.fx.runtime</groupId>
 	<artifactId>org.eclipse.fx.core.databinding</artifactId>
-	<packaging>eclipse-plugin</packaging>
+	<packaging>jar</packaging>
 
 	<parent>
-		<groupId>org.eclipse.fx</groupId>
-		<artifactId>releng</artifactId>
-		<relativePath>../../../releng/org.eclipse.fx.releng/pom.xml</relativePath>
-		<version>3.1.0-SNAPSHOT</version>
+		<groupId>org.eclipse.fx.runtime</groupId>
+		<artifactId>parent</artifactId>
+		<relativePath>../../pom.xml</relativePath>
+		<version>4.0.0-SNAPSHOT</version>
 	</parent>
-
-	<build>
-		<resources>
-			<!-- to ensure that the feature lookup of the ui test works -->
-			<resource>
-				<directory>.</directory>
-				<includes>
-					<include>META-INF/</include>
-				</includes>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-source-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.fx.runtime</groupId>
+			<artifactId>org.eclipse.fx.core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>org.eclipse.jdt.annotation</artifactId>
+			<version>${dep-org.eclipse.jdt.annotation}</version>
+		</dependency>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>org.eclipse.core.databinding.observable</artifactId>
+			<version>${dep-org.eclipse.core.databinding.observable}</version>
+		</dependency>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>org.eclipse.core.databinding.property</artifactId>
+			<version>${dep-org.eclipse.core.databinding.property}</version>
+		</dependency>
+		
+	</dependencies>
 
 </project>

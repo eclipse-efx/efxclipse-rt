@@ -23,7 +23,6 @@ import org.eclipse.fx.core.databinding.JFXBeanProperties;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
-
 /**
  * @since 3.3
  * 
@@ -33,16 +32,20 @@ public class AnonymousFXBeanValueProperty extends DelegatingValueProperty {
 	private final String propertyName;
 
 	@NonNull
-	private Map<Class<?>,IValueProperty> delegates;
+	private Map<Class<?>, IValueProperty> delegates;
 
 	/**
+	 * Create new instance
+	 * 
 	 * @param propertyName
+	 *            the name of the property
 	 * @param valueType
+	 *            the value type
 	 */
 	public AnonymousFXBeanValueProperty(@NonNull String propertyName, @Nullable Class<?> valueType) {
 		super(valueType);
 		this.propertyName = propertyName;
-		this.delegates = new HashMap<Class<?>,IValueProperty>();
+		this.delegates = new HashMap<Class<?>, IValueProperty>();
 	}
 
 	@Override
@@ -57,8 +60,7 @@ public class AnonymousFXBeanValueProperty extends DelegatingValueProperty {
 
 		IValueProperty delegate;
 		try {
-			delegate = JFXBeanProperties.value(beanClass, this.propertyName,
-					(Class<?>) getValueType());
+			delegate = JFXBeanProperties.value(beanClass, this.propertyName, (Class<?>) getValueType());
 		} catch (IllegalArgumentException noSuchProperty) {
 			delegate = null;
 		}
@@ -71,14 +73,12 @@ public class AnonymousFXBeanValueProperty extends DelegatingValueProperty {
 		Object valueType = getValueType();
 		if (valueType == null)
 			valueType = inferValueType(master.getValueType());
-		return MasterDetailObservables.detailValue(master, valueFactory(master
-				.getRealm()), valueType);
+		return MasterDetailObservables.detailValue(master, valueFactory(master.getRealm()), valueType);
 	}
 
 	private Object inferValueType(Object masterObservableValueType) {
 		if (masterObservableValueType instanceof Class) {
-			return getClassDelegate((Class<?>) masterObservableValueType)
-					.getValueType();
+			return getClassDelegate((Class<?>) masterObservableValueType).getValueType();
 		}
 		return null;
 	}

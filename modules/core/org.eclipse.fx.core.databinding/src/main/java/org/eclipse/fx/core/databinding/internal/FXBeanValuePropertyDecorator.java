@@ -23,22 +23,24 @@ import org.eclipse.fx.core.databinding.JFXBeanProperties;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
-
 /**
  * @since 3.3
  * 
  */
-public class FXBeanValuePropertyDecorator extends ValueProperty implements
-		IJFXBeanValueProperty {
+public class FXBeanValuePropertyDecorator extends ValueProperty implements IJFXBeanValueProperty {
 	@NonNull
 	private final IValueProperty delegate;
-	
+
 	@Nullable
 	private final PropertyDescriptor propertyDescriptor;
 
 	/**
+	 * Create a new decorator
+	 * 
 	 * @param delegate
+	 *            the delegate
 	 * @param propertyDescriptor
+	 *            the descriptor
 	 */
 	public FXBeanValuePropertyDecorator(@NonNull IValueProperty delegate,
 			@Nullable PropertyDescriptor propertyDescriptor) {
@@ -80,89 +82,75 @@ public class FXBeanValuePropertyDecorator extends ValueProperty implements
 	@SuppressWarnings("null")
 	@Override
 	public IJFXBeanValueProperty value(IJFXBeanValueProperty property) {
-		return new FXBeanValuePropertyDecorator(super.value(property),
-				property.getPropertyDescriptor());
+		return new FXBeanValuePropertyDecorator(super.value(property), property.getPropertyDescriptor());
 	}
 
-	/*public IBeanListProperty list(String propertyName) {
-		return list(propertyName, null);
-	}
-
-	public IBeanListProperty list(String propertyName, Class elementType) {
-		Class beanClass = (Class) delegate.getValueType();
-		return list(BeanProperties.list(beanClass, propertyName, elementType));
-	}
-
-	public IBeanListProperty list(IBeanListProperty property) {
-		return new BeanListPropertyDecorator(super.list(property),
-				property.getPropertyDescriptor());
-	}
-
-	public IBeanSetProperty set(String propertyName) {
-		return set(propertyName, null);
-	}
-
-	public IBeanSetProperty set(String propertyName, Class elementType) {
-		Class beanClass = (Class) delegate.getValueType();
-		return set(BeanProperties.set(beanClass, propertyName, elementType));
-	}
-
-	public IBeanSetProperty set(IBeanSetProperty property) {
-		return new BeanSetPropertyDecorator(super.set(property),
-				property.getPropertyDescriptor());
-	}
-
-	public IBeanMapProperty map(String propertyName) {
-		return map(propertyName, null, null);
-	}
-
-	public IBeanMapProperty map(String propertyName, Class keyType,
-			Class valueType) {
-		Class beanClass = (Class) delegate.getValueType();
-		return map(BeanProperties.map(beanClass, propertyName, keyType,
-				valueType));
-	}
-
-	public IBeanMapProperty map(IBeanMapProperty property) {
-		return new BeanMapPropertyDecorator(super.map(property),
-				property.getPropertyDescriptor());
-	}*/
+	/*
+	 * public IBeanListProperty list(String propertyName) { return
+	 * list(propertyName, null); }
+	 * 
+	 * public IBeanListProperty list(String propertyName, Class elementType) { Class
+	 * beanClass = (Class) delegate.getValueType(); return
+	 * list(BeanProperties.list(beanClass, propertyName, elementType)); }
+	 * 
+	 * public IBeanListProperty list(IBeanListProperty property) { return new
+	 * BeanListPropertyDecorator(super.list(property),
+	 * property.getPropertyDescriptor()); }
+	 * 
+	 * public IBeanSetProperty set(String propertyName) { return set(propertyName,
+	 * null); }
+	 * 
+	 * public IBeanSetProperty set(String propertyName, Class elementType) { Class
+	 * beanClass = (Class) delegate.getValueType(); return
+	 * set(BeanProperties.set(beanClass, propertyName, elementType)); }
+	 * 
+	 * public IBeanSetProperty set(IBeanSetProperty property) { return new
+	 * BeanSetPropertyDecorator(super.set(property),
+	 * property.getPropertyDescriptor()); }
+	 * 
+	 * public IBeanMapProperty map(String propertyName) { return map(propertyName,
+	 * null, null); }
+	 * 
+	 * public IBeanMapProperty map(String propertyName, Class keyType, Class
+	 * valueType) { Class beanClass = (Class) delegate.getValueType(); return
+	 * map(BeanProperties.map(beanClass, propertyName, keyType, valueType)); }
+	 * 
+	 * public IBeanMapProperty map(IBeanMapProperty property) { return new
+	 * BeanMapPropertyDecorator(super.map(property),
+	 * property.getPropertyDescriptor()); }
+	 */
 
 	@SuppressWarnings("null")
 	@Override
 	public IObservableValue observe(Object source) {
-		return new FXBeanObservableValueDecorator(this.delegate.observe(source),
-				this.propertyDescriptor);
+		return new FXBeanObservableValueDecorator(this.delegate.observe(source), this.propertyDescriptor);
 	}
 
 	@SuppressWarnings("null")
 	@Override
 	public IObservableValue observe(Realm realm, Object source) {
-		return new FXBeanObservableValueDecorator(
-				this.delegate.observe(realm, source), this.propertyDescriptor);
+		return new FXBeanObservableValueDecorator(this.delegate.observe(realm, source), this.propertyDescriptor);
 	}
 
 	@SuppressWarnings("null")
 	@Override
 	public IObservableValue observeDetail(IObservableValue master) {
-		return new FXBeanObservableValueDecorator(this.delegate.observeDetail(master),
-				this.propertyDescriptor);
+		return new FXBeanObservableValueDecorator(this.delegate.observeDetail(master), this.propertyDescriptor);
 	}
 
-	/*public IObservableList observeDetail(IObservableList master) {
-		return new FXBeanObservableListDecorator(delegate.observeDetail(master),
-				propertyDescriptor);
-	}
-
-	public IObservableMap observeDetail(IObservableSet master) {
-		return new FXBeanObservableMapDecorator(delegate.observeDetail(master),
-				propertyDescriptor);
-	}
-
-	public IObservableMap observeDetail(IObservableMap master) {
-		return new FXBeanObservableMapDecorator(delegate.observeDetail(master),
-				propertyDescriptor);
-	}*/
+	/*
+	 * public IObservableList observeDetail(IObservableList master) { return new
+	 * FXBeanObservableListDecorator(delegate.observeDetail(master),
+	 * propertyDescriptor); }
+	 * 
+	 * public IObservableMap observeDetail(IObservableSet master) { return new
+	 * FXBeanObservableMapDecorator(delegate.observeDetail(master),
+	 * propertyDescriptor); }
+	 * 
+	 * public IObservableMap observeDetail(IObservableMap master) { return new
+	 * FXBeanObservableMapDecorator(delegate.observeDetail(master),
+	 * propertyDescriptor); }
+	 */
 
 	@Override
 	public String toString() {

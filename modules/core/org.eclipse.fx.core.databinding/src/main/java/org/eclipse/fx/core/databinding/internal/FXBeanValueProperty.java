@@ -29,14 +29,16 @@ public class FXBeanValueProperty extends SimpleValueProperty {
 	private final Class<?> valueType;
 
 	/**
+	 * Create a new value property
+	 * 
 	 * @param propertyDescriptor
+	 *            the descriptor
 	 * @param valueType
+	 *            the value type
 	 */
-	public FXBeanValueProperty(PropertyDescriptor propertyDescriptor,
-			Class<?> valueType) {
+	public FXBeanValueProperty(PropertyDescriptor propertyDescriptor, Class<?> valueType) {
 		this.propertyDescriptor = propertyDescriptor;
-		this.valueType = valueType == null ? propertyDescriptor
-				.getPropertyType() : valueType;
+		this.valueType = valueType == null ? propertyDescriptor.getPropertyType() : valueType;
 	}
 
 	@Override
@@ -55,8 +57,7 @@ public class FXBeanValueProperty extends SimpleValueProperty {
 	}
 
 	@Override
-	public INativePropertyListener adaptListener(
-			final ISimplePropertyListener listener) {
+	public INativePropertyListener adaptListener(final ISimplePropertyListener listener) {
 		return new FXBeanPropertyListener(this, this.propertyDescriptor, listener) {
 			@Override
 			protected IDiff computeDiff(Object oldValue, Object newValue) {

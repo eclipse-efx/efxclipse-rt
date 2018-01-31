@@ -36,38 +36,31 @@ public class FXBeanPropertyHelper {
 	 * @param value
 	 *            the new value of the property
 	 */
-	public static void writeProperty(Object source,
-			PropertyDescriptor propertyDescriptor, Object value) {
+	public static void writeProperty(Object source, PropertyDescriptor propertyDescriptor, Object value) {
 		try {
 			Method writeMethod = propertyDescriptor.getWriteMethod();
 			if (null == writeMethod) {
-				throw new IllegalArgumentException(
-						"Missing public setter method for " //$NON-NLS-1$
-								+ propertyDescriptor.getName() + " property"); //$NON-NLS-1$
+				throw new IllegalArgumentException("Missing public setter method for " //$NON-NLS-1$
+						+ propertyDescriptor.getName() + " property"); //$NON-NLS-1$
 			}
 			if (!writeMethod.isAccessible()) {
 				writeMethod.setAccessible(true);
 			}
-			
+
 			writeMethod.invoke(source, new Object[] { value });
 		} catch (InvocationTargetException e) {
 			/*
-			 * InvocationTargetException wraps any exception thrown by the
-			 * invoked method.
+			 * InvocationTargetException wraps any exception thrown by the invoked method.
 			 */
 			throw new RuntimeException(e.getCause());
 		} catch (Exception e) {
-//TODO Problems with primitive values			
-			/*if (BeansObservables.DEBUG) {
-				Policy
-						.getLog()
-						.log(
-								new Status(
-										IStatus.WARNING,
-										Policy.JFACE_DATABINDING,
-										IStatus.OK,
-										"Could not change value of " + source + "." + propertyDescriptor.getName(), e)); //$NON-NLS-1$ //$NON-NLS-2$
-			}*/
+			// TODO Problems with primitive values
+			/*
+			 * if (BeansObservables.DEBUG) { Policy .getLog() .log( new Status(
+			 * IStatus.WARNING, Policy.JFACE_DATABINDING, IStatus.OK,
+			 * "Could not change value of " + source + "." + propertyDescriptor.getName(),
+			 * e)); //$NON-NLS-1$ //$NON-NLS-2$ }
+			 */
 		}
 	}
 
@@ -80,13 +73,12 @@ public class FXBeanPropertyHelper {
 	 *            the property to retrieve
 	 * @return the contents of the given property for the given bean.
 	 */
-	public static Object readProperty(Object source,
-			PropertyDescriptor propertyDescriptor) {
+	public static Object readProperty(Object source, PropertyDescriptor propertyDescriptor) {
 		try {
 			Method readMethod = propertyDescriptor.getReadMethod();
 			if (readMethod == null) {
-				throw new IllegalArgumentException(propertyDescriptor.getName()
-						+ " property does not have a read method."); //$NON-NLS-1$
+				throw new IllegalArgumentException(
+						propertyDescriptor.getName() + " property does not have a read method."); //$NON-NLS-1$
 			}
 			if (!readMethod.isAccessible()) {
 				readMethod.setAccessible(true);
@@ -94,50 +86,45 @@ public class FXBeanPropertyHelper {
 			return readMethod.invoke(source);
 		} catch (InvocationTargetException e) {
 			/*
-			 * InvocationTargetException wraps any exception thrown by the
-			 * invoked method.
+			 * InvocationTargetException wraps any exception thrown by the invoked method.
 			 */
 			throw new RuntimeException(e.getCause());
 		} catch (Exception e) {
 			e.printStackTrace();
-			/*if (BeansObservables.DEBUG) {
-				Policy
-						.getLog()
-						.log(
-								new Status(
-										IStatus.WARNING,
-										Policy.JFACE_DATABINDING,
-										IStatus.OK,
-										"Could not read value of " + source + "." + propertyDescriptor.getName(), e)); //$NON-NLS-1$ //$NON-NLS-2$
-			}*/
+			/*
+			 * if (BeansObservables.DEBUG) { Policy .getLog() .log( new Status(
+			 * IStatus.WARNING, Policy.JFACE_DATABINDING, IStatus.OK,
+			 * "Could not read value of " + source + "." + propertyDescriptor.getName(),
+			 * e)); //$NON-NLS-1$ //$NON-NLS-2$ }
+			 */
 			return null;
 		}
 	}
 
 	/**
-	 * Returns the element type of the given collection-typed property for the
-	 * given bean.
+	 * Returns the element type of the given collection-typed property for the given
+	 * bean.
 	 * 
 	 * @param descriptor
 	 *            the property being inspected
-	 * @return the element type of the given collection-typed property if it is
-	 *         an array property, or Object.class otherwise.
+	 * @return the element type of the given collection-typed property if it is an
+	 *         array property, or Object.class otherwise.
 	 */
-	public static Class<?> getCollectionPropertyElementType(
-			PropertyDescriptor descriptor) {
+	public static Class<?> getCollectionPropertyElementType(PropertyDescriptor descriptor) {
 		Class<?> propertyType = descriptor.getPropertyType();
-		return propertyType.isArray() ? propertyType.getComponentType()
-				: Object.class;
+		return propertyType.isArray() ? propertyType.getComponentType() : Object.class;
 	}
 
 	/**
+	 * Create a property descriptor
+	 * 
 	 * @param beanClass
+	 *            the bean class
 	 * @param propertyName
-	 * @return the PropertyDescriptor for the named property on the given bean
-	 *         class
+	 *            the property name
+	 * @return the PropertyDescriptor for the named property on the given bean class
 	 */
-	public static PropertyDescriptor getPropertyDescriptor(Class<?> beanClass,
-			String propertyName) {
+	public static PropertyDescriptor getPropertyDescriptor(Class<?> beanClass, String propertyName) {
 		if (!beanClass.isInterface()) {
 			BeanInfo beanInfo;
 			try {
@@ -146,8 +133,7 @@ public class FXBeanPropertyHelper {
 				// cannot introspect, give up
 				return null;
 			}
-			PropertyDescriptor[] propertyDescriptors = beanInfo
-					.getPropertyDescriptors();
+			PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
 			for (int i = 0; i < propertyDescriptors.length; i++) {
 				PropertyDescriptor descriptor = propertyDescriptors[i];
 				if (descriptor.getName().equals(propertyName)) {
@@ -160,8 +146,7 @@ public class FXBeanPropertyHelper {
 				List<PropertyDescriptor> pds = new ArrayList<>();
 				getInterfacePropertyDescriptors(pds, beanClass);
 				if (pds.size() > 0) {
-					propertyDescriptors = (PropertyDescriptor[]) pds
-							.toArray(new PropertyDescriptor[pds.size()]);
+					propertyDescriptors = (PropertyDescriptor[]) pds.toArray(new PropertyDescriptor[pds.size()]);
 					PropertyDescriptor descriptor;
 					for (int i = 0; i < propertyDescriptors.length; i++) {
 						descriptor = propertyDescriptors[i];
@@ -179,8 +164,7 @@ public class FXBeanPropertyHelper {
 	}
 
 	/**
-	 * Goes recursively into the interface and gets all defined
-	 * propertyDescriptors
+	 * Goes recursively into the interface and gets all defined propertyDescriptors
 	 * 
 	 * @param propertyDescriptors
 	 *            The result list of all PropertyDescriptors the given interface
@@ -189,8 +173,7 @@ public class FXBeanPropertyHelper {
 	 *            The interface to fetch the PropertyDescriptors
 	 * @throws IntrospectionException
 	 */
-	private static void getInterfacePropertyDescriptors(
-			List<PropertyDescriptor> propertyDescriptors, Class<?> iface)
+	private static void getInterfacePropertyDescriptors(List<PropertyDescriptor> propertyDescriptors, Class<?> iface)
 			throws IntrospectionException {
 		BeanInfo beanInfo = Introspector.getBeanInfo(iface);
 		PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
@@ -205,31 +188,38 @@ public class FXBeanPropertyHelper {
 	}
 
 	/**
+	 * Get the value type property descriptor
+	 * 
 	 * @param observable
+	 *            the observable
 	 * @param propertyName
+	 *            the property name
 	 * @return property descriptor or <code>null</code>
 	 */
-	/* package */public static PropertyDescriptor getValueTypePropertyDescriptor(
-			IObservableValue observable, String propertyName) {
+	/* package */public static PropertyDescriptor getValueTypePropertyDescriptor(IObservableValue observable,
+			String propertyName) {
 		if (observable.getValueType() != null)
-			return getPropertyDescriptor((Class<?>) observable.getValueType(),
-					propertyName);
+			return getPropertyDescriptor((Class<?>) observable.getValueType(), propertyName);
 		return null;
 	}
 
 	/**
+	 * Extract the property name
+	 * 
 	 * @param propertyDescriptor
+	 *            the descriptor
 	 * @return String description of property descriptor
 	 */
 	public static String propertyName(PropertyDescriptor propertyDescriptor) {
-		Class<?> beanClass = propertyDescriptor.getReadMethod()
-				.getDeclaringClass();
-		return shortClassName(beanClass)
-				+ "." + propertyDescriptor.getName() + ""; //$NON-NLS-1$ //$NON-NLS-2$
+		Class<?> beanClass = propertyDescriptor.getReadMethod().getDeclaringClass();
+		return shortClassName(beanClass) + "." + propertyDescriptor.getName() + ""; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
+	 * Compute a short class name
+	 * 
 	 * @param beanClass
+	 *            the class
 	 * @return class name excluding package
 	 */
 	public static String shortClassName(Class<?> beanClass) {

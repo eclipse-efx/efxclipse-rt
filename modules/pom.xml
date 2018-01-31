@@ -15,10 +15,13 @@
 		<dep-org.eclipse.osgi.services>3.6.0</dep-org.eclipse.osgi.services>
 		<dep-com.google.guava>21.0.0</dep-com.google.guava>
 		<dep-org.apache.commons.lang>2.6.0</dep-org.apache.commons.lang>
+		<dep-org.eclipse.core.databinding.observable>1.6.100</dep-org.eclipse.core.databinding.observable>
+		<dep-org.eclipse.core.databinding.property>1.6.100</dep-org.eclipse.core.databinding.property>
 	</properties>
 	
 	<modules>
 		<module>core/org.eclipse.fx.core</module>
+		<module>core/org.eclipse.fx.core.databinding</module>
 	</modules>
 
 	<repositories>
