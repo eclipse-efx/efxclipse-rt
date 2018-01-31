@@ -46,7 +46,8 @@ public class RankedObjectRegistry<T> {
 
 		@Override
 		public String toString() {
-			return "RankedObjectRegistry@"+Integer.toHexString(hashCode()) + "( ranking: " + this.rank + "," + this.object  + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			return "RankedObjectRegistry@" + Integer.toHexString(hashCode()) + "( ranking: " + this.rank + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					+ this.object + ")"; //$NON-NLS-1$
 		}
 	}
 
@@ -89,8 +90,8 @@ public class RankedObjectRegistry<T> {
 	}
 
 	/**
-	 * Create a stream who operates in the direct list and users need to make
-	 * sure no concurrent modifications happen in between
+	 * Create a stream who operates in the direct list and users need to make sure
+	 * no concurrent modifications happen in between
 	 *
 	 * @return the stream
 	 */

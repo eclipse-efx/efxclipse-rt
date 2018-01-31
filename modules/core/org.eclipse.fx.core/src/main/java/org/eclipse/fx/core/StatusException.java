@@ -37,7 +37,7 @@ public class StatusException extends RuntimeException {
 	public StatusException(@NonNull Status status) {
 		this.status = status;
 	}
-	
+
 	/**
 	 * @return the status object
 	 */

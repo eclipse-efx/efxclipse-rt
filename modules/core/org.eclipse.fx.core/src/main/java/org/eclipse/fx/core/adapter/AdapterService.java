@@ -24,8 +24,7 @@ public interface AdapterService {
 	 *            the source object
 	 * @param targetType
 	 *            the target type
-	 * @return <code>true</code> if object can be adapted, else
-	 *         <code>false</code>
+	 * @return <code>true</code> if object can be adapted, else <code>false</code>
 	 */
 	public boolean canAdapt(@Nullable Object sourceObject, @NonNull Class<?> targetType);
 
@@ -40,8 +39,7 @@ public interface AdapterService {
 	 *            value access
 	 * @param <A>
 	 *            the type adapted to
-	 * @return the adapted object or <code>null</code> if adaption was not
-	 *         possible
+	 * @return the adapted object or <code>null</code> if adaption was not possible
 	 */
 	@Nullable
 	public <A> A adapt(@Nullable Object sourceObject, @NonNull Class<A> targetType, ValueAccess... valueAccesses);

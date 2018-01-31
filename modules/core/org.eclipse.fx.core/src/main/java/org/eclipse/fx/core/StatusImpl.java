@@ -44,7 +44,7 @@ class StatusImpl implements Status {
 	 * Ok status
 	 */
 	@NonNull
-	public static final Status OK = new StatusImpl(State.OK,-1,"<ok>",null); //$NON-NLS-1$
+	public static final Status OK = new StatusImpl(State.OK, -1, "<ok>", null); //$NON-NLS-1$
 
 	/**
 	 * Create a new return value
@@ -92,9 +92,9 @@ class StatusImpl implements Status {
 
 	@Override
 	public String toString() {
-		return "StatusImpl [state=" + this.state + ", message=" + this.message + ", throwable=" + this.throwable + ", code=" + this.code  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "StatusImpl [state=" + this.state + ", message=" + this.message + ", throwable=" + this.throwable //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+				+ ", code=" + this.code //$NON-NLS-1$
 				+ "]"; //$NON-NLS-1$
 	}
-
 
 }

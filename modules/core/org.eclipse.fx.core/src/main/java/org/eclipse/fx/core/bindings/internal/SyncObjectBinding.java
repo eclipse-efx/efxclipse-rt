@@ -24,7 +24,6 @@ public class SyncObjectBinding<A> extends ObjectBinding<A> {
 	private ObservableValue<A> source;
 	private ThreadSynchronize thread;
 
-
 	public SyncObjectBinding(ObservableValue<A> source, ThreadSynchronize thread) {
 		this.source = source;
 		this.thread = thread;

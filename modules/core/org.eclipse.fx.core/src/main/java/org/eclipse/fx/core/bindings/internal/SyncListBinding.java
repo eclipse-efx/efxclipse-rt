@@ -25,7 +25,7 @@ public class SyncListBinding<A> extends ListBinding<A> {
 	private ObservableList<A> source;
 	private ThreadSynchronize thread;
 
-	public  SyncListBinding(ObservableList<A> source, ThreadSynchronize thread) {
+	public SyncListBinding(ObservableList<A> source, ThreadSynchronize thread) {
 		this.source = source;
 		this.thread = thread;
 

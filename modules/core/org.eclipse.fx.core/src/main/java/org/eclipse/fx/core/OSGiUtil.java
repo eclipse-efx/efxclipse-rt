@@ -109,7 +109,8 @@ class OSGiUtil {
 		}
 	}
 
-	public static <S> List<org.eclipse.fx.core.ServiceUtils.ServiceReference<S>> lookupServiceReferenceList(Class<?> requestor, Class<S> serviceClass) {
+	public static <S> List<org.eclipse.fx.core.ServiceUtils.ServiceReference<S>> lookupServiceReferenceList(
+			Class<?> requestor, Class<S> serviceClass) {
 		List<Class<?>> cl = new ArrayList<>();
 		if (requestor != null) {
 			cl.add(requestor);
@@ -124,8 +125,8 @@ class OSGiUtil {
 			if (serviceReferences == null) {
 				return Collections.emptyList();
 			}
-			List<org.eclipse.fx.core.ServiceUtils.ServiceReference<S>> list = Stream.of(serviceReferences).map(r -> new ServiceReferenceImpl<>(r, ctx)).sorted()
-					.collect(Collectors.toList());
+			List<org.eclipse.fx.core.ServiceUtils.ServiceReference<S>> list = Stream.of(serviceReferences)
+					.map(r -> new ServiceReferenceImpl<>(r, ctx)).sorted().collect(Collectors.toList());
 			Collections.reverse(list);
 			return list;
 		} catch (InvalidSyntaxException e) {
@@ -146,7 +147,7 @@ class OSGiUtil {
 
 		@Override
 		public S get() {
-			if( this.serviceInstance == null ) {
+			if (this.serviceInstance == null) {
 				this.serviceInstance = this.ctx.getService(this.ref);
 			}
 			return this.serviceInstance;
@@ -155,15 +156,17 @@ class OSGiUtil {
 		@Override
 		public int getRanking() {
 			Object ranking = this.ref.getProperty("service.ranking"); //$NON-NLS-1$
-			return ranking == null ? 0 : ranking instanceof Integer ? ((Integer)ranking).intValue() : Integer.parseInt(ranking.toString());
+			return ranking == null ? 0
+					: ranking instanceof Integer ? ((Integer) ranking).intValue()
+							: Integer.parseInt(ranking.toString());
 		}
 
 		@Override
 		public KeyValueStore<String, Object> getProperties() {
 			// TODO create the KeyValueStore lazy
-			if( this.properties == null ) {
+			if (this.properties == null) {
 				Map<String, Object> p = new HashMap<String, Object>();
-				for( String s : this.ref.getPropertyKeys() ) {
+				for (String s : this.ref.getPropertyKeys()) {
 					p.put(s, this.ref.getProperty(s));
 				}
 				this.properties = KeyValueStore.fromMap(p);

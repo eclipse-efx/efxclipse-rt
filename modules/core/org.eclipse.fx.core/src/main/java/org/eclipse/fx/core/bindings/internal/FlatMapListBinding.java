@@ -49,7 +49,8 @@ public class FlatMapListBinding<A, B> extends ListBinding<B> {
 	@Override
 	protected ObservableList<B> computeValue() {
 		this.updateDependencies();
-		return FXCollections.observableList(this.source.stream().map(this.map).flatMap(o->o.stream()).collect(Collectors.toList()));
+		return FXCollections.observableList(
+				this.source.stream().map(this.map).flatMap(o -> o.stream()).collect(Collectors.toList()));
 	}
 
 	@Override

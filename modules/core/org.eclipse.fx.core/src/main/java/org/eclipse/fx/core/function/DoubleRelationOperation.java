@@ -22,12 +22,15 @@ package org.eclipse.fx.core.function;
  * </ul>
  *
  * To create relation operations one uses the static helpers
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  * DoubleRelationOperation r = DoubleRelationOperation::lt
  * if( r.apply(10.0, 11.0) ) {
  * 	// 10.0 is lower than 11.0
  * }
- * </code></pre>
+ * </code>
+ * </pre>
  *
  * @since 2.2
  */
@@ -50,7 +53,7 @@ public interface DoubleRelationOperation {
 	 * <code>
 	 *  i &lt; j
 	 * </code>
-	 *  </pre>
+	 * </pre>
 	 *
 	 * @param i
 	 *            the first operand

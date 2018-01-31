@@ -41,8 +41,7 @@ public interface ValidatedProperty<O> extends ValidationStatusPropertyOwner {
 	public Subscription registerValidator(Function<O, Status> validator);
 
 	/**
-	 * Register a validator who is also use the values from dependent
-	 * observables
+	 * Register a validator who is also use the values from dependent observables
 	 *
 	 * @param validator
 	 *            the validator

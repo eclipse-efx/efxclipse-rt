@@ -30,7 +30,8 @@ public class ExtensibleURLStreamHandlerFactory implements URLStreamHandlerFactor
 	private final Map<String, org.eclipse.fx.core.URLStreamHandler> handlerMap;
 
 	private ExtensibleURLStreamHandlerFactory() {
-		this.handlerMap = ServiceUtils.getServiceList(org.eclipse.fx.core.URLStreamHandler.class).stream().collect(Collectors.toMap(h -> h.getProtocol(), h -> h));
+		this.handlerMap = ServiceUtils.getServiceList(org.eclipse.fx.core.URLStreamHandler.class).stream()
+				.collect(Collectors.toMap(h -> h.getProtocol(), h -> h));
 	}
 
 	@Override
@@ -47,8 +48,9 @@ public class ExtensibleURLStreamHandlerFactory implements URLStreamHandlerFactor
 	 * <p>
 	 * <b>Warning:</b>
 	 * </p>
-	 * <p>If you run in a framework like eg Equinox you should not run
-	 * this code because the framework might already have set its custom handler
+	 * <p>
+	 * If you run in a framework like eg Equinox you should not run this code
+	 * because the framework might already have set its custom handler
 	 * </p>
 	 */
 	public static void setup() {
@@ -64,7 +66,7 @@ public class ExtensibleURLStreamHandlerFactory implements URLStreamHandlerFactor
 
 		@Override
 		protected URLConnection openConnection(URL u) throws IOException {
-			if( u == null ) {
+			if (u == null) {
 				throw new IllegalStateException("The url must not be null"); //$NON-NLS-1$
 			}
 			return new URLConnectionImpl(u, this.h);

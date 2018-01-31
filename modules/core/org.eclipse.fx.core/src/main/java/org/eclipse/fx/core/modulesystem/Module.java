@@ -7,6 +7,8 @@ import org.eclipse.fx.core.Version;
 
 public interface Module {
 	public String getId();
+
 	public Optional<Version> getVersion();
+
 	public Optional<Path> getLocation();
 }

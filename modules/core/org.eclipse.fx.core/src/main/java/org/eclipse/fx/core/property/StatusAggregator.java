@@ -33,7 +33,8 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
  */
 public class StatusAggregator implements ValidationStatusPropertyOwner {
 	private List<ValidationStatusPropertyOwner> list = new ArrayList<>();
-	private ReadOnlyObjectWrapper<Status> statusProperty = new ReadOnlyObjectWrapper<>(this, "statusProperty", Status.ok()); //$NON-NLS-1$
+	private ReadOnlyObjectWrapper<Status> statusProperty = new ReadOnlyObjectWrapper<>(this, "statusProperty", //$NON-NLS-1$
+			Status.ok());
 
 	private static Comparator<Status> STATUS_SORTER = (s1, s2) -> s1.getState().compareTo(s2.getState());
 	private static Predicate<Status> WARNING_ERROR = s -> s.getState() == State.ERROR || s.getState() == State.WARNING;
@@ -98,7 +99,8 @@ public class StatusAggregator implements ValidationStatusPropertyOwner {
 	}
 
 	private void _validate() {
-		this.statusProperty.set(this.list.stream().map(b -> b.statusProperty().get()).sorted(STATUS_SORTER).filter(WARNING_ERROR).findFirst().orElse(Status.ok()));
+		this.statusProperty.set(this.list.stream().map(b -> b.statusProperty().get()).sorted(STATUS_SORTER)
+				.filter(WARNING_ERROR).findFirst().orElse(Status.ok()));
 		this.validationScheduled.set(false);
 	}
 }

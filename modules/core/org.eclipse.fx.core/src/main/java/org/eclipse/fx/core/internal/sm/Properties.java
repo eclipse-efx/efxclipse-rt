@@ -28,7 +28,9 @@ public class Properties {
 
 	/**
 	 * Set the entry path
-	 * @param entry the entry path
+	 * 
+	 * @param entry
+	 *            the entry path
 	 */
 	public void setEntry(String entry) {
 		this.entry = entry;

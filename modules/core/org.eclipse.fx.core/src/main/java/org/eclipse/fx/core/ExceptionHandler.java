@@ -24,16 +24,16 @@ public interface ExceptionHandler {
 	 * @noimplement
 	 */
 	public interface ExceptionData {
-//		/**
-//		 * @return the thread the exception happened on
-//		 */
-//		public Thread thread();
-		
+		// /**
+		// * @return the thread the exception happened on
+		// */
+		// public Thread thread();
+
 		/**
 		 * @return the source class
 		 */
 		public @NonNull String sourceClass();
-		
+
 		/**
 		 * @return the exception
 		 */

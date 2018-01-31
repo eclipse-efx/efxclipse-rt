@@ -57,12 +57,12 @@ class SimpleURI implements URI {
 			_uri = _uri.substring(0, queryStart);
 		}
 
-		if( _uri.startsWith("//") ) { //$NON-NLS-1$
+		if (_uri.startsWith("//")) { //$NON-NLS-1$
 			String[] vals = _uri.substring(2).split("/"); //$NON-NLS-1$
-			if( vals.length > 0 ) {
-				this.segments = new String[vals.length-1];
-				for( int i = 1; i < vals.length; i++ ) {
-					this.segments[i-1] = vals[i];
+			if (vals.length > 0) {
+				this.segments = new String[vals.length - 1];
+				for (int i = 1; i < vals.length; i++) {
+					this.segments[i - 1] = vals[i];
 				}
 				this.host = vals[0];
 			}
@@ -83,7 +83,7 @@ class SimpleURI implements URI {
 
 	@Override
 	public @Nullable String segment(int i) {
-		if( i < this.segments.length ) {
+		if (i < this.segments.length) {
 			return this.segments[i];
 		}
 		return null;

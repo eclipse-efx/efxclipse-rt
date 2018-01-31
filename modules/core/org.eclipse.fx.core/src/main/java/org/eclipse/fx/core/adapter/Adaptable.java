@@ -18,8 +18,8 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public interface Adaptable {
 	/**
-	 * Adapts the type to the target type or <code>null</code> if adapting is
-	 * not possible
+	 * Adapts the type to the target type or <code>null</code> if adapting is not
+	 * possible
 	 * 
 	 * @param adapt
 	 *            the type to adapt to
@@ -35,8 +35,7 @@ public interface Adaptable {
 	 * 
 	 * @param adapt
 	 *            the type to adapt to
-	 * @return <code>true</code> if adaption is possible, else
-	 *         <code>false</code>
+	 * @return <code>true</code> if adaption is possible, else <code>false</code>
 	 */
 	public boolean canAdaptTo(@NonNull Class<?> adapt);
 }

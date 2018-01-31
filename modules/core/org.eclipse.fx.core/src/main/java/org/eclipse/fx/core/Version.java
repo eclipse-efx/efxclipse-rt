@@ -105,6 +105,7 @@ public abstract class Version implements Comparable<Version> {
 	 * <p>
 	 * Required format:
 	 * </p>
+	 * 
 	 * <pre>
 	 * version ::= major '.' minor '.' micro (('_'|'-'))qualifier)?
 	 * major ::= digit+
@@ -137,7 +138,7 @@ public abstract class Version implements Comparable<Version> {
 			return createVersion(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]),
 					qualifier);
 		} else {
-			throw new IllegalArgumentException("Invalid version string '"+versionString+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+			throw new IllegalArgumentException("Invalid version string '" + versionString + "'"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -196,7 +197,8 @@ public abstract class Version implements Comparable<Version> {
 
 		@Override
 		public String toString() {
-			return "VersionImpl [major=" + this.major + ", minor=" + this.minor + ", micro=" + this.micro + ", qualifier=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			return "VersionImpl [major=" + this.major + ", minor=" + this.minor + ", micro=" + this.micro //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					+ ", qualifier=" //$NON-NLS-1$
 					+ this.qualifier + "]"; //$NON-NLS-1$
 		}
 

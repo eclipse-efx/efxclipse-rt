@@ -22,8 +22,7 @@ public interface ProgressReporter {
 	/**
 	 * Reports about the start of a task
 	 * <p>
-	 * <b>Warning</b>: This code might be called by multiple threads
-	 * concurrently
+	 * <b>Warning</b>: This code might be called by multiple threads concurrently
 	 * </p>
 	 *
 	 * @param taskId
@@ -39,7 +38,8 @@ public interface ProgressReporter {
 	 *            <code>true</code> if the task can be canceled
 	 *
 	 */
-	public void taskStart(@NonNull String taskId, @Nullable String parentTaskId, @NonNull String taskName, int totalUnits, boolean cancelable);
+	public void taskStart(@NonNull String taskId, @Nullable String parentTaskId, @NonNull String taskName,
+			int totalUnits, boolean cancelable);
 
 	/**
 	 * Inform that the total task units has changed
@@ -54,8 +54,7 @@ public interface ProgressReporter {
 	/**
 	 * Report about the end of a task
 	 * <p>
-	 * <b>Warning</b>: This code might be called by multiple threads
-	 * concurrently
+	 * <b>Warning</b>: This code might be called by multiple threads concurrently
 	 * </p>
 	 *
 	 * @param taskId
@@ -66,11 +65,10 @@ public interface ProgressReporter {
 	public void taskEnd(@NonNull String taskId, boolean canceled);
 
 	/**
-	 * Inform about progress update and provide a chance for the user to cancel
-	 * the task.
+	 * Inform about progress update and provide a chance for the user to cancel the
+	 * task.
 	 * <p>
-	 * <b>Warning</b>: This code might be called by multiple threads
-	 * concurrently
+	 * <b>Warning</b>: This code might be called by multiple threads concurrently
 	 * </p>
 	 *
 	 * @param taskId
@@ -81,29 +79,30 @@ public interface ProgressReporter {
 	 *            the units done
 	 */
 	public void progress(@NonNull String taskId, @Nullable String message, int unitsDone);
-	
+
 	/**
 	 * A simple default progress reporter
 	 * 
 	 * @since 2.0
 	 */
 	public static ProgressReporter NULLPROGRESS_REPORTER = new ProgressReporter() {
-		
+
 		@Override
 		public void taskUnitsChanged(@NonNull String taskId, int totalUnits) {
 			// nothing
 		}
-		
+
 		@Override
-		public void taskStart(@NonNull String taskId, @Nullable String parentTaskId, @NonNull String taskName, int totalUnits, boolean cancelable) {
+		public void taskStart(@NonNull String taskId, @Nullable String parentTaskId, @NonNull String taskName,
+				int totalUnits, boolean cancelable) {
 			// nothing
 		}
-		
+
 		@Override
 		public void taskEnd(@NonNull String taskId, boolean canceled) {
 			// nothing
 		}
-		
+
 		@Override
 		public void progress(@NonNull String taskId, @Nullable String message, int unitsDone) {
 			// nothing

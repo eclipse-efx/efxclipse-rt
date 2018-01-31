@@ -100,7 +100,8 @@ public interface URLDynamicDataStreamHandler {
 	 * @return <code>true</code> if is a valid URL
 	 */
 	public static boolean isValidDynamicDataStreamURL(URL url) {
-		return PROTOCOL.equals(url.getProtocol()) && url.getQuery() != null && url.getQuery().contains(DYNAMIC_DATA_KEY);
+		return PROTOCOL.equals(url.getProtocol()) && url.getQuery() != null
+				&& url.getQuery().contains(DYNAMIC_DATA_KEY);
 	}
 
 	/**

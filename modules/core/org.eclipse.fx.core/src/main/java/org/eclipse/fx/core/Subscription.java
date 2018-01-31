@@ -22,8 +22,8 @@ public interface Subscription {
 	public void dispose();
 
 	/**
-	 * This is a helper method so that user code is not cluttered with null
-	 * checks before disposing a {@link Subscription}
+	 * This is a helper method so that user code is not cluttered with null checks
+	 * before disposing a {@link Subscription}
 	 *
 	 * @param s
 	 *            the possible subscription instance, might be <code>null</code>

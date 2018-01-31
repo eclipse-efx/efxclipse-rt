@@ -30,7 +30,6 @@ public class MapSimpleObjectBinding<A, B> extends ObjectBinding<B> {
 		bind(this.source);
 	}
 
-
 	@SuppressWarnings("null")
 	@Override
 	protected B computeValue() {
@@ -41,8 +40,7 @@ public class MapSimpleObjectBinding<A, B> extends ObjectBinding<B> {
 		if (sourceVal != null) {
 			B apply = this.map.apply(sourceVal);
 			return apply;
-		}
-		else {
+		} else {
 			return (B) null;
 		}
 	}

@@ -13,7 +13,8 @@ package org.eclipse.fx.core;
 import java.util.ServiceLoader;
 
 /**
- * Mixin to implement by services to allow ranking them in {@link ServiceLoader} environment
+ * Mixin to implement by services to allow ranking them in {@link ServiceLoader}
+ * environment
  *
  * @since 1.2
  */

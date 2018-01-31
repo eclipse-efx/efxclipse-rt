@@ -45,7 +45,7 @@ public interface CancelableOperation<T> extends Operation<T> {
 	 */
 	@Override
 	public CancelableOperation<T> onException(@NonNull Consumer<@NonNull StatusException> consumer);
-	
+
 	/**
 	 * Called when the operation is canceled
 	 * 
@@ -54,7 +54,7 @@ public interface CancelableOperation<T> extends Operation<T> {
 	 * @return the operation
 	 */
 	public CancelableOperation<T> onCancel(@NonNull Runnable consumer);
-	
+
 	/**
 	 * Cancel the running operation
 	 */

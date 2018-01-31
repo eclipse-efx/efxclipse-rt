@@ -20,7 +20,8 @@ import javafx.collections.ObservableList;
  *            the set type
  * @since 2.4.0
  */
-public class ValidatedSimpleListProperty<E> extends ValidatedPropertyBase<ObservableList<E>> implements ValidatedListProperty<E> {
+public class ValidatedSimpleListProperty<E> extends ValidatedPropertyBase<ObservableList<E>>
+		implements ValidatedListProperty<E> {
 	/**
 	 * Create a new wrapper
 	 *

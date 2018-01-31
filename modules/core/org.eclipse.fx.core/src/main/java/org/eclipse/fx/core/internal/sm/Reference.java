@@ -164,9 +164,10 @@ public class Reference {
 		/**
 		 * static binding
 		 */
-		STATIC, /**
-				 * dynamic binding
-				 */
+		STATIC,
+		/**
+		 * dynamic binding
+		 */
 		DYNAMIC;
 
 		/**

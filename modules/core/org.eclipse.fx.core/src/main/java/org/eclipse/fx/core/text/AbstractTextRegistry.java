@@ -36,14 +36,15 @@ public class AbstractTextRegistry<M> extends BasicTextRegistry implements TextRe
 	}
 
 	/**
-	 * Register a consumer and a function acting as the supplier of the
-	 * translation value:
+	 * Register a consumer and a function acting as the supplier of the translation
+	 * value:
+	 * 
 	 * <pre>
-	 *   &#064;Inject
-	 *   private MessageHandler handler; // Subclass of AbstractMessageRegistry
+	 * &#064;Inject
+	 * private MessageHandler handler; // Subclass of AbstractMessageRegistry
 	 *
-	 *   TitledPane tb = new TitledPane();
-	 *   handler.register(tb::setText, (m) -&gt; m.PreferenceView_Title);
+	 * TitledPane tb = new TitledPane();
+	 * handler.register(tb::setText, (m) -&gt; m.PreferenceView_Title);
 	 * </pre>
 	 *
 	 * @param consumer
@@ -58,16 +59,19 @@ public class AbstractTextRegistry<M> extends BasicTextRegistry implements TextRe
 
 	/**
 	 * Register a consumer and supplier
+	 * 
 	 * <pre>
-	 *   &#064;Inject
-	 *   private MessageHandler handler; // Subclass of AbstractMessageRegistry
+	 * &#064;Inject
+	 * private MessageHandler handler; // Subclass of AbstractMessageRegistry
 	 *
-	 *   TitledPane tb = new TitledPane();
-	 *   handler.register(tb::setText, handler::PreferenceView_Title);
+	 * TitledPane tb = new TitledPane();
+	 * handler.register(tb::setText, handler::PreferenceView_Title);
 	 * </pre>
 	 *
-	 * @param consumer the consumer the value is set on
-	 * @param supplier the supplier
+	 * @param consumer
+	 *            the consumer the value is set on
+	 * @param supplier
+	 *            the supplier
 	 * @return the subscription
 	 */
 	@Override
@@ -78,13 +82,14 @@ public class AbstractTextRegistry<M> extends BasicTextRegistry implements TextRe
 	/**
 	 * Update the message object
 	 *
-	 * @param messages the messages
+	 * @param messages
+	 *            the messages
 	 */
 	public void updateMessages(M messages) {
 		this.messages = messages;
 		updateBindings();
 	}
-	
+
 	@PreDestroy
 	void unregister() {
 		this.bindings.clear();

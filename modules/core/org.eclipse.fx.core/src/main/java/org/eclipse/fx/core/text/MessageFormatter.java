@@ -33,7 +33,9 @@ public class MessageFormatter {
 	 *            provides the dynamic formatters
 	 * @return a formatting function
 	 */
-	public static @NonNull Function<Object, String> create(@NonNull Function<@NonNull String, @Nullable Object> dataProvider, @NonNull Function<@NonNull String, @Nullable Formatter<@Nullable ?>> formatProvider) {
+	public static @NonNull Function<Object, String> create(
+			@NonNull Function<@NonNull String, @Nullable Object> dataProvider,
+			@NonNull Function<@NonNull String, @Nullable Formatter<@Nullable ?>> formatProvider) {
 		StrSubstitutor strSubstitutor = new StrSubstitutor(new LookupImpl(dataProvider, formatProvider));
 		return strSubstitutor::replace;
 	}
@@ -45,7 +47,8 @@ public class MessageFormatter {
 		@NonNull
 		private final Function<@NonNull String, @Nullable Formatter<@Nullable ?>> formatProvider;
 
-		public LookupImpl(@NonNull Function<@NonNull String, @Nullable Object> dataProvider, @NonNull Function<@NonNull String, @Nullable Formatter<@Nullable ?>> formatProvider) {
+		public LookupImpl(@NonNull Function<@NonNull String, @Nullable Object> dataProvider,
+				@NonNull Function<@NonNull String, @Nullable Formatter<@Nullable ?>> formatProvider) {
 			this.dataProvider = dataProvider;
 			this.formatProvider = formatProvider;
 		}
@@ -60,7 +63,8 @@ public class MessageFormatter {
 
 			Object object = this.dataProvider.apply(key);
 			@SuppressWarnings("unchecked")
-			Formatter<@Nullable Object> formatterInstance = (Formatter<@Nullable Object>) this.formatProvider.apply(formatter);
+			Formatter<@Nullable Object> formatterInstance = (Formatter<@Nullable Object>) this.formatProvider
+					.apply(formatter);
 			if (formatterInstance == null) {
 				return object + ""; //$NON-NLS-1$
 			}

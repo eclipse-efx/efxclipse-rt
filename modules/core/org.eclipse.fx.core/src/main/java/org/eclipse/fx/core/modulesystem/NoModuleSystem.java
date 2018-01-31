@@ -27,7 +27,7 @@ class NoModuleSystem implements ModuleSystem {
 	private static NoModuleSystem INSTANCE;
 
 	public static final NoModuleSystem getInstance() {
-		if( INSTANCE == null ) {
+		if (INSTANCE == null) {
 			INSTANCE = new NoModuleSystem();
 		}
 		return INSTANCE;

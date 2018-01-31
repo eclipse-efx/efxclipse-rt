@@ -21,12 +21,16 @@ package org.eclipse.fx.core.function;
  * <li>!= - not equal</li>
  * </ul>
  * To create relation operations one uses the static helpers
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  * IntRelationOperation r = IntRelationOperation::lt
  * if( r.apply(10, 11) ) {
  * 	// 10 is lower than 11
  * }
- * </code></pre>
+ * </code>
+ * </pre>
+ * 
  * @since 2.2
  */
 public interface IntRelationOperation {

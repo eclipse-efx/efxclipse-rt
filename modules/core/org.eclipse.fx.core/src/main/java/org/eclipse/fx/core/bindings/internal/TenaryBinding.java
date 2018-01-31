@@ -35,7 +35,7 @@ public class TenaryBinding<T> extends ObjectBinding<T> {
 		this._else = null;
 		this._obsElse = _else;
 		this.obsThen = then;
-		bind(condition,then,_else);
+		bind(condition, then, _else);
 	}
 
 	public TenaryBinding(ObservableBooleanValue condition, T then, T _else) {
@@ -51,7 +51,7 @@ public class TenaryBinding<T> extends ObjectBinding<T> {
 	protected T computeValue() {
 		ObservableValue<T> obsThen = this.obsThen;
 		ObservableValue<T> _obsElse = this._obsElse;
-		return this.condition.get() ?
-				(obsThen == null ? this.then :  obsThen.getValue()) : ( _obsElse == null ? this._else : _obsElse.getValue());
+		return this.condition.get() ? (obsThen == null ? this.then : obsThen.getValue())
+				: (_obsElse == null ? this._else : _obsElse.getValue());
 	}
 }

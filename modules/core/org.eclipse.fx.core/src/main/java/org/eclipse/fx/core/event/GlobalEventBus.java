@@ -16,11 +16,11 @@ import org.eclipse.fx.core.Subscription;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * EventBus as OSGi Service to send and receive events
- * that are compatible with the e4 client EventBus
+ * EventBus as OSGi Service to send and receive events that are compatible with
+ * the e4 client EventBus
  */
 public interface GlobalEventBus extends EventBus {
-	
+
 	/**
 	 * Publish the event
 	 *
@@ -29,8 +29,8 @@ public interface GlobalEventBus extends EventBus {
 	 * @param data
 	 *            the data to publish
 	 * @param synchronous
-	 *            <code>true</code> returns after the event has been processed
-	 *            by all subscribers
+	 *            <code>true</code> returns after the event has been processed by
+	 *            all subscribers
 	 * @since 2.4.0
 	 */
 	@Override

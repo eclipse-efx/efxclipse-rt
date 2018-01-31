@@ -13,7 +13,9 @@ package org.eclipse.fx.core.app;
 /**
  * The exit status of the application
  *
- * <p>This provisional API and subject to change</p>
+ * <p>
+ * This provisional API and subject to change
+ * </p>
  *
  * @since 3.0
  * @noimplement

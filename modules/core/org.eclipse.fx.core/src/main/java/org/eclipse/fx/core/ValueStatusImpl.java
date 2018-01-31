@@ -17,7 +17,8 @@ import org.eclipse.jdt.annotation.Nullable;
 class ValueStatusImpl<@Nullable O> extends StatusImpl implements ValueStatus<O> {
 	private final @Nullable O value;
 
-	public ValueStatusImpl(@Nullable O value, @NonNull State state, int code, @Nullable String message, @Nullable Throwable throwable) {
+	public ValueStatusImpl(@Nullable O value, @NonNull State state, int code, @Nullable String message,
+			@Nullable Throwable throwable) {
 		super(state, code, message, throwable);
 		this.value = value;
 	}

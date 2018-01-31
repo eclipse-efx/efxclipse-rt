@@ -19,7 +19,7 @@ package org.eclipse.fx.core;
  *            the type of value 2
  * @param <W>
  *            the type of value 3
- *            
+ * 
  * @since 3.0
  */
 public class Triple<U, V, W> {
@@ -72,7 +72,7 @@ public class Triple<U, V, W> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Triple<?,?,?> other = (Triple<?,?,?>) obj;
+		Triple<?, ?, ?> other = (Triple<?, ?, ?>) obj;
 		if (this.value1 == null) {
 			if (other.value1 != null)
 				return false;

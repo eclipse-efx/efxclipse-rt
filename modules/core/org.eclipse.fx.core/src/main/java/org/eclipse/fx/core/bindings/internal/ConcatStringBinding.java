@@ -30,10 +30,7 @@ public class ConcatStringBinding<T> extends StringBinding {
 
 	@Override
 	protected String computeValue() {
-		return Stream.of(this.sources)
-					.map( s -> s.getValue())
-					.map( v -> v == null ? "" : v.toString()) //$NON-NLS-1$
-					.filter( v -> ! v.isEmpty())
-					.collect(Collectors.joining(this.delimiter));
+		return Stream.of(this.sources).map(s -> s.getValue()).map(v -> v == null ? "" : v.toString()) //$NON-NLS-1$
+				.filter(v -> !v.isEmpty()).collect(Collectors.joining(this.delimiter));
 	}
 }

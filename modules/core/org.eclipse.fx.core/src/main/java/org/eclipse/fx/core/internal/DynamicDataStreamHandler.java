@@ -63,20 +63,18 @@ public class DynamicDataStreamHandler implements URLStreamHandler {
 	public @NonNull InputStream createStream(@NonNull URL url) throws IOException {
 		if (URLDynamicDataStreamHandler.isValidDynamicDataStreamURL(url)) {
 			InputStream inStream = Stream.of(url.getQuery().split("&")) //$NON-NLS-1$
-					.filter(e -> e.startsWith(URLDynamicDataStreamHandler.DYNAMIC_DATA_KEY))
-					.findFirst()
-					.map( e -> e.split("=")[1]) //$NON-NLS-1$
-					.map( id -> this.map.get(id))
-					.map( h -> h.createDataStream(url))
-					.orElse(null);
-			if( inStream == null ) {
-				throw new IOException("Could not create input stream for URL '"+url+"'");  //$NON-NLS-1$//$NON-NLS-2$
+					.filter(e -> e.startsWith(URLDynamicDataStreamHandler.DYNAMIC_DATA_KEY)).findFirst()
+					.map(e -> e.split("=")[1]) //$NON-NLS-1$
+					.map(id -> this.map.get(id)).map(h -> h.createDataStream(url)).orElse(null);
+			if (inStream == null) {
+				throw new IOException("Could not create input stream for URL '" + url + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			}
 			return inStream;
 		} else {
-			InputStream inStream = new URL(url.toExternalForm().substring(URLDynamicDataStreamHandler.PROTOCOL.length()+1)).openStream();
-			if( inStream == null ) {
-				throw new IOException("Could not create input stream for URL '"+url+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			InputStream inStream = new URL(
+					url.toExternalForm().substring(URLDynamicDataStreamHandler.PROTOCOL.length() + 1)).openStream();
+			if (inStream == null) {
+				throw new IOException("Could not create input stream for URL '" + url + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			}
 			return inStream;
 		}

@@ -62,7 +62,8 @@ public interface Value<T> extends Adaptable {
 	 *
 	 * By default the following adapters are available:
 	 * <ul>
-	 * <li>Eclipse Databinding - <code>org.eclipse.core.databinding.observable.value.IObservableValue</code></li>
+	 * <li>Eclipse Databinding -
+	 * <code>org.eclipse.core.databinding.observable.value.IObservableValue</code></li>
 	 * <li>JavaFX property - {@link javafx.beans.property.Property}</li>
 	 * </ul>
 	 *
@@ -80,7 +81,8 @@ public interface Value<T> extends Adaptable {
 	 *
 	 * By default the following adapters are available:
 	 * <ul>
-	 * <li>Eclipse Databinding - <code>org.eclipse.core.databinding.observable.value.IObservableValue</code></li>
+	 * <li>Eclipse Databinding -
+	 * <code>org.eclipse.core.databinding.observable.value.IObservableValue</code></li>
 	 * <li>JavaFX property - {@link javafx.beans.property.Property}</li>
 	 * </ul>
 	 *

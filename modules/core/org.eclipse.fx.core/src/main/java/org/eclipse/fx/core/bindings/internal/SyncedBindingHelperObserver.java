@@ -25,24 +25,24 @@ public class SyncedBindingHelperObserver implements InvalidationListener {
 	private final ThreadSynchronize thread;
 	private final WeakReference<Binding<?>> ref;
 
-    public SyncedBindingHelperObserver(ThreadSynchronize thread, Binding<?> binding) {
-    	Objects.requireNonNull(binding);
-        this.ref = new WeakReference<Binding<?>>(binding);
-        this.thread = thread;
-    }
+	public SyncedBindingHelperObserver(ThreadSynchronize thread, Binding<?> binding) {
+		Objects.requireNonNull(binding);
+		this.ref = new WeakReference<Binding<?>>(binding);
+		this.thread = thread;
+	}
 
-    @Override
-    public void invalidated(Observable observable) {
-        this.thread.syncExec(()->syncedInvalidated(observable));
-    }
+	@Override
+	public void invalidated(Observable observable) {
+		this.thread.syncExec(() -> syncedInvalidated(observable));
+	}
 
-    private void syncedInvalidated(Observable observable) {
-    	final Binding<?> binding = this.ref.get();
-        if (binding == null) {
-            observable.removeListener(this);
-        } else {
-            binding.invalidate();
-        }
-    }
+	private void syncedInvalidated(Observable observable) {
+		final Binding<?> binding = this.ref.get();
+		if (binding == null) {
+			observable.removeListener(this);
+		} else {
+			binding.invalidate();
+		}
+	}
 
 }

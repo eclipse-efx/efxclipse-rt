@@ -24,9 +24,8 @@ public class ExceptionLogger implements ExceptionHandler {
 	@SuppressWarnings("null")
 	@Override
 	public void handleException(ExceptionData data) {
-		ServiceUtils.getService(LoggerFactory.class)
-			.map( f -> f.createLogger(data.sourceClass()))
-			.ifPresent( l -> l.error( data.throwable().getMessage(),data.throwable()));
+		ServiceUtils.getService(LoggerFactory.class).map(f -> f.createLogger(data.sourceClass()))
+				.ifPresent(l -> l.error(data.throwable().getMessage(), data.throwable()));
 	}
 
 }

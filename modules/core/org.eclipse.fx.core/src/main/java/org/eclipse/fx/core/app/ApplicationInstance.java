@@ -15,7 +15,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * A running instance of the application
  *
- * <p>This provisional API and subject to change</p>
+ * <p>
+ * This provisional API and subject to change
+ * </p>
  *
  * @since 3.0
  * @noimplement

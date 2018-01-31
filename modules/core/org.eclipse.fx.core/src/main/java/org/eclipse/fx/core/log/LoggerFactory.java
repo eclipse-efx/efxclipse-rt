@@ -19,7 +19,9 @@ import org.eclipse.jdt.annotation.NonNull;
 public interface LoggerFactory extends RankedService {
 	/**
 	 * Create an instance of a logger
-	 * @param name the name of the logger
+	 * 
+	 * @param name
+	 *            the name of the logger
 	 * @return the logger instance
 	 */
 	@NonNull

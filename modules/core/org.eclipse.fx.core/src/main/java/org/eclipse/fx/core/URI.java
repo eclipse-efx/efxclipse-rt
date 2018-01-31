@@ -23,7 +23,7 @@ public interface URI {
 	 */
 	@Nullable
 	public String host();
-	
+
 	/**
 	 * @return <code>true</code> if it is a plug-in URI (platform:/plugin/....)
 	 */
@@ -78,8 +78,7 @@ public interface URI {
 	 *            the path
 	 * @return the uri
 	 */
-	public static URI createPlatformPluginURI(String symbolicBundleName,
-			String path) {
+	public static URI createPlatformPluginURI(String symbolicBundleName, String path) {
 		return new SimpleURI("platform:/plugin/" + symbolicBundleName + "/" //$NON-NLS-1$ //$NON-NLS-2$
 				+ path);
 	}

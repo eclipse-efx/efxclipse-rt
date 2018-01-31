@@ -55,8 +55,7 @@ public class DefaultContent implements TextContent {
 
 	/**
 	 * Creates a new DefaultContent and initializes it. A
-	 * <code>StyledTextContent</code> will always have
-	 * at least one empty line.
+	 * <code>StyledTextContent</code> will always have at least one empty line.
 	 */
 	public DefaultContent() {
 		super();
@@ -64,9 +63,9 @@ public class DefaultContent implements TextContent {
 	}
 
 	/**
-	 * Adds a line to the end of the line indexes array. Increases the size of
-	 * the array if necessary. <code>lineCount</code> is updated to reflect the
-	 * new entry.
+	 * Adds a line to the end of the line indexes array. Increases the size of the
+	 * array if necessary. <code>lineCount</code> is updated to reflect the new
+	 * entry.
 	 * <p>
 	 *
 	 * @param start
@@ -89,8 +88,8 @@ public class DefaultContent implements TextContent {
 	}
 
 	/**
-	 * Adds a line index to the end of <code>linesArray</code>. Increases the
-	 * size of the array if necessary and returns a new array.
+	 * Adds a line index to the end of <code>linesArray</code>. Increases the size
+	 * of the array if necessary and returns a new array.
 	 * <p>
 	 *
 	 * @param start
@@ -151,8 +150,8 @@ public class DefaultContent implements TextContent {
 	}
 
 	/**
-	 * Calculates the indexes of each line in the text store. Assumes no gap
-	 * exists. Optimized to do less checking.
+	 * Calculates the indexes of each line in the text store. Assumes no gap exists.
+	 * Optimized to do less checking.
 	 */
 	void indexLines() {
 		int start = 0;
@@ -180,8 +179,8 @@ public class DefaultContent implements TextContent {
 	}
 
 	/**
-	 * Returns whether or not the given character is a line delimiter. Both CR
-	 * and LF are valid line delimiters.
+	 * Returns whether or not the given character is a line delimiter. Both CR and
+	 * LF are valid line delimiters.
 	 * <p>
 	 *
 	 * @param ch
@@ -197,8 +196,8 @@ public class DefaultContent implements TextContent {
 	}
 
 	/**
-	 * Determine whether or not the replace operation is valid. DefaultContent
-	 * will not allow the /r/n line delimiter to be split or partially deleted.
+	 * Determine whether or not the replace operation is valid. DefaultContent will
+	 * not allow the /r/n line delimiter to be split or partially deleted.
 	 * <p>
 	 *
 	 * @param start
@@ -207,8 +206,7 @@ public class DefaultContent implements TextContent {
 	 *            start offset of text to replace
 	 * @param newText
 	 *            start offset of text to replace
-	 * @return a boolean specifying whether or not the replace operation is
-	 *         valid
+	 * @return a boolean specifying whether or not the replace operation is valid
 	 */
 	protected boolean isValidReplace(int start, int replaceLength, String newText) {
 		if (replaceLength == 0) {
@@ -258,10 +256,10 @@ public class DefaultContent implements TextContent {
 	 *            the length of the text to lineate, includes gap
 	 * @param numLines
 	 *            the number of lines to initially allocate for the line index
-	 *            array, passed in for efficiency (the exact number of lines may
-	 *            be known)
-	 * @return a line indexes array where each line is identified by a start
-	 *         offset and a length
+	 *            array, passed in for efficiency (the exact number of lines may be
+	 *            known)
+	 * @return a line indexes array where each line is identified by a start offset
+	 *         and a length
 	 */
 	int[][] indexLines(int offset, int length, int numLines) {
 		int[][] indexedLines = new int[numLines][2];
@@ -373,8 +371,8 @@ public class DefaultContent implements TextContent {
 	}
 
 	/**
-	 * Moves the gap and adjusts its size in anticipation of a text change. The
-	 * gap is resized to actual size + the specified size and moved to the given
+	 * Moves the gap and adjusts its size in anticipation of a text change. The gap
+	 * is resized to actual size + the specified size and moved to the given
 	 * position.
 	 * <p>
 	 *
@@ -425,7 +423,8 @@ public class DefaultContent implements TextContent {
 			int delta = this.gapStart - newGapStart;
 			System.arraycopy(this.textStore, 0, content, 0, newGapStart);
 			System.arraycopy(this.textStore, newGapStart, content, newGapEnd, delta);
-			System.arraycopy(this.textStore, this.gapEnd, content, newGapEnd + delta, this.textStore.length - this.gapEnd);
+			System.arraycopy(this.textStore, this.gapEnd, content, newGapEnd + delta,
+					this.textStore.length - this.gapEnd);
 		} else {
 			int delta = newGapStart - this.gapStart;
 			System.arraycopy(this.textStore, 0, content, 0, this.gapStart);
@@ -569,13 +568,13 @@ public class DefaultContent implements TextContent {
 	}
 
 	/**
-	 * Returns the line delimiter that should be used by the StyledText widget
-	 * when inserting new lines. This delimiter may be different than the
-	 * delimiter that is used by the <code>StyledTextContent</code> interface.
+	 * Returns the line delimiter that should be used by the StyledText widget when
+	 * inserting new lines. This delimiter may be different than the delimiter that
+	 * is used by the <code>StyledTextContent</code> interface.
 	 * <p>
 	 *
-	 * @return the platform line delimiter as specified in the line.separator
-	 *         system property.
+	 * @return the platform line delimiter as specified in the line.separator system
+	 *         property.
 	 */
 	public static String getLineDelimiter() {
 		return LineDelimiter;
@@ -607,8 +606,8 @@ public class DefaultContent implements TextContent {
 	}
 
 	/**
-	 * Returns the physical line at the given index (i.e., with delimiters and
-	 * the gap).
+	 * Returns the physical line at the given index (i.e., with delimiters and the
+	 * gap).
 	 * <p>
 	 *
 	 * @param index
@@ -721,8 +720,7 @@ public class DefaultContent implements TextContent {
 	 *         lines, getOffsetAtLine(0) is a valid call that should answer 0.
 	 * @exception IllegalArgumentException
 	 *                <ul>
-	 *                <li>ERROR_INVALID_ARGUMENT when lineIndex is out of range
-	 *                </li>
+	 *                <li>ERROR_INVALID_ARGUMENT when lineIndex is out of range</li>
 	 *                </ul>
 	 */
 	@Override
@@ -790,8 +788,8 @@ public class DefaultContent implements TextContent {
 	}
 
 	/**
-	 * Returns a string representing the logical content of the text store
-	 * (i.e., gap stripped out).
+	 * Returns a string representing the logical content of the text store (i.e.,
+	 * gap stripped out).
 	 * <p>
 	 *
 	 * @param start
@@ -843,14 +841,14 @@ public class DefaultContent implements TextContent {
 
 	/**
 	 * Replaces the text with <code>newText</code> starting at position
-	 * <code>start</code> for a length of <code>replaceLength</code>. Notifies
-	 * the appropriate listeners.
+	 * <code>start</code> for a length of <code>replaceLength</code>. Notifies the
+	 * appropriate listeners.
 	 * <p>
 	 *
-	 * When sending the TextChangingEvent, <code>newLineCount</code> is the
-	 * number of lines that are going to be inserted and
-	 * <code>replaceLineCount</code> is the number of lines that are going to be
-	 * deleted, based on the change that occurs visually. For example:
+	 * When sending the TextChangingEvent, <code>newLineCount</code> is the number
+	 * of lines that are going to be inserted and <code>replaceLineCount</code> is
+	 * the number of lines that are going to be deleted, based on the change that
+	 * occurs visually. For example:
 	 * <ul>
 	 * <li>(replaceText,newText) ==&gt; (replaceLineCount,newLineCount)
 	 * <li>("","\n") ==&gt; (0,1)
@@ -873,7 +871,8 @@ public class DefaultContent implements TextContent {
 			throw new IllegalArgumentException();
 
 		// inform listeners
-		TextChangingEvent event = TextChangingEvent.textChanging(this, start, replaceLength, lineCount(start, replaceLength), newText, newText.length(), lineCount(newText));
+		TextChangingEvent event = TextChangingEvent.textChanging(this, start, replaceLength,
+				lineCount(start, replaceLength), newText, newText.length(), lineCount(newText));
 		for (TextChangeListener l : this.textListeners) {
 			l.textChanging(event);
 		}

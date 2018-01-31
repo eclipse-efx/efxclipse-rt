@@ -58,8 +58,8 @@ public class SimpleEventBus implements EventBus {
 
 		public SubscribeWrapper(String topic, Consumer<Event<T>> consumer) {
 			String t = topic;
-			if( t.endsWith("*") ) { //$NON-NLS-1$
-				t = t.substring(0, topic.length()-1);
+			if (t.endsWith("*")) { //$NON-NLS-1$
+				t = t.substring(0, topic.length() - 1);
 				this.allSubTopics = true;
 			} else {
 				this.allSubTopics = false;
@@ -70,7 +70,7 @@ public class SimpleEventBus implements EventBus {
 
 		@Subscribe
 		public void record(Event<T> event) {
-			if( event.getTopic().equals(this.topic) || (this.allSubTopics && event.getTopic().startsWith(this.topic) )  ) {
+			if (event.getTopic().equals(this.topic) || (this.allSubTopics && event.getTopic().startsWith(this.topic))) {
 				this.consumer.accept(event);
 			}
 		}

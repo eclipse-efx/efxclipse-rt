@@ -98,8 +98,8 @@ public class IOUtils {
 	 * @param dir
 	 *            the directory to zip
 	 * @param zipFile
-	 *            the zip file or <code>null</code> if you want a temporary zip
-	 *            file to be created
+	 *            the zip file or <code>null</code> if you want a temporary zip file
+	 *            to be created
 	 * @return the directory
 	 * @throws IOException
 	 *             if somethings going wrong
@@ -150,14 +150,17 @@ public class IOUtils {
 	 * @param url
 	 *            the url
 	 * @param copyIfNeeded
-	 *            <code>true</code> if the url can not be converted to a local
-	 *            the content is copied to the local filesystem
+	 *            <code>true</code> if the url can not be converted to a local the
+	 *            content is copied to the local filesystem
 	 * @return the path
 	 * @since 2.2.0
 	 */
 	public static Optional<Resource<@NonNull Path>> getLocalPath(@NonNull URL url, boolean copyIfNeeded) {
-		return ServiceUtils.getServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst().map(r -> Optional.of(Resource.createResource(r.resolveToLocalPath(url)))).orElseGet(() -> copyIfNeeded ? ExExecutor.executeSupplier(() -> copyToTempFile(url), "Unable to copy resource") //$NON-NLS-1$
-				: Optional.empty());
+		return ServiceUtils.getServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst()
+				.map(r -> Optional.of(Resource.createResource(r.resolveToLocalPath(url))))
+				.orElseGet(() -> copyIfNeeded
+						? ExExecutor.executeSupplier(() -> copyToTempFile(url), "Unable to copy resource") //$NON-NLS-1$
+						: Optional.empty());
 	}
 
 	/**
@@ -169,7 +172,8 @@ public class IOUtils {
 	 * @since 2.2.0
 	 */
 	public static Optional<URL> getLocalURL(@NonNull URL url) {
-		return ServiceUtils.getServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst().map(r -> r.resolveToLocalURL(url));
+		return ServiceUtils.getServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst()
+				.map(r -> r.resolveToLocalURL(url));
 	}
 
 	private static Resource<@NonNull Path> copyToTempFile(@NonNull URL url) throws IOException {

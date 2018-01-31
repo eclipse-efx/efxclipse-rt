@@ -45,7 +45,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 	public void registerHandler(Handler handler) {
 		this.handlers.add(handler);
 		synchronized (this.activeLoggers) {
-			this.activeLoggers.keySet().forEach( (l) -> l.getLogger().addHandler(handler));
+			this.activeLoggers.keySet().forEach((l) -> l.getLogger().addHandler(handler));
 		}
 	}
 
@@ -58,7 +58,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 	public void unregisterHandler(Handler handler) {
 		this.handlers.add(handler);
 		synchronized (this.activeLoggers) {
-			this.activeLoggers.keySet().forEach( (l) -> l.getLogger().removeHandler(handler));
+			this.activeLoggers.keySet().forEach((l) -> l.getLogger().removeHandler(handler));
 		}
 	}
 
@@ -75,7 +75,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 	@Override
 	public Logger createLogger(String name) {
 		LoggerImpl loggerImpl = new LoggerImpl(name);
-		if( ! this.handlers.isEmpty() ) {
+		if (!this.handlers.isEmpty()) {
 			java.util.logging.Logger logger = loggerImpl.getLogger();
 			this.handlers.forEach(logger::addHandler);
 			synchronized (this.activeLoggers) {

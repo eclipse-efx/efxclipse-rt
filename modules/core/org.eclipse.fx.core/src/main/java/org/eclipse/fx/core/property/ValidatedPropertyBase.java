@@ -164,11 +164,13 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 	}
 
 	private void _runValidation() {
-		Map<String, Object> map = Optional.ofNullable(this.dependencyMap)
-				.<Map<String,Object>>map(m -> m.entrySet().stream().collect(Collectors.toMap(Entry::getKey, e -> (Object) e.getValue().get())))
+		Map<String, Object> map = Optional.ofNullable(this.dependencyMap).<Map<String, Object>>map(
+				m -> m.entrySet().stream().collect(Collectors.toMap(Entry::getKey, e -> (Object) e.getValue().get())))
 				.orElse(new HashMap<>());
-		this.validationStatusList.setAll(this.validationList.stream().map(f -> f.apply(this.bindProperty().getValue(), map)).collect(Collectors.toList()));
-		this.status.setValue(this.validationStatusList.stream().sorted(STATUS_SORTER).filter(WARNING_ERROR).findFirst().orElse(Status.ok()));
+		this.validationStatusList.setAll(this.validationList.stream()
+				.map(f -> f.apply(this.bindProperty().getValue(), map)).collect(Collectors.toList()));
+		this.status.setValue(this.validationStatusList.stream().sorted(STATUS_SORTER).filter(WARNING_ERROR).findFirst()
+				.orElse(Status.ok()));
 		this.validationScheduled.set(false);
 	}
 

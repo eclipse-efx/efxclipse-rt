@@ -22,7 +22,8 @@ import javafx.collections.ObservableMap;
  *            the value type
  * @since 2.4.0
  */
-public class ValidatedSimpleMapProperty<K, V> extends ValidatedPropertyBase<ObservableMap<K, V>> implements ValidatedMapProperty<K, V> {
+public class ValidatedSimpleMapProperty<K, V> extends ValidatedPropertyBase<ObservableMap<K, V>>
+		implements ValidatedMapProperty<K, V> {
 	/**
 	 * Create a new wrapper
 	 *

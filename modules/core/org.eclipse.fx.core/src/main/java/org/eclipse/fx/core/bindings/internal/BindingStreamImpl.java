@@ -46,23 +46,24 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 	public final ObservableValue<?> base;
 	public final List<StreamStep<?, ?>> path;
 
-
 	private interface StreamStep<T, S> {
 		S apply(T cur, Set<Observable> toTrack);
 	}
 
 	private static class MapValue<T, S> implements StreamStep<T, S> {
 		private final Function<T, ObservableValue<S>> map;
+
 		public MapValue(Function<T, ObservableValue<S>> map) {
 			this.map = map;
 		}
+
 		@SuppressWarnings("null")
 		@Override
 		public S apply(T cur, Set<Observable> toTrack) {
-			if( cur == null ) {
-				return (S)null;
+			if (cur == null) {
+				return (S) null;
 			}
-			ObservableValue<S> r = this.map.apply((T)cur);
+			ObservableValue<S> r = this.map.apply((T) cur);
 			toTrack.add(r);
 			return r.getValue();
 		}
@@ -70,16 +71,18 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 
 	private static class MapNoObservable<T, S> implements StreamStep<T, S> {
 		private final Function<T, S> map;
+
 		public MapNoObservable(Function<T, S> map) {
 			this.map = map;
 		}
+
 		@SuppressWarnings("null")
 		@Override
 		public S apply(T cur, Set<Observable> toTrack) {
-			if( cur == null ) {
-				return (S)null;
+			if (cur == null) {
+				return (S) null;
 			}
-			return this.map.apply((T)cur);
+			return this.map.apply((T) cur);
 		}
 	}
 
@@ -105,14 +108,14 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 			super.dispose();
 		}
 
-		@SuppressWarnings({"rawtypes", "unchecked"})
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@Override
 		protected T computeValue() {
 			Set<Observable> toTrack = new HashSet<>();
 			toTrack.add(this.base);
 
 			try {
-				if( this.path.isEmpty() ) {
+				if (this.path.isEmpty()) {
 					return (T) this.base.getValue();
 				} else {
 					Object cur = this.base.getValue();
@@ -133,7 +136,6 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 		}
 
 	}
-
 
 	public BindingStreamImpl(ObservableValue<?> base) {
 		this.base = base;
@@ -178,19 +180,19 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 			private ObjectBinding<Property<S>> b = binding;
 		};
 
-		if( binding.get() != null ) {
+		if (binding.get() != null) {
 			rv.bindBidirectional(binding.get());
 		}
 
-		binding.addListener( (o, ol, ne) -> {
-			if( ol != null ) {
+		binding.addListener((o, ol, ne) -> {
+			if (ol != null) {
 				rv.unbindBidirectional(ol);
 			}
 
-			if( ne != null ) {
+			if (ne != null) {
 				rv.bindBidirectional(ne);
 			} else {
-				rv.set((S)null);
+				rv.set((S) null);
 			}
 		});
 
@@ -205,16 +207,16 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 			private ObjectBinding<BooleanProperty> b = binding;
 		};
 
-		if( binding.get() != null ) {
+		if (binding.get() != null) {
 			rv.bindBidirectional(binding.get());
 		}
 
-		binding.addListener( (o, ol, ne) -> {
-			if( ol != null ) {
+		binding.addListener((o, ol, ne) -> {
+			if (ol != null) {
 				rv.unbindBidirectional(ol);
 			}
 
-			if( ne != null ) {
+			if (ne != null) {
 				rv.bindBidirectional(ne);
 			} else {
 				rv.set(false);
@@ -232,16 +234,16 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 			private ObjectBinding<DoubleProperty> b = binding;
 		};
 
-		if( binding.get() != null ) {
+		if (binding.get() != null) {
 			rv.bindBidirectional(binding.get());
 		}
 
-		binding.addListener( (o, ol, ne) -> {
-			if( ol != null ) {
+		binding.addListener((o, ol, ne) -> {
+			if (ol != null) {
 				rv.unbindBidirectional(ol);
 			}
 
-			if( ne != null ) {
+			if (ne != null) {
 				rv.bindBidirectional(ne);
 			} else {
 				rv.set(0.0);
@@ -259,16 +261,16 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 			private ObjectBinding<FloatProperty> b = binding;
 		};
 
-		if( binding.get() != null ) {
+		if (binding.get() != null) {
 			rv.bindBidirectional(binding.get());
 		}
 
-		binding.addListener( (o, ol, ne) -> {
-			if( ol != null ) {
+		binding.addListener((o, ol, ne) -> {
+			if (ol != null) {
 				rv.unbindBidirectional(ol);
 			}
 
-			if( ne != null ) {
+			if (ne != null) {
 				rv.bindBidirectional(ne);
 			} else {
 				rv.set(0.0f);
@@ -286,16 +288,16 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 			private ObjectBinding<IntegerProperty> b = binding;
 		};
 
-		if( binding.get() != null ) {
+		if (binding.get() != null) {
 			rv.bindBidirectional(binding.get());
 		}
 
-		binding.addListener( (o, ol, ne) -> {
-			if( ol != null ) {
+		binding.addListener((o, ol, ne) -> {
+			if (ol != null) {
 				rv.unbindBidirectional(ol);
 			}
 
-			if( ne != null ) {
+			if (ne != null) {
 				rv.bindBidirectional(ne);
 			} else {
 				rv.set(0);
@@ -313,16 +315,16 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 			private ObjectBinding<LongProperty> b = binding;
 		};
 
-		if( binding.get() != null ) {
+		if (binding.get() != null) {
 			rv.bindBidirectional(binding.get());
 		}
 
-		binding.addListener( (o, ol, ne) -> {
-			if( ol != null ) {
+		binding.addListener((o, ol, ne) -> {
+			if (ol != null) {
 				rv.unbindBidirectional(ol);
 			}
 
-			if( ne != null ) {
+			if (ne != null) {
 				rv.bindBidirectional(ne);
 			} else {
 				rv.set(0);
@@ -341,19 +343,19 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 			private ObjectBinding<ObjectProperty<S>> b = binding;
 		};
 
-		if( binding.get() != null ) {
+		if (binding.get() != null) {
 			rv.bindBidirectional(binding.get());
 		}
 
-		binding.addListener( (o, ol, ne) -> {
-			if( ol != null ) {
+		binding.addListener((o, ol, ne) -> {
+			if (ol != null) {
 				rv.unbindBidirectional(ol);
 			}
 
-			if( ne != null ) {
+			if (ne != null) {
 				rv.bindBidirectional(ne);
 			} else {
-				rv.set((S)null);
+				rv.set((S) null);
 			}
 		});
 
@@ -368,16 +370,16 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 			private ObjectBinding<StringProperty> b = binding;
 		};
 
-		if( binding.get() != null ) {
+		if (binding.get() != null) {
 			rv.bindBidirectional(binding.get());
 		}
 
-		binding.addListener( (o, ol, ne) -> {
-			if( ol != null ) {
+		binding.addListener((o, ol, ne) -> {
+			if (ol != null) {
 				rv.unbindBidirectional(ol);
 			}
 
-			if( ne != null ) {
+			if (ne != null) {
 				rv.bindBidirectional(ne);
 			} else {
 				rv.set(null);

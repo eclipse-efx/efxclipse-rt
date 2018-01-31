@@ -32,9 +32,9 @@ public interface Resource<@NonNull O> {
 	public O getNativeResource();
 
 	/**
-	 * Release the resource. The semantics what releaseing a resource means
-	 * depends on the wrapped resource eg for a temp-file releaseing could mean
-	 * it is deleted
+	 * Release the resource. The semantics what releaseing a resource means depends
+	 * on the wrapped resource eg for a temp-file releaseing could mean it is
+	 * deleted
 	 *
 	 * @return <code>true</code> if releasing was successfull
 	 */

@@ -31,9 +31,9 @@ public class OSGiModule implements Module {
 	@Override
 	public Optional<Path> getLocation() {
 		Optional<URL> optUrl = IOUtils.getLocalURL(this.bundle.getResource("META-INF/MANIFEST.MF")); //$NON-NLS-1$
-		if( optUrl.isPresent() ) {
+		if (optUrl.isPresent()) {
 			URL url = optUrl.get();
-			if( url.getProtocol().equals("file") ) { //$NON-NLS-1$
+			if (url.getProtocol().equals("file")) { //$NON-NLS-1$
 				try {
 					Path path = Paths.get(url.toURI());
 					return Optional.of(path.getParent().getParent());
@@ -41,10 +41,10 @@ public class OSGiModule implements Module {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			} else if( url.getProtocol().equals("jar") ) {
+			} else if (url.getProtocol().equals("jar")) {
 				String path = url.getPath();
-				if( path.startsWith("file:") ) {
-					return Optional.of(Paths.get(URI.create(path.substring(0,path.indexOf('!')))));
+				if (path.startsWith("file:")) {
+					return Optional.of(Paths.get(URI.create(path.substring(0, path.indexOf('!')))));
 				}
 			}
 		}

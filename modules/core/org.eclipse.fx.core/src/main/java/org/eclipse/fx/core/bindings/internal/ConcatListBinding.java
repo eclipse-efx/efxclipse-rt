@@ -17,7 +17,6 @@ import javafx.beans.binding.ListBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
 @SuppressWarnings("javadoc")
 public class ConcatListBinding<A> extends ListBinding<A> {
 

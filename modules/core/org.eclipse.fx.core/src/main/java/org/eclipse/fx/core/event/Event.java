@@ -70,7 +70,7 @@ public final class Event<@Nullable T> {
 	 * @since 2.2.0
 	 */
 	public Event(Topic<T> topic, T data, KeyValueStore<String, Object> properties) {
-		this(topic.topic,data,properties);
+		this(topic.topic, data, properties);
 	}
 
 	/**

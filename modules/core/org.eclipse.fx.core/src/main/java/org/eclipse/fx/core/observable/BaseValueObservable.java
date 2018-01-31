@@ -46,7 +46,7 @@ public class BaseValueObservable<T> implements ValueObservable<T> {
 
 	@Override
 	public void setValue(T value) {
-		if( this.disposed ) {
+		if (this.disposed) {
 			throw new IllegalStateException("Observable is disposed"); //$NON-NLS-1$
 		}
 		notifyChange(this.value, this.value = value);
@@ -66,7 +66,7 @@ public class BaseValueObservable<T> implements ValueObservable<T> {
 
 	@Override
 	public Subscription onValueChange(ChangeSubscription<T> c) {
-		if( this.disposed ) {
+		if (this.disposed) {
 			throw new IllegalStateException("Observable is disposed"); //$NON-NLS-1$
 		}
 
@@ -85,7 +85,7 @@ public class BaseValueObservable<T> implements ValueObservable<T> {
 	@Override
 	public void dispose() {
 		this.disposed = true;
-		if( this.subscriptions != null ) {
+		if (this.subscriptions != null) {
 			this.subscriptions = null;
 		}
 	}

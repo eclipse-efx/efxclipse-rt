@@ -125,7 +125,7 @@ public class FileSystemServiceImpl implements FilesystemService {
 				try {
 					key = this.watcher.take();
 				} catch (Exception x) {
-					if( x instanceof ClosedWatchServiceException ) {
+					if (x instanceof ClosedWatchServiceException) {
 						// nothing to be done
 					} else {
 						LoggerCreator.createLogger(getClass()).warning("File watcher failed. Watching ended", x); //$NON-NLS-1$
@@ -148,8 +148,8 @@ public class FileSystemServiceImpl implements FilesystemService {
 						if (pathSubscriptionList != null) {
 							for (PathSubscription pathSubscription : pathSubscriptionList) {
 								PathSubscription fp = pathSubscription;
-								this.dispatcher.execute((() -> fp.consumer.accept(toKind(kind),
-										fp.path.resolve(context))));
+								this.dispatcher
+										.execute((() -> fp.consumer.accept(toKind(kind), fp.path.resolve(context))));
 							}
 						}
 					}
@@ -163,9 +163,9 @@ public class FileSystemServiceImpl implements FilesystemService {
 			synchronized (this.subscriptions) {
 				List<PathSubscription> list = this.subscriptions.get(subscription.register);
 
-				if( list != null ) {
+				if (list != null) {
 					list.remove(subscription);
-					if( list.isEmpty() ) {
+					if (list.isEmpty()) {
 						this.subscriptions.remove(subscription.register);
 					}
 				}

@@ -26,11 +26,11 @@ public abstract class BaseBidiPropertyBinding extends ObjectBinding<Status> impl
 	}
 
 	private InvalidationListener onInvalidate = this::onInvalidate;
+
 	private void onInvalidate(Observable o) {
 		if (o == this.source) {
 			_doSourceToTarget();
-		}
-		else if (o == this.target) {
+		} else if (o == this.target) {
 			doTargetToSource();
 		}
 	}
@@ -38,16 +38,15 @@ public abstract class BaseBidiPropertyBinding extends ObjectBinding<Status> impl
 	protected abstract void syncTarget();
 
 	private void _doSourceToTarget() {
-		if (this.inUpdate) return;
+		if (this.inUpdate)
+			return;
 		this.inUpdate = true;
 		try {
 			syncTarget();
 			setStatus(Status.ok());
-		}
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			setStatus(Status.status(State.ERROR, 0, "sourceToTarget failure", t)); //$NON-NLS-1$
-		}
-		finally {
+		} finally {
 			this.inUpdate = false;
 		}
 	}
@@ -55,16 +54,15 @@ public abstract class BaseBidiPropertyBinding extends ObjectBinding<Status> impl
 	protected abstract void syncSource();
 
 	private void doTargetToSource() {
-		if (this.inUpdate) return;
+		if (this.inUpdate)
+			return;
 		this.inUpdate = true;
 		try {
 			syncSource();
 			setStatus(Status.ok());
-		}
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			setStatus(Status.status(State.ERROR, 0, "targetToSource failure", t)); //$NON-NLS-1$
-		}
-		finally {
+		} finally {
 			this.inUpdate = false;
 		}
 	}
@@ -75,7 +73,6 @@ public abstract class BaseBidiPropertyBinding extends ObjectBinding<Status> impl
 		this.target.removeListener(this.onInvalidate);
 		super.dispose();
 	}
-
 
 	private void setStatus(Status s) {
 		this.curStatus = s;

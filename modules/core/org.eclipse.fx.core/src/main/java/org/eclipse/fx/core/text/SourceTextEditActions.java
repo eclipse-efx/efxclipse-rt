@@ -26,7 +26,6 @@ public enum SourceTextEditActions implements TextEditAction {
 	 */
 	FONT_ZOOM_RESET(false);
 
-
 	private boolean modification;
 
 	private SourceTextEditActions(boolean modification) {

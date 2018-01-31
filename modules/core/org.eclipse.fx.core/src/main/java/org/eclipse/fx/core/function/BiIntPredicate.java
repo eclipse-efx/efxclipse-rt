@@ -25,8 +25,8 @@ public interface BiIntPredicate {
 	 *            the first argument
 	 * @param u
 	 *            the second argument
-	 * @return {@code true} if the input arguments matches the predicate,
-	 *         otherwise {@code false}
+	 * @return {@code true} if the input arguments matches the predicate, otherwise
+	 *         {@code false}
 	 */
 	public boolean test(int t, int u);
 }

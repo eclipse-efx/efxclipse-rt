@@ -17,7 +17,9 @@ import javafx.geometry.Point2D;
 
 /**
  * Context associated with the application
- * <p>This provisional API and subject to change</p>
+ * <p>
+ * This provisional API and subject to change
+ * </p>
  *
  * @since 3.0
  * @noimplement
@@ -25,14 +27,13 @@ import javafx.geometry.Point2D;
  */
 public interface ApplicationContext {
 	/**
-	 * @return arguments passed on the command line when launching the
-	 *         application
+	 * @return arguments passed on the command line when launching the application
 	 */
 	String[] getApplicationArguments();
 
 	/**
-	 * Called when the application code has been entered (must be called on the
-	 * same thread as the initial launching)
+	 * Called when the application code has been entered (must be called on the same
+	 * thread as the initial launching)
 	 */
 	void applicationRunning();
 

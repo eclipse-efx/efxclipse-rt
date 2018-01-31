@@ -12,7 +12,7 @@ public class OSGiModuleSystem implements ModuleSystem {
 	private WeakHashMap<Bundle, Module> bundleCache = new WeakHashMap<>();
 
 	public static final OSGiModuleSystem getInstance() {
-		if( INSTANCE == null ) {
+		if (INSTANCE == null) {
 			INSTANCE = new OSGiModuleSystem();
 		}
 		return INSTANCE;
@@ -26,9 +26,7 @@ public class OSGiModuleSystem implements ModuleSystem {
 	@Override
 	public Optional<Module> getModuleById(String moduleId) {
 		return Stream.of(FrameworkUtil.getBundle(getClass()).getBundleContext().getBundles())
-			.filter( b -> b.getSymbolicName().equals(moduleId))
-			.findFirst()
-			.map( this::getModule);
+				.filter(b -> b.getSymbolicName().equals(moduleId)).findFirst().map(this::getModule);
 	}
 
 	private Module getModule(Bundle bundle) {

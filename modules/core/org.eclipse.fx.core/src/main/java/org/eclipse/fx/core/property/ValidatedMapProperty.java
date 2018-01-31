@@ -22,7 +22,7 @@ import javafx.collections.ObservableMap;
  *            the value type
  * @since 2.4.0
  */
-public interface ValidatedMapProperty<K,V> extends ValidatedProperty<ObservableMap<K, V>> {
+public interface ValidatedMapProperty<K, V> extends ValidatedProperty<ObservableMap<K, V>> {
 	@Override
 	public MapProperty<K, V> bindProperty();
 }

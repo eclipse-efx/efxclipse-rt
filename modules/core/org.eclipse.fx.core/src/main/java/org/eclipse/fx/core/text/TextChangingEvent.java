@@ -50,7 +50,8 @@ public class TextChangingEvent {
 	 */
 	public final int newLineCount;
 
-	private TextChangingEvent(TextContent source, int offset, int replaceCharCount, int replaceLineCount, String newText, int newCharCount, int newLineCount) {
+	private TextChangingEvent(TextContent source, int offset, int replaceCharCount, int replaceLineCount,
+			String newText, int newCharCount, int newLineCount) {
 		this.source = source;
 		this.offset = offset;
 		this.replaceCharCount = replaceCharCount;
@@ -79,12 +80,15 @@ public class TextChangingEvent {
 	 *            the new line count
 	 * @return the event
 	 */
-	public static TextChangingEvent textChanging(TextContent source, int offset, int replaceCharCount, int replaceLineCount, String newText, int newCharCount, int newLineCount) {
-		return new TextChangingEvent(source, offset, replaceCharCount, replaceLineCount, newText, newCharCount, newLineCount);
+	public static TextChangingEvent textChanging(TextContent source, int offset, int replaceCharCount,
+			int replaceLineCount, String newText, int newCharCount, int newLineCount) {
+		return new TextChangingEvent(source, offset, replaceCharCount, replaceLineCount, newText, newCharCount,
+				newLineCount);
 	}
 
 	@Override
 	public String toString() {
-		return "TextChangingEvent(offset="+this.offset+", replaceCharCount="+this.replaceCharCount+", replaceText=" + (this.newText == null ? "null" : "\""+this.newText+"\"") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
+		return "TextChangingEvent(offset=" + this.offset + ", replaceCharCount=" + this.replaceCharCount //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", replaceText=" + (this.newText == null ? "null" : "\"" + this.newText + "\"") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 	}
 }

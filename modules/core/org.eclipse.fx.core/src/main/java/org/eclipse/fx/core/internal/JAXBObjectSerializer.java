@@ -41,11 +41,11 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 	public String serialize(Object object) {
 		if (object instanceof List) {
 			object = new ListWrapper<>((List<?>) object);
-		} else if( object instanceof Set ) {
-			object = new SetWrapper<>((Set<?>)object);
+		} else if (object instanceof Set) {
+			object = new SetWrapper<>((Set<?>) object);
 		}
 		try (StringWriter w = new StringWriter()) {
-			JAXBContext jaxbContext = JAXBContext.newInstance( object.getClass() );
+			JAXBContext jaxbContext = JAXBContext.newInstance(object.getClass());
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
 			// output pretty printed
@@ -63,13 +63,13 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 		Object object;
 		if (data instanceof List) {
 			object = new ListWrapper<>((List<?>) data);
-		} else if( data instanceof Set ) {
-			object = new SetWrapper<>((Set<?>)data);
+		} else if (data instanceof Set) {
+			object = new SetWrapper<>((Set<?>) data);
 		} else {
 			throw new IllegalArgumentException("Unsupported collection type"); //$NON-NLS-1$
 		}
 		try (StringWriter w = new StringWriter()) {
-			JAXBContext jaxbContext = JAXBContext.newInstance( object.getClass(), contentType );
+			JAXBContext jaxbContext = JAXBContext.newInstance(object.getClass(), contentType);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
 			// output pretty printed
@@ -92,7 +92,7 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 		}
 
 		try (StringReader r = new StringReader(value)) {
-			JAXBContext jaxbContext = JAXBContext.newInstance(clazz );
+			JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
@@ -111,16 +111,16 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 	@Override
 	public <O, T extends Collection<O>> T deserializeCollection(Class<T> type, Class<O> contentType, String value) {
 		Class<O> clazz;
-		if ( ((Class<?>)type) == List.class ) {
+		if (((Class<?>) type) == List.class) {
 			clazz = (Class<O>) ListWrapper.class;
-		} else if (  (Class<?>)type == Set.class) {
+		} else if ((Class<?>) type == Set.class) {
 			clazz = (Class<O>) SetWrapper.class;
 		} else {
 			throw new IllegalArgumentException("Unsupported collection type"); //$NON-NLS-1$
 		}
 
 		try (StringReader r = new StringReader(value)) {
-			JAXBContext jaxbContext = JAXBContext.newInstance(clazz, contentType );
+			JAXBContext jaxbContext = JAXBContext.newInstance(clazz, contentType);
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 

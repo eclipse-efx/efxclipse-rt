@@ -40,7 +40,8 @@ public class NumberFormatter implements Formatter<Number> {
 
 	@Override
 	public @NonNull String format(@Nullable Number object, @NonNull String format) {
-		String rv = new DecimalFormat(format, DecimalFormatSymbols.getInstance(this.localeProvider.getLocale())).format(object);
+		String rv = new DecimalFormat(format, DecimalFormatSymbols.getInstance(this.localeProvider.getLocale()))
+				.format(object);
 		return rv == null ? "" : rv; //$NON-NLS-1$
 	}
 }

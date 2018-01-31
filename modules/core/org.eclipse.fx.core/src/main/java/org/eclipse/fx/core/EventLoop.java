@@ -31,7 +31,7 @@ public class EventLoop implements ThreadQueue {
 	AtomicReference<Runnable> runnableRef = new AtomicReference<>();
 
 	private volatile AtomicInteger spinningEventLoop = new AtomicInteger();
-	
+
 	private final Thread thread = new Thread() {
 		@Override
 		public void run() {
@@ -62,7 +62,7 @@ public class EventLoop implements ThreadQueue {
 
 	@Override
 	public Subscription push(Runnable r) {
-		if( isCurrent() ) {
+		if (isCurrent()) {
 			r.run();
 			return () -> {
 				// Nothing to do
@@ -99,7 +99,7 @@ public class EventLoop implements ThreadQueue {
 	 */
 	@SuppressWarnings("null")
 	public boolean dispatch() {
-		if( this.spinningEventLoop.get() > 0 && ! isCurrent() ) {
+		if (this.spinningEventLoop.get() > 0 && !isCurrent()) {
 			return false;
 		}
 		ArrayList<Runnable> list;
@@ -116,13 +116,12 @@ public class EventLoop implements ThreadQueue {
 				}
 			}
 		};
-		
-		if( isCurrent() ) {
+
+		if (isCurrent()) {
 			executable.run();
 		} else {
-			this.service.submit(executable);	
+			this.service.submit(executable);
 		}
-		
 
 		synchronized (this.tasks) {
 			return !this.tasks.isEmpty();
@@ -139,40 +138,40 @@ public class EventLoop implements ThreadQueue {
 	@Override
 	public <T> void spinWhile(BlockCondition<T> condition) {
 		this.spinningEventLoop.incrementAndGet();
-		while( condition.isBlocked() ) {
-			if( ! dispatch() ) {
+		while (condition.isBlocked()) {
+			if (!dispatch()) {
 				sleep();
 			}
 		}
 		this.spinningEventLoop.decrementAndGet();
 	}
-//
-//	public static void main(String[] args) {
-//		EventLoop evt = new EventLoop();
-//		Thread t = new Thread() {
-//			@Override
-//			public void run() {
-//				for (int i = 0; i < 20; i++) {
-//					evt.push(() -> {
-//						System.err.println("A new event " + System.currentTimeMillis());
-//					});
-//					try {
-//						Thread.sleep(20);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-//		};
-//		t.start();
-//
-//		for (int i = 0; i < 1000; i++) {
-//			if (!evt.dispatch()) {
-//				System.err.println("Sleeping");
-//				evt.sleep();
-//			}
-//		}
-//		evt.dispose();
-//	}
+	//
+	// public static void main(String[] args) {
+	// EventLoop evt = new EventLoop();
+	// Thread t = new Thread() {
+	// @Override
+	// public void run() {
+	// for (int i = 0; i < 20; i++) {
+	// evt.push(() -> {
+	// System.err.println("A new event " + System.currentTimeMillis());
+	// });
+	// try {
+	// Thread.sleep(20);
+	// } catch (InterruptedException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+	// };
+	// t.start();
+	//
+	// for (int i = 0; i < 1000; i++) {
+	// if (!evt.dispatch()) {
+	// System.err.println("Sleeping");
+	// evt.sleep();
+	// }
+	// }
+	// evt.dispose();
+	// }
 }

@@ -61,7 +61,7 @@ public final class Tuple<U, V> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Tuple<?,?> other = (Tuple<?,?>) obj;
+		Tuple<?, ?> other = (Tuple<?, ?>) obj;
 		if (this.value1 == null) {
 			if (other.value1 != null)
 				return false;

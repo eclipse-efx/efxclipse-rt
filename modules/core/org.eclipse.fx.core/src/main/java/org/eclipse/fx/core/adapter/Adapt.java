@@ -23,8 +23,8 @@ import javax.inject.Qualifier;
  */
 @Qualifier
 @Documented
-@Target({ElementType.FIELD, ElementType.PARAMETER})
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Adapt {
-//	String contextKey() default ""; 
+	// String contextKey() default "";
 }

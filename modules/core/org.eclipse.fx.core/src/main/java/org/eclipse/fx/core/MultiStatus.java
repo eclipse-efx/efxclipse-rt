@@ -45,7 +45,7 @@ public interface MultiStatus extends Status {
 	public static Collector<@NonNull Status, ?, MultiStatus> toMultiStatus(String message, int code) {
 		return Collectors.collectingAndThen(Collectors.toList(), l -> new MultiStatusImpl(message, code, l, true));
 	}
-	
+
 	/**
 	 * @return unmodifiable list of child states
 	 */
