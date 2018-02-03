@@ -5,10 +5,13 @@
 	<artifactId>parent</artifactId>
 	<version>4.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+
+		<osgi.qualifier>${maven.build.timestamp}</osgi.qualifier>
+		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+
 		<dep-org.eclipse.jdt.annotation>2.1.100</dep-org.eclipse.jdt.annotation>
 		<dep-org.eclipse.osgi>3.12.0</dep-org.eclipse.osgi>
 		<dep-javax.inject>1.0.0</dep-javax.inject>
@@ -18,11 +21,18 @@
 		<dep-org.eclipse.core.databinding.observable>1.6.100</dep-org.eclipse.core.databinding.observable>
 		<dep-org.eclipse.core.databinding.property>1.6.100</dep-org.eclipse.core.databinding.property>
 		<dep-junit>4.12</dep-junit>
+
+		<plugin-maven-osgi-package-plugin>0.0.1</plugin-maven-osgi-package-plugin>
+		<plugin-bnd-maven-plugin>3.5.0</plugin-bnd-maven-plugin>
 	</properties>
-	
+
 	<modules>
 		<module>core/org.eclipse.fx.core</module>
 		<module>core/org.eclipse.fx.core.databinding</module>
+
+		<module>p2/org.eclipse.fx.target.feature</module>
+
+		<module>p2/org.eclipse.fx.core.repo</module>
 	</modules>
 
 	<repositories>
@@ -51,7 +61,7 @@
 			<plugin>
 				<groupId>biz.aQute.bnd</groupId>
 				<artifactId>bnd-maven-plugin</artifactId>
-				<version>3.5.0</version>
+				<version>${plugin-bnd-maven-plugin}</version>
 				<executions>
 					<execution>
 						<id>default-bnd-process</id>
@@ -130,6 +140,46 @@
 						</tag>
 					</tags>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>3.3.0</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>create-eclipse-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>bundle</goal>
+						</goals>
+						<configuration>
+							<instructions>
+								<Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+								<Bundle-Version>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${osgi.qualifier}</Bundle-Version>
+								<Bundle-SymbolicName>${project.artifactId}.source</Bundle-SymbolicName>
+								<Eclipse-SourceBundle>${project.artifactId};version="${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${osgi.qualifier}";roots:="."</Eclipse-SourceBundle>
+								<Export-Package>!*</Export-Package>
+								<Private-Package>!*</Private-Package>
+								<Include-Resource>${project.build.sourceDirectory}</Include-Resource>
+							</instructions>
+							<classifier>sources</classifier>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>parse-version</id>
+						<goals>
+							<goal>parse-version</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
