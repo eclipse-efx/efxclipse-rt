@@ -29,6 +29,7 @@
 	<modules>
 		<module>core/org.eclipse.fx.core</module>
 		<module>core/org.eclipse.fx.core.databinding</module>
+		<module>core/org.eclipse.fx.core.di</module>
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 
