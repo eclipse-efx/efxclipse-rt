@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.target.feature"
       label="e(fx)clipse - Target Platform Feature"
-      version="3.1.0.qualifier"
+      version="3.2.0.qualifier"
       provider-name="Eclipse.org">
 
    <description>
