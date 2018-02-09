@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * Supplier which handles the {@link ContextValue}
  */
-@SuppressWarnings("restriction")
 @Component(service=ExtendedObjectSupplier.class,property="dependency.injection.annotation:String=org.eclipse.fx.core.di.ContextValue")
 public class ContextBoundValueSupplier extends ExtendedObjectSupplier {
 

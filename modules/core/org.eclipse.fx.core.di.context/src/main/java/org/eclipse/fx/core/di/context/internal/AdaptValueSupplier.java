@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * Supplier working for {@link Adapt}
  */
-@SuppressWarnings("restriction")
 @Component(service=ExtendedObjectSupplier.class,property="dependency.injection.annotation:String=org.eclipse.fx.core.adapter.Adapt")
 public class AdaptValueSupplier extends ExtendedObjectSupplier {
 

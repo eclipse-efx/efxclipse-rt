@@ -1,10 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2018 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.core.di.context.internal;
 
 import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import javax.inject.Inject;
@@ -20,7 +28,9 @@ import org.eclipse.fx.core.TypeTypeProviderService;
 import org.eclipse.fx.core.di.Service;
 import org.osgi.service.component.annotations.Component;
 
-@SuppressWarnings("restriction")
+/**
+ * Object supplier to compute local instance of the requested type
+ */
 @Component(service=ExtendedObjectSupplier.class,property="dependency.injection.annotation:String=org.eclipse.fx.core.di.LocalInstance")
 public class LocalInstanceObjectSupplier extends ExtendedObjectSupplier {
 
@@ -33,29 +43,21 @@ public class LocalInstanceObjectSupplier extends ExtendedObjectSupplier {
 
 		return instanceCreator.createInstance(descriptorsClass, r.getRequestingObjectClass());
 	}
-
-	private static Class<?> getDesiredClass(Type desiredType) {
-		if (desiredType instanceof Class<?>)
-			return (Class<?>) desiredType;
-		if (desiredType instanceof ParameterizedType) {
-			Type rawType = ((ParameterizedType) desiredType).getRawType();
-			if (rawType instanceof Class<?>)
-				return (Class<?>) rawType;
-		}
-		return null;
-	}
-
+	
+	/**
+	 * Instance creation helper
+	 */
 	public static class InstanceCreator {
 		private final IEclipseContext context;
 		private final List<TypeTypeProviderService<?>> providerList;
 
 		@Inject
-		public InstanceCreator(IEclipseContext context, @Service List<TypeTypeProviderService<?>> providerList) {
+		InstanceCreator(IEclipseContext context, @Service List<TypeTypeProviderService<?>> providerList) {
 			this.context = context;
 			this.providerList = providerList;
 		}
 
-		public Object createInstance(Type iType, Class<?> owner) {
+		Object createInstance(Type iType, Class<?> owner) {
 			Supplier<Class<?>> classSuplier = () -> {
 				if( iType instanceof Class<?> ) {
 					Class<?> cl = (Class<?>) iType;

@@ -49,7 +49,6 @@ import org.osgi.service.log.LogService;
  *
  * @since 1.2
  */
-@SuppressWarnings("restriction")
 @Component(service=ExtendedObjectSupplier.class,property="dependency.injection.annotation:String=org.eclipse.fx.core.di.Service")
 public class ServiceSupplier extends ExtendedObjectSupplier {
 

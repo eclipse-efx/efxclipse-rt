@@ -127,7 +127,7 @@ public class PreferenceValue<T> implements Value<T> {
 	 * @param defaultValue
 	 *            the default value
 	 */
-	@SuppressWarnings({ "unchecked", "null" })
+	@SuppressWarnings({ "unchecked" })
 	public void init(String nodePath, @NonNull String contextKey, Class<?> cl, Class<?> valueType, T defaultValue) {
 		this.contextKey = contextKey;
 		this.rootType = cl;

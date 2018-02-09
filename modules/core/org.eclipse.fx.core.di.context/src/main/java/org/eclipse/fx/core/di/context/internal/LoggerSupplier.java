@@ -23,7 +23,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * DI Extension to inject {@link Log} into your DI-Bean
  */
-@SuppressWarnings("restriction")
 @Component(service=ExtendedObjectSupplier.class,property="dependency.injection.annotation:String=org.eclipse.fx.core.log.Log")
 public class LoggerSupplier extends ExtendedObjectSupplier {
 

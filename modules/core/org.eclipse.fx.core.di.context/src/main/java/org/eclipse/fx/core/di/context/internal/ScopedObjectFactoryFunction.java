@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * Context function to create requested object factory
  */
-@SuppressWarnings("restriction")
 @Component(service=IContextFunction.class,property="service.context.key:String=org.eclipse.fx.core.di.ScopedObjectFactory")
 public class ScopedObjectFactoryFunction extends ContextFunction {
 	@Override
