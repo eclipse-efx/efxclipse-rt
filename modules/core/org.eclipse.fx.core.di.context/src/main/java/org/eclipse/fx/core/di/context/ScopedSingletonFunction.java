@@ -25,7 +25,7 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
  * Implementing a Window-Singleton Function for an Eclipse 4 application would look like this:
  * </p>
  * 
- * <code><pre>
+ * <pre><code>
  * class WindowSingletonFunction extends ScopedSingletonFunction&lt;MyService&gt; {
  *   public Optional&lt;IEclipseContext&gt; computeSingletonContext(IEclipseContext context) {
  *     return context.get(MWindow.class).getContext();
@@ -35,7 +35,7 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
  *     return ContextInjectionFactory.make(MyWindowServiceImpl.class, context);
  *   }
  * }
- * </pre></code>
+ * </code></pre>
  * 
  * @param <T>
  *            the computed type
@@ -79,6 +79,7 @@ public abstract class ScopedSingletonFunction<T> extends ContextFunction {
 		return object;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public final Object compute(IEclipseContext context) {
 		return super.compute(context);

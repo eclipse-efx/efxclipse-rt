@@ -89,6 +89,8 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	 *
 	 * @param contextKey
 	 *            the key
+	 * @param scope
+	 *            the scope
 	 */
 	public void setContextKey(@NonNull final String contextKey, final ContextScope scope) {
 		this.contextKey = contextKey;

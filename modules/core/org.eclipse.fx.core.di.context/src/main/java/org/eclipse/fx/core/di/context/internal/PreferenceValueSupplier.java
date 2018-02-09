@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Component;
  *
  * @since 2.1.0
  */
-@SuppressWarnings("restriction")
 @Component(service = ExtendedObjectSupplier.class, property = "dependency.injection.annotation=org.eclipse.fx.core.preferences.Preference")
 public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 	static private class PrefInjectionListener implements IPreferenceChangeListener {
@@ -102,7 +101,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 	private static ValueSerializer serializer;
 
 	private static ValueSerializer getValueSerializer() {
-		if( serializer == null ) {
+		if (serializer == null) {
 			ServiceUtils.getService(ValueSerializer.class).ifPresent(s -> serializer = s);
 		}
 		return serializer;
@@ -111,7 +110,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 	private static ObjectSerializer objectSerializer;
 
 	private static ObjectSerializer getObjectSerializer() {
-		if( objectSerializer == null ) {
+		if (objectSerializer == null) {
 			ServiceUtils.getService(ObjectSerializer.class).ifPresent(s -> objectSerializer = s);
 		}
 		return objectSerializer;
@@ -120,7 +119,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 	private static IPreferencesService preferenceService;
 
 	private static IPreferencesService getPreferenceService() {
-		if( preferenceService == null ) {
+		if (preferenceService == null) {
 			ServiceUtils.getService(IPreferencesService.class).ifPresent(s -> preferenceService = s);
 		}
 		return preferenceService;
@@ -132,7 +131,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		if (descriptor == null)
 			return null;
 		Class<?> descriptorsClass = getDesiredClass(descriptor.getDesiredType());
-		if( descriptorsClass == null ) {
+		if (descriptorsClass == null) {
 			return null;
 		}
 		String nodePath = getNodePath(descriptor, requestor.getRequestingObjectClass());
@@ -154,17 +153,21 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		Preference p = descriptor.getQualifier(Preference.class);
 
 		String defaultValue = p.defaultValue();
-		if( "EFX__NO_VALUE__".equals(defaultValue) ) { //$NON-NLS-1$
+		if ("EFX__NO_VALUE__".equals(defaultValue)) { //$NON-NLS-1$
 			defaultValue = null;
 		}
 
 		Class<?> factory = p.factory();
-		if( factory == PreferenceDefaultValueFactory.class ) {
+		if (factory == PreferenceDefaultValueFactory.class) {
 			factory = null;
 		}
 
-		if (descriptorsClass.equals(boolean.class) || descriptorsClass.equals(Boolean.class) || descriptorsClass.equals(int.class) || descriptorsClass.equals(Integer.class) || descriptorsClass.equals(double.class) || descriptorsClass.equals(Double.class) || descriptorsClass.equals(float.class)
-				|| descriptorsClass.equals(Float.class) || descriptorsClass.equals(long.class) || descriptorsClass.equals(Long.class) || descriptorsClass.equals(String.class)) {
+		if (descriptorsClass.equals(boolean.class) || descriptorsClass.equals(Boolean.class)
+				|| descriptorsClass.equals(int.class) || descriptorsClass.equals(Integer.class)
+				|| descriptorsClass.equals(double.class) || descriptorsClass.equals(Double.class)
+				|| descriptorsClass.equals(float.class) || descriptorsClass.equals(Float.class)
+				|| descriptorsClass.equals(long.class) || descriptorsClass.equals(Long.class)
+				|| descriptorsClass.equals(String.class)) {
 			if (track)
 				addListener(nodePath, key, requestor);
 
@@ -173,7 +176,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		}
 
 		ValueSerializer valueSerializer = getValueSerializer();
-		if( valueSerializer != null && valueSerializer.test(descriptorsClass) ) {
+		if (valueSerializer != null && valueSerializer.test(descriptorsClass)) {
 			if (track)
 				addListener(nodePath, key, requestor);
 
@@ -183,20 +186,23 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 
 		Requestor<?> r = (Requestor<?>) requestor;
 		PreferenceValue<Object> v = r.getInjector().make(PreferenceValue.class, r.getPrimarySupplier());
-		if( descriptorsClass != Value.class && ! v.canAdaptTo(descriptorsClass) ) {
+		if (descriptorsClass != Value.class && !v.canAdaptTo(descriptorsClass)) {
 			ObjectSerializer objectSerializer = getObjectSerializer();
-			if( objectSerializer != null ) {
+			if (objectSerializer != null) {
 				if (track) {
 					addListener(nodePath, key, requestor);
 				}
 				Class<?> valueType = null;
-				if( (descriptorsClass == List.class || descriptorsClass == Set.class) && descriptor.getDesiredType() instanceof ParameterizedType ) {
+				if ((descriptorsClass == List.class || descriptorsClass == Set.class)
+						&& descriptor.getDesiredType() instanceof ParameterizedType) {
 					Type t = ((ParameterizedType) descriptor.getDesiredType()).getActualTypeArguments()[0];
-					valueType = t instanceof ParameterizedType ? (Class<?>) ((ParameterizedType) t).getRawType() : (Class<?>) t;
+					valueType = t instanceof ParameterizedType ? (Class<?>) ((ParameterizedType) t).getRawType()
+							: (Class<?>) t;
 
 				}
 
-				return getValue(nodePath, key, (Class<Object>) descriptorsClass, valueType, getDefault(defaultValue, descriptorsClass, p, factory));
+				return getValue(nodePath, key, (Class<Object>) descriptorsClass, valueType,
+						getDefault(defaultValue, descriptorsClass, p, factory));
 			}
 		}
 
@@ -205,9 +211,10 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		if (type == Object.class && descriptor.getDesiredType() instanceof ParameterizedType) {
 			Type t = ((ParameterizedType) descriptor.getDesiredType()).getActualTypeArguments()[0];
 			type = t instanceof ParameterizedType ? (Class<?>) ((ParameterizedType) t).getRawType() : (Class<?>) t;
-			if( t instanceof ParameterizedType && (type == List.class || type == Set.class) ) {
-				Type tmp = ((ParameterizedType)t).getActualTypeArguments()[0];
-				valueType = tmp instanceof ParameterizedType ? (Class<?>) ((ParameterizedType) tmp).getRawType() : (Class<?>) tmp;
+			if (t instanceof ParameterizedType && (type == List.class || type == Set.class)) {
+				Type tmp = ((ParameterizedType) t).getActualTypeArguments()[0];
+				valueType = tmp instanceof ParameterizedType ? (Class<?>) ((ParameterizedType) tmp).getRawType()
+						: (Class<?>) tmp;
 			}
 		}
 
@@ -217,7 +224,6 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 
 		v.init(nodePath, key, type, valueType, getDefault(defaultValue, type, p, factory));
 
-
 		if (descriptorsClass != Value.class) {
 			return v.adaptTo(descriptorsClass);
 		}
@@ -225,18 +231,19 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		return v;
 	}
 
-	@SuppressWarnings({ "unchecked", "null" })
-	private static <@Nullable T> @Nullable T getDefault(@Nullable String value, @NonNull Class<@NonNull T> type, Preference p, Class<?> factory) {
-		if( factory != null ) {
+	@SuppressWarnings({ "unchecked" })
+	private static <@Nullable T> @Nullable T getDefault(@Nullable String value, @NonNull Class<@NonNull T> type,
+			Preference p, Class<?> factory) {
+		if (factory != null) {
 			try {
 				PreferenceDefaultValueFactory<T> instance;
 				instance = (PreferenceDefaultValueFactory<@Nullable T>) factory.newInstance();
-				if( instance != null ) {
+				if (instance != null) {
 					return instance.create(p);
 				}
 
 			} catch (InstantiationException | IllegalAccessException e) {
-				getLogger().error("Failed to create instance of '"+factory+"'", e);  //$NON-NLS-1$//$NON-NLS-2$
+				getLogger().error("Failed to create instance of '" + factory + "'", e); //$NON-NLS-1$//$NON-NLS-2$
 			}
 		}
 
@@ -289,22 +296,22 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		} else if (type == String.class) {
 			return (T) value;
 		} else {
-			if( value != null ) {
+			if (value != null) {
 				ValueSerializer valueSerializer = getValueSerializer();
-				if( valueSerializer != null ) {
-					if( valueSerializer.test(type) ) {
+				if (valueSerializer != null) {
+					if (valueSerializer.test(type)) {
 						return valueSerializer.fromString(type, value);
 					}
 				}
 
 				ObjectSerializer objectSerializer = getObjectSerializer();
-				if( objectSerializer != null ) {
+				if (objectSerializer != null) {
 					return objectSerializer.deserialize(type, value);
 				}
 			}
 		}
 
-		return (@Nullable T)null;
+		return (@Nullable T) null;
 	}
 
 	/**
@@ -316,59 +323,72 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 	 *            the key
 	 * @param type
 	 *            the descriptor
+	 * @param valueType
+	 *            the value type
 	 * @param defaultValue
 	 *            the default value
 	 * @return the value
+	 * @param <T>
+	 *            the result type
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getValue(String path, String key, Class<T> type, Class<?> valueType, T defaultValue) {
 		if (type.isPrimitive()) {
 			if (type.equals(boolean.class)) {
-				return (T) Boolean.valueOf(getPreferenceService().getBoolean(path, key, ((Boolean) defaultValue).booleanValue(),null));
+				return (T) Boolean.valueOf(
+						getPreferenceService().getBoolean(path, key, ((Boolean) defaultValue).booleanValue(), null));
 			} else if (type.equals(int.class)) {
-				return (T) Integer.valueOf(getPreferenceService().getInt(path, key, ((Integer) defaultValue).intValue(), null));
+				return (T) Integer
+						.valueOf(getPreferenceService().getInt(path, key, ((Integer) defaultValue).intValue(), null));
 			} else if (type.equals(double.class)) {
-				return (T) Double.valueOf(getPreferenceService().getDouble(path, key, ((Double) defaultValue).doubleValue(), null));
+				return (T) Double.valueOf(
+						getPreferenceService().getDouble(path, key, ((Double) defaultValue).doubleValue(), null));
 			} else if (type.equals(float.class)) {
-				return (T) Float.valueOf(getPreferenceService().getFloat(path, key, ((Float) defaultValue).floatValue(), null));
+				return (T) Float
+						.valueOf(getPreferenceService().getFloat(path, key, ((Float) defaultValue).floatValue(), null));
 			} else if (type.equals(long.class)) {
-				return (T) Long.valueOf(getPreferenceService().getLong(path, key, ((Long) defaultValue).longValue(), null));
+				return (T) Long
+						.valueOf(getPreferenceService().getLong(path, key, ((Long) defaultValue).longValue(), null));
 			}
 		}
 
 		if (String.class.equals(type) || CharSequence.class.equals(type)) {
 			String v = null;
-			if( defaultValue != null ) {
+			if (defaultValue != null) {
 				v = defaultValue.toString();
 			}
 			return (T) getPreferenceService().getString(path, key, v, null);
 		} else if (Boolean.class.equals(type)) {
-			return (T) Boolean.valueOf(getPreferenceService().getBoolean(path, key, ((Boolean) defaultValue).booleanValue(), null));
+			return (T) Boolean.valueOf(
+					getPreferenceService().getBoolean(path, key, ((Boolean) defaultValue).booleanValue(), null));
 		} else if (Integer.class.equals(type)) {
-			return (T) Integer.valueOf(getPreferenceService().getInt(path, key, ((Integer) defaultValue).intValue(), null));
+			return (T) Integer
+					.valueOf(getPreferenceService().getInt(path, key, ((Integer) defaultValue).intValue(), null));
 		} else if (Double.class.equals(type)) {
-			return (T) Double.valueOf(getPreferenceService().getDouble(path, key, ((Double) defaultValue).doubleValue(), null));
+			return (T) Double
+					.valueOf(getPreferenceService().getDouble(path, key, ((Double) defaultValue).doubleValue(), null));
 		} else if (Float.class.equals(type)) {
-			return (T) Float.valueOf(getPreferenceService().getFloat(path, key, ((Float) defaultValue).floatValue(), null));
+			return (T) Float
+					.valueOf(getPreferenceService().getFloat(path, key, ((Float) defaultValue).floatValue(), null));
 		} else if (Long.class.equals(type)) {
 			return (T) Long.valueOf(getPreferenceService().getLong(path, key, ((Long) defaultValue).longValue(), null));
 		} else {
 			String value = getPreferenceService().getString(path, key, null, null);
-			if( value != null ) {
+			if (value != null) {
 				ValueSerializer valueSerializer = getValueSerializer();
-				if( valueSerializer != null ) {
-					if( valueSerializer.test(type) ) {
+				if (valueSerializer != null) {
+					if (valueSerializer.test(type)) {
 						return valueSerializer.fromString(type, value);
 					}
 				}
 
 				ObjectSerializer objectSerializer = getObjectSerializer();
-				if( objectSerializer != null ) {
-					if( valueType != null && (type == List.class || type == Set.class) ) {
-						if( type == List.class ) {
-							return (T) objectSerializer.deserializeCollection((Class<List>)type, valueType, value);
+				if (objectSerializer != null) {
+					if (valueType != null && (type == List.class || type == Set.class)) {
+						if (type == List.class) {
+							return (T) objectSerializer.deserializeCollection((Class<List>) type, valueType, value);
 						} else {
-							return (T) objectSerializer.deserializeCollection((Class<Set>)type, valueType, value);
+							return (T) objectSerializer.deserializeCollection((Class<Set>) type, valueType, value);
 						}
 
 					}
@@ -404,7 +424,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		Preference qualifier = descriptor.getQualifier(Preference.class);
 		String nodePath = qualifier.nodePath();
 
-		if( nodePath == null || nodePath.trim().isEmpty() ) {
+		if (nodePath == null || nodePath.trim().isEmpty()) {
 			if (requestingObject == null)
 				return null;
 			nodePath = FrameworkUtil.getBundle(requestingObject).getSymbolicName();
