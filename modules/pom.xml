@@ -23,6 +23,7 @@
 		<dep-junit>4.12</dep-junit>
 		<dep-org.eclipse.e4.core.contexts>1.6.0</dep-org.eclipse.e4.core.contexts>
 		<dep-org.eclipse.e4.core.services>2.0.100</dep-org.eclipse.e4.core.services>
+		<dep-org.eclipse.equinox.preferences>3.7.0</dep-org.eclipse.equinox.preferences>
 
 		<plugin-maven-osgi-package-plugin>0.0.1</plugin-maven-osgi-package-plugin>
 		<plugin-bnd-maven-plugin>3.5.0</plugin-bnd-maven-plugin>
@@ -33,6 +34,7 @@
 		<module>core/org.eclipse.fx.core.databinding</module>
 		<module>core/org.eclipse.fx.core.di</module>
 		<module>core/org.eclipse.fx.core.di.context</module>
+		<module>core/org.eclipse.fx.core.di.context.tests</module>
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 
