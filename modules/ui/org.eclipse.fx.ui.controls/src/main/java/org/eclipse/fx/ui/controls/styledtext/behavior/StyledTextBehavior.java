@@ -478,7 +478,7 @@ public class StyledTextBehavior {
 	}
 
 	private void onTextPositionPressed(TextPositionEvent event) {
-		if( event.getButton() != MouseButton.PRIMARY ) {
+		if( ! (event.getButton() == MouseButton.PRIMARY || event.getButton() == MouseButton.SECONDARY) ) {
 			return;
 		}
 
