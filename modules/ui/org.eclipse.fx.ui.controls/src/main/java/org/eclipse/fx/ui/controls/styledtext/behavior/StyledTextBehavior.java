@@ -491,6 +491,9 @@ public class StyledTextBehavior {
 		if (isInSelection(this.mousePressedOffset) && getControl().getEditable()) {
 			this.pressedInSelection = true;
 			event.consume();
+		} else if (isInSelection(this.mousePressedOffset) && event.getButton() == MouseButton.SECONDARY) {
+			// if the secondary button was pressed within the selection, we want the selction to stay
+			event.consume();
 		} else {
 			moveCaretAbsolute(this.mousePressedOffset, event.isShiftDown());
 			event.consume();
