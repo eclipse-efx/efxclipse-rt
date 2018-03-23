@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+<extension id="application" point="org.eclipse.core.runtime.applications">
+	<application thread="any" cardinality="*" visible="true" >
+		<run class="org.eclipse.fx.ui.di.DIApplication" >
+			<parameter name="mainClass" value="org.eclipse.fx.ui.preferences.app.MainApplication" />
+			
+		</run>
+		
+	</application>
+	
+</extension>
+<extension id="product" point="org.eclipse.core.runtime.products">
+	<product application="org.eclipse.fx.ui.preferences.app.application" name="Preference Sample" >
+		<property name="appName" value="Preference Sample" />
+		
+	</product>
+	
+</extension>
+</plugin>
