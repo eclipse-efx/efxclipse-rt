@@ -11,12 +11,25 @@ public abstract class FieldEditor<T> extends Region {
 	private String name;
 	private Memento memento;
 	
-	public FieldEditor(String name) {
+	public FieldEditor(String name, String label) {
 		this.name = name;
+		this.setLabel(label);
+	}
+	
+	public FieldEditor(String name) {
+		this(name, null);
 	}
 	
 	void setMemento(Memento memento) {
 		this.memento = memento;
+	}
+	
+	protected Memento getMemento() {
+		return this.memento;
+	}
+	
+	protected String getName() {
+		return this.name;
 	}
 	
 	abstract void load();

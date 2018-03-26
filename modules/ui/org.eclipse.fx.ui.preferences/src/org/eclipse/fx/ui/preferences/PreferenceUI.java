@@ -53,6 +53,7 @@ public class PreferenceUI {
 		this.factory = factory;
 		this.providerView = new ListView<>();
 		this.contentArea = new ScrollPane();
+		this.contentArea.setFitToWidth(true);
 		
 		this.providerView.setCellFactory( v -> new SimpleListCell<>( pp -> pp.titleProperty().getValue()));
 		FXObservableUtil.onChange(this.providerView.getSelectionModel().selectedItemProperty(), this::handleSelectedPageChange);
@@ -94,8 +95,15 @@ public class PreferenceUI {
 		split.setDividerPositions(0.3);
 		
 		root.setCenter(split);
+		
+		selectFirstPage();
 	}
 	
+	private void selectFirstPage() {
+		providerView.getSelectionModel().clearSelection();
+		providerView.getSelectionModel().selectFirst();
+	}
+
 	@Inject
 	public void setPreferencePageProviders(@Service List<PreferencePageProvider> providers) {
 		providerView.getItems().setAll(providers);
