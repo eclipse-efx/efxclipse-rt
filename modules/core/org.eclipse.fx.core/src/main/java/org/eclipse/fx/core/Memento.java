@@ -13,7 +13,6 @@ package org.eclipse.fx.core;
 import java.util.Optional;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -97,8 +96,8 @@ public interface Memento {
 	 * @param key
 	 *            the key
 	 * @param defaultValue
-	 *            the default value if the key does not exists, is
-	 *            <code>null</code> or not a {@link String}
+	 *            the default value if the key does not exists, is <code>null</code>
+	 *            or not a {@link String}
 	 * @return the value or the default value provided
 	 */
 	public @Nullable String get(@NonNull String key, @Nullable String defaultValue);
@@ -109,8 +108,8 @@ public interface Memento {
 	 * @param key
 	 *            the key
 	 * @param defaultValue
-	 *            the default value of the key does not exits, is
-	 *            <code>null</code> or not a boolean
+	 *            the default value of the key does not exits, is <code>null</code>
+	 *            or not a boolean
 	 * @return the value or the default value provided
 	 */
 	public boolean get(@NonNull String key, boolean defaultValue);
@@ -121,8 +120,8 @@ public interface Memento {
 	 * @param key
 	 *            the value
 	 * @param defaultValue
-	 *            the default value of the key does not exits, is
-	 *            <code>null</code> or not an int
+	 *            the default value of the key does not exits, is <code>null</code>
+	 *            or not an int
 	 * @return the value or the default value provided
 	 */
 	public int get(@NonNull String key, int defaultValue);
@@ -133,8 +132,8 @@ public interface Memento {
 	 * @param key
 	 *            the key
 	 * @param defaultValue
-	 *            the default value if the key does not exits, is
-	 *            <code>null</code> or not a double
+	 *            the default value if the key does not exits, is <code>null</code>
+	 *            or not a double
 	 * @return the value or the default value provided
 	 */
 	public double get(@NonNull String key, double defaultValue);
@@ -147,8 +146,8 @@ public interface Memento {
 	 * @param clazz
 	 *            the type
 	 * @param defaultValue
-	 *            the default value if the key does not exits, is
-	 *            <code>null</code> or can not be deserialized
+	 *            the default value if the key does not exits, is <code>null</code>
+	 *            or can not be deserialized
 	 * @return the value or default value provided
 	 */
 	public <O> @Nullable O get(String key, Class<O> clazz, @Nullable O defaultValue);
@@ -166,5 +165,52 @@ public interface Memento {
 	public default <@Nullable O> Optional<O> get(String key, Class<O> clazz) {
 		O o = get(key, clazz, null);
 		return Optional.ofNullable(o);
+	}
+
+	/**
+	 * Get the default boolean value for the key
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the default
+	 * @since 3.2
+	 */
+	public default boolean getDefaultBoolean(String key) {
+		return false;
+	}
+
+	/**
+	 * Get the default double value for the key
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the value
+	 */
+	public default double getDefaultDouble(String key) {
+		return 0.0;
+	}
+
+	/**
+	 * Get the default String value for the key
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the default value
+	 */
+	public default String getDefaultString(String key) {
+		return ""; //$NON-NLS-1$
+	}
+
+	/**
+	 * Get the default Object value for the key
+	 * 
+	 * @param key
+	 *            the key
+	 * @param clazz
+	 *            the type
+	 * @return the value
+	 */
+	public default <@Nullable O> O getDefault(String key, Class<O> clazz) {
+		return null;
 	}
 }
