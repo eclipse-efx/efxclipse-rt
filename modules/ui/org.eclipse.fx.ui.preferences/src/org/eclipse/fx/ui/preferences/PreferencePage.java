@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.preferences;
 
+import java.util.Optional;
+
 import org.eclipse.fx.core.command.Command;
 
 public interface PreferencePage {
+	public Optional<Command<Void>> restoreDefault();
+	public Command<Void> reset();
 	public Command<Void> persist();
 }

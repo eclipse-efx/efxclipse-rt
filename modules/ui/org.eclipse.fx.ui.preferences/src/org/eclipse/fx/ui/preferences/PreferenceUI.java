@@ -59,12 +59,16 @@ public class PreferenceUI {
 	}
 	
 	private void handleSelectedPageChange(PreferencePageProvider provider) {
-		PageCache pc = pages.computeIfAbsent(provider, p -> {
-			BorderPane parent = new BorderPane();
-			return new PageCache(factory.make(parent, provider), parent);
-		});
-		
-		contentArea.setContent(pc.parent);
+		if( provider != null ) {
+			PageCache pc = pages.computeIfAbsent(provider, p -> {
+				BorderPane parent = new BorderPane();
+				return new PageCache(factory.make(parent, provider), parent);
+			});
+			
+			contentArea.setContent(pc.parent);			
+		} else {
+			contentArea.setContent(null);
+		}
 	}
 	
 	@PostConstruct

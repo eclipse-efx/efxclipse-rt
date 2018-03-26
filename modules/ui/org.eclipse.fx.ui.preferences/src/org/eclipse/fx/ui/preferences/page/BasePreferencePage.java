@@ -14,7 +14,7 @@ import org.eclipse.fx.core.Memento;
 import org.eclipse.fx.ui.preferences.PreferencePage;
 
 public abstract class BasePreferencePage implements PreferencePage {
-	private final Memento memento;
+	final Memento memento;
 	
 	public BasePreferencePage(Memento memento) {
 		this.memento = memento;
