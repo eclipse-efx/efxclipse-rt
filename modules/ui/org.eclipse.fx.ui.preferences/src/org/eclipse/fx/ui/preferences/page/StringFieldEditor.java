@@ -17,12 +17,12 @@ import javafx.scene.layout.HBox;
 /**
  * <p>A Field editor for string preferences.</p>
  */
-public class TextFieldEditor extends FieldEditor {
+public class StringFieldEditor extends FieldEditor {
 
 	private HBox textFieldContainer;
 	private TextField textField;
 	
-	public TextFieldEditor(String name, String label) {
+	public StringFieldEditor(String name, String label) {
 		super(name, label);
 		this.textFieldContainer = new HBox();
 		this.textField = new TextField();
@@ -38,7 +38,7 @@ public class TextFieldEditor extends FieldEditor {
 		return this.textField;
 	}
 
-	public TextFieldEditor(String name) {
+	public StringFieldEditor(String name) {
 		this(name, null);
 	}
 
