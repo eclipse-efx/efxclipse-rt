@@ -11,33 +11,45 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.preferences.page;
 
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 
 /**
- * <p>A Field editor for boolean preferences.</p>
+ * <p>A Field editor for string preferences.</p>
  */
-public class BooleanFieldEditor extends FieldEditor {
+public class TextFieldEditor extends FieldEditor {
 
-	private final CheckBox checkBox;
-
-	public BooleanFieldEditor(String name, String label) {
+	private HBox textFieldContainer;
+	private TextField textField;
+	
+	public TextFieldEditor(String name, String label) {
 		super(name, label);
-		this.checkBox = new CheckBox();
-		getChildren().add(checkBox);
+		this.textFieldContainer = new HBox();
+		this.textField = new TextField();
+		this.textFieldContainer.getChildren().add(textField);
+		getChildren().add(this.textFieldContainer);
 	}
 	
-	public BooleanFieldEditor(String name) {
-		this(name, null);		
+	protected HBox getTextContainer() {
+		return this.textFieldContainer;
+	}
+	
+	protected TextField getTextField() {
+		return this.textField;
+	}
+
+	public TextFieldEditor(String name) {
+		this(name, null);
 	}
 
 	@Override
 	void load() {
-		this.checkBox.setSelected(getMemento().get(getName(), false));
+		this.textField.setText(getMemento().get(getName(), ""));
 	}
 
 	@Override
 	void persist() {
-		getMemento().put(getName(), this.checkBox.isSelected());
+		getMemento().put(getName(), this.textField.getText());
 	}
 
 }
