@@ -12,7 +12,7 @@ import org.eclipse.fx.ui.preferences.page.ColorFieldEditor;
 import org.eclipse.fx.ui.preferences.page.DirectoryFieldEditor;
 import org.eclipse.fx.ui.preferences.page.FieldEditorPreferencePage;
 import org.eclipse.fx.ui.preferences.page.IntegerFieldEditor;
-import org.eclipse.fx.ui.preferences.page.TextFieldEditor;
+import org.eclipse.fx.ui.preferences.page.StringFieldEditor;
 import org.osgi.service.component.annotations.Component;
 
 import javafx.beans.property.ObjectProperty;
@@ -61,7 +61,7 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 			addField(new IntegerFieldEditor("integerProperty", "Integer Property"));
 			addField(new ColorFieldEditor("colorProperty", "Color Property"));
 			addField(new DirectoryFieldEditor("directoryProperty", "Directory Property"));
-			addField(new TextFieldEditor("textProperty", "Text"));
+			addField(new StringFieldEditor("textProperty", "Text"));
 		}
 	}
 }

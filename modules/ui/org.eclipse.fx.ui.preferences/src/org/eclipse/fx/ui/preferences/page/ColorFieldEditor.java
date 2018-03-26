@@ -11,8 +11,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.preferences.page;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
 
 import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
@@ -36,20 +36,22 @@ public class ColorFieldEditor extends FieldEditor {
 
 	@Override
 	void load() {
-		String color = getMemento().get(getName(), "0;0;0;1");
+		String color = getMemento().get(getName(), "0,0,0,1");
 		this.colorPicker.setValue(parseColor(color));
 	}
-
-	/** RGBA Format: 255;255;255;1.0 */
-	private static Pattern colorRegex = Pattern.compile("(\\d{1,3});(\\d{1,3});(\\d{1,3});(\\d(\\.\\d+)?)");
 	
+	//Parses a JavaFX Color from a String. The String is compatible with
+	//JFace preference format for RGB, with an optional alpha value.
+	//The color must be in the format 255,255,255 or 255,255,255,1.0
 	private Color parseColor(String color) {
-		Matcher matcher = colorRegex.matcher(color);
-		if (matcher.matches()) {
-			String red = matcher.group(1);
-			String green = matcher.group(2);
-			String blue = matcher.group(3);
-			String alpha = matcher.group(4);
+		StringTokenizer tokenizer = new StringTokenizer(color, ",");
+		try {
+			String red = tokenizer.nextToken().trim();
+			String green = tokenizer.nextToken().trim();
+			String blue = tokenizer.nextToken().trim();
+			//Alpha is optional, for backwards compatibility with JFace
+			String alpha = tokenizer.hasMoreTokens() ? tokenizer.nextToken() : "1.0";
+			
 			try {
 				int r = Integer.parseInt(red);
 				int g = Integer.parseInt(green);
@@ -60,7 +62,11 @@ public class ColorFieldEditor extends FieldEditor {
 				ex.printStackTrace(); //TODO Log
 				return Color.BLACK;
 			}
-		}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace(); //TODO Log
+        } catch (NoSuchElementException e) {
+        	e.printStackTrace(); //TODO Log
+        }
 		return null;
 	}
 
@@ -75,7 +81,7 @@ public class ColorFieldEditor extends FieldEditor {
 	}
 	
 	private static String toString(Color color) {
-		return String.format("%s;%s;%s;%s", toInt(color.getRed()), toInt(color.getGreen()), toInt(color.getBlue()), color.getOpacity());
+		return String.format("%s,%s,%s,%s", toInt(color.getRed()), toInt(color.getGreen()), toInt(color.getBlue()), color.getOpacity());
 	}
 
 	private static int toInt(double color) {

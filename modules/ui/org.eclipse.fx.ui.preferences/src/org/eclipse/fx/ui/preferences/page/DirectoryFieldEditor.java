@@ -20,7 +20,7 @@ import javafx.stage.Window;
 /**
  * <p>A Field editor for directories.</p>
  */
-public class DirectoryFieldEditor extends TextFieldEditor {
+public class DirectoryFieldEditor extends StringFieldEditor {
 
 	public DirectoryFieldEditor(String name, String label) {
 		super(name, label);
