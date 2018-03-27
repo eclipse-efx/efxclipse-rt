@@ -11,6 +11,7 @@ import org.eclipse.fx.core.MementoStore;
 import org.eclipse.fx.ui.preferences.PreferencePage;
 import org.eclipse.fx.ui.preferences.PreferencePageFactory;
 import org.eclipse.fx.ui.preferences.PreferencePageProvider;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 
 import javafx.scene.layout.BorderPane;
@@ -41,7 +42,8 @@ public class PreferencePageFactoryCF extends ContextFunction implements IContext
 			
 			Memento memento = provider.memento().orElseGet( () -> {
 				if( store != null ) {
-					return store.getMemento("helloWorld"); // FIXME We should use the Bundle
+					String prefId = FrameworkUtil.getBundle(provider.getClass()).getSymbolicName();
+					return store.getMemento(prefId);
 				}
 				return null;
 			});
