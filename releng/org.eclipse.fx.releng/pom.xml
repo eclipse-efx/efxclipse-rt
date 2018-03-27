@@ -59,6 +59,8 @@
 		<module>../../modules/ui/org.eclipse.fx.ui.dialogs.nl</module>
 		<module>../../modules/ui/org.eclipse.fx.ui.mobile</module>
 		<module>../../modules/ui/org.eclipse.fx.emf.edit.ui</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.preferences</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.preferences.context</module>
 
 		<!-- e4 -->
 		<module>../../modules/ui/org.eclipse.fx.ui.keybindings</module>
