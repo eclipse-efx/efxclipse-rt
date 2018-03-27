@@ -15,7 +15,7 @@ import java.util.Vector;
 /**
  * A string pattern matcher, suppporting "*" and "?" wildcards.
  */
-public class StringMatcher {
+class StringMatcher implements TextMatcher {
     protected String fPattern;
 
     protected int fLength; // pattern length
