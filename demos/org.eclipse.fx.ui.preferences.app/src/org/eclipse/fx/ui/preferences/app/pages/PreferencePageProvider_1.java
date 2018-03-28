@@ -1,10 +1,12 @@
 package org.eclipse.fx.ui.preferences.app.pages;
 
+import java.net.URL;
 import java.util.Optional;
 
 import javax.inject.Inject;
 
 import org.eclipse.fx.core.Memento;
+import org.eclipse.fx.core.MementoStore;
 import org.eclipse.fx.ui.preferences.PreferencePage;
 import org.eclipse.fx.ui.preferences.PreferencePageProvider;
 import org.eclipse.fx.ui.preferences.page.BooleanFieldEditor;
@@ -14,6 +16,7 @@ import org.eclipse.fx.ui.preferences.page.FieldEditorPreferencePage;
 import org.eclipse.fx.ui.preferences.page.IntegerFieldEditor;
 import org.eclipse.fx.ui.preferences.page.StringFieldEditor;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,10 +26,11 @@ import javafx.scene.layout.BorderPane;
 @Component
 public class PreferencePageProvider_1 implements PreferencePageProvider {
 	private ObjectProperty<CharSequence> title = new SimpleObjectProperty<>(this, "title", "Page 1");
-
-	@Override
-	public boolean select(CharSequence term) {
-		return true;
+	private MementoStore mementoStore;
+	
+	@Reference
+	public void setMementoStore(MementoStore mementoStore) {
+		this.mementoStore = mementoStore;
 	}
 
 	@Override
@@ -48,6 +52,11 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 	public Optional<String> parentId() {
 		return Optional.empty();
 	}
+	
+	@Override
+	public Optional<Memento> memento() {
+		return Optional.of(mementoStore.getMemento(getClass().getName()));
+	}
 
 	static class Page1 extends FieldEditorPreferencePage {
 		@Inject
@@ -62,6 +71,11 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 			addField(new ColorFieldEditor("colorProperty", "Color Property"));
 			addField(new DirectoryFieldEditor("directoryProperty", "Directory Property"));
 			addField(new StringFieldEditor("textProperty", "Text"));
+		}
+		
+		@Override
+		protected Optional<URL> getUserAgentStylesheet() {
+			return Optional.ofNullable(getClass().getResource("page.css"));
 		}
 	}
 }

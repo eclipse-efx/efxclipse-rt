@@ -11,8 +11,10 @@
 package org.eclipse.fx.ui.preferences;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.eclipse.fx.core.Memento;
+import org.eclipse.fx.core.text.TextUtil;
 
 import javafx.beans.value.ObservableValue;
 
@@ -27,7 +29,10 @@ public interface PreferencePageProvider {
 	 *            the term used for selection
 	 * @return <code>true</code> if matched
 	 */
-	public boolean select(CharSequence term);
+	public default boolean select(CharSequence term) {
+		Predicate<String> wildcardFilter = TextUtil.createTextMatcher(term.toString(), true, false);
+		return wildcardFilter.test(titleProperty().getValue().toString());
+	}
 
 	/**
 	 * @return the title of the page
@@ -42,7 +47,9 @@ public interface PreferencePageProvider {
 	/**
 	 * @return the id of the parent
 	 */
-	public Optional<String> parentId();
+	public default Optional<String> parentId(){
+		return Optional.empty();
+	}
 	
 	/**
 	 * @return an optional memento used for storing

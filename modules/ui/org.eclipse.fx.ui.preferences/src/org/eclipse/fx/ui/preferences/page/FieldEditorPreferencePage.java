@@ -1,5 +1,6 @@
 package org.eclipse.fx.ui.preferences.page;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 public abstract class FieldEditorPreferencePage extends BasePreferencePage {
+	
+	/**
+	 * CSS Class Name for the grid holding the field editors
+	 */
+	public static final String PAGE_GRID_STYLE = "field-editor-grid"; //$NON-NLS-1$
+	
+	/**
+	 * CSS Class Name for the region in which the actions buttons are added
+	 */
+	public static final String PAGE_ACTIONS_STYLE = "field-editor-actions"; //$NON-NLS-1$
 	private BorderPane parent;
 	private GridPane grid = new GridPane();
 	private HBox actions = new HBox();
@@ -28,6 +39,11 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 		this.parent.setCenter(grid);
 		this.parent.setBottom(actions);
 		actions.setAlignment(Pos.BASELINE_RIGHT);
+		
+		grid.getStyleClass().add(PAGE_GRID_STYLE);
+		actions.getStyleClass().add(PAGE_ACTIONS_STYLE);
+		
+		getUserAgentStylesheet().map(URL::toExternalForm).ifPresent(parent.getStylesheets()::add);
 	}
 
 	@Override
@@ -102,5 +118,9 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 		
 		editors.add(editor);
 		editor.setMemento(this.memento);
+	}
+	
+	protected Optional<URL> getUserAgentStylesheet(){
+		return Optional.empty();
 	}
 }
