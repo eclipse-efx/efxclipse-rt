@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.fx.core.Memento;
 import org.eclipse.fx.core.MementoStore;
 import org.eclipse.fx.ui.preferences.PreferencePage;
@@ -31,6 +33,14 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 	@Reference
 	public void setMementoStore(MementoStore mementoStore) {
 		this.mementoStore = mementoStore;
+		initDefaultPreferences();
+	}
+
+	private void initDefaultPreferences() {
+		// Initialize some default preferences... Here, we assume that the default Eclipse-based Memento will be used
+		IEclipsePreferences defaultNode = DefaultScope.INSTANCE.getNode(getClass().getName());
+		defaultNode.putInt("integerProperty", 12);
+		defaultNode.put("colorProperty", "204,255,204");
 	}
 
 	@Override

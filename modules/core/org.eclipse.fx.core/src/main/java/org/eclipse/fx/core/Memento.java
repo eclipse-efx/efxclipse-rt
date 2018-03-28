@@ -180,6 +180,18 @@ public interface Memento {
 	}
 
 	/**
+	 * Get the default integer value for the key
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the value
+	 * @since 3.2
+	 */
+	public default int getDefaultInteger(String key) {
+		return 0;
+	}
+
+	/**
 	 * Get the default double value for the key
 	 * 
 	 * @param key
