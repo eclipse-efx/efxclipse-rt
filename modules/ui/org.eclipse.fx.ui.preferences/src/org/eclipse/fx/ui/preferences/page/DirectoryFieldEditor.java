@@ -18,7 +18,9 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 
 /**
- * <p>A Field editor for directories.</p>
+ * <p>
+ * A Field editor for directories.
+ * </p>
  */
 public class DirectoryFieldEditor extends StringFieldEditor {
 
@@ -28,7 +30,7 @@ public class DirectoryFieldEditor extends StringFieldEditor {
 		getTextContainer().getChildren().add(browse);
 		browse.setOnAction(event -> browse(browse.getScene().getWindow()));
 	}
-	
+
 	private void browse(Window parent) {
 		DirectoryChooser chooser = new DirectoryChooser();
 		chooser.setInitialDirectory(getCurrentFolder());
@@ -45,8 +47,8 @@ public class DirectoryFieldEditor extends StringFieldEditor {
 	private File getCurrentFolder() {
 		String textValue = getTextField().getText();
 		File folder = new File(textValue);
-		//Find the first existing folder in the current path hierarchy
-		while (folder != null && ! folder.isDirectory()) {
+		// Find the first existing folder in the current path hierarchy
+		while (folder != null && !folder.isDirectory()) {
 			folder = folder.getParentFile();
 		}
 		return folder;

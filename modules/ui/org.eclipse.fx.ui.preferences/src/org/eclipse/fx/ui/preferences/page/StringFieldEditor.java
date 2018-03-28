@@ -11,17 +11,20 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.preferences.page;
 
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 /**
- * <p>A Field editor for string preferences.</p>
+ * <p>
+ * A Field editor for string preferences.
+ * </p>
  */
 public class StringFieldEditor extends FieldEditor {
 
 	private HBox textFieldContainer;
 	private TextField textField;
-	
+
 	public StringFieldEditor(String name, String label) {
 		super(name, label);
 		this.textFieldContainer = new HBox();
@@ -29,11 +32,11 @@ public class StringFieldEditor extends FieldEditor {
 		this.textFieldContainer.getChildren().add(textField);
 		getChildren().add(this.textFieldContainer);
 	}
-	
+
 	protected HBox getTextContainer() {
 		return this.textFieldContainer;
 	}
-	
+
 	protected TextField getTextField() {
 		return this.textField;
 	}
@@ -43,13 +46,23 @@ public class StringFieldEditor extends FieldEditor {
 	}
 
 	@Override
-	void load() {
+	protected void doLoad() {
 		this.textField.setText(getMemento().get(getName(), ""));
 	}
 
 	@Override
-	void persist() {
+	protected void doRestoreDefaults() {
+		this.textField.setText(getMemento().getDefaultString(getName()));
+	}
+
+	@Override
+	protected void doPersist() {
 		getMemento().put(getName(), this.textField.getText());
+	}
+
+	@Override
+	protected ObservableValue<?> getValue() {
+		return this.textField.textProperty();
 	}
 
 }

@@ -1,13 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2018 BestSolution.at, EclipseSource and others.
+ * Copyright (c) 2018 EclipseSource and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Tom Schindl<tom.schindl@bestsolution.at> - initial API
- *     Camille Letavernier <cletavernier@eclipsesource.com> - initial implementation
+ *     Camille Letavernier <cletavernier@eclipsesource.com> - initial API and implementation
  *******************************************************************************/
 package org.eclipse.fx.ui.preferences.page;
 
@@ -23,16 +22,15 @@ import javafx.scene.control.TextField;
 
 /**
  * <p>
- * A Field editor for integer preferences.
+ * A Field editor for float preferences.
  * </p>
  */
-public class IntegerFieldEditor extends FieldEditor {
-
-	private static final Logger LOGGER = LoggerCreator.createLogger(IntegerFieldEditor.class);
-
+public class FloatFieldEditor extends FieldEditor {
 	private final TextField textField;
 
-	public IntegerFieldEditor(String name, String label) {
+	private static final Logger LOGGER = LoggerCreator.createLogger(FloatFieldEditor.class);
+
+	public FloatFieldEditor(String name, String label) {
 		super(name, label);
 		this.textField = new TextField();
 		getChildren().add(textField);
@@ -40,7 +38,7 @@ public class IntegerFieldEditor extends FieldEditor {
 		configureValidation(this.textField);
 	}
 
-	public IntegerFieldEditor(String name) {
+	public FloatFieldEditor(String name) {
 		this(name, null);
 	}
 
@@ -49,42 +47,52 @@ public class IntegerFieldEditor extends FieldEditor {
 		NodeDecorator.apply(this.textField, status);
 		this.textField.textProperty().addListener((obs, oldText, newText) -> {
 			try {
-				Integer.parseInt(newText);
+				Float.parseFloat(newText);
 				status.set(Status.ok());
 			} catch (NumberFormatException ex) {
-				status.set(Status.status(State.ERROR, Status.UNKNOWN_RETURN_CODE, "The value must be a valid integer",
-						ex));
+				status.set(
+						Status.status(State.ERROR, Status.UNKNOWN_RETURN_CODE, "The value must be a valid float", ex));
 			}
 		});
 	}
 
 	@Override
 	protected void doLoad() {
-		this.textField.setText(Integer.toString(getMemento().get(getName(), 0)));
+		this.textField.setText(getDisplayValue((float) getMemento().get(getName(), 0f)));
 	}
 
 	@Override
 	protected void doRestoreDefaults() {
-		this.textField.setText(Integer.toString(getMemento().getDefaultInteger(getName())));
+		this.textField.setText(getDisplayValue((float) getMemento().getDefaultDouble(getName())));
+	}
+
+	/**
+	 * Hook point to override the display/formatting of floats
+	 * 
+	 * @param floatValue
+	 *            The float value to display
+	 * @return The String to be displayed in the text field for this float value
+	 */
+	protected String getDisplayValue(float floatValue) {
+		return Float.toString(floatValue);
 	}
 
 	@Override
 	protected void doPersist() {
 		try {
-			getMemento().put(getName(), getIntValue());
+			getMemento().put(getName(), getFloatValue());
 		} catch (NumberFormatException ex) {
 			// Don't persist when the current value is incorrect
-			LOGGER.error("An error occurred when trying to persist the integer value for " + getName(), ex);
+			LOGGER.error("An error occurred when trying to persist the float value for " + getName(), ex);
 		}
 	}
 
-	private int getIntValue() throws NumberFormatException {
-		return Integer.parseInt(textField.getText());
+	private float getFloatValue() throws NumberFormatException {
+		return Float.parseFloat(textField.getText());
 	}
 
 	@Override
 	protected ObservableValue<?> getValue() {
 		return this.textField.textProperty();
 	}
-
 }

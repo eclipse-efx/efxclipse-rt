@@ -3,5 +3,6 @@
    <service>
       <provide interface="org.eclipse.fx.ui.preferences.PreferencePageProvider"/>
    </service>
+   <reference bind="setMementoStore" interface="org.eclipse.fx.core.MementoStore" name="MementoStore"/>
    <implementation class="org.eclipse.fx.ui.preferences.app.pages.PreferencePageProvider_1"/>
 </scr:component>

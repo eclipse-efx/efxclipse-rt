@@ -11,10 +11,13 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.preferences.page;
 
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;
 
 /**
- * <p>A Field editor for boolean preferences.</p>
+ * <p>
+ * A Field editor for boolean preferences.
+ * </p>
  */
 public class BooleanFieldEditor extends FieldEditor {
 
@@ -25,19 +28,29 @@ public class BooleanFieldEditor extends FieldEditor {
 		this.checkBox = new CheckBox();
 		getChildren().add(checkBox);
 	}
-	
+
 	public BooleanFieldEditor(String name) {
-		this(name, null);		
+		this(name, null);
 	}
 
 	@Override
-	void load() {
+	protected void doLoad() {
 		this.checkBox.setSelected(getMemento().get(getName(), false));
 	}
 
 	@Override
-	void persist() {
+	protected void doPersist() {
 		getMemento().put(getName(), this.checkBox.isSelected());
+	}
+
+	@Override
+	protected void doRestoreDefaults() {
+		this.checkBox.setSelected(getMemento().getDefaultBoolean(getName()));
+	}
+
+	@Override
+	protected ObservableValue<?> getValue() {
+		return this.checkBox.selectedProperty();
 	}
 
 }

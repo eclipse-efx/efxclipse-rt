@@ -1,19 +1,27 @@
 package org.eclipse.fx.ui.preferences.app.pages;
 
+import java.net.URL;
 import java.util.Optional;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.fx.core.Memento;
+import org.eclipse.fx.core.MementoStore;
 import org.eclipse.fx.ui.preferences.PreferencePage;
 import org.eclipse.fx.ui.preferences.PreferencePageProvider;
 import org.eclipse.fx.ui.preferences.page.BooleanFieldEditor;
 import org.eclipse.fx.ui.preferences.page.ColorFieldEditor;
 import org.eclipse.fx.ui.preferences.page.DirectoryFieldEditor;
 import org.eclipse.fx.ui.preferences.page.FieldEditorPreferencePage;
+import org.eclipse.fx.ui.preferences.page.FileFieldEditor;
+import org.eclipse.fx.ui.preferences.page.FloatFieldEditor;
 import org.eclipse.fx.ui.preferences.page.IntegerFieldEditor;
+import org.eclipse.fx.ui.preferences.page.RadioGroupFieldEditor;
 import org.eclipse.fx.ui.preferences.page.StringFieldEditor;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,10 +31,19 @@ import javafx.scene.layout.BorderPane;
 @Component
 public class PreferencePageProvider_1 implements PreferencePageProvider {
 	private ObjectProperty<CharSequence> title = new SimpleObjectProperty<>(this, "title", "Page 1");
+	private MementoStore mementoStore;
+	
+	@Reference
+	public void setMementoStore(MementoStore mementoStore) {
+		this.mementoStore = mementoStore;
+		initDefaultPreferences();
+	}
 
-	@Override
-	public boolean select(CharSequence term) {
-		return true;
+	private void initDefaultPreferences() {
+		// Initialize some default preferences... Here, we assume that the default Eclipse-based Memento will be used
+		IEclipsePreferences defaultNode = DefaultScope.INSTANCE.getNode(getClass().getName());
+		defaultNode.putInt("integerProperty", 12);
+		defaultNode.put("colorProperty", "204,255,204");
 	}
 
 	@Override
@@ -48,6 +65,11 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 	public Optional<String> parentId() {
 		return Optional.empty();
 	}
+	
+	@Override
+	public Optional<Memento> memento() {
+		return Optional.of(mementoStore.getMemento(getClass().getName()));
+	}
 
 	static class Page1 extends FieldEditorPreferencePage {
 		@Inject
@@ -62,6 +84,24 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 			addField(new ColorFieldEditor("colorProperty", "Color Property"));
 			addField(new DirectoryFieldEditor("directoryProperty", "Directory Property"));
 			addField(new StringFieldEditor("textProperty", "Text"));
+			addField(new FloatFieldEditor("floatProperty", "Float Property"));
+			addField(new RadioGroupFieldEditor("radioProperty", "Radio Property", 3, new String[][] {
+				{"Radio value 1", "value1"},
+				{"Radio value 2", "value2"},
+				{"Radio value 3", "value3"},
+				{"Radio value 4", "value4"},
+				{"Radio value 5", "value5"},
+				{"Radio value 6", "value6"},
+				{"Radio value 7", "value7"},
+			}));
+			FileFieldEditor editor = new FileFieldEditor("fileProperty", "File Property");
+			editor.setExtensionFilters("*.txt", "*.png");
+			addField(editor);
+		}
+		
+		@Override
+		protected Optional<URL> getUserAgentStylesheet() {
+			return Optional.ofNullable(getClass().getResource("page.css"));
 		}
 	}
 }
