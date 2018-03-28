@@ -86,6 +86,7 @@ public class PreferenceUI {
 		if( provider != null ) {
 			PageCache pc = pages.computeIfAbsent(provider, p -> {
 				BorderPane parent = new BorderPane();
+				parent.getStyleClass().add("field-page");
 				return new PageCache(factory.make(parent, provider), parent);
 			});
 			
@@ -96,9 +97,15 @@ public class PreferenceUI {
 	}
 	
 	@PostConstruct
-	void init(BorderPane root) {
+	void init(BorderPane container) {
+		BorderPane root = new BorderPane() {
+			@Override
+			public String getUserAgentStylesheet() {
+				return getClass().getResource("preferenceUI.css").toExternalForm();
+			}
+		};
+		container.setCenter(root);
 		SplitPane split = new SplitPane();
-		root.getStylesheets().add(getClass().getResource("preferenceUI.css").toExternalForm());
 		
 		{
 			VBox box = new VBox();

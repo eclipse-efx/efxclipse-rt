@@ -98,10 +98,5 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 			editor.setExtensionFilters("*.txt", "*.png");
 			addField(editor);
 		}
-		
-		@Override
-		protected Optional<URL> getUserAgentStylesheet() {
-			return Optional.ofNullable(getClass().getResource("page.css"));
-		}
 	}
 }

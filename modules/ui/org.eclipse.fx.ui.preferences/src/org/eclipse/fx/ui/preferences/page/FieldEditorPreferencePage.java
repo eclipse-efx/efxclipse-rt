@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.preferences.page;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,13 +49,21 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 	public static final String ERROR_MESSAGE_STYLE = "field-editor-error"; //$NON-NLS-1$
 	
 	private BorderPane parent;
-	private GridPane grid = new GridPane();
+	private GridPane grid;
 	private HBox actions = new HBox();
 	private List<FieldEditor> editors = new ArrayList<>();
 	private Label errorMessage = new Label();
 	
 	public FieldEditorPreferencePage(Memento memento, BorderPane parent) {
 		super(memento);
+		
+		this.grid = new GridPane() {
+			@Override
+			public String getUserAgentStylesheet() {
+				return FieldEditorPreferencePage.this.getUserAgentStylesheet();
+			}
+		};
+		
 		this.parent = parent;
 		this.parent.setTop(errorMessage);
 		this.parent.setCenter(grid);
@@ -64,9 +71,11 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 		actions.setAlignment(Pos.BASELINE_RIGHT);
 		
 		grid.getStyleClass().add(PAGE_GRID_STYLE);
-		actions.getStyleClass().add(PAGE_ACTIONS_STYLE);
-		
-		getUserAgentStylesheet().map(URL::toExternalForm).ifPresent(parent.getStylesheets()::add);
+		actions.getStyleClass().add(PAGE_ACTIONS_STYLE);		
+	}
+	
+	protected String getUserAgentStylesheet() {
+		return null;
 	}
 
 	@Override
@@ -140,9 +149,5 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 		
 		editors.add(editor);
 		editor.setMemento(this.memento);
-	}
-	
-	protected Optional<URL> getUserAgentStylesheet(){
-		return Optional.empty();
 	}
 }
