@@ -15,7 +15,10 @@ import org.eclipse.fx.ui.preferences.page.BooleanFieldEditor;
 import org.eclipse.fx.ui.preferences.page.ColorFieldEditor;
 import org.eclipse.fx.ui.preferences.page.DirectoryFieldEditor;
 import org.eclipse.fx.ui.preferences.page.FieldEditorPreferencePage;
+import org.eclipse.fx.ui.preferences.page.FileFieldEditor;
+import org.eclipse.fx.ui.preferences.page.FloatFieldEditor;
 import org.eclipse.fx.ui.preferences.page.IntegerFieldEditor;
+import org.eclipse.fx.ui.preferences.page.RadioGroupFieldEditor;
 import org.eclipse.fx.ui.preferences.page.StringFieldEditor;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,6 +84,19 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 			addField(new ColorFieldEditor("colorProperty", "Color Property"));
 			addField(new DirectoryFieldEditor("directoryProperty", "Directory Property"));
 			addField(new StringFieldEditor("textProperty", "Text"));
+			addField(new FloatFieldEditor("floatProperty", "Float Property"));
+			addField(new RadioGroupFieldEditor("radioProperty", "Radio Property", 3, new String[][] {
+				{"Radio value 1", "value1"},
+				{"Radio value 2", "value2"},
+				{"Radio value 3", "value3"},
+				{"Radio value 4", "value4"},
+				{"Radio value 5", "value5"},
+				{"Radio value 6", "value6"},
+				{"Radio value 7", "value7"},
+			}));
+			FileFieldEditor editor = new FileFieldEditor("fileProperty", "File Property");
+			editor.setExtensionFilters("*.txt", "*.png");
+			addField(editor);
 		}
 		
 		@Override
