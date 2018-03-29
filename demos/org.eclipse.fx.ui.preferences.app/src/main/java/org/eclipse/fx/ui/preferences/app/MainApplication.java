@@ -6,9 +6,6 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.fx.ui.preferences.PreferencePage;
-import org.eclipse.fx.ui.preferences.PreferencePageFactory;
-import org.eclipse.fx.ui.preferences.PreferencePageProvider;
 import org.eclipse.fx.ui.preferences.PreferenceUI;
 
 import javafx.scene.Scene;
@@ -33,7 +30,9 @@ public class MainApplication {
 		IEclipseContext preferenceCtx = context.createChild("Preference");
 		preferenceCtx.set(BorderPane.class, pane);
 
-		ContextInjectionFactory.make(PreferenceUI.class, preferenceCtx);
+		PreferenceUI prefUI = ContextInjectionFactory.make(PreferenceUI.class, preferenceCtx);
+		prefUI.registerOnCancelHandler(page -> primaryStage.close());
+		prefUI.registerOnOkHandler(page -> primaryStage.close());
 
 		Scene s = new Scene(pane);
 		primaryStage.setScene(s);

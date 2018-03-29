@@ -24,10 +24,16 @@ import javafx.stage.Window;
  */
 public class DirectoryFieldEditor extends StringFieldEditor {
 
+	/**
+	 * CSS Style Class for the Container HBox of this {@link DirectoryFieldEditor}
+	 */
+	public static final String DIRECTORY_EDITOR_STYLE = "directory-field-container";
+	
 	public DirectoryFieldEditor(String name, String label) {
 		super(name, label);
 		Button browse = new Button("...");
 		getTextContainer().getChildren().add(browse);
+		getTextContainer().getStyleClass().add(DIRECTORY_EDITOR_STYLE);
 		browse.setOnAction(event -> browse(browse.getScene().getWindow()));
 	}
 

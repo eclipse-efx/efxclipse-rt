@@ -1,6 +1,5 @@
 package org.eclipse.fx.ui.preferences.app.pages;
 
-import java.net.URL;
 import java.util.Optional;
 
 import javax.inject.Inject;

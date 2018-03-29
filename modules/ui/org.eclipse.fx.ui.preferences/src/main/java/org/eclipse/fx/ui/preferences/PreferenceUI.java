@@ -12,15 +12,18 @@
 package org.eclipse.fx.ui.preferences;
 
 import java.text.Collator;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.command.Command;
 import org.eclipse.fx.core.di.Service;
 import org.eclipse.fx.core.observable.FXObservableUtil;
@@ -37,6 +40,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -45,7 +49,11 @@ import javafx.scene.layout.VBox;
 public class PreferenceUI {
 	private final ListView<PreferencePageProvider> providerView;
 	
+	private final TitledPane contentAreaWrapper;
 	private final ScrollPane contentArea;
+	
+	private final List<Consumer<PreferencePage>> onCancelHandlers = new ArrayList<>();
+	private final List<Consumer<PreferencePage>> onOkHandlers = new ArrayList<>();
 	
 	private Map<PreferencePageProvider, PageCache> pages = new HashMap<>();
 	
@@ -56,6 +64,7 @@ public class PreferenceUI {
 	private final ObservableList<PreferencePageProvider> providers = FXCollections.observableArrayList();
 	private final SortedList<PreferencePageProvider> sortedProviders = providers.sorted((p1, p2) -> Collator.getInstance().compare(p1.titleProperty().getValue().toString(), p2.titleProperty().getValue().toString()));
 	private final FilteredList<PreferencePageProvider> filteredProviders = sortedProviders.filtered(getFilter());
+	private PageCache currentPage;
 
 	private HBox actions;
 	
@@ -73,9 +82,14 @@ public class PreferenceUI {
 	public PreferenceUI(PreferencePageFactory factory) {
 		this.factory = factory;
 		this.providerView = new ListView<>();
+		this.contentAreaWrapper = new TitledPane();
 		this.contentArea = new ScrollPane();
 		this.contentArea.setFitToWidth(true);
 		this.contentArea.setFitToHeight(true);
+		this.contentAreaWrapper.setContent(this.contentArea);
+		this.contentAreaWrapper.setMaxHeight(Double.MAX_VALUE);
+		this.contentAreaWrapper.setMaxWidth(Double.MAX_VALUE);
+		this.contentAreaWrapper.setCollapsible(false);
 		
 		this.providerView.setCellFactory( v -> new SimpleListCell<>( pp -> pp.titleProperty().getValue()));
 		FXObservableUtil.onChange(this.providerView.getSelectionModel().selectedItemProperty(), this::handleSelectedPageChange);
@@ -84,15 +98,19 @@ public class PreferenceUI {
 	
 	private void handleSelectedPageChange(PreferencePageProvider provider) {
 		if( provider != null ) {
-			PageCache pc = pages.computeIfAbsent(provider, p -> {
+			this.currentPage = pages.computeIfAbsent(provider, p -> {
 				BorderPane parent = new BorderPane();
 				parent.getStyleClass().add("field-page");
 				return new PageCache(factory.make(parent, provider), parent);
 			});
 			
-			contentArea.setContent(pc.parent);			
+			contentAreaWrapper.setText(provider.titleProperty().getValue().toString());
+			contentArea.setContent(this.currentPage.parent);
+			
 		} else {
 			contentArea.setContent(null);
+			contentAreaWrapper.setText(null);
+			this.currentPage = null;
 		}
 	}
 	
@@ -101,7 +119,7 @@ public class PreferenceUI {
 		BorderPane root = new BorderPane() {
 			@Override
 			public String getUserAgentStylesheet() {
-				return getClass().getResource("preferenceUI.css").toExternalForm();
+				return "platform:/plugin/org.eclipse.fx.ui.preferences/preferenceUI.css";
 			}
 		};
 		container.setCenter(root);
@@ -124,7 +142,7 @@ public class PreferenceUI {
 		
 		{
 			BorderPane p = new BorderPane();
-			p.setCenter(contentArea);
+			p.setCenter(contentAreaWrapper);
 			split.getItems().add(p);	
 		}
 		
@@ -150,6 +168,10 @@ public class PreferenceUI {
 			for (PageCache pageCache : pages.values()) {
 				pageCache.page.persist().execute();
 			}
+			PreferencePage activePreferencePage = currentPage == null ? null : currentPage.page;
+			this.onOkHandlers.forEach(handler -> {
+				handler.accept(activePreferencePage);
+			});
 		}));
 	}
 
@@ -158,12 +180,9 @@ public class PreferenceUI {
 			for (PageCache pageCache : pages.values()) {
 				pageCache.page.reset().execute();
 			}
-			this.requestClose();
+			PreferencePage activePreferencePage = currentPage == null ? null : currentPage.page;
+			this.onCancelHandlers.forEach(handler -> handler.accept(activePreferencePage));
 		}));
-	}
-
-	private void requestClose() {
-		//Unsupported TODO
 	}
 
 	protected void addButton(String label, Optional<Command<Void>> restoreDefault) {
@@ -211,5 +230,15 @@ public class PreferenceUI {
 	private Predicate<PreferencePageProvider> getFilter(){
 		String filter = currentFilter == null ? "*" : "*" + currentFilter+"*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		return provider -> provider.select(filter);
+	}
+	
+	public Subscription registerOnCancelHandler(Consumer<PreferencePage> handler){
+		onCancelHandlers.add(handler);
+		return () -> onCancelHandlers.remove(handler);
+	}
+	
+	public Subscription registerOnOkHandler(Consumer<PreferencePage> handler) {
+		onOkHandlers.add(handler);
+		return () -> onOkHandlers.remove(handler);
 	}
 }
