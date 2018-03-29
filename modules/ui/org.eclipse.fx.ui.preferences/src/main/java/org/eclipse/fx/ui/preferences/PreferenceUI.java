@@ -139,6 +139,8 @@ public class PreferenceUI {
 			VBox.setVgrow(providerView, Priority.ALWAYS);
 			
 			split.getItems().add(box);
+			
+			SplitPane.setResizableWithParent(box, false);
 		}
 		
 		{
