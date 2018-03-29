@@ -146,12 +146,18 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 	}
 	
 	public void addField(FieldEditor editor) {
-		Label l = new Label();
-		l.textProperty().bind(editor.labelProperty());
-		l.setMinWidth(Region.USE_PREF_SIZE);
+		int editorColumn = 0;
+		int editorSpan = 2;
+		if (editor.displayLabel()) {
+			Label l = new Label();
+			l.textProperty().bind(editor.labelProperty());
+			l.setMinWidth(Region.USE_PREF_SIZE);
+			grid.add(l, 0, editors.size());
+			editorColumn = 1;
+			editorSpan = 1;
+		}
 		
-		grid.add(l, 0, editors.size());
-		grid.add(editor, 1, editors.size());
+		grid.add(editor, editorColumn, editors.size(), editorSpan, 1);
 		GridPane.setHgrow(editor, Priority.ALWAYS);
 		
 		editors.add(editor);

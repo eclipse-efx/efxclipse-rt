@@ -19,6 +19,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
 public abstract class FieldEditor extends Region {
@@ -43,6 +45,23 @@ public abstract class FieldEditor extends Region {
 
 	public FieldEditor(String name) {
 		this(name, null);
+	}
+
+	/**
+	 * <p>
+	 * By default, give all available width and height to the children. If more than
+	 * one child is present in this field editor, subclasses should provide custom
+	 * layout.
+	 * </p>
+	 */
+	@Override
+	protected void layoutChildren() {
+		Insets padding = getPadding();
+		double width = getWidth() - padding.getRight() - padding.getLeft();
+		double height = getHeight() - padding.getTop() - padding.getBottom();
+		for (Node node : getManagedChildren()) {
+			node.resize(width, height);
+		}
 	}
 
 	void setMemento(Memento memento) {
@@ -137,5 +156,20 @@ public abstract class FieldEditor extends Region {
 	 * manage {@link #setDefault(boolean)}
 	 */
 	protected abstract ObservableValue<?> getValue();
+
+	/**
+	 * <p>
+	 * If true, the preference page will be responsible for displaying the label for
+	 * this field editor.
+	 * </p>
+	 * 
+	 * <p>
+	 * Subclasses that need to control how their label should be displayed should
+	 * override this method and return false.
+	 * </p>
+	 */
+	protected boolean displayLabel() {
+		return true;
+	}
 
 }

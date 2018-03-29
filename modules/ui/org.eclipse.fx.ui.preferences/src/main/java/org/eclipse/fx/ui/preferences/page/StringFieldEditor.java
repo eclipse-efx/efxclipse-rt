@@ -14,6 +14,7 @@ package org.eclipse.fx.ui.preferences.page;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 /**
  * <p>
@@ -29,14 +30,16 @@ public class StringFieldEditor extends FieldEditor {
 		super(name, label);
 		this.textFieldContainer = new HBox();
 		this.textField = new TextField();
+		this.textField.setMaxWidth(Double.MAX_VALUE);
 		this.textFieldContainer.getChildren().add(textField);
+		HBox.setHgrow(textField, Priority.ALWAYS);
 		getChildren().add(this.textFieldContainer);
 	}
 
 	protected HBox getTextContainer() {
 		return this.textFieldContainer;
 	}
-
+	
 	protected TextField getTextField() {
 		return this.textField;
 	}
