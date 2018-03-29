@@ -25,6 +25,7 @@ import org.eclipse.fx.core.command.Command;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -150,6 +151,7 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 		int editorSpan = 2;
 		if (editor.displayLabel()) {
 			Label l = new Label();
+			GridPane.setValignment(l, VPos.TOP);
 			l.textProperty().bind(editor.labelProperty());
 			l.setMinWidth(Region.USE_PREF_SIZE);
 			grid.add(l, 0, editors.size());
