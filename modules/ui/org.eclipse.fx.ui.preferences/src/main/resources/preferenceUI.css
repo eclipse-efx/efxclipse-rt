@@ -7,10 +7,6 @@
 	-fx-spacing: 5;
 }
 
-.radio-field {
-	-fx-spacing: 5;
-}
-
 .field-editor-grid,
 .radio-field-grid {
 	-fx-hgap: 5;
