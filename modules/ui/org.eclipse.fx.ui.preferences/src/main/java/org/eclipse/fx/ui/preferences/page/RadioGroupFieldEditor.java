@@ -25,6 +25,11 @@ import javafx.scene.layout.GridPane;
  * </p>
  */
 public class RadioGroupFieldEditor extends FieldEditor {
+	
+	/**
+	 * CSS Style Class for the Grid of this {@link RadioGroupFieldEditor}
+	 */
+	public static final String RADIO_GRID_STYLE = "radio-field-grid"; //$NON-NLS-1$
 
 	private String currentValue;
 	private Map<String, RadioButton> valueToRadio = new HashMap<>();
@@ -34,6 +39,7 @@ public class RadioGroupFieldEditor extends FieldEditor {
 		super(name, label);
 
 		GridPane grid = new GridPane();
+		grid.getStyleClass().add(RADIO_GRID_STYLE);
 		int column = 0;
 		int row = 0;
 

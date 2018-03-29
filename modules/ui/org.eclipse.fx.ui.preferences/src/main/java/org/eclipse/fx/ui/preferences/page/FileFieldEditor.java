@@ -29,12 +29,18 @@ import javafx.stage.Window;
  */
 public class FileFieldEditor extends StringFieldEditor {
 
+	/**
+	 * CSS Style Class for the Container HBox of this {@link FileFieldEditor}
+	 */
+	public static final String FILE_EDITOR_STYLE = "file-field-container";
+	
 	private Collection<ExtensionFilter> extensionFilters;
 
 	public FileFieldEditor(String name, String label) {
 		super(name, label);
 		Button browse = new Button("...");
 		getTextContainer().getChildren().add(browse);
+		getTextContainer().getStyleClass().add(FILE_EDITOR_STYLE);
 		browse.setOnAction(event -> browse(browse.getScene().getWindow()));
 	}
 
