@@ -14,9 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 /**
  * <p>
@@ -27,9 +29,14 @@ import javafx.scene.layout.GridPane;
 public class RadioGroupFieldEditor extends FieldEditor {
 	
 	/**
-	 * CSS Style Class for the Grid of this {@link RadioGroupFieldEditor}
+	 * CSS Style Class for the {@link GridPane} of this {@link RadioGroupFieldEditor}
 	 */
 	public static final String RADIO_GRID_STYLE = "radio-field-grid"; //$NON-NLS-1$
+	
+	/**
+	 * CSS Style Class for the RadioGroup Field Editor container ({@link VBox})
+	 */
+	public static final String RADIO_FIELD_STYLE = "radio-field"; //$NON-NLS-1$
 
 	private String currentValue;
 	private Map<String, RadioButton> valueToRadio = new HashMap<>();
@@ -38,6 +45,9 @@ public class RadioGroupFieldEditor extends FieldEditor {
 	public RadioGroupFieldEditor(String name, String label, int numColumns, String[][] labelAndValues) {
 		super(name, label);
 
+		VBox container = new VBox();
+		container.getStyleClass().add(RADIO_FIELD_STYLE);
+		Label l = new Label(label);
 		GridPane grid = new GridPane();
 		grid.getStyleClass().add(RADIO_GRID_STYLE);
 		int column = 0;
@@ -63,7 +73,8 @@ public class RadioGroupFieldEditor extends FieldEditor {
 			}
 		}
 
-		getChildren().add(grid);
+		container.getChildren().addAll(l, grid);
+		getChildren().add(container);
 	}
 
 	@Override
@@ -98,6 +109,11 @@ public class RadioGroupFieldEditor extends FieldEditor {
 	@Override
 	protected ObservableValue<?> getValue() {
 		return this.radioGroup.selectedToggleProperty();
+	}
+	
+	@Override
+	protected boolean displayLabel() {
+		return false;
 	}
 
 }
