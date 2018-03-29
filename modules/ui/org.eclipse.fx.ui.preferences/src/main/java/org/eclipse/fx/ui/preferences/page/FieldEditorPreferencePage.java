@@ -30,6 +30,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 
 public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 	
@@ -72,6 +74,9 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 		
 		grid.getStyleClass().add(PAGE_GRID_STYLE);
 		actions.getStyleClass().add(PAGE_ACTIONS_STYLE);		
+		actions.setMinWidth(Region.USE_PREF_SIZE);
+		grid.setMinWidth(Region.USE_PREF_SIZE);
+		grid.setMinHeight(Region.USE_PREF_SIZE);
 	}
 	
 	protected String getUserAgentStylesheet() {
@@ -143,9 +148,11 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 	public void addField(FieldEditor editor) {
 		Label l = new Label();
 		l.textProperty().bind(editor.labelProperty());
+		l.setMinWidth(Region.USE_PREF_SIZE);
 		
 		grid.add(l, 0, editors.size());
 		grid.add(editor, 1, editors.size());
+		GridPane.setHgrow(editor, Priority.ALWAYS);
 		
 		editors.add(editor);
 		editor.setMemento(this.memento);

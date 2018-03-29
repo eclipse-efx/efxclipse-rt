@@ -44,6 +44,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class PreferenceUI {
@@ -151,6 +152,7 @@ public class PreferenceUI {
 		root.setCenter(split);
 		actions = new HBox();
 		actions.getStyleClass().add("preferences-actions-bar");
+		actions.setMinWidth(Region.USE_PREF_SIZE);
 		actions.setAlignment(Pos.BASELINE_RIGHT);
 		createActionButtons();
 		root.setBottom(actions);
