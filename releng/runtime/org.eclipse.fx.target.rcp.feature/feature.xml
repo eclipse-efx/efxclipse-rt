@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.target.rcp.feature"
       label="e(fx)clipse - RCP 3.x Target Platform Feature"
-      version="3.2.0.qualifier"
+      version="3.3.0.qualifier"
       provider-name="Eclipse.org">
 
    <description>
