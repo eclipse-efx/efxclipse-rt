@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.fx.core.Memento;
 import org.eclipse.fx.core.MementoStore;
@@ -35,6 +37,7 @@ import org.osgi.service.prefs.BackingStoreException;
 public class MementoStoreImpl implements MementoStore {
 
 	List<ObjectSerializer> serializers = new ArrayList<ObjectSerializer>();
+	IPreferencesService preferencesService;
 
 	/**
 	 * Register a new serializer
@@ -47,6 +50,17 @@ public class MementoStoreImpl implements MementoStore {
 		synchronized (this.serializers) {
 			this.serializers.add(serializer);
 		}
+	}
+	
+	/**
+	 * Sets the {@link IPreferencesService} used by this MementoStore
+	 * 
+	 * @param preferenceService
+	 * 		The preference service
+	 */
+	@Reference
+	public void setPreferenceService(IPreferencesService preferenceService) {
+		this.preferencesService = preferenceService;
 	}
 
 	/**
@@ -63,8 +77,7 @@ public class MementoStoreImpl implements MementoStore {
 	
 	@Override
 	public @NonNull Memento getMemento(String path) {
-		IEclipsePreferences node = InstanceScope.INSTANCE.getNode(path);
-		return new MementoImpl(node);
+		return new MementoImpl(this.preferencesService, path);
 	}
 
 	@Override
@@ -77,7 +90,10 @@ public class MementoStoreImpl implements MementoStore {
 	}
 
 	class MementoImpl implements Memento {
+		private final IPreferencesService preferencesService;
+		private final String path;
 		private final IEclipsePreferences node;
+		private final IEclipsePreferences defaultNode;
 		private static final String TYPE_PREFIX = "__type_"; //$NON-NLS-1$
 		
 		private void flush() {
@@ -88,10 +104,13 @@ public class MementoStoreImpl implements MementoStore {
 			}
 		}
 		
-		public MementoImpl(IEclipsePreferences node) {
-			this.node = node;
+		public MementoImpl(IPreferencesService preferencesService, String path) {
+			this.preferencesService = preferencesService;
+			this.path = path;
+			this.node = InstanceScope.INSTANCE.getNode(path);
+			this.defaultNode = DefaultScope.INSTANCE.getNode(path);
 		}
-		
+
 		@Override
 		public void put(@NonNull String key, String value) {
 			this.node.put(key, value);
@@ -152,33 +171,77 @@ public class MementoStoreImpl implements MementoStore {
 
 		@Override
 		public @Nullable String get(@NonNull String key, @Nullable String defaultValue) {
-			return this.node.get(key, defaultValue);
+			return this.preferencesService.getString(this.path, key, defaultValue, null);
 		}
 
 		@Override
 		public boolean get(@NonNull String key, boolean defaultValue) {
-			return this.node.getBoolean(key, defaultValue);
+			return this.preferencesService.getBoolean(this.path, key, defaultValue, null);
 		}
 
 		@Override
 		public int get(@NonNull String key, int defaultValue) {
-			return this.node.getInt(key, defaultValue);
+			return this.preferencesService.getInt(this.path, key, defaultValue, null);
 		}
 
 		@Override
 		public double get(@NonNull String key, double defaultValue) {
-			return this.node.getDouble(key, defaultValue);
+			return this.preferencesService.getDouble(this.path, key, defaultValue, null);
 		}
-
+		
+		@Override
+		public <@Nullable O> O getDefault(String key, Class<O> clazz) {
+			synchronized (MementoStoreImpl.this.serializers) {
+				String serializer = this.defaultNode.get(TYPE_PREFIX+key, null);
+				if( serializer == null ) {
+					return null;
+				}
+				
+				String value = this.defaultNode.get(key, null);
+				if( value == null ) {
+					return null;
+				}
+				
+				serializer = serializer.substring("serialized:".length()); //$NON-NLS-1$
+				
+				for( ObjectSerializer s : MementoStoreImpl.this.serializers ) {
+					if( s.getId().equals(serializer) ) {
+						return s.deserialize(clazz, value);
+					}
+				}
+				throw new IllegalArgumentException("The serializer '"+serializer+"' is not known");  //$NON-NLS-1$//$NON-NLS-2$
+			}
+		}
+		
+		@Override
+		public boolean getDefaultBoolean(String key) {
+			return this.defaultNode.getBoolean(key, false);
+		}
+		
+		@Override
+		public int getDefaultInteger(String key) {
+			return this.defaultNode.getInt(key, 0);
+		}
+		
+		@Override
+		public double getDefaultDouble(String key) {
+			return this.defaultNode.getDouble(key, 0.);
+		}
+		
+		@Override
+		public String getDefaultString(String key) {
+			return this.defaultNode.get(key, ""); //$NON-NLS-1$
+		}
+		
 		@Override
 		public <O> @Nullable O get(String key, Class<O> clazz, @Nullable O defaultValue) {
 			synchronized (MementoStoreImpl.this.serializers) {
-				String serializer = this.node.get(TYPE_PREFIX+key,null);
+				String serializer = this.preferencesService.getString(this.path, TYPE_PREFIX+key, null, null);
 				if( serializer == null ) {
 					return defaultValue;
 				}
 				
-				String value = this.node.get(key,null);
+				String value = this.preferencesService.getString(this.path, key, null, null);
 				if( value == null ) {
 					return defaultValue;
 				}

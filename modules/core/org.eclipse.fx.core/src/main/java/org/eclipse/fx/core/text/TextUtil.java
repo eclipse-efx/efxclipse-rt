@@ -348,8 +348,7 @@ public class TextUtil {
 	 * <ul>
 	 * <li>{@link Triple#value1}: the new char array</li>
 	 * <li>{@link Triple#value2}: the indices the tabs have been found</li>
-	 * <li>{@link Triple#value3}: the new indices where a "tab" is starts
-	 * now</li>
+	 * <li>{@link Triple#value3}: the new indices where a "tab" is starts now</li>
 	 * </ul>
 	 *
 	 * @param source
@@ -450,8 +449,7 @@ public class TextUtil {
 	 *            the replacement character
 	 * @param predicate
 	 *            the predicate to decided if a character is replaced, first
-	 *            argument is the character index, second argument is the
-	 *            character
+	 *            argument is the character index, second argument is the character
 	 * @return transformed character array
 	 */
 	public static char[] replace(char[] source, char c, BiIntPredicate predicate) {
@@ -465,8 +463,8 @@ public class TextUtil {
 	private static String[] BASIC_STRING_CACHE = new String[256];
 
 	/**
-	 * Get the matching string for the char. The string object returned might be
-	 * the same instance.
+	 * Get the matching string for the char. The string object returned might be the
+	 * same instance.
 	 *
 	 * @param c
 	 *            the character
@@ -484,5 +482,34 @@ public class TextUtil {
 			rv = String.valueOf(c);
 		}
 		return rv;
+	}
+
+	/**
+	 * Create a {@link TextMatcher} who takes in a String object that is a simple
+	 * pattern which may contain '*' for 0 and many characters and '?' for exactly
+	 * one character.
+	 *
+	 * Literal '*' and '?' characters must be escaped in the pattern e.g., "\*"
+	 * means literal "*", etc.
+	 *
+	 * Escaping any other character (including the escape character itself), just
+	 * results in that character in the pattern. e.g., "\a" means "a" and "\\" means
+	 * "\"
+	 *
+	 * If invoking the StringMatcher with string literals in Java, don't forget
+	 * escape characters are represented by "\\".
+	 *
+	 * @param pattern
+	 *            the pattern to match text against
+	 * @param ignoreCase
+	 *            if true, case is ignored
+	 * @param ignoreWildCards
+	 *            if true, wild cards and their escape sequences are ignored
+	 *            (everything is taken literally).
+	 * @return the matcher
+	 * @since 3.3.0
+	 */
+	public static TextMatcher createTextMatcher(@NonNull String pattern, boolean ignoreCase, boolean ignoreWildCards) {
+		return new StringMatcher(pattern, ignoreCase, ignoreWildCards);
 	}
 }
