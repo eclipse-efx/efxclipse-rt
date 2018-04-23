@@ -17,7 +17,8 @@ Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/services/org.eclipse.fx.ui.di.interopt.UISynchronizeImpl.xml,
  OSGI-INF/services/org.eclipse.fx.ui.di.interopt.InteroptContextFunction.xml,
  OSGI-INF/services/org.eclipse.fx.ui.di.interopt.CommandServiceImplCF.xml
-Import-Package: javax.inject;version="1.0.0",
+Import-Package: javax.annotation,
+ javax.inject;version="1.0.0",
  org.eclipse.fx.core;version="3.3.0",
  org.eclipse.fx.core.adapter;version="3.3.0",
  org.eclipse.fx.core.command;version="3.3.0",

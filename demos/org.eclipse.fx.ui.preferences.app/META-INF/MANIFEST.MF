@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.fx.osgi.util,
  org.eclipse.fx.ui.preferences;bundle-version="3.3.0",
  org.eclipse.e4.core.contexts,
  org.eclipse.e4.core.di;bundle-version="1.6.100"
-Import-Package: javax.annotation;version="1.0.0",
+Import-Package: javax.annotation,
  javax.inject;version="1.0.0",
  org.eclipse.core.runtime.preferences;version="3.3.0",
  org.eclipse.fx.core;version="3.3.0",

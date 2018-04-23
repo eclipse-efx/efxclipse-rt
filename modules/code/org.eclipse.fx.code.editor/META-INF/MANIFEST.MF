@@ -4,7 +4,8 @@ Bundle-Name: Basic service APIs for an Editor
 Bundle-SymbolicName: org.eclipse.fx.code.editor
 Bundle-Version: 3.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: javax.inject,
+Import-Package: javax.annotation,
+ javax.inject,
  org.eclipse.fx.core;version="3.3.0",
  org.eclipse.fx.core.adapter;version="3.3.0",
  org.eclipse.fx.core.event;version="3.3.0",
