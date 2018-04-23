@@ -42,7 +42,6 @@
 		<module>../../modules/core/org.eclipse.fx.core.di.context</module>
 		<module>../../modules/core/org.eclipse.fx.emf.databinding</module>
 		<module>../../modules/core/org.eclipse.fx.formats.svg</module>
-		<module>../../modules/core/javax.annotation.jre</module>
 		<module>../../modules/core/javax.xml.jre</module>
 		<module>../../modules/core/org.eclipse.fx.core.junit</module>
 
