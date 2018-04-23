@@ -40,7 +40,7 @@ public class JavaFXCompatUtil {
 	@SuppressWarnings("unchecked")
 	public static List<Window> getAllWindows() {
 		try {
-			if (SystemUtils.isFX9()) {
+			if (SystemUtils.getMajorFXVersion() > 8) {
 				// ObservableList<Window> windows = Window.getWindows();
 				return ((List<Window>) Window.class.getMethod("getWindows").invoke(null)); //$NON-NLS-1$
 			} else {
@@ -66,7 +66,7 @@ public class JavaFXCompatUtil {
 	 * @return the keycode
 	 */
 	public static int getCode(KeyCode keyCode) {
-		if (SystemUtils.isFX9()) {
+		if (SystemUtils.getMajorFXVersion() > 8) {
 			try {
 				return ((Integer) KeyCode.class.getMethod("getCode").invoke(keyCode)).intValue(); //$NON-NLS-1$
 			} catch (Throwable t) {
@@ -93,7 +93,7 @@ public class JavaFXCompatUtil {
 	 * @return the character
 	 */
 	public static String getChar(KeyCode keyCode) {
-		if (SystemUtils.isFX9()) {
+		if (SystemUtils.getMajorFXVersion() > 8) {
 			try {
 				return (String) KeyCode.class.getMethod("getChar").invoke(keyCode); //$NON-NLS-1$
 			} catch (Throwable t) {
@@ -118,7 +118,7 @@ public class JavaFXCompatUtil {
 	 *            the node
 	 */
 	public static void reapplyCSS(Node node) {
-		if (SystemUtils.isFX9()) {
+		if (SystemUtils.getMajorFXVersion() > 8) {
 			try {
 				Method m = Node.class.getDeclaredMethod("reapplyCSS"); //$NON-NLS-1$
 				m.setAccessible(true);

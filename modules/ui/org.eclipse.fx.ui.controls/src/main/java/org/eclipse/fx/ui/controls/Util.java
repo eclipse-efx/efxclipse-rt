@@ -383,7 +383,7 @@ public class Util {
 	 * @since 2.3.0
 	 */
 	public static void enterNestedEventLoop(String id) {
-		if (SystemUtils.isFX9()) {
+		if (SystemUtils.getMajorFXVersion() > 8) {
 			enterNestedEventLoop9(id);
 		} else {
 			enterNestedEventLoop8(id);
@@ -418,7 +418,7 @@ public class Util {
 	 * @since 2.3.0
 	 */
 	public static void exitNestedEventLoop(String id) {
-		if (SystemUtils.isFX9()) {
+		if (SystemUtils.getMajorFXVersion() > 8) {
 			exitNestedEventLoop9(id);
 		} else {
 			exitNestedEventLoop8(id);
