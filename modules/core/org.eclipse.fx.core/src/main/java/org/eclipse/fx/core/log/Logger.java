@@ -32,6 +32,20 @@ public interface Logger {
 	 *            the message
 	 */
 	public void log(@NonNull Level level, @NonNull String message);
+	
+	/**
+	 * logs a message in the specified log level.
+	 *
+	 * @param level
+	 *            the Log Level
+	 * @param message
+	 *            the message
+	 * @since 3.3.0
+	 */
+	@SuppressWarnings("null")
+	public default void log(@NonNull Level level, @NonNull CharSequence message) {
+		log(level,message.toString());
+	}
 
 	/**
 	 * logs a message in the specified log level
@@ -79,6 +93,22 @@ public interface Logger {
 	 *            the Exception
 	 */
 	public void log(@NonNull Level level, @NonNull String message, @NonNull Throwable t);
+	
+	/**
+	 * logs a message and an exception in the specified log level
+	 *
+	 * @param level
+	 *            the Log Level
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the Exception
+	 * @since 3.3.0
+	 */
+	@SuppressWarnings("null")
+	public default void log(@NonNull Level level, @NonNull CharSequence message, @NonNull Throwable t) {
+		log(level, message.toString(), t);
+	}
 
 	/**
 	 * logs a message and an exception in the specified log level
