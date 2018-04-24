@@ -49,36 +49,37 @@ import javafx.scene.layout.VBox;
 
 public class PreferenceUI {
 	private final ListView<PreferencePageProvider> providerView;
-	
+
 	private final TitledPane contentAreaWrapper;
 	private final ScrollPane contentArea;
-	
+
 	private final List<Consumer<PreferencePage>> onCancelHandlers = new ArrayList<>();
 	private final List<Consumer<PreferencePage>> onOkHandlers = new ArrayList<>();
-	
+
 	private Map<PreferencePageProvider, PageCache> pages = new HashMap<>();
-	
+
 	private final PreferencePageFactory factory;
 
 	private String currentFilter = "";
-	
+
 	private final ObservableList<PreferencePageProvider> providers = FXCollections.observableArrayList();
-	private final SortedList<PreferencePageProvider> sortedProviders = providers.sorted((p1, p2) -> Collator.getInstance().compare(p1.titleProperty().getValue().toString(), p2.titleProperty().getValue().toString()));
+	private final SortedList<PreferencePageProvider> sortedProviders = providers.sorted((p1, p2) -> Collator
+			.getInstance().compare(p1.titleProperty().getValue().toString(), p2.titleProperty().getValue().toString()));
 	private final FilteredList<PreferencePageProvider> filteredProviders = sortedProviders.filtered(getFilter());
 	private PageCache currentPage;
 
 	private HBox actions;
-	
+
 	static class PageCache {
 		final PreferencePage page;
 		final BorderPane parent;
-		
+
 		public PageCache(PreferencePage page, BorderPane parent) {
 			this.page = page;
 			this.parent = parent;
 		}
 	}
-	
+
 	@Inject
 	public PreferenceUI(PreferencePageFactory factory) {
 		this.factory = factory;
@@ -91,30 +92,31 @@ public class PreferenceUI {
 		this.contentAreaWrapper.setMaxHeight(Double.MAX_VALUE);
 		this.contentAreaWrapper.setMaxWidth(Double.MAX_VALUE);
 		this.contentAreaWrapper.setCollapsible(false);
-		
-		this.providerView.setCellFactory( v -> new SimpleListCell<>( pp -> pp.titleProperty().getValue()));
-		FXObservableUtil.onChange(this.providerView.getSelectionModel().selectedItemProperty(), this::handleSelectedPageChange);
+
+		this.providerView.setCellFactory(v -> new SimpleListCell<>(pp -> pp.titleProperty().getValue()));
+		FXObservableUtil.onChange(this.providerView.getSelectionModel().selectedItemProperty(),
+				this::handleSelectedPageChange);
 		providerView.setItems(filteredProviders);
 	}
-	
+
 	private void handleSelectedPageChange(PreferencePageProvider provider) {
-		if( provider != null ) {
+		if (provider != null) {
 			this.currentPage = pages.computeIfAbsent(provider, p -> {
 				BorderPane parent = new BorderPane();
 				parent.getStyleClass().add("field-page");
 				return new PageCache(factory.make(parent, provider), parent);
 			});
-			
+
 			contentAreaWrapper.setText(provider.titleProperty().getValue().toString());
 			contentArea.setContent(this.currentPage.parent);
-			
+
 		} else {
 			contentArea.setContent(null);
 			contentAreaWrapper.setText(null);
 			this.currentPage = null;
 		}
 	}
-	
+
 	@PostConstruct
 	void init(BorderPane container) {
 		BorderPane root = new BorderPane() {
@@ -125,32 +127,32 @@ public class PreferenceUI {
 		};
 		container.setCenter(root);
 		SplitPane split = new SplitPane();
-		
+
 		{
 			VBox box = new VBox();
 			TextField searchField = new TextField();
-			searchField.textProperty().addListener((obs, old, newFilter) -> { 
+			searchField.textProperty().addListener((obs, old, newFilter) -> {
 				this.currentFilter = newFilter == null ? "" : newFilter;
 				refreshFilter();
 			});
-			
+
 			box.getChildren().add(searchField);
 			box.getChildren().add(providerView);
 			VBox.setVgrow(providerView, Priority.ALWAYS);
-			
+
 			split.getItems().add(box);
-			
+
 			SplitPane.setResizableWithParent(box, false);
 		}
-		
+
 		{
 			BorderPane p = new BorderPane();
 			p.setCenter(contentAreaWrapper);
-			split.getItems().add(p);	
+			split.getItems().add(p);
 		}
-		
+
 		split.setDividerPositions(0.3);
-		
+
 		root.setCenter(split);
 		actions = new HBox();
 		actions.getStyleClass().add("preferences-actions-bar");
@@ -158,19 +160,23 @@ public class PreferenceUI {
 		actions.setAlignment(Pos.BASELINE_RIGHT);
 		createActionButtons();
 		root.setBottom(actions);
-		
+
 		selectFirstPage();
 	}
-	
+
 	protected void createActionButtons() {
 		addButton("Cancel", this.cancel());
 		addButton("Apply and Close", this.applyAndClose());
 	}
-	
+
 	private Optional<Command<Void>> applyAndClose() {
 		return Optional.of(Command.createCommand(() -> {
 			for (PageCache pageCache : pages.values()) {
-				pageCache.page.persist().execute();
+				Command<Void> persist = pageCache.page.persist();
+				persist.evaluate();
+				if (persist.isEnabled()) {
+					persist.execute();
+				}
 			}
 			PreferencePage activePreferencePage = currentPage == null ? null : currentPage.page;
 			this.onOkHandlers.forEach(handler -> {
@@ -205,15 +211,16 @@ public class PreferenceUI {
 			action.setDisable(true);
 		}
 	}
-	
+
 	private void refreshFilter() {
 		SelectionModel<PreferencePageProvider> selectionModel = providerView.getSelectionModel();
-		//Make sure one page is always selected
-		//If we already had a selection, preserve it; otherwise, select the first visible item
+		// Make sure one page is always selected
+		// If we already had a selection, preserve it; otherwise, select the first
+		// visible item
 		PreferencePageProvider selectedItem = selectionModel.getSelectedItem();
 		this.filteredProviders.predicateProperty().set(getFilter());
 		if (selectionModel.isEmpty()) {
-			if (selectedItem == null || ! filteredProviders.contains(selectedItem)) {
+			if (selectedItem == null || !filteredProviders.contains(selectedItem)) {
 				selectionModel.selectFirst();
 			} else {
 				selectionModel.select(selectedItem);
@@ -230,17 +237,17 @@ public class PreferenceUI {
 	public void setPreferencePageProviders(@Service List<PreferencePageProvider> providers) {
 		this.providers.setAll(providers);
 	}
-	
-	private Predicate<PreferencePageProvider> getFilter(){
-		String filter = currentFilter == null ? "*" : "*" + currentFilter+"*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+	private Predicate<PreferencePageProvider> getFilter() {
+		String filter = currentFilter == null ? "*" : "*" + currentFilter + "*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		return provider -> provider.select(filter);
 	}
-	
-	public Subscription registerOnCancelHandler(Consumer<PreferencePage> handler){
+
+	public Subscription registerOnCancelHandler(Consumer<PreferencePage> handler) {
 		onCancelHandlers.add(handler);
 		return () -> onCancelHandlers.remove(handler);
 	}
-	
+
 	public Subscription registerOnOkHandler(Consumer<PreferencePage> handler) {
 		onOkHandlers.add(handler);
 		return () -> onOkHandlers.remove(handler);

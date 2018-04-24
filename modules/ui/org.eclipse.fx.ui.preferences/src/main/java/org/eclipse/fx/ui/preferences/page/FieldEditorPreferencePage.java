@@ -19,11 +19,17 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.fx.core.Memento;
+import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.bindings.FXBindings;
 import org.eclipse.fx.core.command.Command;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
@@ -56,6 +62,7 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 	private HBox actions = new HBox();
 	private List<FieldEditor<?>> editors = new ArrayList<>();
 	private Label errorMessage = new Label();
+	private Command<Void> persistCommand = new PersistCommand();
 
 	public FieldEditorPreferencePage(Memento memento, BorderPane parent) {
 		super(memento);
@@ -88,11 +95,7 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 
 	@Override
 	public Command<Void> persist() {
-		return Command.createCommand(() -> editors.stream()
-				// XXX How do we want to handle incorrect values?
-				// JFace prevents applying/changing page if at least one value is incorrect 
-				.filter(editor -> editor.statusProperty().get().isOk())
-				.forEach(FieldEditor::persist));
+		return persistCommand;
 	}
 
 	@Override
@@ -104,8 +107,8 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 
 	@PostConstruct
 	void initFieldEditors() {
-		createActionButtons();
 		createFieldEditors();
+		createActionButtons();
 		bindErrorMessages();
 		reset().execute();
 	}
@@ -171,5 +174,44 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 
 		editors.add(editor);
 		editor.setMemento(this.memento);
+	}
+	
+	private class PersistCommand implements Command<Void> {
+
+		ObservableMap<String, String> parameters = FXCollections.observableHashMap();
+
+		@Override
+		public ReadOnlyBooleanProperty enabledProperty() {
+			List<ObservableValue<Status>> allStatuses = editors.stream().map(FieldEditor::statusProperty)
+					.collect(Collectors.toList());
+			SimpleBooleanProperty enabled = new SimpleBooleanProperty();
+			enabled.bind(
+					Bindings.createBooleanBinding(this::isEnabled, allStatuses.toArray(new ObservableValue<?>[0])));
+			return enabled;
+		}
+
+		@Override
+		public boolean isEnabled() {
+			return editors.stream().map(FieldEditor::statusProperty).allMatch(obs -> obs.getValue().isOk());
+		}
+
+		@Override
+		public Optional<Void> execute() {
+			if (isEnabled()) {
+				editors.forEach(FieldEditor::persist);
+			}
+			return null;
+		}
+
+		@Override
+		public ObservableMap<String, String> parameters() {
+			return parameters;
+		}
+
+		@Override
+		public void evaluate() {
+			// Nothing
+		}
+
 	}
 }
