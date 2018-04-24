@@ -16,6 +16,7 @@ import java.util.function.Function;
 import org.eclipse.fx.core.Memento;
 import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.Status.State;
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.beans.binding.Bindings;
@@ -72,7 +73,7 @@ public abstract class FieldEditor<T> extends Region {
 	 * <p>
 	 * Subclasses should override this method if they need to update the status
 	 * independently from a value change (Typically, if the new user input doesn't
-	 * result in a valid new value, thus can't trigger a value change)
+	 * result in a valid new value, thus can't trigger a value change).
 	 * </p>
 	 */
 	protected ObjectExpression<Status> createStatusBinding() {
@@ -175,8 +176,10 @@ public abstract class FieldEditor<T> extends Region {
 	}
 
 	/**
+	 * <p>
 	 * Return the value of this field editor. This will be used to automatically
-	 * manage {@link #setDefault(boolean)}
+	 * manage {@link #setDefault(boolean)}.
+	 * </p>
 	 */
 	protected abstract ObservableValue<T> getValue();
 
@@ -196,7 +199,9 @@ public abstract class FieldEditor<T> extends Region {
 	}
 
 	/**
-	 * Return the observable {@link Status} property for this editor's value
+	 * <p>
+	 * Return the observable {@link Status} property for this editor's value.
+	 * </p>
 	 * 
 	 * @return
 	 */
@@ -205,17 +210,21 @@ public abstract class FieldEditor<T> extends Region {
 	}
 
 	/**
+	 * <p>
 	 * Add a validation function to this field editor. The validation function
 	 * accepts a value and produces an error message as a {@link String}, or
 	 * <code>null</code> if the value is valid.
+	 * </p>
 	 * 
 	 * @param validationFunction
 	 *            A Function taking a value as a parameter, and returning a
 	 *            {@link String} error message, or <code>null</code> if the value is
 	 *            valid.
+	 * @return A {@link Subscription} to unregister the validation function
 	 */
-	public void addValidator(@NonNull Function<? super T, String> validationFunction) {
+	public Subscription registerValidator(@NonNull Function<? super T, String> validationFunction) {
 		validationFunctions.add(validationFunction);
+		return () -> validationFunctions.remove(validationFunction);
 	}
 
 }
