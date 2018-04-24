@@ -114,12 +114,12 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 
 		@Override
 		public void log(Level level, String message) {
-			getLogger().log(toLog4JLevel(level), message);
+			getLogger().log(Log4JLoggerFactory.class.getCanonicalName(), toLog4JLevel(level), message, null);
 		}
 
 		@Override
 		public void log(Level level, String message, Throwable t) {
-			getLogger().log(toLog4JLevel(level), message, t);
+			getLogger().log(Log4JLoggerFactory.class.getCanonicalName(), toLog4JLevel(level), message, t);
 		}
 
 		@Override
