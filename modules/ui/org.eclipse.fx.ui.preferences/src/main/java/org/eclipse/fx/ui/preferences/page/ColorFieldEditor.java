@@ -26,7 +26,7 @@ import javafx.scene.paint.Color;
  * A Field editor for color preferences.
  * </p>
  */
-public class ColorFieldEditor extends FieldEditor {
+public class ColorFieldEditor extends FieldEditor<Color> {
 
 	private static final Logger LOGGER = LoggerCreator.createLogger(ColorFieldEditor.class);
 
@@ -107,8 +107,12 @@ public class ColorFieldEditor extends FieldEditor {
 	}
 
 	@Override
-	protected ObservableValue<?> getValue() {
+	protected ObservableValue<Color> getValue() {
 		return this.colorPicker.valueProperty();
+	}
+	
+	protected final ColorPicker getColorPicker() {
+		return this.colorPicker;
 	}
 
 }

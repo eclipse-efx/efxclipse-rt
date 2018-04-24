@@ -79,7 +79,9 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 		@Override
 		protected void createFieldEditors() {
 			addField(new BooleanFieldEditor("booleanProperty", "Boolean Property"));
-			addField(new IntegerFieldEditor("integerProperty", "Integer Property"));
+			IntegerFieldEditor intEditor = new IntegerFieldEditor("integerProperty", "Integer Property");
+			intEditor.addValidator(intValue -> { return intValue > 20 ? "The value must be lower than 20" : null; });
+			addField(intEditor);
 			addField(new ColorFieldEditor("colorProperty", "Color Property"));
 			addField(new DirectoryFieldEditor("directoryProperty", "Directory Property"));
 			addField(new StringFieldEditor("textProperty", "Text"));

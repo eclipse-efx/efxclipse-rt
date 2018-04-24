@@ -19,7 +19,7 @@ import javafx.scene.control.CheckBox;
  * A Field editor for boolean preferences.
  * </p>
  */
-public class BooleanFieldEditor extends FieldEditor {
+public class BooleanFieldEditor extends FieldEditor<Boolean> {
 
 	private final CheckBox checkBox;
 
@@ -49,8 +49,12 @@ public class BooleanFieldEditor extends FieldEditor {
 	}
 
 	@Override
-	protected ObservableValue<?> getValue() {
+	protected ObservableValue<Boolean> getValue() {
 		return this.checkBox.selectedProperty();
+	}
+	
+	protected final CheckBox getCheckBox() {
+		return this.checkBox;
 	}
 
 }

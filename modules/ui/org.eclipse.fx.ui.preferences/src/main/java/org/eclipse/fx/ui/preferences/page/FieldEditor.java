@@ -11,19 +11,29 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.preferences.page;
 
-import org.eclipse.fx.core.Memento;
+import java.util.function.Function;
 
+import org.eclipse.fx.core.Memento;
+import org.eclipse.fx.core.Status;
+import org.eclipse.fx.core.Status.State;
+import org.eclipse.jdt.annotation.NonNull;
+
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectExpression;
 import javafx.beans.binding.StringExpression;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
-public abstract class FieldEditor extends Region {
+public abstract class FieldEditor<T> extends Region {
 	private StringProperty label = new SimpleStringProperty(this, "label");
 	private String name;
 	private Memento memento;
@@ -36,11 +46,44 @@ public abstract class FieldEditor extends Region {
 	private boolean isLoaded = false;
 	private final ChangeListener<Object> valueListener = (obs, old, newValue) -> this.setDefault(false);
 
-	protected final ReadOnlyStringWrapper errorMessage = new ReadOnlyStringWrapper(this, "errorMessage", null);
+	private final ReadOnlyStringWrapper errorMessage = new ReadOnlyStringWrapper(this, "errorMessage", null);
+	private final ReadOnlyObjectWrapper<Status> status = new ReadOnlyObjectWrapper<>(Status.ok());
+	protected final ObservableList<Function<? super T, String>> validationFunctions = FXCollections
+			.observableArrayList();
 
 	public FieldEditor(String name, String label) {
 		this.name = name;
 		this.setLabel(label);
+
+		errorMessage.bind(
+				Bindings.createStringBinding(() -> status.get().isOk() ? null : status.get().getMessage(), status));
+	}
+
+	private void configureStatus() {
+		ObjectExpression<Status> createStatusBinding = createStatusBinding();
+		status.bind(createStatusBinding);
+	}
+
+	/**
+	 * <p>
+	 * Create the status binding for this field editor. The default is computed by
+	 * applying the validation functions to the current value upon value change.
+	 * </p>
+	 * <p>
+	 * Subclasses should override this method if they need to update the status
+	 * independently from a value change (Typically, if the new user input doesn't
+	 * result in a valid new value, thus can't trigger a value change)
+	 * </p>
+	 */
+	protected ObjectExpression<Status> createStatusBinding() {
+		return Bindings.createObjectBinding(this::validate, validationFunctions, getValue());
+	}
+
+	private Status validate() {
+		T value = getValue().getValue();
+		String error = validationFunctions.stream().map(f -> f.apply(value)).filter(s -> s != null && !s.isEmpty())
+				.reduce((s1, s2) -> new StringBuilder(s1).append("\n").append(s2).toString()).orElse(null);
+		return error == null ? Status.ok() : Status.status(State.ERROR, Status.UNKNOWN_RETURN_CODE, error, null);
 	}
 
 	public FieldEditor(String name) {
@@ -89,6 +132,7 @@ public abstract class FieldEditor extends Region {
 		if (!isLoaded) {
 			this.isLoaded = true;
 			getValue().addListener(this.valueListener);
+			configureStatus();
 		}
 	}
 
@@ -118,27 +162,6 @@ public abstract class FieldEditor extends Region {
 		return errorMessage.getReadOnlyProperty();
 	}
 
-	/**
-	 * Sets the error message for this field editor. Null or empty string will clear
-	 * the error message
-	 * 
-	 * @param error
-	 *            The error message to set, or null/empty if the message should be
-	 *            cleared
-	 * 
-	 * @see #clearErrorMessage()
-	 */
-	protected void setErrorMessage(String error) {
-		this.errorMessage.set(error);
-	}
-
-	/**
-	 * Clear the error message for this field editor
-	 */
-	protected void clearErrorMessage() {
-		this.errorMessage.set(null);
-	}
-
 	public final StringProperty labelProperty() {
 		return this.label;
 	}
@@ -155,7 +178,7 @@ public abstract class FieldEditor extends Region {
 	 * Return the value of this field editor. This will be used to automatically
 	 * manage {@link #setDefault(boolean)}
 	 */
-	protected abstract ObservableValue<?> getValue();
+	protected abstract ObservableValue<T> getValue();
 
 	/**
 	 * <p>
@@ -170,6 +193,29 @@ public abstract class FieldEditor extends Region {
 	 */
 	protected boolean displayLabel() {
 		return true;
+	}
+
+	/**
+	 * Return the observable {@link Status} property for this editor's value
+	 * 
+	 * @return
+	 */
+	public ObjectExpression<Status> statusProperty() {
+		return status.getReadOnlyProperty();
+	}
+
+	/**
+	 * Add a validation function to this field editor. The validation function
+	 * accepts a value and produces an error message as a {@link String}, or
+	 * <code>null</code> if the value is valid.
+	 * 
+	 * @param validationFunction
+	 *            A Function taking a value as a parameter, and returning a
+	 *            {@link String} error message, or <code>null</code> if the value is
+	 *            valid.
+	 */
+	public void addValidator(@NonNull Function<? super T, String> validationFunction) {
+		validationFunctions.add(validationFunction);
 	}
 
 }

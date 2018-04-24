@@ -16,7 +16,9 @@ import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.controls.form.NodeDecorator;
 
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectExpression;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
@@ -25,35 +27,44 @@ import javafx.scene.control.TextField;
  * A Field editor for float preferences.
  * </p>
  */
-public class FloatFieldEditor extends FieldEditor {
-	private final TextField textField;
-
+public class FloatFieldEditor extends FieldEditor<Float> {
 	private static final Logger LOGGER = LoggerCreator.createLogger(FloatFieldEditor.class);
+	
+	private final TextField textField;
+	private SimpleFloatProperty value = new SimpleFloatProperty(this, "value");
 
 	public FloatFieldEditor(String name, String label) {
 		super(name, label);
 		this.textField = new TextField();
 		getChildren().add(textField);
 
-		configureValidation(this.textField);
+		NodeDecorator.apply(this.textField, statusProperty());
+		
+		this.textField.textProperty().addListener((obs, old, newValue) -> {
+			try {
+				value.set(Float.parseFloat(newValue));
+			} catch (NumberFormatException ex) {
+				return;
+			}
+		});
 	}
 
 	public FloatFieldEditor(String name) {
 		this(name, null);
 	}
 
-	private void configureValidation(TextField textField) {
-		SimpleObjectProperty<Status> status = new SimpleObjectProperty<Status>(Status.ok());
-		NodeDecorator.apply(this.textField, status);
-		this.textField.textProperty().addListener((obs, oldText, newText) -> {
+	@Override
+	protected ObjectExpression<Status> createStatusBinding() {
+		ObjectExpression<Status> parentStatus = super.createStatusBinding();
+		return Bindings.createObjectBinding(() -> {
 			try {
-				Float.parseFloat(newText);
-				status.set(Status.ok());
+				Float.parseFloat(textField.getText());
+				return parentStatus.get();
 			} catch (NumberFormatException ex) {
-				status.set(
-						Status.status(State.ERROR, Status.UNKNOWN_RETURN_CODE, "The value must be a valid float", ex));
+				return Status.status(State.ERROR, Status.UNKNOWN_RETURN_CODE, "The value must be a valid float", ex);
 			}
-		});
+		}, parentStatus, textField.textProperty());
+
 	}
 
 	@Override
@@ -80,19 +91,19 @@ public class FloatFieldEditor extends FieldEditor {
 	@Override
 	protected void doPersist() {
 		try {
-			getMemento().put(getName(), getFloatValue());
+			getMemento().put(getName(), getValue().getValue());
 		} catch (NumberFormatException ex) {
 			// Don't persist when the current value is incorrect
 			LOGGER.error("An error occurred when trying to persist the float value for " + getName(), ex);
 		}
 	}
 
-	private float getFloatValue() throws NumberFormatException {
-		return Float.parseFloat(textField.getText());
+	protected final TextField getTextField() {
+		return this.textField;
 	}
 
 	@Override
-	protected ObservableValue<?> getValue() {
-		return this.textField.textProperty();
+	protected ObservableValue<Float> getValue() {
+		return value.asObject();
 	}
 }

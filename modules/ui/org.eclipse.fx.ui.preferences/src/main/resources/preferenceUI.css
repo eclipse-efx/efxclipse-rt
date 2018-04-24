@@ -21,3 +21,8 @@
 .file-field-container {
 	-fx-spacing: 5;
 }
+
+.field-editor-error {
+	-fx-graphic: url("icons/dialog-error-16.png");
+}
+

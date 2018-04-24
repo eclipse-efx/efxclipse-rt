@@ -35,67 +35,73 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
 public abstract class FieldEditorPreferencePage extends BasePreferencePage {
-	
+
 	/**
 	 * CSS Class Name for the grid holding the field editors
 	 */
 	public static final String PAGE_GRID_STYLE = "field-editor-grid"; //$NON-NLS-1$
-	
+
 	/**
 	 * CSS Class Name for the region in which the actions buttons are added
 	 */
 	public static final String PAGE_ACTIONS_STYLE = "field-editor-actions"; //$NON-NLS-1$
-	
+
 	/**
 	 * CSS Class Name for the error message label
 	 */
 	public static final String ERROR_MESSAGE_STYLE = "field-editor-error"; //$NON-NLS-1$
-	
+
 	private BorderPane parent;
 	private GridPane grid;
 	private HBox actions = new HBox();
-	private List<FieldEditor> editors = new ArrayList<>();
+	private List<FieldEditor<?>> editors = new ArrayList<>();
 	private Label errorMessage = new Label();
-	
+
 	public FieldEditorPreferencePage(Memento memento, BorderPane parent) {
 		super(memento);
-		
+
 		this.grid = new GridPane() {
 			@Override
 			public String getUserAgentStylesheet() {
 				return FieldEditorPreferencePage.this.getUserAgentStylesheet();
 			}
 		};
-		
+
+		errorMessage.getStyleClass().add(ERROR_MESSAGE_STYLE);
+
 		this.parent = parent;
 		this.parent.setTop(errorMessage);
 		this.parent.setCenter(grid);
 		this.parent.setBottom(actions);
 		actions.setAlignment(Pos.BASELINE_RIGHT);
-		
+
 		grid.getStyleClass().add(PAGE_GRID_STYLE);
-		actions.getStyleClass().add(PAGE_ACTIONS_STYLE);		
+		actions.getStyleClass().add(PAGE_ACTIONS_STYLE);
 		actions.setMinWidth(Region.USE_PREF_SIZE);
 		grid.setMinWidth(Region.USE_PREF_SIZE);
 		grid.setMinHeight(Region.USE_PREF_SIZE);
 	}
-	
+
 	protected String getUserAgentStylesheet() {
 		return null;
 	}
 
 	@Override
 	public Command<Void> persist() {
-		return Command.createCommand(() -> editors.forEach(FieldEditor::persist));
+		return Command.createCommand(() -> editors.stream()
+				// XXX How do we want to handle incorrect values?
+				// JFace prevents applying/changing page if at least one value is incorrect 
+				.filter(editor -> editor.statusProperty().get().isOk())
+				.forEach(FieldEditor::persist));
 	}
-	
+
 	@Override
 	public Optional<Command<Void>> restoreDefault() {
 		return Optional.of(Command.createCommand(() -> {
 			editors.forEach(FieldEditor::restoreDefaults);
 		}));
 	}
-	
+
 	@PostConstruct
 	void initFieldEditors() {
 		createActionButtons();
@@ -103,23 +109,24 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 		bindErrorMessages();
 		reset().execute();
 	}
-	
+
 	private void bindErrorMessages() {
-		List<StringExpression> errorMessages = editors.stream().map(FieldEditor::errorMessage).collect(Collectors.toList());
-		StringExpression concat = FXBindings.concat("\n", errorMessages.toArray(new ObservableValue[errorMessages.size()]));
-		concat.addListener((obs, old, newV) -> System.out.println("'"+newV+"'"));
+		List<StringExpression> errorMessages = editors.stream().map(FieldEditor::errorMessage)
+				.collect(Collectors.toList());
+		StringExpression concat = FXBindings.concat("\n",
+				errorMessages.toArray(new ObservableValue<?>[errorMessages.size()]));
 		this.errorMessage.textProperty().bind(concat);
 		this.errorMessage.managedProperty().bind(this.errorMessage.visibleProperty());
 		this.errorMessage.visibleProperty().bind(this.errorMessage.textProperty().isNotEmpty());
 	}
 
 	abstract protected void createFieldEditors();
-	
+
 	protected void createActionButtons() {
 		addButton("Restore Defaults", this.restoreDefault());
 		addButton("Apply", Optional.of(this.persist()));
 	}
-	
+
 	protected void addButton(String label, Optional<Command<Void>> restoreDefault) {
 		Button action = new Button(label);
 		actions.getChildren().add(action);
@@ -141,12 +148,12 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 	public Command<Void> reset() {
 		return Command.createCommand(this::doReset);
 	}
-	
+
 	void doReset() {
 		this.editors.forEach(FieldEditor::load);
 	}
-	
-	public void addField(FieldEditor editor) {
+
+	public void addField(FieldEditor<?> editor) {
 		int editorColumn = 0;
 		int editorSpan = 2;
 		if (editor.displayLabel()) {
@@ -158,10 +165,10 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 			editorColumn = 1;
 			editorSpan = 1;
 		}
-		
+
 		grid.add(editor, editorColumn, editors.size(), editorSpan, 1);
 		GridPane.setHgrow(editor, Priority.ALWAYS);
-		
+
 		editors.add(editor);
 		editor.setMemento(this.memento);
 	}

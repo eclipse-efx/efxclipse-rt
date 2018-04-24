@@ -13,6 +13,8 @@ package org.eclipse.fx.ui.preferences.page;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -24,14 +26,14 @@ import javafx.scene.layout.GridPane;
  * buttons
  * </p>
  */
-public class RadioGroupFieldEditor extends FieldEditor {
+public class RadioGroupFieldEditor extends FieldEditor<String> {
 	
 	/**
 	 * CSS Style Class for the {@link GridPane} of this {@link RadioGroupFieldEditor}
 	 */
 	public static final String RADIO_GRID_STYLE = "radio-field-grid"; //$NON-NLS-1$
 	
-	private String currentValue;
+	private final StringProperty currentValue = new SimpleStringProperty(this, "currentValue");
 	private Map<String, RadioButton> valueToRadio = new HashMap<>();
 	private ToggleGroup radioGroup;
 
@@ -52,7 +54,7 @@ public class RadioGroupFieldEditor extends FieldEditor {
 			radio.setToggleGroup(radioGroup);
 			radio.selectedProperty().addListener((obs, old, newSelected) -> {
 				if (newSelected) {
-					this.currentValue = value;
+					this.currentValue.set(value);
 				}
 			});
 			grid.add(radio, column, row);
@@ -88,16 +90,16 @@ public class RadioGroupFieldEditor extends FieldEditor {
 
 	@Override
 	protected void doPersist() {
-		if (currentValue == null) {
+		if (currentValue.getValue() == null) {
 			getMemento().remove(getName());
 		} else {
-			getMemento().put(getName(), currentValue);
+			getMemento().put(getName(), currentValue.getValue());
 		}
 	}
 
 	@Override
-	protected ObservableValue<?> getValue() {
-		return this.radioGroup.selectedToggleProperty();
+	protected ObservableValue<String> getValue() {
+		return currentValue;
 	}
 	
 }
