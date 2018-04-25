@@ -11,6 +11,7 @@
 package org.eclipse.fx.core.log;
 
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -22,6 +23,27 @@ import org.eclipse.jdt.annotation.NonNull;
  * @noimplement
  */
 public interface FluentLogContext {
+	/**
+	 * Predicate to decide if we want to log
+	 * 
+	 * @param t
+	 *            the predicate
+	 * @return the log context
+	 */
+	public FluentLogContext when(Predicate<MutableState> t);
+//
+//	/**
+//	 * Predicate to decide until when we want to log
+//	 * 
+//	 * @param t
+//	 *            the predicate
+//	 * 
+//	 * @return the log context
+//	 */
+//	public FluentLogContext until(Predicate<MutableState> t);
+//	
+//	public FluentLogContext throttle(Predicate<MutableState> predicate);
+
 	/**
 	 * Attach an exception to the log statement
 	 * 
@@ -69,5 +91,8 @@ public interface FluentLogContext {
 	 *            the argument passed to the function
 	 */
 	public <T> void log(@NonNull Function<T, @NonNull CharSequence> messageSupplier, T argument);
-
+	
+	public interface MutableState {
+		public long callCount();
+	}
 }
