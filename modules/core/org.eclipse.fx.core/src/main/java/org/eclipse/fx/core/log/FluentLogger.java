@@ -47,42 +47,42 @@ public interface FluentLogger<C extends FluentLogContext<C>> {
 	/**
 	 * @return context at level {@link Level#TRACE}
 	 */
-	public default C trace() {
+	public default C atTrace() {
 		return at(Level.TRACE);
 	}
 
 	/**
 	 * @return context at level {@link Level#DEBUG}
 	 */
-	public default C debug() {
+	public default C atDebug() {
 		return at(Level.DEBUG);
 	}
 
 	/**
 	 * @return context at level {@link Level#INFO}
 	 */
-	public default C info() {
+	public default C atInfo() {
 		return at(Level.INFO);
 	}
 
 	/**
 	 * @return context at level {@link Level#WARNING}
 	 */
-	public default C warning() {
+	public default C atWarning() {
 		return at(Level.WARNING);
 	}
 
 	/**
 	 * @return context at level {@link Level#ERROR}
 	 */
-	public default C error() {
+	public default C atError() {
 		return at(Level.ERROR);
 	}
 
 	/**
 	 * @return context at level {@link Level#FATAL}
 	 */
-	public default C fatal() {
+	public default C atFatal() {
 		return at(Level.FATAL);
 	}
 }
