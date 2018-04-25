@@ -48,6 +48,38 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class PreferenceUI {
+
+	/**
+	 * The CSS class for the top-level container of the Preference UI
+	 */
+	public static final String TOP_LEVEL_STYLE = "preferences-container";
+
+	/**
+	 * The CSS class for the content area of the preferences (Where the current
+	 * preference page is displayed)
+	 */
+	public static final String CONTENT_AREA_STYLE = "preferences-contents";
+	
+	/**
+	 * The CSS class for a preference page
+	 */
+	public static final String PAGE_STYLE = "preferences-page";
+	
+	/**
+	 * The CSS class for the list of preference pages
+	 */
+	public static final String PAGE_LIST_STYLE = "preferences-page-list";
+	
+	/**
+	 * The CSS class for the page-search field
+	 */
+	public static final String SEARCH_STYLE = "preferences-search-field";
+	
+	/**
+	 * The CSS class for the Actions bar
+	 */
+	public static final String ACTIONS_BAR_STYLE = "preferences-actions-bar";
+
 	private final ListView<PreferencePageProvider> providerView;
 
 	private final TitledPane contentAreaWrapper;
@@ -84,6 +116,7 @@ public class PreferenceUI {
 	public PreferenceUI(PreferencePageFactory factory) {
 		this.factory = factory;
 		this.providerView = new ListView<>();
+		this.providerView.getStyleClass().add(PAGE_LIST_STYLE);
 		this.contentAreaWrapper = new TitledPane();
 		this.contentArea = new ScrollPane();
 		this.contentArea.setFitToWidth(true);
@@ -103,7 +136,7 @@ public class PreferenceUI {
 		if (provider != null) {
 			this.currentPage = pages.computeIfAbsent(provider, p -> {
 				BorderPane parent = new BorderPane();
-				parent.getStyleClass().add("field-page");
+				parent.getStyleClass().add(PAGE_STYLE);
 				return new PageCache(factory.make(parent, provider), parent);
 			});
 
@@ -125,12 +158,14 @@ public class PreferenceUI {
 				return "platform:/plugin/org.eclipse.fx.ui.preferences/preferenceUI.css";
 			}
 		};
+		root.getStyleClass().add(TOP_LEVEL_STYLE);
 		container.setCenter(root);
 		SplitPane split = new SplitPane();
 
 		{
 			VBox box = new VBox();
 			TextField searchField = new TextField();
+			searchField.getStyleClass().add(SEARCH_STYLE);
 			FXObservableUtil.onChange(searchField.textProperty(), newFilter -> {
 				this.currentFilter = newFilter == null ? "" : newFilter;
 				refreshFilter();
@@ -147,6 +182,7 @@ public class PreferenceUI {
 
 		{
 			BorderPane p = new BorderPane();
+			p.getStyleClass().add(CONTENT_AREA_STYLE);
 			p.setCenter(contentAreaWrapper);
 			split.getItems().add(p);
 		}
@@ -155,7 +191,7 @@ public class PreferenceUI {
 
 		root.setCenter(split);
 		actions = new HBox();
-		actions.getStyleClass().add("preferences-actions-bar");
+		actions.getStyleClass().add(ACTIONS_BAR_STYLE);
 		actions.setMinWidth(Region.USE_PREF_SIZE);
 		actions.setAlignment(Pos.BASELINE_RIGHT);
 		createActionButtons();
