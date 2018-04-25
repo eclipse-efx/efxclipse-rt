@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.preferences.page;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -149,7 +150,7 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 		
 		Callable<Status> toMultistatus = () -> allStatuses.stream()
 				.map(ObservableValue::getValue)
-				.filter(s -> s != null && ! s.isOk())
+				.filter(Objects::nonNull).filter(Status::isNotOk)
 				.collect(MultiStatus.toMultiStatus(getMessage(allStatuses), Status.UNKNOWN_RETURN_CODE));
 		
 		return Bindings.createObjectBinding(toMultistatus, allStatuses.toArray(new ObservableValue<?>[0]));

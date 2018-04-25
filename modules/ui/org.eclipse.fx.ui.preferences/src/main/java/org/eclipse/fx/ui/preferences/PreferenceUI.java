@@ -131,7 +131,7 @@ public class PreferenceUI {
 		{
 			VBox box = new VBox();
 			TextField searchField = new TextField();
-			searchField.textProperty().addListener((obs, old, newFilter) -> {
+			FXObservableUtil.onChange(searchField.textProperty(), newFilter -> {
 				this.currentFilter = newFilter == null ? "" : newFilter;
 				refreshFilter();
 			});

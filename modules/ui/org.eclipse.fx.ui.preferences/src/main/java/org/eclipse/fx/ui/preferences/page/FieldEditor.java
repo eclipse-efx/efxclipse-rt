@@ -12,6 +12,7 @@
 package org.eclipse.fx.ui.preferences.page;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -51,7 +52,7 @@ public abstract class FieldEditor<T> extends Region {
 	private final ChangeListener<Object> valueListener = (obs, old, newValue) -> this.setDefault(false);
 
 	private final ReadOnlyStringWrapper errorMessage = new ReadOnlyStringWrapper(this, "errorMessage", null);
-	private final ReadOnlyObjectWrapper<Status> status = new ReadOnlyObjectWrapper<>(Status.ok());
+	private final ReadOnlyObjectWrapper<Status> status = new ReadOnlyObjectWrapper<>(this, "status", Status.ok());
 	protected final ObservableList<Function<? super T, Status>> validationFunctions = FXCollections
 			.observableArrayList();
 
@@ -88,14 +89,13 @@ public abstract class FieldEditor<T> extends Region {
 			
 		List<Status> errorStatuses = validationFunctions.stream()
 				.map(vf -> vf.apply(value))
-				.filter(s -> s != null && !s.isOk())
+				.filter(Objects::nonNull).filter(Status::isNotOk)
 				.collect(Collectors.toList());
 		
 		String errorMessages = errorStatuses.stream()
 				.map(Status::getMessage)
 				.filter(m -> m != null && !m.isEmpty())
-				.reduce((s1, s2) -> new StringBuilder(s1).append("\n").append(s2).toString())
-				.orElse(null); //When everything's OK, or when Warning/Errors are reported without a message
+				.collect(Collectors.joining("\n"));
 		
 		MultiStatus status = errorStatuses.stream()
 				.collect(MultiStatus.toMultiStatus(errorMessages, Status.UNKNOWN_RETURN_CODE));
