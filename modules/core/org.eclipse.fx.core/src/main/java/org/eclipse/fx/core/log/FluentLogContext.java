@@ -92,7 +92,15 @@ public interface FluentLogContext {
 	 */
 	public <T> void log(@NonNull Function<T, @NonNull CharSequence> messageSupplier, T argument);
 	
+	/**
+	 * Mutable state of a {@link FluentLogContext}
+	 * 
+	 * @noimplement
+	 */
 	public interface MutableState {
+		/**
+		 * @return the call count
+		 */
 		public long callCount();
 	}
 }
