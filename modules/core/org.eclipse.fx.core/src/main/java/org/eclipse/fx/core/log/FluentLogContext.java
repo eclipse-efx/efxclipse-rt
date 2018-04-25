@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.core.log;
 
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -29,20 +30,44 @@ public interface FluentLogContext {
 	 * @param t
 	 *            the predicate
 	 * @return the log context
+	 * @see Throttle
+	 * @see #with(Function)
 	 */
 	public FluentLogContext when(Predicate<MutableState> t);
-//
-//	/**
-//	 * Predicate to decide until when we want to log
-//	 * 
-//	 * @param t
-//	 *            the predicate
-//	 * 
-//	 * @return the log context
-//	 */
-//	public FluentLogContext until(Predicate<MutableState> t);
-//	
-//	public FluentLogContext throttle(Predicate<MutableState> predicate);
+
+	/**
+	 * Create a custom condition object
+	 * 
+	 * @param condition
+	 *            the condition object
+	 * @return instance of the condition object
+	 */
+	public <T extends Condition> T with(Function<FluentLogContext, T> condition);
+
+	/**
+	 * Add a condition to make sure only every n-th log statement is really executed
+	 * 
+	 * @param nTime
+	 *            the number of statements skipped
+	 * @return the log context
+	 */
+	public default FluentLogContext throttleByCount(long nTime) {
+		return with(Throttle::new).every(nTime);
+	}
+
+	/**
+	 * Add a condition to make sure only every n-th time interval a log statement is
+	 * really executed
+	 * 
+	 * @param interval
+	 *            the interval
+	 * @param unit
+	 *            the time unit
+	 * @return the log context
+	 */
+	public default FluentLogContext throttleByTime(long interval, TimeUnit unit) {
+		return with(Throttle::new).interval(interval, unit);
+	}
 
 	/**
 	 * Attach an exception to the log statement
@@ -91,7 +116,7 @@ public interface FluentLogContext {
 	 *            the argument passed to the function
 	 */
 	public <T> void log(@NonNull Function<T, @NonNull CharSequence> messageSupplier, T argument);
-	
+
 	/**
 	 * Mutable state of a {@link FluentLogContext}
 	 * 
@@ -101,6 +126,16 @@ public interface FluentLogContext {
 		/**
 		 * @return the call count
 		 */
-		public long callCount();
+		public long currentCallCount();
+
+		/**
+		 * @return the last time in nano-seconds the logged
+		 */
+		public long lastLogTime();
+
+		/**
+		 * @return the last counted statement that has been logged
+		 */
+		public long lastLogCount();
 	}
 }

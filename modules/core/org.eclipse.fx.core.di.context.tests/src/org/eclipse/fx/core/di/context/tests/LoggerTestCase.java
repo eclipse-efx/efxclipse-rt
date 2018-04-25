@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.fx.core.di.context.tests.LocalInstanceTestCase.TestBean;
 import org.eclipse.fx.core.log.FluentLogger;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
@@ -32,6 +31,6 @@ public class LoggerTestCase {
 		IEclipseContext child = serviceContext.createChild();
 		LogTestBean bean = ContextInjectionFactory.make(LogTestBean.class, child);
 		assertNotNull(bean.logger);
-		assertNotNull(bean.fLogger);
+		assertNotNull(bean.fLogger);		
 	}
 }

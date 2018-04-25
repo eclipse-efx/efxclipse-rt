@@ -17,6 +17,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import org.eclipse.fx.core.log.Condition;
 import org.eclipse.fx.core.log.FluentLogContext;
 import org.eclipse.fx.core.log.FluentLogContext.MutableState;
 import org.eclipse.fx.core.log.FluentLogger;
@@ -62,16 +63,11 @@ public class FluentLoggerImpl implements FluentLogger {
 		public FluentLogContext when(Predicate<MutableState> t) {
 			return this;
 		}
-//		
-//		@Override
-//		public FluentLogContext until(Predicate<MutableState> t) {
-//			return this;
-//		}
-//		
-//		@Override
-//		public FluentLogContext throttle(Predicate<MutableState> predicate) {
-//			return this;
-//		}
+		
+		@Override
+		public <T extends Condition> T with(Function<FluentLogContext, T> condition) {
+			return condition.apply(this);
+		}
 	}
 
 	static class FluentLogContextImpl implements FluentLogContext {
@@ -83,8 +79,6 @@ public class FluentLoggerImpl implements FluentLogger {
 		private Throwable t;
 		
 		private List<Predicate<MutableState>> whenList;
-//		
-//		private List<Predicate<MutableState>> throttleList;
 
 		private final MutableStateImpl state;
 		
@@ -107,12 +101,23 @@ public class FluentLoggerImpl implements FluentLogger {
 			return this;
 		}
 		
+		@Override
+		public <T extends Condition> T with(Function<FluentLogContext, T> condition) {
+			return condition.apply(this);
+		}
+		
 		private boolean shouldLog() {
 			this.state.incrementCallCount();
-			if( this.whenList == null ) {
+			if( this.whenList == null) {
 				return true;
 			}
-			boolean rv = this.whenList.stream().allMatch(w -> w.test(this.state));
+			
+			boolean rv = this.whenList == null ? true : this.whenList.stream().mapToInt(w -> w.test(this.state) ? 1 : 0).sum() == this.whenList.size();
+			
+			if( rv ) {
+				this.state.recordLastLog();
+			}
+			
 			return rv;
 		}
 
@@ -162,6 +167,8 @@ public class FluentLoggerImpl implements FluentLogger {
 	 */
 	public static class MutableStateImpl implements MutableState {
 		private AtomicLong callCount = new AtomicLong();
+		private AtomicLong lastLogCount = new AtomicLong();
+		private AtomicLong lastLogTime = new AtomicLong();
 		
 		/**
 		 * Create new state
@@ -174,8 +181,23 @@ public class FluentLoggerImpl implements FluentLogger {
 		}
 		
 		@Override
-		public long callCount() {
+		public long currentCallCount() {
 			return this.callCount.get();
+		}
+		
+		public void recordLastLog() {
+			this.lastLogTime.set(System.nanoTime());
+			this.lastLogCount.set(currentCallCount());
+		}
+		
+		@Override
+		public long lastLogCount() {
+			return this.lastLogCount.get();
+		}
+		
+		@Override
+		public long lastLogTime() {
+			return this.lastLogTime.get();
 		}
 	}
 
