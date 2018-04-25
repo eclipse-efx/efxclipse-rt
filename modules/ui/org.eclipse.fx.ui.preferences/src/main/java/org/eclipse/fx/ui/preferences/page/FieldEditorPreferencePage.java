@@ -14,22 +14,25 @@ package org.eclipse.fx.ui.preferences.page;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
 import org.eclipse.fx.core.Memento;
+import org.eclipse.fx.core.MultiStatus;
 import org.eclipse.fx.core.Status;
-import org.eclipse.fx.core.bindings.FXBindings;
+import org.eclipse.fx.core.Status.State;
 import org.eclipse.fx.core.command.Command;
+import org.eclipse.fx.core.observable.FXObservableUtil;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringExpression;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
+import javafx.css.PseudoClass;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
@@ -56,6 +59,18 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 	 * CSS Class Name for the error message label
 	 */
 	public static final String ERROR_MESSAGE_STYLE = "field-editor-error"; //$NON-NLS-1$
+
+	/**
+	 * CSS {@link PseudoClass} applied on the error message label if the severity is
+	 * {@link State#WARNING}
+	 */
+	public static final PseudoClass WARNING_STYLE = PseudoClass.getPseudoClass("warning");
+
+	/**
+	 * CSS {@link PseudoClass} applied on the error message label if the severity is
+	 * {@link State#ERRO}
+	 */
+	public static final PseudoClass ERROR_STYLE = PseudoClass.getPseudoClass("error");
 
 	private BorderPane parent;
 	private GridPane grid;
@@ -114,13 +129,46 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 	}
 
 	private void bindErrorMessages() {
-		List<StringExpression> errorMessages = editors.stream().map(FieldEditor::errorMessage)
-				.collect(Collectors.toList());
-		StringExpression concat = FXBindings.concat("\n",
-				errorMessages.toArray(new ObservableValue<?>[errorMessages.size()]));
-		this.errorMessage.textProperty().bind(concat);
+		ObservableValue<Status> pageStatus = getPageStatus();
+		
+		this.errorMessage.textProperty().bind(Bindings.createStringBinding(() -> pageStatus.getValue().getMessage(), pageStatus));
 		this.errorMessage.managedProperty().bind(this.errorMessage.visibleProperty());
 		this.errorMessage.visibleProperty().bind(this.errorMessage.textProperty().isNotEmpty());
+		
+		FXObservableUtil.onChange(pageStatus, status -> {
+			boolean isWarning = status.getState() == State.WARNING;
+			boolean isError = status.getState() == State.ERROR;
+			
+			this.errorMessage.pseudoClassStateChanged(WARNING_STYLE, isWarning);
+			this.errorMessage.pseudoClassStateChanged(ERROR_STYLE, isError);
+		});
+	}
+
+	private ObservableValue<Status> getPageStatus(){
+		List<ObservableValue<Status>> allStatuses = getAllStatuses();
+		
+		Callable<Status> toMultistatus = () -> allStatuses.stream()
+				.map(ObservableValue::getValue)
+				.filter(s -> s != null && ! s.isOk())
+				.collect(MultiStatus.toMultiStatus(getMessage(allStatuses), Status.UNKNOWN_RETURN_CODE));
+		
+		return Bindings.createObjectBinding(toMultistatus, allStatuses.toArray(new ObservableValue<?>[0]));
+	}
+	
+	private List<ObservableValue<Status>> getAllStatuses() {
+		return editors.stream()
+				.map(FieldEditor::statusProperty)
+				.collect(Collectors.toList());
+	}
+
+	private String getMessage(List<ObservableValue<Status>> allStatuses) {
+		return allStatuses.stream()
+			.map(ObservableValue::getValue)
+			.filter(s -> s != null && !s.isOk()) 
+			.map(Status::getMessage)
+			.filter(m -> m != null && !m.isEmpty())
+			.reduce((s1, s2) -> new StringBuilder(s1).append("\n").append(s2).toString())
+			.orElse(null);
 	}
 
 	abstract protected void createFieldEditors();
@@ -175,7 +223,7 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 		editors.add(editor);
 		editor.setMemento(this.memento);
 	}
-	
+
 	private class PersistCommand implements Command<Void> {
 
 		ObservableMap<String, String> parameters = FXCollections.observableHashMap();
@@ -192,7 +240,9 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 
 		@Override
 		public boolean isEnabled() {
-			return editors.stream().map(FieldEditor::statusProperty).allMatch(obs -> obs.getValue().isOk());
+			// Warning & OK can be persisted; Error can't (And will block the entire page)
+			return editors.stream().map(FieldEditor::statusProperty)
+					.noneMatch(obs -> obs.getValue().getState() == State.ERROR);
 		}
 
 		@Override

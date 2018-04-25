@@ -15,6 +15,7 @@ import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.Status.State;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
+import org.eclipse.fx.core.observable.FXObservableUtil;
 import org.eclipse.fx.ui.controls.form.NodeDecorator;
 
 import javafx.beans.binding.Bindings;
@@ -40,7 +41,7 @@ public class IntegerFieldEditor extends FieldEditor<Integer> {
 		getChildren().add(textField);
 
 		NodeDecorator.apply(this.textField, statusProperty());
-		this.textField.textProperty().addListener((obs, old, newValue) -> {
+		FXObservableUtil.onChange(this.textField.textProperty(), newValue -> {
 			try {
 				value.set(Integer.parseInt(newValue));
 			} catch (NumberFormatException ex) {

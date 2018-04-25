@@ -11,9 +11,12 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.preferences.page;
 
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Memento;
+import org.eclipse.fx.core.MultiStatus;
 import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.Status.State;
 import org.eclipse.fx.core.Subscription;
@@ -49,7 +52,7 @@ public abstract class FieldEditor<T> extends Region {
 
 	private final ReadOnlyStringWrapper errorMessage = new ReadOnlyStringWrapper(this, "errorMessage", null);
 	private final ReadOnlyObjectWrapper<Status> status = new ReadOnlyObjectWrapper<>(Status.ok());
-	protected final ObservableList<Function<? super T, String>> validationFunctions = FXCollections
+	protected final ObservableList<Function<? super T, Status>> validationFunctions = FXCollections
 			.observableArrayList();
 
 	public FieldEditor(String name, String label) {
@@ -82,9 +85,22 @@ public abstract class FieldEditor<T> extends Region {
 
 	private Status validate() {
 		T value = getValue().getValue();
-		String error = validationFunctions.stream().map(f -> f.apply(value)).filter(s -> s != null && !s.isEmpty())
-				.reduce((s1, s2) -> new StringBuilder(s1).append("\n").append(s2).toString()).orElse(null);
-		return error == null ? Status.ok() : Status.status(State.ERROR, Status.UNKNOWN_RETURN_CODE, error, null);
+			
+		List<Status> errorStatuses = validationFunctions.stream()
+				.map(vf -> vf.apply(value))
+				.filter(s -> s != null && !s.isOk())
+				.collect(Collectors.toList());
+		
+		String errorMessages = errorStatuses.stream()
+				.map(Status::getMessage)
+				.filter(m -> m != null && !m.isEmpty())
+				.reduce((s1, s2) -> new StringBuilder(s1).append("\n").append(s2).toString())
+				.orElse(null); //When everything's OK, or when Warning/Errors are reported without a message
+		
+		MultiStatus status = errorStatuses.stream()
+				.collect(MultiStatus.toMultiStatus(errorMessages, Status.UNKNOWN_RETURN_CODE));
+		
+		return status;
 	}
 
 	public FieldEditor(String name) {
@@ -212,8 +228,30 @@ public abstract class FieldEditor<T> extends Region {
 	/**
 	 * <p>
 	 * Add a validation function to this field editor. The validation function
+	 * accepts a value and produces a Status.
+	 * </p>
+	 * 
+	 * @param validationFunction
+	 *            A Function taking a value as a parameter, and returning a
+	 *            {@link Status}
+	 * @return A {@link Subscription} to unregister the validation function
+	 */
+	public Subscription registerStatusValidator(@NonNull Function<? super T, Status> validationFunction) {
+		validationFunctions.add(validationFunction);
+		return () -> validationFunctions.remove(validationFunction);
+	}
+	
+	/**
+	 * <p>
+	 * Add a validation function to this field editor. The validation function
 	 * accepts a value and produces an error message as a {@link String}, or
 	 * <code>null</code> if the value is valid.
+	 * </p>
+	 * <p>
+	 * This is a simplified version of {@link #registerStatusValidator(Function)}:
+	 * a null or empty message corresponds to {@link Status#ok()}, whereas
+	 * a non-empty message corresponds to an {@link Status.State#Error Error} status,
+	 * with a default error code an no exception.
 	 * </p>
 	 * 
 	 * @param validationFunction
@@ -221,10 +259,14 @@ public abstract class FieldEditor<T> extends Region {
 	 *            {@link String} error message, or <code>null</code> if the value is
 	 *            valid.
 	 * @return A {@link Subscription} to unregister the validation function
+	 * 
+	 * @see #registerStatusValidator(Function)
 	 */
 	public Subscription registerValidator(@NonNull Function<? super T, String> validationFunction) {
-		validationFunctions.add(validationFunction);
-		return () -> validationFunctions.remove(validationFunction);
+		return registerStatusValidator(validationFunction.andThen(m -> 
+			m == null || m.isEmpty() 
+					? Status.ok()
+					:Status.status(State.ERROR, Status.UNKNOWN_RETURN_CODE, m, null)));
 	}
 
 }

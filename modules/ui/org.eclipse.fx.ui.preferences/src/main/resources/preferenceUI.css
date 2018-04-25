@@ -22,7 +22,11 @@
 	-fx-spacing: 5;
 }
 
-.field-editor-error {
+.field-editor-error:error {
 	-fx-graphic: url("icons/dialog-error-16.png");
+}
+
+.field-editor-error:warning {
+	-fx-graphic: url("icons/dialog-warning-16.png");
 }
 
