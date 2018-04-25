@@ -30,7 +30,7 @@ class MultiStatusImpl implements MultiStatus {
 	public @NonNull State getState() {
 		State rv = this.state;
 		if( rv == null ) {
-			rv = this.state = this.states.stream().map( s -> s.getState() ).max(State::compareTo).orElse(State.OK);
+			rv = this.state = this.states.stream().map( s -> s.getState() ).min(State::compareTo).orElse(State.OK);
 		}
 		return rv;
 	}

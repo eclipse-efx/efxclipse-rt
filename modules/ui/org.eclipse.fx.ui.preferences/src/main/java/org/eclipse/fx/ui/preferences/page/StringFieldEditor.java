@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.preferences.page;
 
+import org.eclipse.fx.ui.controls.form.NodeDecorator;
+
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -21,7 +23,7 @@ import javafx.scene.layout.Priority;
  * A Field editor for string preferences.
  * </p>
  */
-public class StringFieldEditor extends FieldEditor {
+public class StringFieldEditor extends FieldEditor<String>{
 
 	private HBox textFieldContainer;
 	private TextField textField;
@@ -34,13 +36,14 @@ public class StringFieldEditor extends FieldEditor {
 		this.textFieldContainer.getChildren().add(textField);
 		HBox.setHgrow(textField, Priority.ALWAYS);
 		getChildren().add(this.textFieldContainer);
+		NodeDecorator.apply(this.textField, statusProperty());
 	}
 
-	protected HBox getTextContainer() {
+	protected final HBox getTextContainer() {
 		return this.textFieldContainer;
 	}
 	
-	protected TextField getTextField() {
+	protected final TextField getTextField() {
 		return this.textField;
 	}
 
@@ -64,7 +67,7 @@ public class StringFieldEditor extends FieldEditor {
 	}
 
 	@Override
-	protected ObservableValue<?> getValue() {
+	protected ObservableValue<String> getValue() {
 		return this.textField.textProperty();
 	}
 

@@ -8,6 +8,8 @@ import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.fx.core.Memento;
 import org.eclipse.fx.core.MementoStore;
+import org.eclipse.fx.core.Status;
+import org.eclipse.fx.core.Status.State;
 import org.eclipse.fx.ui.preferences.PreferencePage;
 import org.eclipse.fx.ui.preferences.PreferencePageProvider;
 import org.eclipse.fx.ui.preferences.page.BooleanFieldEditor;
@@ -31,7 +33,7 @@ import javafx.scene.layout.BorderPane;
 public class PreferencePageProvider_1 implements PreferencePageProvider {
 	private ObjectProperty<CharSequence> title = new SimpleObjectProperty<>(this, "title", "Page 1");
 	private MementoStore mementoStore;
-	
+
 	@Reference
 	public void setMementoStore(MementoStore mementoStore) {
 		this.mementoStore = mementoStore;
@@ -39,7 +41,8 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 	}
 
 	private void initDefaultPreferences() {
-		// Initialize some default preferences... Here, we assume that the default Eclipse-based Memento will be used
+		// Initialize some default preferences... Here, we assume that the default
+		// Eclipse-based Memento will be used
 		IEclipsePreferences defaultNode = DefaultScope.INSTANCE.getNode(getClass().getName());
 		defaultNode.putInt("integerProperty", 12);
 		defaultNode.put("colorProperty", "204,255,204");
@@ -64,7 +67,7 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 	public Optional<String> parentId() {
 		return Optional.empty();
 	}
-	
+
 	@Override
 	public Optional<Memento> memento() {
 		return Optional.of(mementoStore.getMemento(getClass().getName()));
@@ -75,15 +78,23 @@ public class PreferencePageProvider_1 implements PreferencePageProvider {
 		public Page1(Memento memento, BorderPane parent) {
 			super(memento, parent);
 		}
-		
+
 		@Override
 		protected void createFieldEditors() {
 			addField(new BooleanFieldEditor("booleanProperty", "Boolean Property"));
-			addField(new IntegerFieldEditor("integerProperty", "Integer Property"));
+			IntegerFieldEditor intEditor = new IntegerFieldEditor("integerProperty", "Integer Property");
+			intEditor.registerValidator(intValue -> {
+				return intValue > 20 ? "The value must be lower than 20" : null;
+			});
+			addField(intEditor);
 			addField(new ColorFieldEditor("colorProperty", "Color Property"));
 			addField(new DirectoryFieldEditor("directoryProperty", "Directory Property"));
 			addField(new StringFieldEditor("textProperty", "Text"));
-			addField(new FloatFieldEditor("floatProperty", "Float Property"));
+			FloatFieldEditor floatEditor = new FloatFieldEditor("floatProperty", "Float Property");
+			floatEditor.registerStatusValidator(floatValue -> floatValue < 20 ? null
+					: Status.status(State.WARNING, Status.UNKNOWN_RETURN_CODE, null,
+							null));
+			addField(floatEditor);
 			addField(new RadioGroupFieldEditor("radioProperty", "Radio Property", 3, new String[][] {
 				{"Radio value 1", "value1"},
 				{"Radio value 2", "value2"},

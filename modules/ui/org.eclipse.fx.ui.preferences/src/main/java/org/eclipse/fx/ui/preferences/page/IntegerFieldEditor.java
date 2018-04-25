@@ -15,9 +15,12 @@ import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.Status.State;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
+import org.eclipse.fx.core.observable.FXObservableUtil;
 import org.eclipse.fx.ui.controls.form.NodeDecorator;
 
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectExpression;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
@@ -26,38 +29,45 @@ import javafx.scene.control.TextField;
  * A Field editor for integer preferences.
  * </p>
  */
-public class IntegerFieldEditor extends FieldEditor {
-
+public class IntegerFieldEditor extends FieldEditor<Integer> {
 	private static final Logger LOGGER = LoggerCreator.createLogger(IntegerFieldEditor.class);
 
 	private final TextField textField;
+	private SimpleIntegerProperty value = new SimpleIntegerProperty(this, "value");
 
 	public IntegerFieldEditor(String name, String label) {
 		super(name, label);
 		this.textField = new TextField();
 		getChildren().add(textField);
 
-		configureValidation(this.textField);
+		NodeDecorator.apply(this.textField, statusProperty());
+		FXObservableUtil.onChange(this.textField.textProperty(), newValue -> {
+			try {
+				value.set(Integer.parseInt(newValue));
+			} catch (NumberFormatException ex) {
+				return;
+			}
+		});
 	}
 
 	public IntegerFieldEditor(String name) {
 		this(name, null);
 	}
 
-	private void configureValidation(TextField textField) {
-		SimpleObjectProperty<Status> status = new SimpleObjectProperty<Status>(Status.ok());
-		NodeDecorator.apply(this.textField, status);
-		this.textField.textProperty().addListener((obs, oldText, newText) -> {
+	@Override
+	protected ObjectExpression<Status> createStatusBinding() {
+		ObjectExpression<Status> parentStatus = super.createStatusBinding();
+		return Bindings.createObjectBinding(() -> {
 			try {
-				Integer.parseInt(newText);
-				status.set(Status.ok());
+				Integer.parseInt(textField.getText());
+				return parentStatus.get();
 			} catch (NumberFormatException ex) {
-				status.set(Status.status(State.ERROR, Status.UNKNOWN_RETURN_CODE, "The value must be a valid integer",
-						ex));
+				return Status.status(State.ERROR, Status.UNKNOWN_RETURN_CODE, "The value must be a valid integer", ex);
 			}
-		});
-	}
+		}, parentStatus, textField.textProperty());
 
+	}
+	
 	@Override
 	protected void doLoad() {
 		this.textField.setText(Integer.toString(getMemento().get(getName(), 0)));
@@ -77,14 +87,18 @@ public class IntegerFieldEditor extends FieldEditor {
 			LOGGER.error("An error occurred when trying to persist the integer value for " + getName(), ex);
 		}
 	}
+	
+	protected final TextField geTextField() {
+		return this.textField;
+	}
 
-	private int getIntValue() throws NumberFormatException {
+	protected int getIntValue() throws NumberFormatException {
 		return Integer.parseInt(textField.getText());
 	}
 
 	@Override
-	protected ObservableValue<?> getValue() {
-		return this.textField.textProperty();
+	protected ObservableValue<Integer> getValue() {
+		return this.value.asObject();
 	}
 
 }
