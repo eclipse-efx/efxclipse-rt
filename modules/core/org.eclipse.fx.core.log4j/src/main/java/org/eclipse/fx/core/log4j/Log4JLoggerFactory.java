@@ -17,6 +17,8 @@ import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.fx.core.RankedService;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -81,6 +83,10 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		private org.apache.log4j.Logger logger;
 
 		private String name;
+		
+		@SuppressWarnings("null")
+		@NonNull
+		private static final String FQN = LoggerImpl.class.getCanonicalName();
 
 		public LoggerImpl(String name) {
 			this.name = name;
@@ -114,27 +120,47 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 
 		@Override
 		public void log(Level level, String message) {
-			getLogger().log(Log4JLoggerFactory.class.getCanonicalName(), toLog4JLevel(level), message, null);
+			log(FQN, level, message, null);
 		}
 
 		@Override
 		public void log(Level level, String message, Throwable t) {
-			getLogger().log(Log4JLoggerFactory.class.getCanonicalName(), toLog4JLevel(level), message, t);
+			log(FQN, level, message, t);
+		}
+
+		@Override
+		public void log(String wrapperClass, Level level, CharSequence message, @Nullable Throwable t) {
+			getLogger().log(wrapperClass, toLog4JLevel(level), message, t);
+		}
+
+		@Override
+		public void log(@NonNull String wrapperClass, @NonNull Level level, @NonNull CharSequence message) {
+			getLogger().log(wrapperClass, toLog4JLevel(level), message, null);
 		}
 
 		@Override
 		public void logf(Level level, String pattern, Object... args) {
-			org.apache.log4j.Level log4jLevel = toLog4JLevel(level);
-			if (getLogger().isEnabledFor(log4jLevel)) {
-				getLogger().log(log4jLevel, String.format(pattern, args));
-			}
+			logf(FQN, level, pattern, args);
 		}
 
 		@Override
 		public void logf(Level level, String pattern, Throwable t, Object... args) {
+			logf(FQN, level, pattern, t, args);
+		}
+
+		@Override
+		public void logf(String wrapperClass, Level level, String pattern, Object... args) {
 			org.apache.log4j.Level log4jLevel = toLog4JLevel(level);
 			if (getLogger().isEnabledFor(log4jLevel)) {
-				getLogger().log(log4jLevel, String.format(pattern, args), t);
+				getLogger().log(wrapperClass, log4jLevel, String.format(pattern, args), null);
+			}
+		}
+
+		@Override
+		public void logf(String wrapperClass, Level level, String pattern, Throwable t, Object... args) {
+			org.apache.log4j.Level log4jLevel = toLog4JLevel(level);
+			if (getLogger().isEnabledFor(log4jLevel)) {
+				getLogger().log(wrapperClass, log4jLevel, String.format(pattern, args), t);
 			}
 		}
 
