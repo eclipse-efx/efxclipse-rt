@@ -30,6 +30,7 @@ import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
 import org.eclipse.fx.core.geom.Size;
 import org.eclipse.fx.core.text.TextUtil;
+import org.eclipse.fx.ui.controls.internal.PseudoClassProperty;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
 import org.eclipse.jdt.annotation.NonNull;
@@ -43,12 +44,14 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Insets;
@@ -598,4 +601,39 @@ public class Util {
 	public static Background getSimpleBackground(Paint p) {
 		return new Background(new BackgroundFill(p, CornerRadii.EMPTY, Insets.EMPTY));
 	}
+	
+	
+    /**
+     * creates a new pseudo class property.
+     * <p>
+     * A pseudo class property is a BooleanProperty which updates the containers pseudo class state on invalidation.
+     * </p>
+     * 
+     * @param cls the pseudo class
+     * @param node the container node
+     * @param name the properties name (not to confuse with the pseudo class name, those may be different)
+     * @param def the initial value
+     * @return the new property
+     */
+    public static BooleanProperty createPseudoClassProperty(PseudoClass cls, Node node, String name, boolean def) {
+        return PseudoClassProperty.create(cls, node, name, def);
+    }
+    
+    /**
+     * creates a new pseudo class property.
+     * <p>
+     * A pseudo class property is a BooleanProperty which updates the containers pseudo class state on invalidation.
+     * </p>
+     * <p>
+     * Convenience method if you do not need to hold the instance of the PseudoClass
+     * </p>
+     * @param pseudoClass the pseudo class string
+     * @param node the container node
+     * @param name the properties name (not to confuse with the pseudo class name, those may be different)
+     * @param def the initial value
+     * @return the new property
+     */
+    public static BooleanProperty createPseudoClassProperty(String pseudoClass, Node node, String name, boolean def) {
+    	return PseudoClassProperty.create(pseudoClass, node, name, def);
+    }
 }
