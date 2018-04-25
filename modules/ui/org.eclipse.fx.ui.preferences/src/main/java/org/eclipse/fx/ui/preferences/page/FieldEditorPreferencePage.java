@@ -168,8 +168,7 @@ public abstract class FieldEditorPreferencePage extends BasePreferencePage {
 			.filter(s -> s != null && !s.isOk()) 
 			.map(Status::getMessage)
 			.filter(m -> m != null && !m.isEmpty())
-			.reduce((s1, s2) -> new StringBuilder(s1).append("\n").append(s2).toString())
-			.orElse(null);
+			.collect(Collectors.joining("\n"));
 	}
 
 	abstract protected void createFieldEditors();
