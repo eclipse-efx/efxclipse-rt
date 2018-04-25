@@ -18,12 +18,10 @@ import org.eclipse.jdt.annotation.NonNull;
 /**
  * A logging context to capture information and log them
  * 
- * @param <C>
- *            the context type
  * @since 3.3.0
  * @noimplement
  */
-public interface FluentLogContext<C extends FluentLogContext<C>> {
+public interface FluentLogContext {
 	/**
 	 * Attach an exception to the log statement
 	 * 
@@ -31,7 +29,7 @@ public interface FluentLogContext<C extends FluentLogContext<C>> {
 	 *            the throwable
 	 * @return the context
 	 */
-	public C withException(Throwable t);
+	public FluentLogContext withException(Throwable t);
 
 	/**
 	 * Log the provided message
@@ -72,10 +70,4 @@ public interface FluentLogContext<C extends FluentLogContext<C>> {
 	 */
 	public <T> void log(@NonNull Function<T, @NonNull CharSequence> messageSupplier, T argument);
 
-	/**
-	 * The default log context
-	 */
-	public interface Default extends FluentLogContext<Default> {
-		// empty by default
-	}
 }

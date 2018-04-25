@@ -20,13 +20,13 @@ import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.jdt.annotation.NonNull;
 
 @SuppressWarnings("javadoc")
-public class FluentLoggerImpl implements FluentLogger<FluentLogContext.Default> {
+public class FluentLoggerImpl implements FluentLogger {
 	@NonNull
 	private final Logger logger;
 
-	private static final FluentLogContext.Default NO_LOG = new NoOpLogContextImpl();
+	private static final FluentLogContext NO_LOG = new NoOpLogContextImpl();
 
-	static class NoOpLogContextImpl implements FluentLogContext.Default {
+	static class NoOpLogContextImpl implements FluentLogContext {
 		@Override
 		public <T> void log(@NonNull Function<T, @NonNull CharSequence> messageSupplier, T type) {
 			// empty
@@ -48,12 +48,12 @@ public class FluentLoggerImpl implements FluentLogger<FluentLogContext.Default> 
 		}
 
 		@Override
-		public FluentLogContext.Default withException(Throwable t) {
+		public FluentLogContext withException(Throwable t) {
 			return this;
 		}
 	}
 
-	static class FluentLogContextImpl implements FluentLogContext.Default {
+	static class FluentLogContextImpl implements FluentLogContext {
 		@NonNull
 		private final Logger logger;
 		@NonNull
@@ -101,7 +101,7 @@ public class FluentLoggerImpl implements FluentLogger<FluentLogContext.Default> 
 		}
 
 		@Override
-		public FluentLogContext.Default withException(Throwable t) {
+		public FluentLogContext withException(Throwable t) {
 			this.t = t;
 			return this;
 		}
@@ -112,7 +112,7 @@ public class FluentLoggerImpl implements FluentLogger<FluentLogContext.Default> 
 	}
 
 	@Override
-	public FluentLogContext.Default at(@NonNull Level level) {
+	public FluentLogContext at(@NonNull Level level) {
 		if (this.logger.isEnabled(level)) {
 			return new FluentLogContextImpl(level, this.logger);
 		}
