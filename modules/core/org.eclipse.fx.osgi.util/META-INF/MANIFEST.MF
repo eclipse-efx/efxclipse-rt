@@ -22,4 +22,5 @@ Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolu
  org.eclipse.equinox.common;bundle-version="3.7.0"
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/services/org.eclipse.fx.osgi.util.internal.FileLocatorURLResolver.xml,
- OSGI-INF/services/org.eclipse.fx.osgi.util.internal.MementoStoreImpl.xml
+ OSGI-INF/services/org.eclipse.fx.osgi.util.internal.MementoStoreImpl.xml,
+ OSGI-INF/services/org.eclipse.fx.osgi.util.internal.URLStreamComponent.xml

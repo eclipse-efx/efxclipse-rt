@@ -15,28 +15,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.eclipse.fx.core.ServiceUtils;
-import org.eclipse.fx.core.URLStreamHandler;
 import org.eclipse.fx.core.log.Logger;
-import org.eclipse.fx.core.log.LoggerFactory;
+import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
-import org.osgi.service.url.URLConstants;
-import org.osgi.service.url.URLStreamHandlerService;
 
 import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
@@ -63,16 +57,12 @@ public class DefaultThemeManager implements ThemeManager {
 
 	private static final String THEMED_KEY = "themed"; //$NON-NLS-1$
 
+	private EventAdmin eventAdmin;
+	
 	/**
 	 * Create a new theme manager instance
 	 */
 	public DefaultThemeManager() {
-		for( URLStreamHandler handler : ServiceUtils.getServiceList(URLStreamHandler.class) ) {
-			Hashtable<String, Object> t = new Hashtable<>();
-			t.put(URLConstants.URL_HANDLER_PROTOCOL, new String[] { handler.getProtocol() });
-			Activator.getContext().registerService(URLStreamHandlerService.class, new DelegatingURLStreamHandlerService(handler), t);
-		}
-
 		this.managedScenes.addListener((ListChangeListener<Scene>) change -> {
 			@Nullable
 			Theme currentTheme = getCurrentTheme();
@@ -87,6 +77,11 @@ public class DefaultThemeManager implements ThemeManager {
 				}
 			}
 		});
+	}
+	
+	@Reference
+	public void setEventAdmin(EventAdmin eventAdmin) {
+		this.eventAdmin = eventAdmin;
 	}
 
 	@Override
@@ -192,9 +187,8 @@ public class DefaultThemeManager implements ThemeManager {
 
 			setTheme(theme);
 
-			EventAdmin eventAdmin = getEventAdmin();
-			if (eventAdmin != null) {
-				eventAdmin.sendEvent(new Event(Constants.THEME_CHANGED, Collections.singletonMap("org.eclipse.e4.data", id))); //$NON-NLS-1$
+			if (this.eventAdmin != null) {
+				this.eventAdmin.sendEvent(new Event(Constants.THEME_CHANGED, Collections.singletonMap("org.eclipse.e4.data", id))); //$NON-NLS-1$
 			}
 			return;
 		}
@@ -212,29 +206,27 @@ public class DefaultThemeManager implements ThemeManager {
 	static Logger getLogger() {
 		Logger logger = LOGGER;
 		if (logger == null) {
-			ServiceReference<LoggerFactory> ref = Activator.getContext().getServiceReference(LoggerFactory.class);
-			logger = Activator.getContext().getService(ref).createLogger(DefaultThemeManager.class.getName());
-			LOGGER = logger;
+			LOGGER = LoggerCreator.createLogger(DefaultThemeManager.class);
 		}
 		return LOGGER;
 	}
 
-	private EventAdmin eventAdmin;
-
-	@Nullable
-	EventAdmin getEventAdmin() {
-		EventAdmin eventAdmin = this.eventAdmin;
-		if (eventAdmin != null) {
-			return eventAdmin;
-		}
-
-		ServiceReference<EventAdmin> ref = Activator.getContext().getServiceReference(EventAdmin.class);
-		if (ref != null) {
-			eventAdmin = Activator.getContext().getService(ref);
-		}
-
-		return eventAdmin;
-	}
+//	private EventAdmin eventAdmin;
+//
+//	@Nullable
+//	EventAdmin getEventAdmin() {
+//		EventAdmin eventAdmin = this.eventAdmin;
+//		if (eventAdmin != null) {
+//			return eventAdmin;
+//		}
+//
+//		ServiceReference<EventAdmin> ref = Activator.getContext().getServiceReference(EventAdmin.class);
+//		if (ref != null) {
+//			eventAdmin = Activator.getContext().getService(ref);
+//		}
+//
+//		return eventAdmin;
+//	}
 
 	@Override
 	public Registration registerScene(final Scene scene) {
