@@ -36,17 +36,17 @@
 			<!-- Important changing this requires to publish the platform bundles to maven -->
 			<id>oxygen.0</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/eclipse/updates/4.7/R-4.7-201706120950/</url>
+			<url>http://download.eclipse.org/eclipse/updates/4.7/R-4.7.3a-201803300640/</url>
 		</repository>
 		<repository>
 			<id>orbit</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository/</url>
+			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository/</url>
 		</repository>
 		<repository>
 			<id>xtext</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.12.0</url>
+			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.13.0</url>
 		</repository>
 		<repository>
 			<id>mwe</id>
