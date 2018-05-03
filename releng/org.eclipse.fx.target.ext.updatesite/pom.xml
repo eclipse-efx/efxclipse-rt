@@ -12,6 +12,10 @@
 		<relativePath>../org.eclipse.fx.target.ext.releng/pom.xml</relativePath>
 		<version>3.3.0-SNAPSHOT</version>
 	</parent>
+	
+	<properties>
+		<p2repo-zip-path>${project.build.directory}/site_assembly.zip</p2repo-zip-path>
+	</properties>
 
 	<profiles>
 		<profile>
