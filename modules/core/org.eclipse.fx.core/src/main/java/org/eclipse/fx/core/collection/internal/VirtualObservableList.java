@@ -109,6 +109,7 @@ public class VirtualObservableList<@Nullable T> implements VirtualList<T> {
 			this.startIndex = new ReadOnlyLongWrapper(startIndex);
 			FXObservableUtil.onInvalidate(this.startIndex, v -> updateList());
 			this.length = new ReadOnlyIntegerWrapper(length);
+			FXObservableUtil.onInvalidate(this.length, v -> updateList());
 			FXObservableUtil.onInvalidate(VirtualObservableList.this.list, o -> updateList());
 
 			this.listener = (c) -> {

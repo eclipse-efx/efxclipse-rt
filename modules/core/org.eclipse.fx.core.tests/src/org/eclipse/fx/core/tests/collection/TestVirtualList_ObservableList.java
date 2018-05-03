@@ -15,6 +15,7 @@ import org.eclipse.fx.core.observable.FXObservableUtil;
 import org.junit.Test;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 
 public class TestVirtualList_ObservableList {
@@ -298,5 +299,162 @@ public class TestVirtualList_ObservableList {
 
 		IndexRangeView<String> view = virtualList.getView(1, 2);
 		view.get(2);
+	}
+	
+	@Test
+	public void indexRangeViewAddAtIndex() {
+		ObservableList<String> list = FXCollections.observableArrayList("A", "B", "C");
+		VirtualList<String> virtualList = VirtualList.of(list);
+
+		AtomicBoolean i = new AtomicBoolean();
+		IndexRangeView<String> view = virtualList.getView(0,2);
+		view.addListener((Change<? extends String> c) -> {
+			i.set(true); 
+		});
+
+		list.add(0, "A0");
+		assertTrue(i.get());
+		assertEquals(0, view.startIndex().get());
+		assertEquals(1, view.endIndex().get());
+		assertEquals("A0", view.get(0));
+		assertEquals("A", view.get(1));
+	}
+	
+	@Test
+	public void indexRangeViewAddBeforeIndex() {
+		ObservableList<String> list = FXCollections.observableArrayList("A", "B", "C");
+		VirtualList<String> virtualList = VirtualList.of(list);
+
+		AtomicBoolean i = new AtomicBoolean();
+		IndexRangeView<String> view = virtualList.getView(1,2);
+		view.addListener((Change<? extends String> c) -> {
+			i.set(true); 
+		});
+
+		assertEquals("B", view.get(0));
+		assertEquals("C", view.get(1));
+		list.add(0, "A0");
+		assertTrue(i.get());
+		assertEquals(1, view.startIndex().get());
+		assertEquals(2, view.endIndex().get());
+		assertEquals("A", view.get(0));
+		assertEquals("B", view.get(1));
+	}
+	
+	@Test
+	public void indexRangeViewAddAfterIndex() {
+		ObservableList<String> list = FXCollections.observableArrayList("A", "B", "C");
+		VirtualList<String> virtualList = VirtualList.of(list);
+
+		AtomicBoolean i = new AtomicBoolean();
+		IndexRangeView<String> view = virtualList.getView(1,2);
+		view.addListener((Change<? extends String> c) -> {
+			i.set(true); 
+		});
+
+		assertEquals("B", view.get(0));
+		assertEquals("C", view.get(1));
+		list.add(3, "A0");
+		assertFalse(i.get());
+		assertEquals(1, view.startIndex().get());
+		assertEquals(2, view.endIndex().get());
+		assertEquals("B", view.get(0));
+		assertEquals("C", view.get(1));
+	}
+	
+	@Test
+	public void indexRangeViewMoveByPositive() {
+		ObservableList<String> list = FXCollections.observableArrayList("A", "B", "C");
+		VirtualList<String> virtualList = VirtualList.of(list);
+		
+		AtomicBoolean i = new AtomicBoolean();
+		IndexRangeView<String> view = virtualList.getView(0,2);
+		view.addListener((Change<? extends String> c) -> {
+			i.set(true); 
+		});
+		
+		view.moveBy(1);
+		assertTrue(i.get());
+		assertEquals(1, view.startIndex().get());
+		assertEquals(2, view.endIndex().get());
+		assertEquals("B", view.get(0));
+		assertEquals("C", view.get(1));
+	}
+	
+	@Test
+	public void indexRangeViewMoveByNegative() {
+		ObservableList<String> list = FXCollections.observableArrayList("A", "B", "C");
+		VirtualList<String> virtualList = VirtualList.of(list);
+		
+		AtomicBoolean i = new AtomicBoolean();
+		IndexRangeView<String> view = virtualList.getView(1,2);
+		view.addListener((Change<? extends String> c) -> {
+			i.set(true); 
+		});
+		
+		view.moveBy(-1);
+		assertTrue(i.get());
+		assertEquals(0, view.startIndex().get());
+		assertEquals(1, view.endIndex().get());
+		assertEquals("A", view.get(0));
+		assertEquals("B", view.get(1));
+	}
+	
+	@Test
+	public void indexRangeViewMoveOutOfRange() {
+		ObservableList<String> list = FXCollections.observableArrayList("A", "B", "C");
+		VirtualList<String> virtualList = VirtualList.of(list);
+		
+		AtomicBoolean i = new AtomicBoolean();
+		IndexRangeView<String> view = virtualList.getView(0,2);
+		view.addListener((Change<? extends String> c) -> {
+			i.set(true); 
+		});
+		
+		view.moveBy(3);
+		assertTrue(i.get());
+		assertEquals(3, view.startIndex().get());
+		assertEquals(4, view.endIndex().get());
+		assertNull(view.get(0));
+		assertNull(view.get(1));
+	}
+	
+	@Test
+	public void indexRangeViewShrink() {
+		ObservableList<String> list = FXCollections.observableArrayList("A", "B", "C");
+		VirtualList<String> virtualList = VirtualList.of(list);
+		
+		AtomicBoolean i = new AtomicBoolean();
+		IndexRangeView<String> view = virtualList.getView(0,3);
+		view.addListener((Change<? extends String> c) -> {
+			i.set(true); 
+		});
+		
+		view.shrinkBy(1);
+		assertTrue(i.get());
+		assertEquals(0, view.startIndex().get());
+		assertEquals(1, view.endIndex().get());
+		assertEquals("A",view.get(0));
+		assertEquals("B", view.get(1));
+	}
+	
+	@Test
+	public void indexRangeViewGrow() {
+		ObservableList<String> list = FXCollections.observableArrayList("A", "B", "C");
+		VirtualList<String> virtualList = VirtualList.of(list);
+		
+		AtomicBoolean i = new AtomicBoolean();
+		IndexRangeView<String> view = virtualList.getView(0,2);
+		view.addListener((Change<? extends String> c) -> {
+			i.set(true); 
+		});
+		
+		view.growBy(1);
+		assertTrue(i.get());
+		assertEquals(0, view.startIndex().get());
+		assertEquals(2, view.endIndex().get());
+		assertEquals("A",view.get(0));
+		assertEquals("B", view.get(1));
+		assertEquals("C", view.get(2));
 	}
 }
