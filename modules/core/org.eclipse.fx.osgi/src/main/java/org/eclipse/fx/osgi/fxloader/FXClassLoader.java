@@ -45,7 +45,7 @@ public class FXClassLoader extends ClassLoaderHook {
 	private ClassLoader j9Classloader;
 
 	private static boolean isJDK8() {
-		return System.getProperty("java.version","").startsWith("1"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return System.getProperty("java.version","").startsWith("1.8"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	@SuppressWarnings("resource")
