@@ -376,13 +376,6 @@
          unpack="false"/>
 
 	<plugin
-         id="org.eclipse.m2e.archetype.common.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-	<plugin
          id="org.eclipse.m2e.jdt"
          download-size="0"
          install-size="0"
@@ -403,13 +396,6 @@
          version="0.0.0"
          unpack="false"/>
          
-    <plugin
-         id="org.eclipse.m2e.maven.indexer.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
 	<plugin
          id="org.eclipse.m2e.maven.runtime"
          download-size="0"
@@ -417,22 +403,8 @@
          version="0.0.0"
          unpack="false"/>
          
-    <plugin
-         id="org.eclipse.m2e.maven.runtime.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
 	<plugin
          id="org.eclipse.m2e.maven.runtime.slf4j.simple"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-         
-    <plugin
-         id="org.eclipse.m2e.maven.runtime.slf4j.simple.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -459,13 +431,6 @@
          version="0.0.0"
          unpack="false"/>
          
-    <plugin
-         id="org.eclipse.m2e.workspace.cli.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
- 
 	<plugin
          id="org.eclipse.m2e.lifecyclemapping.defaults"
          download-size="0"
@@ -473,13 +438,6 @@
          version="0.0.0"
          unpack="false"/>
          
-    <plugin
-         id="org.eclipse.m2e.lifecyclemapping.defaults.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
 	<plugin
          id="javax.annotation"
          download-size="0"
