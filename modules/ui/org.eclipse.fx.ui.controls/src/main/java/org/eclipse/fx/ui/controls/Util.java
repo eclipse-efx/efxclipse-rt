@@ -49,6 +49,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.beans.value.WeakChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
@@ -58,6 +59,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -214,8 +216,8 @@ public class Util {
 	}
 
 	/**
-	 * Find all node at the given x/y location starting the search from the
-	 * given node
+	 * Find all node at the given x/y location starting the search from the given
+	 * node
 	 *
 	 * @param n
 	 *            the node to use as the start
@@ -260,7 +262,7 @@ public class Util {
 
 		ChangeListener<Window> l = (o, oldV, newV) -> w.set(newV);
 
-		n.sceneProperty().addListener((o, oldV, newV) -> {
+		ChangeListener<Scene> sl = (o, oldV, newV) -> {
 			if (oldV != null) {
 				oldV.windowProperty().removeListener(l);
 			}
@@ -268,14 +270,15 @@ public class Util {
 			if (newV != null) {
 				newV.windowProperty().addListener(l);
 			}
-		});
+		};
+		n.sceneProperty().addListener(new WeakChangeListener<>(sl));
 
 		return w;
 	}
 
 	/**
-	 * Bind the content to the source list to the target and apply the converter
-	 * in between
+	 * Bind the content to the source list to the target and apply the converter in
+	 * between
 	 *
 	 * @param target
 	 *            the target list
@@ -455,7 +458,8 @@ public class Util {
 	 *            the condition
 	 * @return the return value of the condition
 	 * @since 2.3.0
-	 * @deprecated deprecated since 3.0 to to be replaced by {@link ThreadSynchronize#block(BlockCondition)}
+	 * @deprecated deprecated since 3.0 to to be replaced by
+	 *             {@link ThreadSynchronize#block(BlockCondition)}
 	 */
 	@Deprecated
 	public static <T> @Nullable T waitUntil(@NonNull BlockCondition<T> blockCondition) {
@@ -601,39 +605,51 @@ public class Util {
 	public static Background getSimpleBackground(Paint p) {
 		return new Background(new BackgroundFill(p, CornerRadii.EMPTY, Insets.EMPTY));
 	}
-	
-	
-    /**
-     * creates a new pseudo class property.
-     * <p>
-     * A pseudo class property is a BooleanProperty which updates the containers pseudo class state on invalidation.
-     * </p>
-     * 
-     * @param cls the pseudo class
-     * @param node the container node
-     * @param name the properties name (not to confuse with the pseudo class name, those may be different)
-     * @param def the initial value
-     * @return the new property
-     */
-    public static BooleanProperty createPseudoClassProperty(PseudoClass cls, Node node, String name, boolean def) {
-        return PseudoClassProperty.create(cls, node, name, def);
-    }
-    
-    /**
-     * creates a new pseudo class property.
-     * <p>
-     * A pseudo class property is a BooleanProperty which updates the containers pseudo class state on invalidation.
-     * </p>
-     * <p>
-     * Convenience method if you do not need to hold the instance of the PseudoClass
-     * </p>
-     * @param pseudoClass the pseudo class string
-     * @param node the container node
-     * @param name the properties name (not to confuse with the pseudo class name, those may be different)
-     * @param def the initial value
-     * @return the new property
-     */
-    public static BooleanProperty createPseudoClassProperty(String pseudoClass, Node node, String name, boolean def) {
-    	return PseudoClassProperty.create(pseudoClass, node, name, def);
-    }
+
+	/**
+	 * creates a new pseudo class property.
+	 * <p>
+	 * A pseudo class property is a BooleanProperty which updates the containers
+	 * pseudo class state on invalidation.
+	 * </p>
+	 * 
+	 * @param cls
+	 *            the pseudo class
+	 * @param node
+	 *            the container node
+	 * @param name
+	 *            the properties name (not to confuse with the pseudo class name,
+	 *            those may be different)
+	 * @param def
+	 *            the initial value
+	 * @return the new property
+	 */
+	public static BooleanProperty createPseudoClassProperty(PseudoClass cls, Node node, String name, boolean def) {
+		return PseudoClassProperty.create(cls, node, name, def);
+	}
+
+	/**
+	 * creates a new pseudo class property.
+	 * <p>
+	 * A pseudo class property is a BooleanProperty which updates the containers
+	 * pseudo class state on invalidation.
+	 * </p>
+	 * <p>
+	 * Convenience method if you do not need to hold the instance of the PseudoClass
+	 * </p>
+	 * 
+	 * @param pseudoClass
+	 *            the pseudo class string
+	 * @param node
+	 *            the container node
+	 * @param name
+	 *            the properties name (not to confuse with the pseudo class name,
+	 *            those may be different)
+	 * @param def
+	 *            the initial value
+	 * @return the new property
+	 */
+	public static BooleanProperty createPseudoClassProperty(String pseudoClass, Node node, String name, boolean def) {
+		return PseudoClassProperty.create(pseudoClass, node, name, def);
+	}
 }
