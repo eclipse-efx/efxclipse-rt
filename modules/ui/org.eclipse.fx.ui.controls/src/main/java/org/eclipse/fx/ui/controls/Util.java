@@ -271,7 +271,10 @@ public class Util {
 				newV.windowProperty().addListener(l);
 			}
 		};
-		n.sceneProperty().addListener(new WeakChangeListener<>(sl));
+		n.getProperties().put("listener", sl); //$NON-NLS-1$
+		WeakChangeListener<Scene> wl = new WeakChangeListener<>(sl);
+		n.getProperties().put("wl_listener", wl); //$NON-NLS-1$
+		n.sceneProperty().addListener(wl);
 
 		return w;
 	}
