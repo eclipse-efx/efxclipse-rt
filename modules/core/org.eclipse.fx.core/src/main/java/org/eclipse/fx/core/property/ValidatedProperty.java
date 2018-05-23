@@ -41,8 +41,7 @@ public interface ValidatedProperty<O> extends ValidationStatusPropertyOwner {
 	public Subscription registerValidator(Function<O, Status> validator);
 
 	/**
-	 * Register a validator who is also use the values from dependent
-	 * observables
+	 * Register a validator who is also use the values from dependent observables
 	 *
 	 * @param validator
 	 *            the validator
@@ -96,4 +95,29 @@ public interface ValidatedProperty<O> extends ValidationStatusPropertyOwner {
 	 * Free all resources
 	 */
 	public void dispose();
+
+	/**
+	 * reset the status
+	 * 
+	 * @since 3.3.0
+	 */
+	public void reset();
+
+	/**
+	 * Set to <code>true</code> the validation only runs by directly call
+	 * {@link #validate()}. Default: <code>false</code>
+	 * 
+	 * @param onRequestOnly
+	 *            the new value
+	 * @since 3.3.0
+	 */
+	public void setOnRequestOnly(boolean onRequestOnly);
+
+	/**
+	 * Get the current value
+	 * 
+	 * @return the current value
+	 * @since 3.3.0
+	 */
+	public boolean isOnRequestOnly();
 }
