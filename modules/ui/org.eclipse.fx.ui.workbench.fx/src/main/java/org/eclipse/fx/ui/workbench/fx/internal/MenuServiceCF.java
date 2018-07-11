@@ -21,7 +21,7 @@ public class MenuServiceCF extends ContextFunction {
 		return ContextInjectionFactory.make(MenuServiceImpl.class, context);
 	}
 
-	private class MenuServiceImpl implements MenuService {
+	static class MenuServiceImpl implements MenuService {
 		@Inject
 		private EMenuService eMenuService;
 
