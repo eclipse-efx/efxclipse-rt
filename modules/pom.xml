@@ -26,6 +26,10 @@
 		<dep-org.eclipse.e4.core.services>2.0.100</dep-org.eclipse.e4.core.services>
 		<dep-org.eclipse.equinox.preferences>3.7.0</dep-org.eclipse.equinox.preferences>
 		<dep-org.apache.log4j>1.2.15</dep-org.apache.log4j>
+		<dep-org.eclipse.equinox.common>3.9.0</dep-org.eclipse.equinox.common>
+		<dep-org.eclipse.core.jobs>3.9.3</dep-org.eclipse.core.jobs>
+		<dep-org.eclipse.equinox.p2.core>2.4.101</dep-org.eclipse.equinox.p2.core>
+		<dep-org.eclipse.equinox.p2.operations>2.4.300</dep-org.eclipse.equinox.p2.operations>
 
 		<plugin-maven-osgi-package-plugin>0.0.1</plugin-maven-osgi-package-plugin>
 		<plugin-bnd-maven-plugin>3.5.0</plugin-bnd-maven-plugin>
@@ -41,6 +45,7 @@
 		<module>core/org.eclipse.fx.core.guice</module>
 		<module>core/org.eclipse.fx.core.junit</module>
 		<module>core/org.eclipse.fx.core.log4j</module>
+		<module>core/org.eclipse.fx.core.p2</module>
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 
@@ -129,7 +134,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.4</version>
+				<version>3.0.1</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -140,6 +145,7 @@
 				</executions>
 				<configuration>
 					<failOnError>true</failOnError>
+					<failOnWarnings>true</failOnWarnings>
 					<tags>
 						<tag>
 							<name>noimplement</name>

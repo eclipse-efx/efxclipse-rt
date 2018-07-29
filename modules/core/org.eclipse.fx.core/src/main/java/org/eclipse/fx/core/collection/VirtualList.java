@@ -63,6 +63,8 @@ public interface VirtualList<@Nullable T> {
 	/**
 	 * Create a {@link VirtualList} from an {@link ObservableList}
 	 * 
+	 * @param <T> the type
+	 * 
 	 * @param list
 	 *            the source list
 	 * @return the virtual list

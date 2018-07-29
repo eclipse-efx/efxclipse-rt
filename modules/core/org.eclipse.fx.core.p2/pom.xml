@@ -1,34 +1,41 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<name>e(fx)clipse - Runtime - P2</name>
-	<groupId>org.eclipse.fx.runtime</groupId>
 	<artifactId>org.eclipse.fx.core.p2</artifactId>
-	<packaging>eclipse-plugin</packaging>
 
 	<parent>
-		<groupId>org.eclipse.fx</groupId>
-		<artifactId>releng</artifactId>
-		<relativePath>../../../releng/org.eclipse.fx.releng/pom.xml</relativePath>
-		<version>3.3.0-SNAPSHOT</version>
+		<groupId>org.eclipse.fx.runtime</groupId>
+		<artifactId>parent</artifactId>
+		<relativePath>../../pom.xml</relativePath>
+		<version>4.0.0-SNAPSHOT</version>
 	</parent>
-
-	<build>
-		<resources>
-			<!-- to ensure that the feature lookup of the ui test works -->
-			<resource>
-				<directory>.</directory>
-				<includes>
-					<include>META-INF/</include>
-				</includes>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-source-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>org.eclipse.equinox.common</artifactId>
+			<version>${dep-org.eclipse.equinox.common}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.fx.runtime</groupId>
+			<artifactId>org.eclipse.fx.core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>org.eclipse.core.jobs</artifactId>
+			<version>${dep-org.eclipse.core.jobs}</version>
+		</dependency>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>org.eclipse.equinox.p2.core</artifactId>
+			<version>${dep-org.eclipse.equinox.p2.core}</version>
+		</dependency>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>org.eclipse.equinox.p2.operations</artifactId>
+			<version>${dep-org.eclipse.equinox.p2.operations}</version>
+		</dependency>
+	</dependencies>
 
 </project>
