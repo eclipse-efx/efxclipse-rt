@@ -25,6 +25,7 @@
 		<dep-org.eclipse.e4.core.contexts>1.6.0</dep-org.eclipse.e4.core.contexts>
 		<dep-org.eclipse.e4.core.services>2.0.100</dep-org.eclipse.e4.core.services>
 		<dep-org.eclipse.equinox.preferences>3.7.0</dep-org.eclipse.equinox.preferences>
+		<dep-org.apache.log4j>1.2.15</dep-org.apache.log4j>
 
 		<plugin-maven-osgi-package-plugin>0.0.1</plugin-maven-osgi-package-plugin>
 		<plugin-bnd-maven-plugin>3.5.0</plugin-bnd-maven-plugin>
@@ -39,6 +40,7 @@
 		<module>core/org.eclipse.fx.core.fxml</module>
 		<module>core/org.eclipse.fx.core.guice</module>
 		<module>core/org.eclipse.fx.core.junit</module>
+		<module>core/org.eclipse.fx.core.log4j</module>
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 

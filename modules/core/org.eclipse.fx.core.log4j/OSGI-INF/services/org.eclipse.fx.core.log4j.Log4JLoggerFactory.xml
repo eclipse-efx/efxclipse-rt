@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.core.log4j.Log4JLoggerFactory">
-   <implementation class="org.eclipse.fx.core.log4j.Log4JLoggerFactory"/>
-   <service>
-      <provide interface="org.eclipse.fx.core.log.LoggerFactory"/>
-   </service>
-   <property name="service.ranking" type="Integer" value="1"/>
-   <reference bind="registerAppender" cardinality="0..n" interface="org.apache.log4j.Appender" name="registerAppender" policy="dynamic" policy-option="greedy" unbind="unregisterAppender"/>
-</scr:component>

@@ -86,6 +86,17 @@
   		<version>${project.version}</version>
   		<classifier>sources</classifier>
   	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.core.log4j</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.core.log4j</artifactId>
+  		<version>${project.version}</version>
+  		<classifier>sources</classifier>
+  	</dependency>
   	
   	
   	
