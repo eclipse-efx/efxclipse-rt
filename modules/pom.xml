@@ -17,6 +17,7 @@
 		<dep-javax.inject>1.0.0</dep-javax.inject>
 		<dep-org.eclipse.osgi.services>3.6.0</dep-org.eclipse.osgi.services>
 		<dep-com.google.guava>21.0.0</dep-com.google.guava>
+		<dep-com.google.inject>3.0.0</dep-com.google.inject>
 		<dep-org.apache.commons.lang>2.6.0</dep-org.apache.commons.lang>
 		<dep-org.eclipse.core.databinding.observable>1.6.100</dep-org.eclipse.core.databinding.observable>
 		<dep-org.eclipse.core.databinding.property>1.6.100</dep-org.eclipse.core.databinding.property>
@@ -36,6 +37,7 @@
 		<module>core/org.eclipse.fx.core.di.context</module>
 		<!-- module>core/org.eclipse.fx.core.di.context.tests</module -->
 		<module>core/org.eclipse.fx.core.fxml</module>
+		<module>core/org.eclipse.fx.core.guice</module>
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 
