@@ -25,11 +25,12 @@ import com.google.inject.spi.TypeListener;
 
 /**
  * Listener to support the injection of @Log
- * <pre>
+ * <pre><code>
  * class MyBean {
- *   @Log
+ *   &#64;Log
  *   Logger logger;
  * }
+ * </code>
  * </pre>
  */
 public class FXLoggerListener implements TypeListener {
