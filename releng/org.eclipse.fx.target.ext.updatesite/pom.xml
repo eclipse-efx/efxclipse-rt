@@ -10,8 +10,12 @@
 		<groupId>org.eclipse.fx</groupId>
 		<artifactId>ext.releng</artifactId>
 		<relativePath>../org.eclipse.fx.target.ext.releng/pom.xml</relativePath>
-		<version>3.1.0-SNAPSHOT</version>
+		<version>3.3.0-SNAPSHOT</version>
 	</parent>
+	
+	<properties>
+		<p2repo-zip-path>${project.build.directory}/site_assembly.zip</p2repo-zip-path>
+	</properties>
 
 	<profiles>
 		<profile>
@@ -37,6 +41,11 @@
 										<copy includeemptydirs="false" todir="${download-publish-path}">
 											<fileset dir="target/repository">
 												<include name="**" />
+											</fileset>
+										</copy>
+										<copy includeemptydirs="false" todir="${download-publish-path}">
+											<fileset dir="target">
+												<include name="org.eclipse.fx.target.ext.updatesite-*-SNAPSHOT.zip" />
 											</fileset>
 										</copy>
 									</tasks>

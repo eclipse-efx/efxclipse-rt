@@ -63,6 +63,14 @@ public interface Status {
 	public default boolean isOk() {
 		return getState() == State.OK;
 	}
+	
+	/**
+	 * @return <code>true</code> if {@link #getState()} is not equal to {@link State#OK}
+	 * @since 3.3
+	 */
+	public default boolean isNotOk() {
+		return getState() != State.OK;
+	}
 
 	/**
 	 * Filter of the status is one of those states

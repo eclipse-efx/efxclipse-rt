@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -38,7 +39,7 @@ public class DynamicDataStreamHandler implements URLStreamHandler {
 	 * @param handler
 	 *            the handler
 	 */
-	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policyOption = ReferencePolicyOption.GREEDY)
+	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policy=ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
 	public void registerURLDynamicDataStreamHandler(URLDynamicDataStreamHandler handler) {
 		this.map.put(handler.getId(), handler);
 	}

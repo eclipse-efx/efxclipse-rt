@@ -105,7 +105,7 @@ public final class DndTabPaneFactory {
 	 * @return the TabPane
 	 */
 	public static TabPane createDefaultDnDPane(FeedbackType feedbackType, boolean allowDetach) {
-		if (SystemUtils.isFX9() || Boolean.getBoolean("java9.tabpane")) {
+		if (SystemUtils.getMajorFXVersion() > 8 || Boolean.getBoolean("java9.tabpane")) {
 			return new TabPane();
 		} else {
 			return new DndTabPane(feedbackType, allowDetach);

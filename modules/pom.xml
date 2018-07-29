@@ -39,6 +39,7 @@
 		<module>p2/org.eclipse.fx.target.feature</module>
 
 		<module>p2/org.eclipse.fx.core.repo</module>
+		
 	</modules>
 
 	<repositories>

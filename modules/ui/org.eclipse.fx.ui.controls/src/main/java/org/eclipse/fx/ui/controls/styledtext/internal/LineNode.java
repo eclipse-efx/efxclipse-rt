@@ -50,7 +50,6 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 @SuppressWarnings("javadoc")
@@ -268,7 +267,7 @@ public class LineNode extends StackPane {
 			for (TextNode t : this.currentTextNodes) {
 				Bounds segmentBounds = t.getBoundsInParent();
 				if (segmentBounds.contains(localLocation)) {
-					Segment segment = this.currentContent.get(currentTextNodes.indexOf(t));
+					Segment segment = this.currentContent.get(this.currentTextNodes.indexOf(t));
 					Point2D anchor = new Point2D(segmentBounds.getMinX(), segmentBounds.getMaxY());
 
 					int segmentBegin = getStartOffset(segment);
@@ -402,9 +401,7 @@ public class LineNode extends StackPane {
 
 			this.sceneProperty().addListener((x, o, n)->{
 				if (n == null) {
-					if (this.caretAnimation != null) {
-						this.caretAnimation.stop();
-					}
+					this.stopCaretAnimation();
 					this.caretAnimation = null;
 				}
 				else {
@@ -420,9 +417,20 @@ public class LineNode extends StackPane {
 		private void showCaret() {
 			this.caret.setVisible(true);
 		}
+		
+		private void playCaretAnimation() {
+			if (this.caretAnimation != null) {
+				this.caretAnimation.playFromStart();
+			}
+		}
+		private void stopCaretAnimation() {
+			if (this.caretAnimation != null) {
+				this.caretAnimation.stop();
+			}
+		}
 
 		Timeline scheduledAnimation = new Timeline(new KeyFrame(Duration.millis(200), (a) -> {
-			this.caretAnimation.playFromStart();
+			this.playCaretAnimation();
 		}));
 
 		public void updateCaret(int index) {
@@ -431,7 +439,7 @@ public class LineNode extends StackPane {
 					this.scheduledAnimation.stop();
 				}
 
-				this.caretAnimation.stop();
+				this.stopCaretAnimation();
 
 				if (index == -1) {
 					hideCaret();

@@ -44,6 +44,14 @@ public class SystemUtils {
 	public static boolean isFX8() {
 		return System.getProperty("javafx.version") != null && System.getProperty("javafx.version").startsWith("8"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 	}
+	
+	/**
+	 * @return get the major JavaFX version
+	 * @since 3.3.0
+	 */
+	public static int getMajorFXVersion() {
+		return Integer.parseInt(System.getProperty("javafx.version").split("\\.")[0]); //$NON-NLS-1$ //$NON-NLS-2$
+	}
 
 	/**
 	 * @return <code>true</code> if running on OSGi

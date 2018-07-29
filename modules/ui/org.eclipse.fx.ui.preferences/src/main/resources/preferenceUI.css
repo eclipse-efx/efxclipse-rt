@@ -1,0 +1,32 @@
+.preferences-actions-bar {
+	-fx-padding: 5;
+	-fx-spacing: 5;
+}
+
+.field-editor-actions {
+	-fx-spacing: 5;
+}
+
+.field-editor-grid,
+.radio-field-grid {
+	-fx-hgap: 5;
+	-fx-vgap: 5;
+}
+
+.preferences-page {
+	-fx-padding: 5;
+}
+
+.directory-field-container,
+.file-field-container {
+	-fx-spacing: 5;
+}
+
+.field-editor-error:error {
+	-fx-graphic: url("icons/dialog-error-16.png");
+}
+
+.field-editor-error:warning {
+	-fx-graphic: url("icons/dialog-warning-16.png");
+}
+

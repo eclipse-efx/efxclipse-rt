@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Basic editor Themes
 Bundle-SymbolicName: org.eclipse.fx.code.editor.fx.themes
-Bundle-Version: 3.1.0.qualifier
+Bundle-Version: 3.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.eclipse.fx.ui.services.theme;version="3.1.0",
+Import-Package: org.eclipse.fx.ui.services.theme;version="3.3.0",
  org.osgi.service.component.annotations;version="1.2.0";resolution:=optional
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.fx.themes.internal.DefaultEditorStylesheet.xml
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.fx.code.editor.fx.themes;version="3.1.0";x-internal:=true
+Export-Package: org.eclipse.fx.code.editor.fx.themes;version="3.3.0";x-internal:=true
 Bundle-Vendor: Eclipse.org

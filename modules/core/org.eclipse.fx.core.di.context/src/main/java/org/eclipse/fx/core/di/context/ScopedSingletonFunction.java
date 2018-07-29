@@ -65,18 +65,20 @@ public abstract class ScopedSingletonFunction<T> extends ContextFunction {
 	public Object compute(IEclipseContext context, String contextKey) {
 		String key = "singleton_" + contextKey; //$NON-NLS-1$
 
-		Object object = context.get(key);
-		if (object == null) {
+	
 			Optional<IEclipseContext> singletonContext = computeSingletonContext(context);
 			if (!singletonContext.isPresent() || singletonContext.get() == context) {
+				Object object = context.getLocal(key);
+				if(object!=null) {
+					return object;
+				}
 				T instance = create(context);
 				context.set(key, instance);
 				return instance;
 			} else {
 				return singletonContext.get().get(contextKey);
 			}
-		}
-		return object;
+		
 	}
 
 	@SuppressWarnings("deprecation")

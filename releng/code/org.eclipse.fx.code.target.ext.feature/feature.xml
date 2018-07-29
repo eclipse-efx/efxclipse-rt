@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.code.target.ext.feature"
       label="Feature"
-      version="3.1.0.qualifier">
+      version="3.3.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -373,7 +373,7 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="true"/>
+         unpack="false"/>
 
 	<plugin
          id="org.eclipse.m2e.jdt"
@@ -394,21 +394,21 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="true"/>
-
+         unpack="false"/>
+         
 	<plugin
          id="org.eclipse.m2e.maven.runtime"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="true"/>
-
+         unpack="false"/>
+         
 	<plugin
          id="org.eclipse.m2e.maven.runtime.slf4j.simple"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="true"/>
+         unpack="false"/>
 
 	<plugin
          id="org.eclipse.m2e.core"
@@ -430,16 +430,23 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
- 
+         
 	<plugin
-         id="org.eclipse.m2e.archetype.common"
+         id="org.eclipse.m2e.lifecyclemapping.defaults"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+	<plugin
+         id="javax.annotation"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
-	<plugin
-         id="org.eclipse.m2e.lifecyclemapping.defaults"
+   <plugin
+         id="javax.annotation.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

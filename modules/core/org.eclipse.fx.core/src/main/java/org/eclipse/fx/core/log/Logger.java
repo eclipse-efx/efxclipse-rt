@@ -34,6 +34,36 @@ public interface Logger {
 	public void log(@NonNull Level level, @NonNull String message);
 
 	/**
+	 * logs a message in the specified log level.
+	 *
+	 * @param level
+	 *            the Log Level
+	 * @param message
+	 *            the message
+	 * @since 3.3.0
+	 */
+	@SuppressWarnings("null")
+	public default void log(@NonNull Level level, @NonNull CharSequence message) {
+		log(level, message.toString());
+	}
+
+	/**
+	 * logs a message in the specified log level if you log from a wrapper
+	 * 
+	 * @param wrapperClass
+	 *            wrapper class
+	 *
+	 * @param level
+	 *            the Log Level
+	 * @param message
+	 *            the message
+	 * @since 3.3.0
+	 */
+	public default void log(@NonNull String wrapperClass, @NonNull Level level, @NonNull CharSequence message) {
+		log(level, message);
+	}
+
+	/**
 	 * logs a message in the specified log level
 	 *
 	 * @param level
@@ -81,6 +111,40 @@ public interface Logger {
 	 *            the Exception
 	 */
 	public void log(@NonNull Level level, @NonNull String message, @NonNull Throwable t);
+
+	/**
+	 * logs a message and an exception in the specified log level
+	 *
+	 * @param level
+	 *            the Log Level
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the Exception
+	 * @since 3.3.0
+	 */
+	@SuppressWarnings("null")
+	public default void log(@NonNull Level level, @NonNull CharSequence message, @NonNull Throwable t) {
+		log(level, message.toString(), t);
+	}
+
+	/**
+	 * logs a message in the specified log level if you log from a wrapper
+	 * 
+	 * @param wrapperClass
+	 *            wrapper class
+	 * @param level
+	 *            the Log Level
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the Exception
+	 * @since 3.3.0
+	 */
+	public default void log(@NonNull String wrapperClass, @NonNull Level level, @NonNull CharSequence message,
+			@NonNull Throwable t) {
+		log(level, message, t);
+	}
 
 	/**
 	 * logs a message and an exception in the specified log level
@@ -147,6 +211,33 @@ public interface Logger {
 	public void logf(@NonNull Level level, @NonNull String pattern, Object... args);
 
 	/**
+	 * logs a formatted message in the specified log level from a wrapper-class
+	 * <p>
+	 * For formatting {@link String#format(String, Object...)} is used. The
+	 * following two method calls yield the same result, but the logf call allows
+	 * the underlying implementation to prevent the formatting if the log level is
+	 * disabled. <code><br>
+	 *  logf(Level.TRACE, "%5.3f", num);<br>
+	 *  log(Level.TRACE, String.format("%5.3", num));
+	 * </code>
+	 * </p>
+	 * 
+	 * @param wrapperClass
+	 *            fqn of the wrapper class
+	 * @param level
+	 *            the Log Level
+	 * @param pattern
+	 *            the message format
+	 * @param args
+	 *            the message arguments
+	 * @see String#format(String, Object...)
+	 */
+	public default void logf(@NonNull String wrapperClass, @NonNull Level level, @NonNull String pattern,
+			Object... args) {
+		logf(level, pattern, args);
+	}
+
+	/**
 	 * logs a formatted message in the specified log level.
 	 * <p>
 	 * For formatting {@link String#format(String, Object...)} is used. The
@@ -169,6 +260,36 @@ public interface Logger {
 	 *            the message arguments
 	 */
 	public void logf(@NonNull Level level, @NonNull String pattern, @NonNull Throwable t, Object... args);
+
+	/**
+	 * convenience method for {@link #log(Level, String)} with {@link Level#TRACE}.
+	 * logs a formatted message in the specified log level.
+	 * <p>
+	 * For formatting {@link String#format(String, Object...)} is used. The
+	 * following two method calls yield the same result, but the logf call allows
+	 * the underlying implementation to prevent the formatting if the log level is
+	 * disabled. <code><br>
+	 *  logf(Level.TRACE, "%5.3f", num);<br>
+	 *  log(Level.TRACE, String.format("%5.3", num));
+	 * </code>
+	 * </p>
+	 * 
+	 * @param wrapperClass
+	 *            them fqn of the wrapper class
+	 * @param level
+	 *            the Log Level
+	 * @param pattern
+	 *            the message format
+	 * @param t
+	 *            the exception
+	 * @param args
+	 *            the message arguments
+	 * @see String#format(String, Object...)
+	 */
+	public default void logf(@NonNull String wrapperClass, @NonNull Level level, @NonNull String pattern,
+			@NonNull Throwable t, Object... args) {
+		logf(level, pattern, t);
+	}
 
 	/**
 	 * convenience method for {@link #log(Level, String)} with {@link Level#TRACE}.

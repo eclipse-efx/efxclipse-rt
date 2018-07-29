@@ -11,12 +11,15 @@
 package org.eclipse.fx.core.di.context.internal;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.IInjector;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.contexts.ContextObjectSupplier;
 import org.eclipse.e4.core.internal.di.Requestor;
+import org.eclipse.fx.core.log.FluentLogger;
 import org.eclipse.fx.core.log.Log;
+import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.osgi.service.component.annotations.Component;
 
@@ -43,7 +46,13 @@ public class LoggerSupplier extends ExtendedObjectSupplier {
 			loggerName = "AnonymousLogger"; //$NON-NLS-1$
 		}
 
-		return context.get(LoggerFactory.class).createLogger(loggerName);
+		Logger logger = context.get(LoggerFactory.class).createLogger(loggerName);
+		if( descriptor.getDesiredType() == Logger.class ) {
+			return logger;
+		} else if( descriptor.getDesiredType() == FluentLogger.class ) {
+			return FluentLogger.of(logger);
+		}
+		return IInjector.NOT_A_VALUE;
 	}
 
 }

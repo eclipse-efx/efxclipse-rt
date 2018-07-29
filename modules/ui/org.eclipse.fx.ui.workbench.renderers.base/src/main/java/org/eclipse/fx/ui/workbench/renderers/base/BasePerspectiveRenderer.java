@@ -99,7 +99,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 
 	@Override
 	protected void doProcessContent(MPerspective element) {
-		List<WLayoutedWidget<MPartSashContainerElement>> list = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
+		List<WLayoutedWidget<MPartSashContainerElement>> list = new ArrayList<>();
 		for (MPartSashContainerElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WLayoutedWidget<MPartSashContainerElement> w = engineCreateWidget(e);
@@ -121,12 +121,13 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 			@SuppressWarnings("unchecked")
 			WWindow<N> topLevel = (WWindow<N>) window.getWidget();
 			for (MWindow w : element.getWindows()) {
-				@SuppressWarnings("null")
-				WWindow<N> ww = engineCreateWidget(w);
-				if (ww != null) {
-					topLevel.addChildWindow(ww);
-				} else {
-					getLogger().error("No widget was created for element '" + w + "'"); //$NON-NLS-1$//$NON-NLS-2$
+				if (w.isToBeRendered()) {
+					WWindow<N> ww = engineCreateWidget(w);
+					if (ww != null) {
+						topLevel.addChildWindow(ww);
+					} else {
+						getLogger().error("No widget was created for element '" + w + "'"); //$NON-NLS-1$//$NON-NLS-2$
+					}
 				}
 			}
 		}

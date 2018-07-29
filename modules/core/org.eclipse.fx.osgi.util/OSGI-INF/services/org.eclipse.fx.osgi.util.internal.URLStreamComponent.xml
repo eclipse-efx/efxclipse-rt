@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" immediate="true" name="org.eclipse.fx.osgi.util.internal.URLStreamComponent">
+   <reference bind="registerUrlStreamHandler" cardinality="0..n" interface="org.eclipse.fx.core.URLStreamHandler" name="registerUrlStreamHandler" policy="dynamic" policy-option="greedy" unbind="unregisterUrlStreamHandler"/>
+   <implementation class="org.eclipse.fx.osgi.util.internal.URLStreamComponent"/>
+</scr:component>

@@ -13,7 +13,6 @@ package org.eclipse.fx.core;
 import java.util.Optional;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -170,5 +169,64 @@ public interface Memento {
 	public default <@Nullable O> Optional<O> get(String key, Class<O> clazz) {
 		O o = get(key, clazz, null);
 		return Optional.ofNullable(o);
+	}
+
+	/**
+	 * Get the default boolean value for the key
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the default
+	 * @since 3.2
+	 */
+	public default boolean getDefaultBoolean(String key) {
+		return false;
+	}
+
+	/**
+	 * Get the default integer value for the key
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the value
+	 * @since 3.2
+	 */
+	public default int getDefaultInteger(String key) {
+		return 0;
+	}
+
+	/**
+	 * Get the default double value for the key
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the value
+	 */
+	public default double getDefaultDouble(String key) {
+		return 0.0;
+	}
+
+	/**
+	 * Get the default String value for the key
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the default value
+	 */
+	public default String getDefaultString(String key) {
+		return ""; //$NON-NLS-1$
+	}
+
+	/**
+	 * Get the default Object value for the key
+	 * 
+	 * @param key
+	 *            the key
+	 * @param clazz
+	 *            the type
+	 * @return the value
+	 */
+	public default <@Nullable O> O getDefault(String key, Class<O> clazz) {
+		return null;
 	}
 }

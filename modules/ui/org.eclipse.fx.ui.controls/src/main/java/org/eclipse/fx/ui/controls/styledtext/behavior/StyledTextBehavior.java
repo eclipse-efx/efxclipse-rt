@@ -478,7 +478,7 @@ public class StyledTextBehavior {
 	}
 
 	private void onTextPositionPressed(TextPositionEvent event) {
-		if( event.getButton() != MouseButton.PRIMARY ) {
+		if( ! (event.getButton() == MouseButton.PRIMARY || event.getButton() == MouseButton.SECONDARY) ) {
 			return;
 		}
 
@@ -487,8 +487,10 @@ public class StyledTextBehavior {
 		if( this.mousePressedOffset < 0 ) {
 			this.mousePressedOffset = getControl().getContent().getCharCount();
 		}
-
-		if (isInSelection(this.mousePressedOffset) && getControl().getEditable()) {
+		if (isInSelection(this.mousePressedOffset) && event.getButton() == MouseButton.SECONDARY) {
+			// if the secondary button was pressed within the selection, we want the selction to stay
+			event.consume();
+		} else if (isInSelection(this.mousePressedOffset) && getControl().getEditable()) {
 			this.pressedInSelection = true;
 			event.consume();
 		} else {

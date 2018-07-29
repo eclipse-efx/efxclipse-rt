@@ -11,7 +11,7 @@
 
 	<groupId>org.eclipse.fx</groupId>
 	<artifactId>releng</artifactId>
-	<version>3.1.0-SNAPSHOT</version>
+	<version>3.3.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<tycho-version>1.0.0</tycho-version>
@@ -42,7 +42,6 @@
 		<module>../../modules/core/org.eclipse.fx.core.di.context</module>
 		<module>../../modules/core/org.eclipse.fx.emf.databinding</module>
 		<module>../../modules/core/org.eclipse.fx.formats.svg</module>
-		<module>../../modules/core/javax.annotation.jre</module>
 		<module>../../modules/core/javax.xml.jre</module>
 		<module>../../modules/core/org.eclipse.fx.core.junit</module>
 
@@ -59,6 +58,8 @@
 		<module>../../modules/ui/org.eclipse.fx.ui.dialogs.nl</module>
 		<module>../../modules/ui/org.eclipse.fx.ui.mobile</module>
 		<module>../../modules/ui/org.eclipse.fx.emf.edit.ui</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.preferences</module>
+		<module>../../modules/ui/org.eclipse.fx.ui.preferences.context</module>
 
 		<!-- e4 -->
 		<module>../../modules/ui/org.eclipse.fx.ui.keybindings</module>

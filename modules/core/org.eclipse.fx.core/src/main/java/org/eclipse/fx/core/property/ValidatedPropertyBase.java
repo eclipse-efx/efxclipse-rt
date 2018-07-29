@@ -48,6 +48,7 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 	static Predicate<Status> WARNING_ERROR = s -> s.getState() == State.ERROR || s.getState() == State.WARNING;
 
 	private final ReadOnlyObjectWrapper<Status> status = new ReadOnlyObjectWrapper<>(this, "status", Status.ok()); //$NON-NLS-1$
+	private boolean onRequestOnly = false;
 	private Map<String, Supplier<?>> dependencyMap = new HashMap<>();
 	private final List<BiFunction<O, Map<String, Object>, Status>> validationList = new ArrayList<>();
 	private List<Subscription> listeners = new ArrayList<>();
@@ -160,7 +161,9 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 		if (this.validationScheduled.getAndSet(true)) {
 			return;
 		}
-		Platform.runLater(this::_runValidation);
+		if( ! this.onRequestOnly ) {
+			Platform.runLater(this::_runValidation);
+		}
 	}
 
 	private void _runValidation() {
@@ -179,5 +182,20 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 		this.listeners.forEach(e -> e.dispose());
 		this.dependencyMap.clear();
 		this.validationList.clear();
+	}
+	
+	@Override
+	public void reset() {
+		this.status.set(Status.ok());
+	}
+	
+	@Override
+	public void setOnRequestOnly(boolean onRequestOnly) {
+		this.onRequestOnly = onRequestOnly;
+	}
+	
+	@Override
+	public boolean isOnRequestOnly() {
+		return this.onRequestOnly;
 	}
 }

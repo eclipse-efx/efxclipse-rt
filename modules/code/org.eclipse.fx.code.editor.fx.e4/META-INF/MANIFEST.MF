@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Integration the JavaFX code editor into Eclipse 4
 Bundle-SymbolicName: org.eclipse.fx.code.editor.fx.e4
-Bundle-Version: 3.1.0.qualifier
+Bundle-Version: 3.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.4.0",
@@ -15,18 +15,18 @@ Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.4.0",
  org.eclipse.fx.text.ui,
  org.eclipse.fx.ui.workbench.renderers.base
 Import-Package: javax.inject,
- org.eclipse.fx.code.editor;version="3.1.0",
- org.eclipse.fx.code.editor.e4;version="3.1.0",
- org.eclipse.fx.code.editor.fx.services;version="3.1.0",
- org.eclipse.fx.code.editor.services;version="3.1.0",
- org.eclipse.fx.core;version="3.1.0",
- org.eclipse.fx.core.di;version="3.1.0",
- org.eclipse.fx.core.di.context;version="3.1.0",
- org.eclipse.fx.text.ui.presentation;version="3.1.0",
- org.eclipse.fx.text.ui.source;version="3.1.0",
- org.eclipse.fx.ui.workbench.base.rendering;version="3.1.0",
- org.eclipse.fx.ui.workbench.services;version="3.1.0",
- org.eclipse.fx.ui.workbench.services.lifecycle;version="3.1.0",
+ org.eclipse.fx.code.editor;version="3.3.0",
+ org.eclipse.fx.code.editor.e4;version="3.3.0",
+ org.eclipse.fx.code.editor.fx.services;version="3.3.0",
+ org.eclipse.fx.code.editor.services;version="3.3.0",
+ org.eclipse.fx.core;version="3.3.0",
+ org.eclipse.fx.core.di;version="3.3.0",
+ org.eclipse.fx.core.di.context;version="3.3.0",
+ org.eclipse.fx.text.ui.presentation;version="3.3.0",
+ org.eclipse.fx.text.ui.source;version="3.3.0",
+ org.eclipse.fx.ui.workbench.base.rendering;version="3.3.0",
+ org.eclipse.fx.ui.workbench.services;version="3.3.0",
+ org.eclipse.fx.ui.workbench.services.lifecycle;version="3.3.0",
  org.osgi.service.component.annotations;resolution:=optional
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.SourceViewerConfigurationContextFunction.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.PresentationReconcilerContextFunction.xml,
@@ -42,4 +42,4 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.S
  OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.ContextInformationValidatorTypeProviderCF.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.SnippetEditorPartTabContextMenuService.xml
 Bundle-Vendor: Eclipse.org
-Export-Package: org.eclipse.fx.code.editor.fx.e4;version="3.1.0";x-internal:=true
+Export-Package: org.eclipse.fx.code.editor.fx.e4;version="3.3.0";x-internal:=true

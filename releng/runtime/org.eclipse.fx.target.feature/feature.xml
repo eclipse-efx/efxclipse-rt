@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.target.feature"
       label="e(fx)clipse - Target Platform Feature"
-      version="3.1.0.qualifier"
+      version="3.3.0.qualifier"
       provider-name="Eclipse.org">
 
    <description>
@@ -2303,14 +2303,14 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="javax.annotation.jre"
+         id="javax.annotation"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="javax.annotation.jre.source"
+         id="javax.annotation.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -2563,6 +2563,35 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.apache.felix.scr.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.ui.preferences"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.ui.preferences.context"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+
+   <plugin
+         id="org.eclipse.fx.ui.preferences.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.ui.preferences.context.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

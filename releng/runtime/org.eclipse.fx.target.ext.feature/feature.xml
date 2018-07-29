@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.target.ext.feature"
       label="Target Feature with all non-efxclipse bundles"
-      version="3.1.0.qualifier">
+      version="3.3.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -1999,6 +1999,20 @@
 
    <plugin
          id="org.apache.felix.scr.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+	<plugin
+         id="javax.annotation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.annotation.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -3,6 +3,7 @@
    <service>
       <provide interface="org.eclipse.fx.ui.services.theme.ThemeManager"/>
    </service>
+   <reference bind="setEventAdmin" interface="org.osgi.service.event.EventAdmin" name="EventAdmin"/>
    <reference bind="registerTheme" cardinality="0..n" interface="org.eclipse.fx.ui.services.theme.Theme" name="registerTheme" policy="static" policy-option="greedy" unbind="unregisterTheme"/>
    <implementation class="org.eclipse.fx.ui.theme.internal.DefaultThemeManager"/>
 </scr:component>
