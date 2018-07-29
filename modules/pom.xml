@@ -38,6 +38,7 @@
 		<!-- module>core/org.eclipse.fx.core.di.context.tests</module -->
 		<module>core/org.eclipse.fx.core.fxml</module>
 		<module>core/org.eclipse.fx.core.guice</module>
+		<module>core/org.eclipse.fx.core.junit</module>
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 
