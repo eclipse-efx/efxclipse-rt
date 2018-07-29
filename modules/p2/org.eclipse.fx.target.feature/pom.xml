@@ -53,7 +53,17 @@
   		<version>${project.version}</version>
   		<classifier>sources</classifier>
   	</dependency>
-  	
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.core.fxml</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.core.fxml</artifactId>
+  		<version>${project.version}</version>
+  		<classifier>sources</classifier>
+  	</dependency>
   	
   	
   <!-- 
@@ -87,13 +97,6 @@
 
    <plugin
          id="org.eclipse.fx.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.fx.core.fxml"
          download-size="0"
          install-size="0"
          version="0.0.0"
