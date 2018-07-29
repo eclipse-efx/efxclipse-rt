@@ -38,6 +38,8 @@ public interface FluentLogContext {
 	/**
 	 * Create a custom condition object
 	 * 
+	 * @param <T> the condition type
+	 * 
 	 * @param condition
 	 *            the condition object
 	 * @return instance of the condition object
@@ -109,6 +111,8 @@ public interface FluentLogContext {
 
 	/**
 	 * Log the message computed by the function
+	 * 
+	 * @param <T> type of value passed
 	 * 
 	 * @param messageSupplier
 	 *            the function to compute the message

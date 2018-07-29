@@ -220,11 +220,14 @@ public interface Memento {
 	/**
 	 * Get the default Object value for the key
 	 * 
+	 * @param <O> the return type
+	 * 
 	 * @param key
 	 *            the key
 	 * @param clazz
 	 *            the type
 	 * @return the value
+	 * 
 	 */
 	public default <@Nullable O> O getDefault(String key, Class<O> clazz) {
 		return null;

@@ -29,12 +29,14 @@ public class InjectingFXMLLoader {
 	/**
 	 * Load an FXML-File
 	 * 
+	 * @param <N> the node type
+	 * 
 	 * @param injector
 	 *            the injector to use when creating the controller instance
 	 * @param url
 	 *            the url
 	 * @return the loaded object graph
-	 * @throws IOException
+	 * @throws IOException thrown loading the FXML fails
 	 */
 	public static <N> N loadFXML(@NonNull final Injector injector, @NonNull URL url) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
