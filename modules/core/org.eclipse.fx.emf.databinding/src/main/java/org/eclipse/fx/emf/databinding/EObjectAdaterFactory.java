@@ -30,6 +30,7 @@ public class EObjectAdaterFactory {
 	 * @param eObject
 	 *            the emf object
 	 * @return the adapted object
+	 * @param <O> the type
 	 */
 	public static <@NonNull O extends EObject> EFXObject<O> adapt(EditingDomain ed, O eObject) {
 		return new AdaptedEObject<O>(ed, eObject);

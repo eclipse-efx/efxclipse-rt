@@ -37,6 +37,7 @@ public interface EFXObject<O extends EObject> {
 	 * @param feature
 	 *            the feature
 	 * @return the property
+	 * @param <T> the type
 	 * @throws IllegalArgumentException
 	 *             if the feature describes a primitive value like int.class,
 	 *             boolean.class
