@@ -51,6 +51,8 @@
 		<module>core/org.eclipse.fx.core.p2</module>
 		<module>core/org.eclipse.fx.core.slf4j</module>
 		<!-- module>core/org.eclipse.fx.core.tests</module -->
+		<module>core/org.eclipse.fx.emf.databinding</module>
+		<!-- module>core/org.eclipse.fx.emf.edit.ui.tests</module -->
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 
