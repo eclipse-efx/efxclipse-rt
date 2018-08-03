@@ -55,6 +55,7 @@
 		<module>core/org.eclipse.fx.emf.databinding</module>
 		<!-- module>core/org.eclipse.fx.emf.edit.ui.tests</module -->
 		<!-- module>core/org.eclipse.fx.formats.svg</module -->
+		<module>core/org.eclipse.fx.osgi</module>
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 
