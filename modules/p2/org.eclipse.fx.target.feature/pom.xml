@@ -141,6 +141,17 @@
   		<version>${project.version}</version>
   		<classifier>sources</classifier>
   	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.osgi.util</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.osgi.util</artifactId>
+  		<version>${project.version}</version>
+  		<classifier>sources</classifier>
+  	</dependency>
   	
   	
   	

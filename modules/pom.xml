@@ -58,6 +58,8 @@
 		<!-- module>core/org.eclipse.fx.emf.edit.ui.tests</module -->
 		<!-- module>core/org.eclipse.fx.formats.svg</module -->
 		<module>core/org.eclipse.fx.osgi</module>
+		<!-- module>core/org.eclipse.fx.osgi.threex</module -->
+		<module>core/org.eclipse.fx.osgi.util</module>
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 
