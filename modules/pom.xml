@@ -31,6 +31,8 @@
 		<dep-org.eclipse.equinox.p2.core>2.4.101</dep-org.eclipse.equinox.p2.core>
 		<dep-org.eclipse.equinox.p2.operations>2.4.300</dep-org.eclipse.equinox.p2.operations>
 		<dep-org.slf4j.api>1.7.10</dep-org.slf4j.api>
+		<dep-org.eclipse.emf.ecore>2.13.0</dep-org.eclipse.emf.ecore>
+		<dep-org.eclipse.emf.edit>2.12.0</dep-org.eclipse.emf.edit>
 
 		<plugin-maven-osgi-package-plugin>0.0.1</plugin-maven-osgi-package-plugin>
 		<plugin-bnd-maven-plugin>3.5.0</plugin-bnd-maven-plugin>
@@ -48,6 +50,7 @@
 		<module>core/org.eclipse.fx.core.log4j</module>
 		<module>core/org.eclipse.fx.core.p2</module>
 		<module>core/org.eclipse.fx.core.slf4j</module>
+		<!-- module>core/org.eclipse.fx.core.tests</module -->
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 
