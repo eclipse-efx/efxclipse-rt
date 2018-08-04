@@ -192,7 +192,6 @@ public class FXClassLoader extends ClassLoaderHook {
 
 				if (javafxDir == null) {
 					providers = getDeployedJavaModuleBundlePaths(this.frameworkContext);
-					System.err.println(providers);
 				} else {
 					providers = Files.list(Paths.get(javafxDir)) //
 							.filter(p -> p.toString().endsWith(".jar")) //$NON-NLS-1$
