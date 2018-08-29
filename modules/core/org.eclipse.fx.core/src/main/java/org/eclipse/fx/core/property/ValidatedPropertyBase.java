@@ -92,6 +92,7 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 				DEFAULT_THREAD_SYNC = threadSync.get();
 			}
 		}
+		System.err.println(DEFAULT_THREAD_SYNC);
 		ThreadSynchronize sync = DEFAULT_THREAD_SYNC;
 		return sync == null ? (r) -> r.run() : sync::asyncExec;
 	}
@@ -104,6 +105,7 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 	 * </p>
 	 * 
 	 * @param batchValidation <code>true</code> to batch validations
+	 * @since 3.4.0
 	 */
 	public void setBatchValidation(boolean batchValidation) {
 		this.batchValidation = batchValidation;
@@ -111,6 +113,7 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 
 	/**
 	 * @return <code>true</code> if batch validation is turned on
+	 * @since 3.4.0
 	 */
 	public boolean isBatchValidation() {
 		return this.batchValidation;
@@ -120,6 +123,7 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 	 * Set the executor to use for batch execution
 	 * 
 	 * @param batchExecutor the executor or <code>null</code> to restore the default
+	 * @since 3.4.0
 	 */
 	public void setBatchExecutor(@Nullable Executor batchExecutor) {
 		this.batchExecutor = batchExecutor;
@@ -127,6 +131,7 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 
 	/**
 	 * @return the current batch executor
+	 * @since 3.4.0
 	 */
 	public Executor getBatchExecutor() {
 		return this.batchExecutor;
