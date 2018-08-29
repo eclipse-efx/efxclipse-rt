@@ -19,8 +19,11 @@ import java.util.List;
 import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.log.LoggerCreator;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
+import javafx.scene.shape.PathElement;
+import javafx.scene.text.Text;
 import javafx.stage.Window;
 
 /**
@@ -137,5 +140,141 @@ public class JavaFXCompatUtil {
 				throw new RuntimeException(t);
 			}
 		}
+	}
+
+	/**
+	 * Set the caret position
+	 * 
+	 * @param t
+	 *            the text node
+	 * @param value
+	 *            the value
+	 * @since 3.4.0
+	 */
+	public static void setCaretPosition(Text t, int value) {
+		if (SystemUtils.getMajorFXVersion() > 8) {
+			try {
+				Method m = Text.class.getDeclaredMethod("setPosition", int.class); //$NON-NLS-1$
+				m.invoke(t, Integer.valueOf(value));
+			} catch (Throwable e) {
+				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#setPosition()", e); //$NON-NLS-1$
+				throw new RuntimeException(e);
+			}
+		} else {
+			try {
+				Method m = Text.class.getDeclaredMethod("setImpl_caretPosition", int.class); //$NON-NLS-1$
+				m.invoke(t, Integer.valueOf(value));
+			} catch (Throwable e) {
+				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#setImpl_caretPosition()", e); //$NON-NLS-1$
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
+	/**
+	 * Get the caret shape
+	 * 
+	 * @param t
+	 *            the text node
+	 * @return the path elements
+	 * @since 3.4.0
+	 */
+	public static PathElement[] getCaretShape(Text t) {
+		if (SystemUtils.getMajorFXVersion() > 8) {
+			try {
+				Method m = Text.class.getDeclaredMethod("getCaretShape"); //$NON-NLS-1$
+				return (PathElement[]) m.invoke(t);
+			} catch (Throwable e) {
+				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#getCaretShape()", e); //$NON-NLS-1$
+				throw new RuntimeException(e);
+			}
+		} else {
+			try {
+				Method m = Text.class.getDeclaredMethod("getImpl_caretShape"); //$NON-NLS-1$
+				return (PathElement[]) m.invoke(t);
+			} catch (Throwable e) {
+				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#getImpl_caretShape()", e); //$NON-NLS-1$
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
+	/**
+	 * Maps local point to index in the content.
+	 * 
+	 * @param t
+	 *            the text
+	 * @param point
+	 *            the point
+	 * @return the index or <code>null</code> if no hit
+	 */
+	public static Integer getInsertionIndex(Text t, Point2D point) {
+		Object hitInfo = null;
+		if (SystemUtils.getMajorFXVersion() > 8) {
+			try {
+				Method m = Text.class.getDeclaredMethod("impl_hitTestChar", Point2D.class); //$NON-NLS-1$
+				hitInfo = m.invoke(t, point);
+			} catch (Throwable e) {
+				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#impl_hitTestChar(Point2D)"); //$NON-NLS-1$
+				throw new RuntimeException(e);
+			}
+		} else {
+			try {
+				Method m = Text.class.getDeclaredMethod("hitTest", Point2D.class); //$NON-NLS-1$
+				hitInfo = m.invoke(t, point);
+			} catch (Throwable e) {
+				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#impl_hitTestChar(Point2D)"); //$NON-NLS-1$
+				throw new RuntimeException(e);
+			}
+		}
+
+		if (hitInfo != null) {
+			try {
+				Method m = hitInfo.getClass().getMethod("getInsertionIndex"); //$NON-NLS-1$
+				return (Integer) m.invoke(hitInfo);
+			} catch (Throwable e) {
+				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call HitInfo#getInsertionIndex()"); //$NON-NLS-1$
+				throw new RuntimeException(e);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Compute the insertation index for a given point
+	 * 
+	 * @param t
+	 *            the text
+	 * @param point
+	 *            the location relative to the text node
+	 * @return the index
+	 */
+	public static Integer insertationIndex(Text t, Point2D point) {
+		if (SystemUtils.getMajorFXVersion() > 8) {
+			try {
+				Method m = Text.class.getDeclaredMethod("hitTestChar", Point2D.class); //$NON-NLS-1$
+				Object hitTest = m.invoke(t, point);
+				if (hitTest != null) {
+					Method m2 = hitTest.getClass().getDeclaredMethod("getInsertionIndex"); //$NON-NLS-1$
+					return (Integer) m2.invoke(hitTest, point);
+				}
+			} catch (Throwable e) {
+				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#getImpl_caretShape()", e); //$NON-NLS-1$
+				throw new RuntimeException(e);
+			}
+		} else {
+			try {
+				Method m = Text.class.getDeclaredMethod("impl_hitTestChar", Point2D.class); //$NON-NLS-1$
+				Object hitTest = m.invoke(t, point);
+				if (hitTest != null) {
+					Method m2 = hitTest.getClass().getDeclaredMethod("getInsertionIndex"); //$NON-NLS-1$
+					return (Integer) m2.invoke(hitTest, point);
+				}
+			} catch (Throwable e) {
+				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#getImpl_caretShape()", e); //$NON-NLS-1$
+				throw new RuntimeException(e);
+			}
+		}
+		return null;
 	}
 }
