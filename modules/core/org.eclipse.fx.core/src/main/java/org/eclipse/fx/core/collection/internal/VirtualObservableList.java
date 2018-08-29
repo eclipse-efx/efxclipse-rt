@@ -14,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalLong;
 
 import org.eclipse.fx.core.collection.IndexRangeView;
 import org.eclipse.fx.core.collection.IndexView;
@@ -39,8 +40,7 @@ import javafx.collections.ObservableListBase;
  * Implementation based on an {@link ObservableList} - hence it is not so
  * virtual
  * 
- * @param <T>
- *            the element type
+ * @param <T> the element type
  */
 public class VirtualObservableList<@Nullable T> implements VirtualList<T> {
 	final ObservableList<T> list;
@@ -49,8 +49,7 @@ public class VirtualObservableList<@Nullable T> implements VirtualList<T> {
 	/**
 	 * Create a new virtual list
 	 * 
-	 * @param list
-	 *            the observable list backing it
+	 * @param list the observable list backing it
 	 */
 	public VirtualObservableList(ObservableList<T> list) {
 		this.list = list;
@@ -75,6 +74,12 @@ public class VirtualObservableList<@Nullable T> implements VirtualList<T> {
 	@Override
 	public IndexRangeView<T> getView(long startIndex, int length) {
 		return new ListViewImpl(startIndex, length);
+	}
+
+	@Override
+	public OptionalLong index(@Nullable T o) {
+		int idx = this.list.indexOf(o);
+		return idx == -1 ? OptionalLong.empty() : OptionalLong.of(idx);
 	}
 
 	class ValueViewImpl extends ReadOnlyObjectWrapper<T> implements IndexView<T> {
@@ -124,7 +129,7 @@ public class VirtualObservableList<@Nullable T> implements VirtualList<T> {
 
 			if (this.startIndex.get() < VirtualObservableList.this.list.size()) {
 				list.addAll(VirtualObservableList.this.list.subList((int) this.startIndex.get(),
-						(int) Math.min(_endIndex()+1, VirtualObservableList.this.list.size())));
+						(int) Math.min(_endIndex() + 1, VirtualObservableList.this.list.size())));
 			}
 
 			// Fill up the reset of the list
@@ -212,7 +217,7 @@ public class VirtualObservableList<@Nullable T> implements VirtualList<T> {
 			super(list);
 			this.change = change;
 			try {
-				//TODO We should use MethodHandles
+				// TODO We should use MethodHandles
 				this.getPermutation = ListChangeListener.Change.class.getDeclaredMethod("getPermutation"); //$NON-NLS-1$
 				this.getPermutation.setAccessible(true);
 			} catch (NoSuchMethodException | SecurityException e) {
