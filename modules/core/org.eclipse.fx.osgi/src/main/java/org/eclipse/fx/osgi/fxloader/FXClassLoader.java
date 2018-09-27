@@ -114,7 +114,7 @@ public class FXClassLoader extends ClassLoaderHook {
 			try {
 				return findClassJavaFX11(name, moduleClassLoader);
 			} catch (Throwable e) {
-				throw new ClassNotFoundException("Could not find class '" + name + "'", e); //$NON-NLS-1$//$NON-NLS-2$
+				return null;
 			}
 		} else {
 			// We only need special things for javafx.embed because osgi-bundles on java9
