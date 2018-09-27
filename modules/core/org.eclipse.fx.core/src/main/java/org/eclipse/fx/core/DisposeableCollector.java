@@ -69,5 +69,6 @@ public abstract class DisposeableCollector<T> {
 				// TODO
 			}
 		});
+		this.objects.clear();
 	}
 }
