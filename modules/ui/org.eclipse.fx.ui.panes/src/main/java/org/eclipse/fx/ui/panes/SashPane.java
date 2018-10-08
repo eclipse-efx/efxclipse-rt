@@ -402,7 +402,7 @@ public class SashPane extends Region {
 	 * non-sash child of the SashForm.
 	 * </p>
 	 *
-	 * @param weights
+	 * @param weights the weights
 	 */
 	public void setWeights(int[] weights) {
 		List<Node> children = getManagedChildren();
@@ -484,7 +484,7 @@ public class SashPane extends Region {
 	 * Change the layout of children to columns (<code>true</code>) or rows
 	 * (<code>false</code>)
 	 *
-	 * @param horizontal
+	 * @param horizontal <code>true</code> if horizontal
 	 */
 	public final void setHorizontal(final boolean horizontal) {
 		this.horizontalProperty().set(horizontal);

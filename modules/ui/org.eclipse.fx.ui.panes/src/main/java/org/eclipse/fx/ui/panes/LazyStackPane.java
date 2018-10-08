@@ -16,7 +16,7 @@ import javafx.beans.value.WritableValue;
 import javafx.scene.layout.StackPane;
 
 /**
- * A {@link StackPane} who is able break the recursive CSS & Layout-Pass call
+ * A {@link StackPane} who is able break the recursive CSS &amp; Layout-Pass call
  * chain
  */
 public class LazyStackPane extends StackPane {
@@ -37,7 +37,7 @@ public class LazyStackPane extends StackPane {
 	private Predicate<CheckType> checkSupplier;
 
 	/**
-	 * Create a pane who can optimize CSS & Layout-Passes
+	 * Create a pane who can optimize CSS &amp; Layout-Passes
 	 *
 	 * @param checkSupplier
 	 *            the supplier
