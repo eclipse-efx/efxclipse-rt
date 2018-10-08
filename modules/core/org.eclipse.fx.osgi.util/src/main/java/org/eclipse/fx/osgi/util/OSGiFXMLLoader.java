@@ -80,6 +80,8 @@ public class OSGiFXMLLoader {
 	 *            the builder factory to use
 	 * @param <O>
 	 *            the loaded root object type
+	 * @param <C>
+	 * 			  the controller type
 	 * @return the created scene graph
 	 * @throws IOException
 	 *             if the FXML could not be loaded
