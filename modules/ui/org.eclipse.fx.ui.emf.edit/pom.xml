@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>org.eclipse.fx.ui.controls</artifactId>
-
+	<artifactId>org.eclipse.fx.ui.emf.edit</artifactId>
+	
 	<parent>
 		<groupId>org.eclipse.fx.runtime</groupId>
 		<artifactId>parent</artifactId>
@@ -12,19 +12,23 @@
 	
 	<dependencies>
 		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>org.eclipse.emf.ecore</artifactId>
+			<version>${dep-org.eclipse.emf.ecore}</version>
+		</dependency>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
+			<artifactId>org.eclipse.emf.edit</artifactId>
+			<version>${dep-org.eclipse.emf.edit}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.eclipse.fx.runtime</groupId>
 			<artifactId>org.eclipse.fx.core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>at.bestsolution.efxclipse.eclipse</groupId>
-			<artifactId>org.eclipse.osgi.services</artifactId>
-			<version>${dep-org.eclipse.osgi.services}</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
 			<groupId>org.eclipse.fx.runtime</groupId>
-			<artifactId>org.eclipse.fx.ui.panes</artifactId>
+			<artifactId>org.eclipse.fx.ui.controls</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
