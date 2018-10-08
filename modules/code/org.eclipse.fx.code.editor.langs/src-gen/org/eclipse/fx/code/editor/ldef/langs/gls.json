@@ -1,0 +1,85 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "gls",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "__gls_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "gls_shdType",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "float",
+                "int",
+                "void",
+                "bool",
+                "mat2",
+                "mat3",
+                "mat4",
+                "vec2",
+                "vec3",
+                "vec4",
+                "ivec2",
+                "ivec3",
+                "ivec4",
+                "bvec2",
+                "bvec3",
+                "bvec4",
+                "sampler1D",
+                "sampler2D",
+                "sampler3D",
+                "samplerCube",
+                "sampler1DShadow",
+                "sampler2DShadow"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "gls_shdSemantic",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "attribute",
+                "in",
+                "out",
+                "inout"
+              ]
+            }
+          ]
+        }
+      ],
+      "whitespace": {
+        "$gtype": "PartitionWhiteSpace",
+        "characterList": [],
+        "javawhiteSpace": true
+      }
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__gls_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "startSeq": "//"
+        }
+      ],
+      "tokenList": []
+    }
+  ]
+}

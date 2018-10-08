@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.core.collection;
 
+import java.util.OptionalLong;
+
 import org.eclipse.fx.core.collection.internal.VirtualObservableList;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -59,6 +61,18 @@ public interface VirtualList<@Nullable T> {
 	 * @return the index range
 	 */
 	public IndexRangeView<T> getView(long startIndex, int length);
+
+	/**
+	 * Get the index of the provided object
+	 * 
+	 * @param o the index
+	 * @return optional with index or <code>empty optional</code>
+	 */
+	public default OptionalLong index(T o) {
+		IndexRangeView<T> range = getView(0L, (int) length().get());
+		int idx = range.indexOf(o);
+		return idx == -1 ? OptionalLong.empty() : OptionalLong.of(idx);
+	}
 
 	/**
 	 * Create a {@link VirtualList} from an {@link ObservableList}

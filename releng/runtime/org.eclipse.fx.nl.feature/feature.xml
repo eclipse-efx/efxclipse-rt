@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.nl.feature"
       label="e(fx)clipse - NL Support"
-      version="3.3.0.qualifier">
+      version="3.5.0.qualifier">
 
    <description url="http://www.example.com/description">
       This feature contains fragments adding native language support for all bundles

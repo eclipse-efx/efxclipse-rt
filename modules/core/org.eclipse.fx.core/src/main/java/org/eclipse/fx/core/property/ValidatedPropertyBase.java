@@ -16,19 +16,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.Optional;
+import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.Status.State;
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.ThreadSynchronize;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
-import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -39,8 +43,7 @@ import javafx.collections.ObservableList;
 /**
  * Base class to wrap up a property to hold its validation information
  *
- * @param <O>
- *            the primitive type
+ * @param <O> the primitive type
  * @since 2.4.0
  */
 public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
@@ -60,17 +63,78 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 	 */
 	protected final Property<O> domainProperty;
 
+	private boolean batchValidation = true;
+
+	private Executor batchExecutor;
+
 	private final AtomicBoolean validationScheduled = new AtomicBoolean();
+
+	@Nullable
+	private static ThreadSynchronize DEFAULT_THREAD_SYNC;
 
 	/**
 	 * Create an instance wrapping an existing property
 	 *
-	 * @param domainProperty
-	 *            the domain property
+	 * @param domainProperty the domain property
 	 */
 	public ValidatedPropertyBase(Property<O> domainProperty) {
 		this.domainProperty = domainProperty;
 		this.domainProperty.addListener(this::handlePropertyChange);
+	}
+
+	private Executor getOrCreatedExecutor() {
+		if (this.batchExecutor != null) {
+			return this.batchExecutor;
+		}
+		if (DEFAULT_THREAD_SYNC == null) {
+			Optional<@NonNull ThreadSynchronize> threadSync = ServiceUtils.getService(ThreadSynchronize.class);
+			if (threadSync.isPresent()) {
+				DEFAULT_THREAD_SYNC = threadSync.get();
+			}
+		}
+		System.err.println(DEFAULT_THREAD_SYNC);
+		ThreadSynchronize sync = DEFAULT_THREAD_SYNC;
+		return sync == null ? (r) -> r.run() : sync::asyncExec;
+	}
+
+	/**
+	 * Turn on/off to patch validations. Default: <code>true</code>
+	 * <p>
+	 * <strong>Attention:</strong> If <code>false</code> validations run on the
+	 * thread triggering it
+	 * </p>
+	 * 
+	 * @param batchValidation <code>true</code> to batch validations
+	 * @since 3.4.0
+	 */
+	public void setBatchValidation(boolean batchValidation) {
+		this.batchValidation = batchValidation;
+	}
+
+	/**
+	 * @return <code>true</code> if batch validation is turned on
+	 * @since 3.4.0
+	 */
+	public boolean isBatchValidation() {
+		return this.batchValidation;
+	}
+
+	/**
+	 * Set the executor to use for batch execution
+	 * 
+	 * @param batchExecutor the executor or <code>null</code> to restore the default
+	 * @since 3.4.0
+	 */
+	public void setBatchExecutor(@Nullable Executor batchExecutor) {
+		this.batchExecutor = batchExecutor;
+	}
+
+	/**
+	 * @return the current batch executor
+	 * @since 3.4.0
+	 */
+	public Executor getBatchExecutor() {
+		return this.batchExecutor;
 	}
 
 	@Override
@@ -161,8 +225,12 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 		if (this.validationScheduled.getAndSet(true)) {
 			return;
 		}
-		if( ! this.onRequestOnly ) {
-			Platform.runLater(this::_runValidation);
+		if (!this.onRequestOnly) {
+			if (isBatchValidation()) {
+				getOrCreatedExecutor().execute(this::_runValidation);
+			} else {
+				this._runValidation();
+			}
 		}
 	}
 
@@ -183,17 +251,17 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 		this.dependencyMap.clear();
 		this.validationList.clear();
 	}
-	
+
 	@Override
 	public void reset() {
 		this.status.set(Status.ok());
 	}
-	
+
 	@Override
 	public void setOnRequestOnly(boolean onRequestOnly) {
 		this.onRequestOnly = onRequestOnly;
 	}
-	
+
 	@Override
 	public boolean isOnRequestOnly() {
 		return this.onRequestOnly;

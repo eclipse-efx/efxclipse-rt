@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.target.ext.feature"
       label="Target Feature with all non-efxclipse bundles"
-      version="3.3.0.qualifier">
+      version="3.5.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -1957,6 +1957,13 @@
 
    <plugin
          id="com.google.inject.multibindings.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.osgi.compatibility.state"
          download-size="0"
          install-size="0"
          version="0.0.0"

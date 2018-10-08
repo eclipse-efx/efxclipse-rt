@@ -7,12 +7,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.ServiceUtils;
+import org.eclipse.fx.ui.controls.JavaFXCompatUtil;
 import org.eclipse.fx.ui.controls.styledtext.DecorationStrategyFactory;
 import org.eclipse.fx.ui.controls.styledtext.model.DecorationStrategy;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
-import com.sun.javafx.scene.text.HitInfo;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.IntegerProperty;
@@ -35,6 +34,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 
+@SuppressWarnings("javadoc")
 public class TextNodeSingle extends Pane implements TextNode {
 
 	@SuppressWarnings("null")
@@ -57,27 +57,12 @@ public class TextNodeSingle extends Pane implements TextNode {
 	@NonNull
 	final ObjectProperty<@NonNull Paint> fill = new SimpleStyleableObjectProperty<>(FILL, this, "fill", Color.BLACK); //$NON-NLS-1$
 
-	private static String[] BASIC_STRING_CACHE = new String[256];
-
-	private static String toString(char c) {
-		String rv = null;
-		if( c < BASIC_STRING_CACHE.length ) {
-			rv = BASIC_STRING_CACHE[c];
-			if( rv == null ) {
-				BASIC_STRING_CACHE[c] = String.valueOf(c);
-			}
-		}
-		if( rv == null ) {
-			rv = String.valueOf(c);
-		}
-		return rv;
-	}
-
 	/**
 	 * The paint used to fill the text
 	 *
 	 * @return the property to observe
 	 */
+	@Override
 	public final @NonNull ObjectProperty<@NonNull Paint> fillProperty() {
 		return (ObjectProperty<@NonNull Paint>) this.fill;
 	}
@@ -102,7 +87,6 @@ public class TextNodeSingle extends Pane implements TextNode {
 	static class DecorationStyleConverter extends StyleConverter<ParsedValue<?, DecorationStrategy>, DecorationStrategy> {
 		private static Map<String, DecorationStrategyFactory> FACTORIES;
 
-		@SuppressWarnings("null")
 		@Override
 		public DecorationStrategy convert(ParsedValue<ParsedValue<?, DecorationStrategy>, DecorationStrategy> value, Font font) {
 			String definition = value.getValue() + ""; //$NON-NLS-1$
@@ -193,7 +177,6 @@ public class TextNodeSingle extends Pane implements TextNode {
 		this.decorationStrategyProperty().set(strategy);
 	}
 
-
 	private final IntegerProperty tabCharAdvance;
 	private String originalText;
 	private final Text text;
@@ -206,7 +189,8 @@ public class TextNodeSingle extends Pane implements TextNode {
 		this.text.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
 		this.text.fillProperty().bind(fillProperty());
 		getStyleClass().add("styled-text-node"); //$NON-NLS-1$
-//		setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		// setBorder(new Border(new BorderStroke(Color.BLACK,
+		// BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 		rebuildText(text);
 		getChildren().add(this.text);
@@ -215,8 +199,8 @@ public class TextNodeSingle extends Pane implements TextNode {
 		InvalidationListener listener = o -> {
 			rebuildText(this.originalText);
 		};
-		this.parentProperty().addListener( e -> {
-			if( this.getParent() == null ) {
+		this.parentProperty().addListener(e -> {
+			if (this.getParent() == null) {
 				this.tabCharAdvance.removeListener(listener);
 			} else {
 				this.tabCharAdvance.addListener(listener);
@@ -237,7 +221,7 @@ public class TextNodeSingle extends Pane implements TextNode {
 	}
 
 	private void rebuildText(String text) {
-		this.text.setText( processText(text));
+		this.text.setText(processText(text));
 	}
 
 	private String processText(String text) {
@@ -263,10 +247,9 @@ public class TextNodeSingle extends Pane implements TextNode {
 
 	@Override
 	public int getCaretIndexAtPoint(Point2D point) {
-		@SuppressWarnings("deprecation")
-		HitInfo info = this.text.impl_hitTestChar(this.text.sceneToLocal(localToScene(point)));
-		if (info != null) {
-			int idx = info.getInsertionIndex();
+		Integer idxObj = JavaFXCompatUtil.getInsertionIndex(this.text, this.text.sceneToLocal(localToScene(point)));
+		if (idxObj != null) {
+			int idx = idxObj.intValue();
 			int toRemove = 0;
 			for (Integer i : this.tabPositions) {
 				if (i.intValue() <= idx && idx < i.intValue() + this.tabCharAdvance.get()) {
@@ -300,7 +283,7 @@ public class TextNodeSingle extends Pane implements TextNode {
 	@Override
 	protected void layoutChildren() {
 		super.layoutChildren();
-		text.resizeRelocate(0, 0, text.prefWidth(-1), text.prefHeight(-1));
+		this.text.resizeRelocate(0, 0, this.text.prefWidth(-1), this.text.prefHeight(-1));
 	}
 
 	@Override
@@ -317,8 +300,8 @@ public class TextNodeSingle extends Pane implements TextNode {
 			}
 		}
 
-		this.text.setImpl_caretPosition(realIndex);
-		PathElement[] pathElements = this.text.getImpl_caretShape();
+		JavaFXCompatUtil.setCaretPosition(this.text, realIndex);
+		PathElement[] pathElements = JavaFXCompatUtil.getCaretShape(this.text);
 		for (PathElement e : pathElements) {
 			if (e instanceof MoveTo) {
 				double x = this.localToParent(((MoveTo) e).getX(), 0).getX();

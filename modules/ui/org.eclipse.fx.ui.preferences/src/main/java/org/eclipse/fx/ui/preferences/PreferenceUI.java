@@ -102,6 +102,8 @@ public class PreferenceUI {
 
 	private HBox actions;
 
+	private TextField searchField;
+
 	static class PageCache {
 		final PreferencePage page;
 		final BorderPane parent;
@@ -164,7 +166,7 @@ public class PreferenceUI {
 
 		{
 			VBox box = new VBox();
-			TextField searchField = new TextField();
+			searchField = new TextField();
 			searchField.getStyleClass().add(SEARCH_STYLE);
 			FXObservableUtil.onChange(searchField.textProperty(), newFilter -> {
 				this.currentFilter = newFilter == null ? "" : newFilter;
@@ -287,5 +289,35 @@ public class PreferenceUI {
 	public Subscription registerOnOkHandler(Consumer<PreferencePage> handler) {
 		onOkHandlers.add(handler);
 		return () -> onOkHandlers.remove(handler);
+	}
+
+	/**
+	 * <p>
+	 * Set the text filter to the given value. The filter is used to restrict the
+	 * pages displayed in the pages list.
+	 * </p>
+	 * <p>
+	 * The filter is case-insensitive, and accepts wildcards (* and ?)
+	 * </p>
+	 * 
+	 * @param filter The new filter
+	 */
+	public void setFilter(String filter) {
+		searchField.setText(filter);
+	}
+
+	/**
+	 * Select the preference page with the given ID
+	 * 
+	 * @param pageId The ID of the page to select
+	 * 
+	 * @see PreferencePageProvider#id()
+	 */
+	public void selectPage(String pageId) {
+		if (pageId == null) {
+			return;
+		}
+		providers.stream().filter(p -> pageId.equals(p.id())).findAny()
+				.ifPresent(providerView.getSelectionModel()::select);
 	}
 }

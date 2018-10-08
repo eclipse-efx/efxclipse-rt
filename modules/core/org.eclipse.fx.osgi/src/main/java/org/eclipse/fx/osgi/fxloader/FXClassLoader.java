@@ -58,7 +58,7 @@ public class FXClassLoader extends ClassLoaderHook {
 	private static Boolean IS_JAVA_8;
 	private static Map<String, ServiceTracker<Object, URLConverter>> urlTrackers = new HashMap<>();
 
-	private static boolean isJDK8() {
+	static boolean isJDK8() {
 		if (IS_JAVA_8 != null) {
 			return IS_JAVA_8.booleanValue();
 		}
@@ -114,7 +114,7 @@ public class FXClassLoader extends ClassLoaderHook {
 			try {
 				return findClassJavaFX11(name, moduleClassLoader);
 			} catch (Throwable e) {
-				throw new ClassNotFoundException("Could not find class '" + name + "'", e); //$NON-NLS-1$//$NON-NLS-2$
+				return null;
 			}
 		} else {
 			// We only need special things for javafx.embed because osgi-bundles on java9
@@ -534,43 +534,54 @@ public class FXClassLoader extends ClassLoaderHook {
 			if (name.startsWith("javafx.embed.swt")) { //$NON-NLS-1$
 				if (this.checkFlag == null) {
 					this.checkFlag = Boolean.TRUE;
-
-					Boolean b = Boolean.FALSE;
-					try {
-						if (FXClassloaderConfigurator.DEBUG) {
-							System.err.println(
-									"FXModuleClassloader#findLocalClass - Someone is trying to load FXCanvas. Need to check for GTK3"); //$NON-NLS-1$
-						}
-
-						// Check for GTK3
-						String value = (String) loadClass("org.eclipse.swt.SWT").getDeclaredMethod("getPlatform") //$NON-NLS-1$ //$NON-NLS-2$
-								.invoke(null);
-						if ("gtk".equals(value)) { //$NON-NLS-1$
+					
+					// On JDK-8 we need to check for GTK3
+					if( isJDK8() ) {
+						Boolean isGTK3 = Boolean.FALSE;
+						try {
+							
 							if (FXClassloaderConfigurator.DEBUG) {
 								System.err.println(
-										"FXModuleClassloader#findLocalClass - We are on GTK need to take a closer look"); //$NON-NLS-1$
+										"FXModuleClassloader#findLocalClass - Someone is trying to load FXCanvas. Need to check for GTK3"); //$NON-NLS-1$
 							}
-							b = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3") //$NON-NLS-1$//$NON-NLS-2$
-									.get(null);
-						} else {
+
+							// Check for GTK3
+							String value = (String) loadClass("org.eclipse.swt.SWT").getDeclaredMethod("getPlatform") //$NON-NLS-1$ //$NON-NLS-2$
+									.invoke(null);
+							if ("gtk".equals(value)) { //$NON-NLS-1$
+								if (FXClassloaderConfigurator.DEBUG) {
+									System.err.println(
+											"FXModuleClassloader#findLocalClass - We are on GTK need to take a closer look"); //$NON-NLS-1$
+								}
+								
+								// Constants moved with Photon
+								try {
+									isGTK3 = (Boolean) loadClass("org.eclipse.swt.internal.gtk.GTK").getDeclaredField("GTK3") //$NON-NLS-1$//$NON-NLS-2$
+											.get(null);
+								} catch( Throwable t) {
+									isGTK3 = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3") //$NON-NLS-1$//$NON-NLS-2$
+											.get(null);
+								}
+							} else {
+								if (FXClassloaderConfigurator.DEBUG) {
+									System.err.println("FXModuleClassloader#findLocalClass - OS is '" + value //$NON-NLS-1$
+											+ "' no need to get upset all is fine"); //$NON-NLS-1$
+								}
+							}
+						} catch (Throwable e) {
+							System.err.println("FXModuleClassloader#findLocalClass - Failed to check for Gtk3"); //$NON-NLS-1$
+							e.printStackTrace();
+						}
+
+						if (isGTK3.booleanValue()) {
 							if (FXClassloaderConfigurator.DEBUG) {
-								System.err.println("FXModuleClassloader#findLocalClass - OS is '" + value //$NON-NLS-1$
-										+ "' no need to get upset all is fine"); //$NON-NLS-1$
+								System.err.println(
+										"FXModuleClassloader#findLocalClass - We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
 							}
+							throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
 						}
-					} catch (Throwable e) {
-						System.err.println("FXModuleClassloader#findLocalClass - Failed to check for Gtk3"); //$NON-NLS-1$
-						e.printStackTrace();
 					}
-
-					if (b.booleanValue()) {
-						if (FXClassloaderConfigurator.DEBUG) {
-							System.err.println(
-									"FXModuleClassloader#findLocalClass - We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
-						}
-						throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
-					}
-
+					
 					try {
 						loadClass("javafx.application.Platform").getDeclaredMethod("setImplicitExit", boolean.class) //$NON-NLS-1$ //$NON-NLS-2$
 								.invoke(null, Boolean.FALSE);
