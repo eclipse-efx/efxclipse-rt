@@ -193,13 +193,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.fx.core.databinding"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.fx.ui.di"
          download-size="0"
          install-size="0"
@@ -214,28 +207,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.fx.emf.databinding"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.fx.emf.edit.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.fx.core.guice"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.fx.osgi.util"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -353,13 +325,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.fx.core.databinding.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.fx.ui.di.source"
          download-size="0"
          install-size="0"
@@ -374,28 +339,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.fx.emf.databinding.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.fx.emf.edit.ui.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.fx.core.guice.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.fx.osgi.util.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
