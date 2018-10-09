@@ -40,6 +40,10 @@ public class TableColumnUtil {
 	 *            the preferred width
 	 * @param valueExtractor
 	 *            function to extract the value
+	 * @param <S>
+	 *            row value type
+	 * @param <T>
+	 *            cell type
 	 * @return the column instance
 	 */
 	public static <S, T> TableColumn<S, T> createColumn(String label, double prefWidth, Function<S, T> valueExtractor) {
@@ -57,6 +61,10 @@ public class TableColumnUtil {
 	 *            the column to configure
 	 * @param valueExtractor
 	 *            function to extract the value
+	 * @param <S>
+	 *            row value type
+	 * @param <T>
+	 *            cell type
 	 * @return the column instance itself
 	 */
 	public static <S, T> TableColumn<S, T> setupColumn(TableColumn<S, T> c, Function<S, T> valueExtractor) {
@@ -73,6 +81,10 @@ public class TableColumnUtil {
 	 *            function to extract the value
 	 * @param labelConverter
 	 *            the label converter
+	 * @param <S>
+	 *            row value type
+	 * @param <T>
+	 *            cell type
 	 * @return the column instance itself
 	 */
 	public static <S, T> TableColumn<S, T> setupColumn(TableColumn<S, T> c, Function<S, T> valueExtractor, Function<T, @NonNull CharSequence> labelConverter) {
@@ -102,6 +114,8 @@ public class TableColumnUtil {
 	 *            the column
 	 * @param booleanPropertyCreator
 	 *            the property extractor
+	 * @param <S>
+	 *            row value type
 	 * @return the column
 	 */
 	public static <S> TableColumn<S, S> setupCheckboxColumn(TableView<S> view, TableColumn<S, S> c, Function<S, BooleanProperty> booleanPropertyCreator) {

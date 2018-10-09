@@ -135,7 +135,7 @@ public class HoverSupport {
 
 	/**
 	 * Create a hover even from the hover mouse event
-	 * @param e the event
+	 * @param event the event
 	 */
 	protected void handleHover(MouseEvent event) {
 		if (DEBUG_HOVER) System.err.println("HoverManager: handleHover"); //$NON-NLS-1$

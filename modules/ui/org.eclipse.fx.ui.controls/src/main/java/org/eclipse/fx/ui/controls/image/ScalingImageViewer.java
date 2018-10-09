@@ -313,7 +313,7 @@ public class ScalingImageViewer extends Region {
 	 * </p>
 	 *
 	 * @param anker
-	 *            the anker, must not be <code>null<code>
+	 *            the anker, must not be <code>null</code>
 	 */
 	public final void setAnker(final Pos anker) {
 		this.ankerProperty().set(anker);

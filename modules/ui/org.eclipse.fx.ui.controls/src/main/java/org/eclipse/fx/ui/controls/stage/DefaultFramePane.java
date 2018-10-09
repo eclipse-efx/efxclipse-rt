@@ -159,6 +159,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 	}
 
 	/**
+	 * @param <N> the node type
 	 * @return the title bar
 	 */
 	@SuppressWarnings("unchecked")

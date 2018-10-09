@@ -1695,7 +1695,7 @@ public class StyledTextArea extends Control {
 	/**
 	 * inserts text at the caret location or replaces a given selection
 	 *
-	 * @param text
+	 * @param text the text to insert
 	 */
 	@SuppressWarnings("null")
 	public void insert(CharSequence text) {
@@ -1820,7 +1820,7 @@ public class StyledTextArea extends Control {
 	/**
 	 * navigates to specified line
 	 *
-	 * @param lineIndex
+	 * @param lineIndex the line index
 	 */
 	public void navigateToLine(int lineIndex) {
 		if (lineIndex >= 0 && lineIndex <= getContent().getLineCount()) {

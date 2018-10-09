@@ -51,6 +51,7 @@ public final class DndTabPaneFactory {
 	 *            the drag setup
 	 * @param detachHandler
 	 *            the detach handler
+	 * @param <D> the drag setup type
 	 * @return a node to add to the scene graph
 	 */
 	public static <D extends Node & DragSetup> Pane setup(FeedbackType feedbackType, D dragSetup, Consumer<GenericTab> detachHandler) {
@@ -310,41 +311,6 @@ public final class DndTabPaneFactory {
 		public abstract void hide();
 	}
 
-	/**
-	 * The drop type
-	 */
-	public enum DropType {
-		/**
-		 * No dropping
-		 */
-		NONE,
-		/**
-		 * Dropped before a reference tab
-		 */
-		BEFORE,
-		/**
-		 * Dropped after a reference tab
-		 */
-		AFTER,
-		/**
-		 * Dropped in an area to detach
-		 */
-		DETACH
-	}
-
-	/**
-	 * The feedback type to use
-	 */
-	public enum FeedbackType {
-		/**
-		 * Show a marker
-		 */
-		MARKER,
-		/**
-		 * Show an outline
-		 */
-		OUTLINE
-	}
 
 	/**
 	 * Data to create a feedback

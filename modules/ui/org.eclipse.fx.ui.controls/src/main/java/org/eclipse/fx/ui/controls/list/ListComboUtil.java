@@ -38,6 +38,7 @@ public class ListComboUtil {
 	 *            the items
 	 * @param labelExtractor
 	 *            function to extract the label
+	 * @param <T> the value type
 	 * @return the combo box passed in
 	 */
 	public static <T> ComboBox<T> setupCombo(ComboBox<T> comboBox, ObservableList<T> items, @NonNull Function<@Nullable T, @Nullable CharSequence> labelExtractor) {
@@ -56,6 +57,7 @@ public class ListComboUtil {
 	 *            the items
 	 * @param labelExtractor
 	 *            function to extract the label
+	 * @param <T> the value type
 	 * @return the choice box passed in
 	 *
 	 * @since 2.4.0
@@ -75,6 +77,7 @@ public class ListComboUtil {
 	 *            the items
 	 * @param labelPropertyExtractor
 	 *            the extractor
+	 * @param <T> the value type
 	 * @return the list view
 	 * @since 2.3.0
 	 */

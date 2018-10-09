@@ -58,6 +58,9 @@ public class SingleMultiDimensionImage implements MultiDimensionImage {
 	 *            the domain object the image is computed for
 	 * @param imageComputer
 	 *            function to compute the image
+	 * @param cache a cache instance
+	 * @param <O> data type
+	 * 
 	 */
 	public <O> SingleMultiDimensionImage(ThreadSynchronize threadSynchronize, Image placeholder, O data, Function<O, Image> imageComputer, @Nullable Cache<O, Image> cache) {
 		this.img = new ReadOnlyObjectWrapper<Image>(this, "image", placeholder); //$NON-NLS-1$

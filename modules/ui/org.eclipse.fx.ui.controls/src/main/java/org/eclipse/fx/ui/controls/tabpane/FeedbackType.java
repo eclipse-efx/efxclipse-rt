@@ -1,33 +1,27 @@
 /*******************************************************************************
- * Copyright (c) 2015 BestSolution.at and others.
+ * Copyright (c) 2018 BestSolution.at and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *     Adrodoc55<adrodoc55@googlemail.com> - initial API and implementation
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.tabpane;
 
 /**
- * Interface the tabs need implement
+ * The feedback type to use
+ * 
+ * @since 3.5.0
  */
-public interface GenericTab {
+public enum FeedbackType {
 	/**
-	 * @return the owner
+	 * Show a marker
 	 */
-	public GenericTabPane getOwner();
-
+	MARKER,
 	/**
-	 * @param <T>
-	 *            the type
-	 * @return the native instance
+	 * Show an outline
 	 */
-	public <T> T getNativeInstance();
-
-	/**
-	 * @return the user data
-	 */
-	public Object getUserData();
+	OUTLINE
 }

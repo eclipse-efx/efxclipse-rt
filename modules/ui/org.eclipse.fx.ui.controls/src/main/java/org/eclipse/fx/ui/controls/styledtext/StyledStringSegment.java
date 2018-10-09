@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * Segment of a {@link StyledString}
- *
+ * <p>
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>
  * </p>

@@ -898,15 +898,15 @@ public class LineNode extends StackPane {
 		return this.textLayer.findTextNode(localLocation);
 	}
 
-	/**
-	 * Check if the offset is between the start and end
-	 *
-	 * @param start
-	 *            the start
-	 * @param end
-	 *            the end
-	 * @return <code>true</code> if intersects the offset
-	 */
+//	/**
+//	 * Check if the offset is between the start and end
+//	 *
+//	 * @param start
+//	 *            the start
+//	 * @param end
+//	 *            the end
+//	 * @return <code>true</code> if intersects the offset
+//	 */
 //	public boolean intersectOffset(int start, int end) {
 //		if (getStartOffset() > end) {
 //			return false;

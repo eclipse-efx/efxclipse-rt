@@ -73,7 +73,7 @@ public class TextPositionSupport {
 	/**
 	 * computes the text offset under the mouse cursor.
 	 *
-	 * @param event
+	 * @param event the event
 	 * @return the offset
 	 */
 	protected int computeCursorOffset(MouseEvent event) {

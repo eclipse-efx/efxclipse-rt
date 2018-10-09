@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
+ * <p>
  * A label which is able to display {@link StyledString}
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>

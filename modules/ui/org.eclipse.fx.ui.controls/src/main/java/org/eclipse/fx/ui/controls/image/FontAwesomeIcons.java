@@ -716,10 +716,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-glass"> fa-glass</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GLASS() {
@@ -727,10 +724,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-music"> fa-music</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MUSIC() {
@@ -738,10 +732,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-search"> fa-search</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SEARCH() {
@@ -749,10 +740,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-envelope-o"> fa-envelope-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ENVELOPE_O() {
@@ -760,10 +748,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-heart"> fa-heart</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HEART() {
@@ -771,10 +756,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-star"> fa-star</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STAR() {
@@ -782,10 +764,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-star-o"> fa-star-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STAR_O() {
@@ -793,10 +772,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-user"> fa-user</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_USER() {
@@ -804,10 +780,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-film"> fa-film</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILM() {
@@ -815,10 +788,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-th-large"> fa-th-large</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TH_LARGE() {
@@ -826,10 +796,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-th"> fa-th</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TH() {
@@ -837,10 +804,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-th-list"> fa-th-list</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TH_LIST() {
@@ -848,10 +812,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-check"> fa-check</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHECK() {
@@ -859,10 +820,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-remove"> fa-remove</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_REMOVE() {
@@ -870,10 +828,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-times"> fa-times</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TIMES() {
@@ -881,10 +836,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-close"> fa-close</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CLOSE() {
@@ -892,10 +844,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-search-plus"> fa-search-plus</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SEARCH_PLUS() {
@@ -903,10 +852,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-search-minus"> fa-search-minus</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SEARCH_MINUS() {
@@ -914,10 +860,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-power-off"> fa-power-off</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_POWER_OFF() {
@@ -925,10 +868,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-signal"> fa-signal</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SIGNAL() {
@@ -936,10 +876,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-gear"> fa-gear</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GEAR() {
@@ -947,10 +884,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cog"> fa-cog</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COG() {
@@ -958,10 +892,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-trash-o"> fa-trash-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TRASH_O() {
@@ -969,10 +900,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-home"> fa-home</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOME() {
@@ -980,10 +908,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-o"> fa-file-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_O() {
@@ -991,10 +916,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-clock-o"> fa-clock-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CLOCK_O() {
@@ -1002,10 +924,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-road"> fa-road</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ROAD() {
@@ -1013,10 +932,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-download"> fa-download</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DOWNLOAD() {
@@ -1024,10 +940,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-circle-o-down"> fa-arrow-circle-o-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_CIRCLE_O_DOWN() {
@@ -1035,10 +948,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-circle-o-up"> fa-arrow-circle-o-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_CIRCLE_O_UP() {
@@ -1046,10 +956,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-inbox"> fa-inbox</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_INBOX() {
@@ -1057,10 +964,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-play-circle-o"> fa-play-circle-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PLAY_CIRCLE_O() {
@@ -1068,10 +972,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-rotate-right"> fa-rotate-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ROTATE_RIGHT() {
@@ -1079,10 +980,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-repeat"> fa-repeat</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_REPEAT() {
@@ -1090,10 +988,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-refresh"> fa-refresh</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_REFRESH() {
@@ -1101,10 +996,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-list-alt"> fa-list-alt</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LIST_ALT() {
@@ -1112,10 +1004,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-lock"> fa-lock</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LOCK() {
@@ -1123,10 +1012,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-flag"> fa-flag</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FLAG() {
@@ -1134,10 +1020,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-headphones"> fa-headphones</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HEADPHONES() {
@@ -1145,10 +1028,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-volume-off"> fa-volume-off</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VOLUME_OFF() {
@@ -1156,10 +1036,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-volume-down"> fa-volume-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VOLUME_DOWN() {
@@ -1167,10 +1044,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-volume-up"> fa-volume-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VOLUME_UP() {
@@ -1178,10 +1052,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-qrcode"> fa-qrcode</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_QRCODE() {
@@ -1189,10 +1060,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-barcode"> fa-barcode</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BARCODE() {
@@ -1200,10 +1068,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tag"> fa-tag</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TAG() {
@@ -1211,10 +1076,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tags"> fa-tags</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TAGS() {
@@ -1222,10 +1084,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-book"> fa-book</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BOOK() {
@@ -1233,10 +1092,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bookmark"> fa-bookmark</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BOOKMARK() {
@@ -1244,10 +1100,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-print"> fa-print</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PRINT() {
@@ -1255,10 +1108,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-camera"> fa-camera</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CAMERA() {
@@ -1266,10 +1116,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-font"> fa-font</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FONT() {
@@ -1277,10 +1124,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bold"> fa-bold</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BOLD() {
@@ -1288,10 +1132,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-italic"> fa-italic</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ITALIC() {
@@ -1299,10 +1140,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-text-height"> fa-text-height</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TEXT_HEIGHT() {
@@ -1310,10 +1148,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-text-width"> fa-text-width</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TEXT_WIDTH() {
@@ -1321,10 +1156,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-align-left"> fa-align-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ALIGN_LEFT() {
@@ -1332,10 +1164,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-align-center"> fa-align-center</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ALIGN_CENTER() {
@@ -1343,10 +1172,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-align-right"> fa-align-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ALIGN_RIGHT() {
@@ -1354,10 +1180,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-align-justify"> fa-align-justify</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ALIGN_JUSTIFY() {
@@ -1365,10 +1188,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-list"> fa-list</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LIST() {
@@ -1376,10 +1196,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-outdent"> fa-outdent</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_OUTDENT() {
@@ -1387,10 +1204,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-dedent"> fa-dedent</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DEDENT() {
@@ -1398,10 +1212,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-indent"> fa-indent</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_INDENT() {
@@ -1409,10 +1220,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-video-camera"> fa-video-camera</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VIDEO_CAMERA() {
@@ -1420,10 +1228,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-image"> fa-image</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_IMAGE() {
@@ -1431,10 +1236,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-photo"> fa-photo</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PHOTO() {
@@ -1442,10 +1244,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-picture-o"> fa-picture-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PICTURE_O() {
@@ -1453,10 +1252,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-pencil"> fa-pencil</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PENCIL() {
@@ -1464,10 +1260,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-map-marker"> fa-map-marker</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MAP_MARKER() {
@@ -1475,10 +1268,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-adjust"> fa-adjust</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ADJUST() {
@@ -1486,10 +1276,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tint"> fa-tint</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TINT() {
@@ -1497,10 +1284,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-edit"> fa-edit</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EDIT() {
@@ -1508,10 +1292,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-pencil-square-o"> fa-pencil-square-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PENCIL_SQUARE_O() {
@@ -1519,10 +1300,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-share-square-o"> fa-share-square-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SHARE_SQUARE_O() {
@@ -1530,10 +1308,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-check-square-o"> fa-check-square-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHECK_SQUARE_O() {
@@ -1541,10 +1316,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrows"> fa-arrows</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROWS() {
@@ -1552,10 +1324,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-step-backward"> fa-step-backward</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STEP_BACKWARD() {
@@ -1563,10 +1332,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-fast-backward"> fa-fast-backward</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FAST_BACKWARD() {
@@ -1574,10 +1340,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-backward"> fa-backward</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BACKWARD() {
@@ -1585,10 +1348,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-play"> fa-play</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PLAY() {
@@ -1596,10 +1356,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-pause"> fa-pause</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PAUSE() {
@@ -1607,10 +1364,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-stop"> fa-stop</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STOP() {
@@ -1618,10 +1372,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-forward"> fa-forward</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FORWARD() {
@@ -1629,10 +1380,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-fast-forward"> fa-fast-forward</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FAST_FORWARD() {
@@ -1640,10 +1388,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-step-forward"> fa-step-forward</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STEP_FORWARD() {
@@ -1651,10 +1396,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-eject"> fa-eject</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EJECT() {
@@ -1662,10 +1404,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-chevron-left"> fa-chevron-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHEVRON_LEFT() {
@@ -1673,10 +1412,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-chevron-right"> fa-chevron-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHEVRON_RIGHT() {
@@ -1684,10 +1420,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-plus-circle"> fa-plus-circle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PLUS_CIRCLE() {
@@ -1695,10 +1428,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-minus-circle"> fa-minus-circle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MINUS_CIRCLE() {
@@ -1706,10 +1436,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-times-circle"> fa-times-circle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TIMES_CIRCLE() {
@@ -1717,10 +1444,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-check-circle"> fa-check-circle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHECK_CIRCLE() {
@@ -1728,10 +1452,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-question-circle"> fa-question-circle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_QUESTION_CIRCLE() {
@@ -1739,10 +1460,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-info-circle"> fa-info-circle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_INFO_CIRCLE() {
@@ -1750,10 +1468,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-crosshairs"> fa-crosshairs</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CROSSHAIRS() {
@@ -1761,10 +1476,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-times-circle-o"> fa-times-circle-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TIMES_CIRCLE_O() {
@@ -1772,10 +1484,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-check-circle-o"> fa-check-circle-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHECK_CIRCLE_O() {
@@ -1783,10 +1492,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-ban"> fa-ban</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BAN() {
@@ -1794,10 +1500,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-left"> fa-arrow-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_LEFT() {
@@ -1805,10 +1508,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-right"> fa-arrow-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_RIGHT() {
@@ -1816,10 +1516,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-up"> fa-arrow-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_UP() {
@@ -1827,10 +1524,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-down"> fa-arrow-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_DOWN() {
@@ -1838,10 +1532,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mail-forward"> fa-mail-forward</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MAIL_FORWARD() {
@@ -1849,10 +1540,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-share"> fa-share</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SHARE() {
@@ -1860,10 +1548,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-expand"> fa-expand</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EXPAND() {
@@ -1871,10 +1556,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-compress"> fa-compress</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COMPRESS() {
@@ -1882,10 +1564,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-plus"> fa-plus</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PLUS() {
@@ -1893,10 +1572,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-minus"> fa-minus</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MINUS() {
@@ -1904,10 +1580,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-asterisk"> fa-asterisk</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ASTERISK() {
@@ -1915,10 +1588,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-exclamation-circle"> fa-exclamation-circle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EXCLAMATION_CIRCLE() {
@@ -1926,10 +1596,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-gift"> fa-gift</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GIFT() {
@@ -1937,10 +1604,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-leaf"> fa-leaf</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LEAF() {
@@ -1948,10 +1612,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-fire"> fa-fire</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FIRE() {
@@ -1959,10 +1620,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-eye"> fa-eye</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EYE() {
@@ -1970,10 +1628,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-eye-slash"> fa-eye-slash</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EYE_SLASH() {
@@ -1981,10 +1636,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-warning"> fa-warning</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WARNING() {
@@ -1992,10 +1644,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-exclamation-triangle"> fa-exclamation-triangle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EXCLAMATION_TRIANGLE() {
@@ -2003,10 +1652,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-plane"> fa-plane</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PLANE() {
@@ -2014,10 +1660,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-calendar"> fa-calendar</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CALENDAR() {
@@ -2025,10 +1668,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-random"> fa-random</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_RANDOM() {
@@ -2036,10 +1676,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-comment"> fa-comment</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COMMENT() {
@@ -2047,10 +1684,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-magnet"> fa-magnet</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MAGNET() {
@@ -2058,10 +1692,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-chevron-up"> fa-chevron-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHEVRON_UP() {
@@ -2069,10 +1700,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-chevron-down"> fa-chevron-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHEVRON_DOWN() {
@@ -2080,10 +1708,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-retweet"> fa-retweet</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_RETWEET() {
@@ -2091,10 +1716,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-shopping-cart"> fa-shopping-cart</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SHOPPING_CART() {
@@ -2102,10 +1724,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-folder"> fa-folder</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FOLDER() {
@@ -2113,10 +1732,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-folder-open"> fa-folder-open</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FOLDER_OPEN() {
@@ -2124,10 +1740,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrows-v"> fa-arrows-v</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROWS_V() {
@@ -2135,10 +1748,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrows-h"> fa-arrows-h</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROWS_H() {
@@ -2146,10 +1756,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bar-chart"> fa-bar-chart</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BAR_CHART() {
@@ -2157,10 +1764,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bar-chart-o"> fa-bar-chart-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BAR_CHART_O() {
@@ -2168,10 +1772,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-twitter-square"> fa-twitter-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TWITTER_SQUARE() {
@@ -2179,10 +1780,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-facebook-square"> fa-facebook-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FACEBOOK_SQUARE() {
@@ -2190,10 +1788,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-camera-retro"> fa-camera-retro</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CAMERA_RETRO() {
@@ -2201,10 +1796,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-key"> fa-key</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_KEY() {
@@ -2212,10 +1804,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-gears"> fa-gears</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GEARS() {
@@ -2223,10 +1812,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cogs"> fa-cogs</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COGS() {
@@ -2234,10 +1820,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-comments"> fa-comments</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COMMENTS() {
@@ -2245,10 +1828,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-thumbs-o-up"> fa-thumbs-o-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_THUMBS_O_UP() {
@@ -2256,10 +1836,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-thumbs-o-down"> fa-thumbs-o-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_THUMBS_O_DOWN() {
@@ -2267,10 +1844,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-star-half"> fa-star-half</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STAR_HALF() {
@@ -2278,10 +1852,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-heart-o"> fa-heart-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HEART_O() {
@@ -2289,10 +1860,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sign-out"> fa-sign-out</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SIGN_OUT() {
@@ -2300,10 +1868,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-linkedin-square"> fa-linkedin-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LINKEDIN_SQUARE() {
@@ -2311,10 +1876,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-thumb-tack"> fa-thumb-tack</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_THUMB_TACK() {
@@ -2322,10 +1884,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-external-link"> fa-external-link</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EXTERNAL_LINK() {
@@ -2333,10 +1892,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sign-in"> fa-sign-in</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SIGN_IN() {
@@ -2344,10 +1900,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-trophy"> fa-trophy</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TROPHY() {
@@ -2355,10 +1908,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-github-square"> fa-github-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GITHUB_SQUARE() {
@@ -2366,10 +1916,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-upload"> fa-upload</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_UPLOAD() {
@@ -2377,10 +1924,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-lemon-o"> fa-lemon-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LEMON_O() {
@@ -2388,10 +1932,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-phone"> fa-phone</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PHONE() {
@@ -2399,10 +1940,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-square-o"> fa-square-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SQUARE_O() {
@@ -2410,10 +1948,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bookmark-o"> fa-bookmark-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BOOKMARK_O() {
@@ -2421,10 +1956,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-phone-square"> fa-phone-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PHONE_SQUARE() {
@@ -2432,10 +1964,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-twitter"> fa-twitter</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TWITTER() {
@@ -2443,10 +1972,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-facebook-f"> fa-facebook-f</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FACEBOOK_F() {
@@ -2454,10 +1980,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-facebook"> fa-facebook</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FACEBOOK() {
@@ -2465,10 +1988,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-github"> fa-github</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GITHUB() {
@@ -2476,10 +1996,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-unlock"> fa-unlock</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_UNLOCK() {
@@ -2487,10 +2004,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-credit-card"> fa-credit-card</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CREDIT_CARD() {
@@ -2498,10 +2012,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-feed"> fa-feed</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FEED() {
@@ -2509,10 +2020,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-rss"> fa-rss</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_RSS() {
@@ -2520,10 +2028,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hdd-o"> fa-hdd-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HDD_O() {
@@ -2531,10 +2036,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bullhorn"> fa-bullhorn</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BULLHORN() {
@@ -2542,10 +2044,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bell-o"> fa-bell-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BELL_O() {
@@ -2553,10 +2052,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-certificate"> fa-certificate</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CERTIFICATE() {
@@ -2564,10 +2060,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-o-right"> fa-hand-o-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_O_RIGHT() {
@@ -2575,10 +2068,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-o-left"> fa-hand-o-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_O_LEFT() {
@@ -2586,10 +2076,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-o-up"> fa-hand-o-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_O_UP() {
@@ -2597,10 +2084,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-o-down"> fa-hand-o-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_O_DOWN() {
@@ -2608,10 +2092,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-circle-left"> fa-arrow-circle-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_CIRCLE_LEFT() {
@@ -2619,10 +2100,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-circle-right"> fa-arrow-circle-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_CIRCLE_RIGHT() {
@@ -2630,10 +2108,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-circle-up"> fa-arrow-circle-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_CIRCLE_UP() {
@@ -2641,10 +2116,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-circle-down"> fa-arrow-circle-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_CIRCLE_DOWN() {
@@ -2652,10 +2124,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-globe"> fa-globe</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GLOBE() {
@@ -2663,10 +2132,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-wrench"> fa-wrench</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WRENCH() {
@@ -2674,10 +2140,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tasks"> fa-tasks</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TASKS() {
@@ -2685,10 +2148,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-filter"> fa-filter</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILTER() {
@@ -2696,10 +2156,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-briefcase"> fa-briefcase</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BRIEFCASE() {
@@ -2707,10 +2164,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrows-alt"> fa-arrows-alt</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROWS_ALT() {
@@ -2718,10 +2172,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-users"> fa-users</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_USERS() {
@@ -2729,10 +2180,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-group"> fa-group</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GROUP() {
@@ -2740,10 +2188,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-link"> fa-link</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LINK() {
@@ -2751,10 +2196,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-chain"> fa-chain</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHAIN() {
@@ -2762,10 +2204,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cloud"> fa-cloud</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CLOUD() {
@@ -2773,10 +2212,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-flask"> fa-flask</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FLASK() {
@@ -2784,10 +2220,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cut"> fa-cut</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CUT() {
@@ -2795,10 +2228,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-scissors"> fa-scissors</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SCISSORS() {
@@ -2806,10 +2236,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-files-o"> fa-files-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILES_O() {
@@ -2817,10 +2244,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-copy"> fa-copy</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COPY() {
@@ -2828,10 +2252,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-paperclip"> fa-paperclip</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PAPERCLIP() {
@@ -2839,10 +2260,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-save"> fa-save</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SAVE() {
@@ -2850,10 +2268,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-floppy-o"> fa-floppy-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FLOPPY_O() {
@@ -2861,10 +2276,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-square"> fa-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SQUARE() {
@@ -2872,10 +2284,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-navicon"> fa-navicon</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_NAVICON() {
@@ -2883,10 +2292,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-reorder"> fa-reorder</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_REORDER() {
@@ -2894,10 +2300,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bars"> fa-bars</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BARS() {
@@ -2905,10 +2308,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-list-ul"> fa-list-ul</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LIST_UL() {
@@ -2916,10 +2316,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-list-ol"> fa-list-ol</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LIST_OL() {
@@ -2927,10 +2324,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-strikethrough"> fa-strikethrough</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STRIKETHROUGH() {
@@ -2938,10 +2332,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-underline"> fa-underline</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_UNDERLINE() {
@@ -2949,10 +2340,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-table"> fa-table</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TABLE() {
@@ -2960,10 +2348,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-magic"> fa-magic</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MAGIC() {
@@ -2971,10 +2356,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-truck"> fa-truck</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TRUCK() {
@@ -2982,10 +2364,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-pinterest"> fa-pinterest</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PINTEREST() {
@@ -2993,10 +2372,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-pinterest-square"> fa-pinterest-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PINTEREST_SQUARE() {
@@ -3004,10 +2380,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-google-plus-square"> fa-google-plus-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GOOGLE_PLUS_SQUARE() {
@@ -3015,10 +2388,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-google-plus"> fa-google-plus</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GOOGLE_PLUS() {
@@ -3026,10 +2396,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-money"> fa-money</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MONEY() {
@@ -3037,10 +2404,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-caret-down"> fa-caret-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CARET_DOWN() {
@@ -3048,10 +2412,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-caret-up"> fa-caret-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CARET_UP() {
@@ -3059,10 +2420,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-caret-left"> fa-caret-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CARET_LEFT() {
@@ -3070,10 +2428,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-caret-right"> fa-caret-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CARET_RIGHT() {
@@ -3081,10 +2436,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-columns"> fa-columns</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COLUMNS() {
@@ -3092,10 +2444,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sort"> fa-sort</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SORT() {
@@ -3103,10 +2452,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-unsorted"> fa-unsorted</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_UNSORTED() {
@@ -3114,10 +2460,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sort-down"> fa-sort-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SORT_DOWN() {
@@ -3125,10 +2468,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sort-desc"> fa-sort-desc</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SORT_DESC() {
@@ -3136,10 +2476,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sort-up"> fa-sort-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SORT_UP() {
@@ -3147,10 +2484,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sort-asc"> fa-sort-asc</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SORT_ASC() {
@@ -3158,10 +2492,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-envelope"> fa-envelope</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ENVELOPE() {
@@ -3169,10 +2500,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-linkedin"> fa-linkedin</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LINKEDIN() {
@@ -3180,10 +2508,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-undo"> fa-undo</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_UNDO() {
@@ -3191,10 +2516,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-rotate-left"> fa-rotate-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ROTATE_LEFT() {
@@ -3202,10 +2524,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-gavel"> fa-gavel</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GAVEL() {
@@ -3213,10 +2532,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-legal"> fa-legal</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LEGAL() {
@@ -3224,10 +2540,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-dashboard"> fa-dashboard</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DASHBOARD() {
@@ -3235,10 +2548,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tachometer"> fa-tachometer</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TACHOMETER() {
@@ -3246,10 +2556,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-comment-o"> fa-comment-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COMMENT_O() {
@@ -3257,10 +2564,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-comments-o"> fa-comments-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COMMENTS_O() {
@@ -3268,10 +2572,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-flash"> fa-flash</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FLASH() {
@@ -3279,10 +2580,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bolt"> fa-bolt</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BOLT() {
@@ -3290,10 +2588,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sitemap"> fa-sitemap</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SITEMAP() {
@@ -3301,10 +2596,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-umbrella"> fa-umbrella</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_UMBRELLA() {
@@ -3312,10 +2604,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-paste"> fa-paste</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PASTE() {
@@ -3323,10 +2612,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-clipboard"> fa-clipboard</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CLIPBOARD() {
@@ -3334,10 +2620,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-lightbulb-o"> fa-lightbulb-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LIGHTBULB_O() {
@@ -3345,10 +2628,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-exchange"> fa-exchange</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EXCHANGE() {
@@ -3356,10 +2636,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cloud-download"> fa-cloud-download</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CLOUD_DOWNLOAD() {
@@ -3367,10 +2644,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cloud-upload"> fa-cloud-upload</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CLOUD_UPLOAD() {
@@ -3378,10 +2652,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-user-md"> fa-user-md</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_USER_MD() {
@@ -3389,10 +2660,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-stethoscope"> fa-stethoscope</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STETHOSCOPE() {
@@ -3400,10 +2668,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-suitcase"> fa-suitcase</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SUITCASE() {
@@ -3411,10 +2676,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bell"> fa-bell</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BELL() {
@@ -3422,10 +2684,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-coffee"> fa-coffee</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COFFEE() {
@@ -3433,10 +2692,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cutlery"> fa-cutlery</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CUTLERY() {
@@ -3444,10 +2700,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-text-o"> fa-file-text-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_TEXT_O() {
@@ -3455,10 +2708,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-building-o"> fa-building-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BUILDING_O() {
@@ -3466,10 +2716,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hospital-o"> fa-hospital-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOSPITAL_O() {
@@ -3477,10 +2724,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-ambulance"> fa-ambulance</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_AMBULANCE() {
@@ -3488,10 +2732,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-medkit"> fa-medkit</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MEDKIT() {
@@ -3499,10 +2740,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-fighter-jet"> fa-fighter-jet</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FIGHTER_JET() {
@@ -3510,10 +2748,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-beer"> fa-beer</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BEER() {
@@ -3521,10 +2756,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-h-square"> fa-h-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_H_SQUARE() {
@@ -3532,10 +2764,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-plus-square"> fa-plus-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PLUS_SQUARE() {
@@ -3543,10 +2772,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-angle-double-left"> fa-angle-double-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ANGLE_DOUBLE_LEFT() {
@@ -3554,10 +2780,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-angle-double-right"> fa-angle-double-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ANGLE_DOUBLE_RIGHT() {
@@ -3565,10 +2788,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-angle-double-up"> fa-angle-double-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ANGLE_DOUBLE_UP() {
@@ -3576,10 +2796,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-angle-double-down"> fa-angle-double-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ANGLE_DOUBLE_DOWN() {
@@ -3587,10 +2804,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-angle-left"> fa-angle-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ANGLE_LEFT() {
@@ -3598,10 +2812,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-angle-right"> fa-angle-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ANGLE_RIGHT() {
@@ -3609,10 +2820,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-angle-up"> fa-angle-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ANGLE_UP() {
@@ -3620,10 +2828,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-angle-down"> fa-angle-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ANGLE_DOWN() {
@@ -3631,10 +2836,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-desktop"> fa-desktop</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DESKTOP() {
@@ -3642,10 +2844,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-laptop"> fa-laptop</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LAPTOP() {
@@ -3653,10 +2852,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tablet"> fa-tablet</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TABLET() {
@@ -3664,10 +2860,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mobile"> fa-mobile</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MOBILE() {
@@ -3675,10 +2868,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mobile-phone"> fa-mobile-phone</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MOBILE_PHONE() {
@@ -3686,10 +2876,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-circle-o"> fa-circle-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CIRCLE_O() {
@@ -3697,10 +2884,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-quote-left"> fa-quote-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_QUOTE_LEFT() {
@@ -3708,10 +2892,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-quote-right"> fa-quote-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_QUOTE_RIGHT() {
@@ -3719,10 +2900,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-spinner"> fa-spinner</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SPINNER() {
@@ -3730,10 +2908,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-circle"> fa-circle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CIRCLE() {
@@ -3741,10 +2916,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mail-reply"> fa-mail-reply</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MAIL_REPLY() {
@@ -3752,10 +2924,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-reply"> fa-reply</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_REPLY() {
@@ -3763,10 +2932,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-github-alt"> fa-github-alt</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GITHUB_ALT() {
@@ -3774,10 +2940,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-folder-o"> fa-folder-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FOLDER_O() {
@@ -3785,10 +2948,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-folder-open-o"> fa-folder-open-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FOLDER_OPEN_O() {
@@ -3796,10 +2956,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-smile-o"> fa-smile-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SMILE_O() {
@@ -3807,10 +2964,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-frown-o"> fa-frown-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FROWN_O() {
@@ -3818,10 +2972,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-meh-o"> fa-meh-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MEH_O() {
@@ -3829,10 +2980,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-gamepad"> fa-gamepad</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GAMEPAD() {
@@ -3840,10 +2988,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-keyboard-o"> fa-keyboard-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_KEYBOARD_O() {
@@ -3851,10 +2996,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-flag-o"> fa-flag-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FLAG_O() {
@@ -3862,10 +3004,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-flag-checkered"> fa-flag-checkered</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FLAG_CHECKERED() {
@@ -3873,10 +3012,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-terminal"> fa-terminal</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TERMINAL() {
@@ -3884,10 +3020,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-code"> fa-code</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CODE() {
@@ -3895,10 +3028,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mail-reply-all"> fa-mail-reply-all</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MAIL_REPLY_ALL() {
@@ -3906,10 +3036,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-reply-all"> fa-reply-all</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_REPLY_ALL() {
@@ -3917,10 +3044,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-star-half-o"> fa-star-half-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STAR_HALF_O() {
@@ -3928,10 +3052,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-star-half-full"> fa-star-half-full</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STAR_HALF_FULL() {
@@ -3939,10 +3060,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-star-half-empty"> fa-star-half-empty</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STAR_HALF_EMPTY() {
@@ -3950,10 +3068,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-location-arrow"> fa-location-arrow</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LOCATION_ARROW() {
@@ -3961,10 +3076,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-crop"> fa-crop</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CROP() {
@@ -3972,10 +3084,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-code-fork"> fa-code-fork</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CODE_FORK() {
@@ -3983,10 +3092,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-unlink"> fa-unlink</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_UNLINK() {
@@ -3994,10 +3100,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-chain-broken"> fa-chain-broken</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHAIN_BROKEN() {
@@ -4005,10 +3108,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-question"> fa-question</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_QUESTION() {
@@ -4016,10 +3116,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-info"> fa-info</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_INFO() {
@@ -4027,10 +3124,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-exclamation"> fa-exclamation</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EXCLAMATION() {
@@ -4038,10 +3132,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-superscript"> fa-superscript</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SUPERSCRIPT() {
@@ -4049,10 +3140,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-subscript"> fa-subscript</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SUBSCRIPT() {
@@ -4060,10 +3148,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-eraser"> fa-eraser</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ERASER() {
@@ -4071,10 +3156,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-puzzle-piece"> fa-puzzle-piece</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PUZZLE_PIECE() {
@@ -4082,10 +3164,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-microphone"> fa-microphone</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MICROPHONE() {
@@ -4093,10 +3172,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-microphone-slash"> fa-microphone-slash</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MICROPHONE_SLASH() {
@@ -4104,10 +3180,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-shield"> fa-shield</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SHIELD() {
@@ -4115,10 +3188,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-calendar-o"> fa-calendar-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CALENDAR_O() {
@@ -4126,10 +3196,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-fire-extinguisher"> fa-fire-extinguisher</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FIRE_EXTINGUISHER() {
@@ -4137,10 +3204,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-rocket"> fa-rocket</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ROCKET() {
@@ -4148,10 +3212,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-maxcdn"> fa-maxcdn</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MAXCDN() {
@@ -4159,10 +3220,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-chevron-circle-left"> fa-chevron-circle-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHEVRON_CIRCLE_LEFT() {
@@ -4170,10 +3228,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-chevron-circle-right"> fa-chevron-circle-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHEVRON_CIRCLE_RIGHT() {
@@ -4181,10 +3236,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-chevron-circle-up"> fa-chevron-circle-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHEVRON_CIRCLE_UP() {
@@ -4192,10 +3244,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-chevron-circle-down"> fa-chevron-circle-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHEVRON_CIRCLE_DOWN() {
@@ -4203,10 +3252,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-html5"> fa-html5</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HTML5() {
@@ -4214,10 +3260,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-css3"> fa-css3</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CSS3() {
@@ -4225,10 +3268,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-anchor"> fa-anchor</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ANCHOR() {
@@ -4236,10 +3276,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-unlock-alt"> fa-unlock-alt</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_UNLOCK_ALT() {
@@ -4247,10 +3284,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bullseye"> fa-bullseye</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BULLSEYE() {
@@ -4258,10 +3292,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-ellipsis-h"> fa-ellipsis-h</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ELLIPSIS_H() {
@@ -4269,10 +3300,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-ellipsis-v"> fa-ellipsis-v</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ELLIPSIS_V() {
@@ -4280,10 +3308,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-rss-square"> fa-rss-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_RSS_SQUARE() {
@@ -4291,10 +3316,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-play-circle"> fa-play-circle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PLAY_CIRCLE() {
@@ -4302,10 +3324,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-ticket"> fa-ticket</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TICKET() {
@@ -4313,10 +3332,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-minus-square"> fa-minus-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MINUS_SQUARE() {
@@ -4324,10 +3340,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-minus-square-o"> fa-minus-square-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MINUS_SQUARE_O() {
@@ -4335,10 +3348,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-level-up"> fa-level-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LEVEL_UP() {
@@ -4346,10 +3356,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-level-down"> fa-level-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LEVEL_DOWN() {
@@ -4357,10 +3364,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-check-square"> fa-check-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHECK_SQUARE() {
@@ -4368,10 +3372,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-pencil-square"> fa-pencil-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PENCIL_SQUARE() {
@@ -4379,10 +3380,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-external-link-square"> fa-external-link-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EXTERNAL_LINK_SQUARE() {
@@ -4390,10 +3388,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-share-square"> fa-share-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SHARE_SQUARE() {
@@ -4401,10 +3396,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-compass"> fa-compass</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COMPASS() {
@@ -4412,10 +3404,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-caret-square-o-down"> fa-caret-square-o-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CARET_SQUARE_O_DOWN() {
@@ -4423,10 +3412,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-toggle-down"> fa-toggle-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TOGGLE_DOWN() {
@@ -4434,10 +3420,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-toggle-up"> fa-toggle-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TOGGLE_UP() {
@@ -4445,10 +3428,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-caret-square-o-up"> fa-caret-square-o-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CARET_SQUARE_O_UP() {
@@ -4456,10 +3436,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-caret-square-o-right"> fa-caret-square-o-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CARET_SQUARE_O_RIGHT() {
@@ -4467,10 +3444,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-toggle-right"> fa-toggle-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TOGGLE_RIGHT() {
@@ -4478,10 +3452,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-eur"> fa-eur</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EUR() {
@@ -4489,10 +3460,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-euro"> fa-euro</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EURO() {
@@ -4500,10 +3468,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-gbp"> fa-gbp</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GBP() {
@@ -4511,10 +3476,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-usd"> fa-usd</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_USD() {
@@ -4522,10 +3484,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-dollar"> fa-dollar</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DOLLAR() {
@@ -4533,10 +3492,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-inr"> fa-inr</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_INR() {
@@ -4544,10 +3500,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-rupee"> fa-rupee</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_RUPEE() {
@@ -4555,10 +3508,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-jpy"> fa-jpy</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_JPY() {
@@ -4566,10 +3516,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-yen"> fa-yen</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_YEN() {
@@ -4577,10 +3524,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-rmb"> fa-rmb</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_RMB() {
@@ -4588,10 +3532,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cny"> fa-cny</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CNY() {
@@ -4599,10 +3540,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-rub"> fa-rub</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_RUB() {
@@ -4610,10 +3548,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-rouble"> fa-rouble</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ROUBLE() {
@@ -4621,10 +3556,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-ruble"> fa-ruble</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_RUBLE() {
@@ -4632,10 +3564,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-krw"> fa-krw</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_KRW() {
@@ -4643,10 +3572,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-won"> fa-won</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WON() {
@@ -4654,10 +3580,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-btc"> fa-btc</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BTC() {
@@ -4665,10 +3588,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bitcoin"> fa-bitcoin</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BITCOIN() {
@@ -4676,10 +3596,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file"> fa-file</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE() {
@@ -4687,10 +3604,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-text"> fa-file-text</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_TEXT() {
@@ -4698,10 +3612,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sort-alpha-asc"> fa-sort-alpha-asc</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SORT_ALPHA_ASC() {
@@ -4709,10 +3620,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sort-alpha-desc"> fa-sort-alpha-desc</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SORT_ALPHA_DESC() {
@@ -4720,10 +3628,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sort-amount-asc"> fa-sort-amount-asc</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SORT_AMOUNT_ASC() {
@@ -4731,10 +3636,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sort-amount-desc"> fa-sort-amount-desc</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SORT_AMOUNT_DESC() {
@@ -4742,10 +3644,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sort-numeric-asc"> fa-sort-numeric-asc</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SORT_NUMERIC_ASC() {
@@ -4753,10 +3652,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sort-numeric-desc"> fa-sort-numeric-desc</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SORT_NUMERIC_DESC() {
@@ -4764,10 +3660,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-thumbs-up"> fa-thumbs-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_THUMBS_UP() {
@@ -4775,10 +3668,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-thumbs-down"> fa-thumbs-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_THUMBS_DOWN() {
@@ -4786,10 +3676,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-youtube-square"> fa-youtube-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_YOUTUBE_SQUARE() {
@@ -4797,10 +3684,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-youtube"> fa-youtube</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_YOUTUBE() {
@@ -4808,10 +3692,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-xing"> fa-xing</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_XING() {
@@ -4819,10 +3700,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-xing-square"> fa-xing-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_XING_SQUARE() {
@@ -4830,10 +3708,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-youtube-play"> fa-youtube-play</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_YOUTUBE_PLAY() {
@@ -4841,10 +3716,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-dropbox"> fa-dropbox</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DROPBOX() {
@@ -4852,10 +3724,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-stack-overflow"> fa-stack-overflow</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STACK_OVERFLOW() {
@@ -4863,10 +3732,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-instagram"> fa-instagram</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_INSTAGRAM() {
@@ -4874,10 +3740,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-flickr"> fa-flickr</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FLICKR() {
@@ -4885,10 +3748,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-adn"> fa-adn</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ADN() {
@@ -4896,10 +3756,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bitbucket"> fa-bitbucket</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BITBUCKET() {
@@ -4907,10 +3764,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bitbucket-square"> fa-bitbucket-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BITBUCKET_SQUARE() {
@@ -4918,10 +3772,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tumblr"> fa-tumblr</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TUMBLR() {
@@ -4929,10 +3780,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tumblr-square"> fa-tumblr-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TUMBLR_SQUARE() {
@@ -4940,10 +3788,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-long-arrow-down"> fa-long-arrow-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LONG_ARROW_DOWN() {
@@ -4951,10 +3796,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-long-arrow-up"> fa-long-arrow-up</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LONG_ARROW_UP() {
@@ -4962,10 +3804,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-long-arrow-left"> fa-long-arrow-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LONG_ARROW_LEFT() {
@@ -4973,10 +3812,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-long-arrow-right"> fa-long-arrow-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LONG_ARROW_RIGHT() {
@@ -4984,10 +3820,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-apple"> fa-apple</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_APPLE() {
@@ -4995,10 +3828,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-windows"> fa-windows</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WINDOWS() {
@@ -5006,10 +3836,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-android"> fa-android</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ANDROID() {
@@ -5017,10 +3844,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-linux"> fa-linux</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LINUX() {
@@ -5028,10 +3852,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-dribbble"> fa-dribbble</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DRIBBBLE() {
@@ -5039,10 +3860,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-skype"> fa-skype</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SKYPE() {
@@ -5050,10 +3868,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-foursquare"> fa-foursquare</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FOURSQUARE() {
@@ -5061,10 +3876,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-trello"> fa-trello</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TRELLO() {
@@ -5072,10 +3884,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-female"> fa-female</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FEMALE() {
@@ -5083,10 +3892,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-male"> fa-male</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MALE() {
@@ -5094,10 +3900,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-gittip"> fa-gittip</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GITTIP() {
@@ -5105,10 +3908,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-gratipay"> fa-gratipay</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GRATIPAY() {
@@ -5116,10 +3916,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sun-o"> fa-sun-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SUN_O() {
@@ -5127,10 +3924,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-moon-o"> fa-moon-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MOON_O() {
@@ -5138,10 +3932,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-archive"> fa-archive</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARCHIVE() {
@@ -5149,10 +3940,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bug"> fa-bug</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BUG() {
@@ -5160,10 +3948,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-vk"> fa-vk</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VK() {
@@ -5171,10 +3956,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-weibo"> fa-weibo</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WEIBO() {
@@ -5182,10 +3964,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-renren"> fa-renren</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_RENREN() {
@@ -5193,10 +3972,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-pagelines"> fa-pagelines</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PAGELINES() {
@@ -5204,10 +3980,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-stack-exchange"> fa-stack-exchange</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STACK_EXCHANGE() {
@@ -5215,10 +3988,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-circle-o-right"> fa-arrow-circle-o-right</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_CIRCLE_O_RIGHT() {
@@ -5226,10 +3996,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-arrow-circle-o-left"> fa-arrow-circle-o-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ARROW_CIRCLE_O_LEFT() {
@@ -5237,10 +4004,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-caret-square-o-left"> fa-caret-square-o-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CARET_SQUARE_O_LEFT() {
@@ -5248,10 +4012,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-toggle-left"> fa-toggle-left</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TOGGLE_LEFT() {
@@ -5259,10 +4020,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-dot-circle-o"> fa-dot-circle-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DOT_CIRCLE_O() {
@@ -5270,10 +4028,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-wheelchair"> fa-wheelchair</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WHEELCHAIR() {
@@ -5281,10 +4036,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-vimeo-square"> fa-vimeo-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VIMEO_SQUARE() {
@@ -5292,10 +4044,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-turkish-lira"> fa-turkish-lira</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TURKISH_LIRA() {
@@ -5303,10 +4052,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-try"> fa-try</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TRY() {
@@ -5314,10 +4060,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-plus-square-o"> fa-plus-square-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PLUS_SQUARE_O() {
@@ -5325,10 +4068,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-space-shuttle"> fa-space-shuttle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SPACE_SHUTTLE() {
@@ -5336,10 +4076,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-slack"> fa-slack</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SLACK() {
@@ -5347,10 +4084,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-envelope-square"> fa-envelope-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ENVELOPE_SQUARE() {
@@ -5358,10 +4092,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-wordpress"> fa-wordpress</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WORDPRESS() {
@@ -5369,10 +4100,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-openid"> fa-openid</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_OPENID() {
@@ -5380,10 +4108,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-university"> fa-university</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_UNIVERSITY() {
@@ -5391,10 +4116,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-institution"> fa-institution</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_INSTITUTION() {
@@ -5402,10 +4124,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bank"> fa-bank</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BANK() {
@@ -5413,10 +4132,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-graduation-cap"> fa-graduation-cap</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GRADUATION_CAP() {
@@ -5424,10 +4140,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mortar-board"> fa-mortar-board</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MORTAR_BOARD() {
@@ -5435,10 +4148,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-yahoo"> fa-yahoo</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_YAHOO() {
@@ -5446,10 +4156,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-google"> fa-google</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GOOGLE() {
@@ -5457,10 +4164,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-reddit"> fa-reddit</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_REDDIT() {
@@ -5468,10 +4172,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-reddit-square"> fa-reddit-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_REDDIT_SQUARE() {
@@ -5479,10 +4180,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-stumbleupon-circle"> fa-stumbleupon-circle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STUMBLEUPON_CIRCLE() {
@@ -5490,10 +4188,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-stumbleupon"> fa-stumbleupon</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STUMBLEUPON() {
@@ -5501,10 +4196,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-delicious"> fa-delicious</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DELICIOUS() {
@@ -5512,10 +4204,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-digg"> fa-digg</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DIGG() {
@@ -5523,10 +4212,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-pied-piper"> fa-pied-piper</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PIED_PIPER() {
@@ -5534,10 +4220,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-pied-piper-alt"> fa-pied-piper-alt</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PIED_PIPER_ALT() {
@@ -5545,10 +4228,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-drupal"> fa-drupal</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DRUPAL() {
@@ -5556,10 +4236,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-joomla"> fa-joomla</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_JOOMLA() {
@@ -5567,10 +4244,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-language"> fa-language</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LANGUAGE() {
@@ -5578,10 +4252,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-fax"> fa-fax</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FAX() {
@@ -5589,10 +4260,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-building"> fa-building</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BUILDING() {
@@ -5600,10 +4268,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-child"> fa-child</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHILD() {
@@ -5611,10 +4276,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-paw"> fa-paw</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PAW() {
@@ -5622,10 +4284,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-spoon"> fa-spoon</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SPOON() {
@@ -5633,10 +4292,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cube"> fa-cube</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CUBE() {
@@ -5644,10 +4300,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cubes"> fa-cubes</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CUBES() {
@@ -5655,10 +4308,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-behance"> fa-behance</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BEHANCE() {
@@ -5666,10 +4316,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-behance-square"> fa-behance-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BEHANCE_SQUARE() {
@@ -5677,10 +4324,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-steam"> fa-steam</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STEAM() {
@@ -5688,10 +4332,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-steam-square"> fa-steam-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STEAM_SQUARE() {
@@ -5699,10 +4340,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-recycle"> fa-recycle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_RECYCLE() {
@@ -5710,10 +4348,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-automobile"> fa-automobile</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_AUTOMOBILE() {
@@ -5721,10 +4356,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-car"> fa-car</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CAR() {
@@ -5732,10 +4364,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-taxi"> fa-taxi</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TAXI() {
@@ -5743,10 +4372,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cab"> fa-cab</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CAB() {
@@ -5754,10 +4380,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tree"> fa-tree</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TREE() {
@@ -5765,10 +4388,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-spotify"> fa-spotify</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SPOTIFY() {
@@ -5776,10 +4396,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-deviantart"> fa-deviantart</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DEVIANTART() {
@@ -5787,10 +4404,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-soundcloud"> fa-soundcloud</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SOUNDCLOUD() {
@@ -5798,10 +4412,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-database"> fa-database</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DATABASE() {
@@ -5809,10 +4420,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-pdf-o"> fa-file-pdf-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_PDF_O() {
@@ -5820,10 +4428,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-word-o"> fa-file-word-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_WORD_O() {
@@ -5831,10 +4436,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-excel-o"> fa-file-excel-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_EXCEL_O() {
@@ -5842,10 +4444,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-powerpoint-o"> fa-file-powerpoint-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_POWERPOINT_O() {
@@ -5853,10 +4452,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-image-o"> fa-file-image-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_IMAGE_O() {
@@ -5864,10 +4460,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-picture-o"> fa-file-picture-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_PICTURE_O() {
@@ -5875,10 +4468,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-photo-o"> fa-file-photo-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_PHOTO_O() {
@@ -5886,10 +4476,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-zip-o"> fa-file-zip-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_ZIP_O() {
@@ -5897,10 +4484,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-archive-o"> fa-file-archive-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_ARCHIVE_O() {
@@ -5908,10 +4492,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-sound-o"> fa-file-sound-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_SOUND_O() {
@@ -5919,10 +4500,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-audio-o"> fa-file-audio-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_AUDIO_O() {
@@ -5930,10 +4508,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-movie-o"> fa-file-movie-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_MOVIE_O() {
@@ -5941,10 +4516,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-video-o"> fa-file-video-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_VIDEO_O() {
@@ -5952,10 +4524,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-file-code-o"> fa-file-code-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FILE_CODE_O() {
@@ -5963,10 +4532,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-vine"> fa-vine</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VINE() {
@@ -5974,10 +4540,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-codepen"> fa-codepen</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CODEPEN() {
@@ -5985,10 +4548,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-jsfiddle"> fa-jsfiddle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_JSFIDDLE() {
@@ -5996,10 +4556,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-life-buoy"> fa-life-buoy</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LIFE_BUOY() {
@@ -6007,10 +4564,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-life-ring"> fa-life-ring</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LIFE_RING() {
@@ -6018,10 +4572,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-life-bouy"> fa-life-bouy</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LIFE_BOUY() {
@@ -6029,10 +4580,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-life-saver"> fa-life-saver</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LIFE_SAVER() {
@@ -6040,10 +4588,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-support"> fa-support</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SUPPORT() {
@@ -6051,10 +4596,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-circle-o-notch"> fa-circle-o-notch</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CIRCLE_O_NOTCH() {
@@ -6062,10 +4604,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-ra"> fa-ra</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_RA() {
@@ -6073,10 +4612,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-rebel"> fa-rebel</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_REBEL() {
@@ -6084,10 +4620,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-empire"> fa-empire</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EMPIRE() {
@@ -6095,10 +4628,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-ge"> fa-ge</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GE() {
@@ -6106,10 +4636,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-git-square"> fa-git-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GIT_SQUARE() {
@@ -6117,10 +4644,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-git"> fa-git</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GIT() {
@@ -6128,10 +4652,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hacker-news"> fa-hacker-news</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HACKER_NEWS() {
@@ -6139,10 +4660,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-yc-square"> fa-yc-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_YC_SQUARE() {
@@ -6150,10 +4668,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-y-combinator-square"> fa-y-combinator-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_Y_COMBINATOR_SQUARE() {
@@ -6161,10 +4676,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tencent-weibo"> fa-tencent-weibo</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TENCENT_WEIBO() {
@@ -6172,10 +4684,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-qq"> fa-qq</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_QQ() {
@@ -6183,10 +4692,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-wechat"> fa-wechat</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WECHAT() {
@@ -6194,10 +4700,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-weixin"> fa-weixin</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WEIXIN() {
@@ -6205,10 +4708,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-send"> fa-send</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SEND() {
@@ -6216,10 +4716,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-paper-plane"> fa-paper-plane</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PAPER_PLANE() {
@@ -6227,10 +4724,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-paper-plane-o"> fa-paper-plane-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PAPER_PLANE_O() {
@@ -6238,10 +4732,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-send-o"> fa-send-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SEND_O() {
@@ -6249,10 +4740,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-history"> fa-history</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HISTORY() {
@@ -6260,10 +4748,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-circle-thin"> fa-circle-thin</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CIRCLE_THIN() {
@@ -6271,10 +4756,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-header"> fa-header</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HEADER() {
@@ -6282,10 +4764,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-paragraph"> fa-paragraph</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PARAGRAPH() {
@@ -6293,10 +4772,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sliders"> fa-sliders</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SLIDERS() {
@@ -6304,10 +4780,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-share-alt"> fa-share-alt</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SHARE_ALT() {
@@ -6315,10 +4788,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-share-alt-square"> fa-share-alt-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SHARE_ALT_SQUARE() {
@@ -6326,10 +4796,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bomb"> fa-bomb</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BOMB() {
@@ -6337,10 +4804,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-soccer-ball-o"> fa-soccer-ball-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SOCCER_BALL_O() {
@@ -6348,10 +4812,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-futbol-o"> fa-futbol-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FUTBOL_O() {
@@ -6359,10 +4820,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tty"> fa-tty</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TTY() {
@@ -6370,10 +4828,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-binoculars"> fa-binoculars</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BINOCULARS() {
@@ -6381,10 +4836,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-plug"> fa-plug</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PLUG() {
@@ -6392,10 +4844,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-slideshare"> fa-slideshare</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SLIDESHARE() {
@@ -6403,10 +4852,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-twitch"> fa-twitch</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TWITCH() {
@@ -6414,10 +4860,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-yelp"> fa-yelp</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_YELP() {
@@ -6425,10 +4868,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-newspaper-o"> fa-newspaper-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_NEWSPAPER_O() {
@@ -6436,10 +4876,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-wifi"> fa-wifi</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WIFI() {
@@ -6447,10 +4884,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-calculator"> fa-calculator</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CALCULATOR() {
@@ -6458,10 +4892,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-paypal"> fa-paypal</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PAYPAL() {
@@ -6469,10 +4900,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-google-wallet"> fa-google-wallet</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GOOGLE_WALLET() {
@@ -6480,10 +4908,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cc-visa"> fa-cc-visa</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CC_VISA() {
@@ -6491,10 +4916,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cc-mastercard"> fa-cc-mastercard</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CC_MASTERCARD() {
@@ -6502,10 +4924,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cc-discover"> fa-cc-discover</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CC_DISCOVER() {
@@ -6513,10 +4932,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cc-amex"> fa-cc-amex</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CC_AMEX() {
@@ -6524,10 +4940,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cc-paypal"> fa-cc-paypal</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CC_PAYPAL() {
@@ -6535,10 +4948,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cc-stripe"> fa-cc-stripe</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CC_STRIPE() {
@@ -6546,10 +4956,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bell-slash"> fa-bell-slash</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BELL_SLASH() {
@@ -6557,10 +4964,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bell-slash-o"> fa-bell-slash-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BELL_SLASH_O() {
@@ -6568,10 +4972,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-trash"> fa-trash</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TRASH() {
@@ -6579,10 +4980,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-copyright"> fa-copyright</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COPYRIGHT() {
@@ -6590,10 +4988,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-at"> fa-at</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_AT() {
@@ -6601,10 +4996,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-eyedropper"> fa-eyedropper</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EYEDROPPER() {
@@ -6612,10 +5004,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-paint-brush"> fa-paint-brush</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PAINT_BRUSH() {
@@ -6623,10 +5012,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-birthday-cake"> fa-birthday-cake</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BIRTHDAY_CAKE() {
@@ -6634,10 +5020,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-area-chart"> fa-area-chart</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_AREA_CHART() {
@@ -6645,10 +5028,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-pie-chart"> fa-pie-chart</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PIE_CHART() {
@@ -6656,10 +5036,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-line-chart"> fa-line-chart</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LINE_CHART() {
@@ -6667,10 +5044,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-lastfm"> fa-lastfm</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LASTFM() {
@@ -6678,10 +5052,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-lastfm-square"> fa-lastfm-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LASTFM_SQUARE() {
@@ -6689,10 +5060,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-toggle-off"> fa-toggle-off</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TOGGLE_OFF() {
@@ -6700,10 +5068,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-toggle-on"> fa-toggle-on</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TOGGLE_ON() {
@@ -6711,10 +5076,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bicycle"> fa-bicycle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BICYCLE() {
@@ -6722,10 +5084,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bus"> fa-bus</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BUS() {
@@ -6733,10 +5092,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-ioxhost"> fa-ioxhost</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_IOXHOST() {
@@ -6744,10 +5100,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-angellist"> fa-angellist</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ANGELLIST() {
@@ -6755,10 +5108,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cc"> fa-cc</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CC() {
@@ -6766,10 +5116,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-ils"> fa-ils</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ILS() {
@@ -6777,10 +5124,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sheqel"> fa-sheqel</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SHEQEL() {
@@ -6788,10 +5132,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-shekel"> fa-shekel</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SHEKEL() {
@@ -6799,10 +5140,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-meanpath"> fa-meanpath</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MEANPATH() {
@@ -6810,10 +5148,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-buysellads"> fa-buysellads</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BUYSELLADS() {
@@ -6821,10 +5156,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-connectdevelop"> fa-connectdevelop</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CONNECTDEVELOP() {
@@ -6832,10 +5164,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-dashcube"> fa-dashcube</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DASHCUBE() {
@@ -6843,10 +5172,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-forumbee"> fa-forumbee</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FORUMBEE() {
@@ -6854,10 +5180,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-leanpub"> fa-leanpub</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_LEANPUB() {
@@ -6865,10 +5188,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sellsy"> fa-sellsy</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SELLSY() {
@@ -6876,10 +5196,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-shirtsinbulk"> fa-shirtsinbulk</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SHIRTSINBULK() {
@@ -6887,10 +5204,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-simplybuilt"> fa-simplybuilt</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SIMPLYBUILT() {
@@ -6898,10 +5212,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-skyatlas"> fa-skyatlas</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SKYATLAS() {
@@ -6909,10 +5220,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cart-plus"> fa-cart-plus</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CART_PLUS() {
@@ -6920,10 +5228,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cart-arrow-down"> fa-cart-arrow-down</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CART_ARROW_DOWN() {
@@ -6931,10 +5236,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-diamond"> fa-diamond</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_DIAMOND() {
@@ -6942,10 +5244,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-ship"> fa-ship</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SHIP() {
@@ -6953,10 +5252,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-user-secret"> fa-user-secret</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_USER_SECRET() {
@@ -6964,10 +5260,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-motorcycle"> fa-motorcycle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MOTORCYCLE() {
@@ -6975,10 +5268,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-street-view"> fa-street-view</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STREET_VIEW() {
@@ -6986,10 +5276,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-heartbeat"> fa-heartbeat</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HEARTBEAT() {
@@ -6997,10 +5284,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-venus"> fa-venus</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VENUS() {
@@ -7008,10 +5292,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mars"> fa-mars</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MARS() {
@@ -7019,10 +5300,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mercury"> fa-mercury</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MERCURY() {
@@ -7030,10 +5308,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-intersex"> fa-intersex</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_INTERSEX() {
@@ -7041,10 +5316,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-transgender"> fa-transgender</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TRANSGENDER() {
@@ -7052,10 +5324,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-transgender-alt"> fa-transgender-alt</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TRANSGENDER_ALT() {
@@ -7063,10 +5332,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-venus-double"> fa-venus-double</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VENUS_DOUBLE() {
@@ -7074,10 +5340,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mars-double"> fa-mars-double</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MARS_DOUBLE() {
@@ -7085,10 +5348,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-venus-mars"> fa-venus-mars</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VENUS_MARS() {
@@ -7096,10 +5356,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mars-stroke"> fa-mars-stroke</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MARS_STROKE() {
@@ -7107,10 +5364,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mars-stroke-v"> fa-mars-stroke-v</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MARS_STROKE_V() {
@@ -7118,10 +5372,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mars-stroke-h"> fa-mars-stroke-h</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MARS_STROKE_H() {
@@ -7129,10 +5380,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-neuter"> fa-neuter</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_NEUTER() {
@@ -7140,10 +5388,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-genderless"> fa-genderless</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GENDERLESS() {
@@ -7151,10 +5396,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-facebook-official"> fa-facebook-official</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FACEBOOK_OFFICIAL() {
@@ -7162,10 +5404,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-pinterest-p"> fa-pinterest-p</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_PINTEREST_P() {
@@ -7173,10 +5412,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-whatsapp"> fa-whatsapp</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WHATSAPP() {
@@ -7184,10 +5420,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-server"> fa-server</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SERVER() {
@@ -7195,10 +5428,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-user-plus"> fa-user-plus</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_USER_PLUS() {
@@ -7206,10 +5436,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-user-times"> fa-user-times</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_USER_TIMES() {
@@ -7217,10 +5444,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-bed"> fa-bed</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BED() {
@@ -7228,10 +5452,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hotel"> fa-hotel</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOTEL() {
@@ -7239,10 +5460,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-viacoin"> fa-viacoin</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VIACOIN() {
@@ -7250,10 +5468,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-train"> fa-train</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TRAIN() {
@@ -7261,10 +5476,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-subway"> fa-subway</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SUBWAY() {
@@ -7272,10 +5484,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-medium"> fa-medium</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MEDIUM() {
@@ -7283,10 +5492,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-yc"> fa-yc</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_YC() {
@@ -7294,10 +5500,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-y-combinator"> fa-y-combinator</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_Y_COMBINATOR() {
@@ -7305,10 +5508,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-optin-monster"> fa-optin-monster</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_OPTIN_MONSTER() {
@@ -7316,10 +5516,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-opencart"> fa-opencart</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_OPENCART() {
@@ -7327,10 +5524,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-expeditedssl"> fa-expeditedssl</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_EXPEDITEDSSL() {
@@ -7338,10 +5532,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-battery-full"> fa-battery-full</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BATTERY_FULL() {
@@ -7349,10 +5540,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-battery-4"> fa-battery-4</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BATTERY_4() {
@@ -7360,10 +5548,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-battery-three-quarters"> fa-battery-three-quarters</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BATTERY_THREE_QUARTERS() {
@@ -7371,10 +5556,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-battery-3"> fa-battery-3</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BATTERY_3() {
@@ -7382,10 +5564,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-battery-half"> fa-battery-half</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BATTERY_HALF() {
@@ -7393,10 +5572,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-battery-2"> fa-battery-2</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BATTERY_2() {
@@ -7404,10 +5580,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-battery-quarter"> fa-battery-quarter</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BATTERY_QUARTER() {
@@ -7415,10 +5588,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-battery-1"> fa-battery-1</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BATTERY_1() {
@@ -7426,10 +5596,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-battery-empty"> fa-battery-empty</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BATTERY_EMPTY() {
@@ -7437,10 +5604,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-battery-0"> fa-battery-0</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BATTERY_0() {
@@ -7448,10 +5612,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-mouse-pointer"> fa-mouse-pointer</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MOUSE_POINTER() {
@@ -7459,10 +5620,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-i-cursor"> fa-i-cursor</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_I_CURSOR() {
@@ -7470,10 +5628,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-object-group"> fa-object-group</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_OBJECT_GROUP() {
@@ -7481,10 +5636,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-object-ungroup"> fa-object-ungroup</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_OBJECT_UNGROUP() {
@@ -7492,10 +5644,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sticky-note"> fa-sticky-note</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STICKY_NOTE() {
@@ -7503,10 +5652,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-sticky-note-o"> fa-sticky-note-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_STICKY_NOTE_O() {
@@ -7514,10 +5660,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cc-jcb"> fa-cc-jcb</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CC_JCB() {
@@ -7525,10 +5668,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-cc-diners-club"> fa-cc-diners-club</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CC_DINERS_CLUB() {
@@ -7536,10 +5676,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-clone"> fa-clone</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CLONE() {
@@ -7547,10 +5684,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-balance-scale"> fa-balance-scale</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BALANCE_SCALE() {
@@ -7558,10 +5692,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hourglass-o"> fa-hourglass-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOURGLASS_O() {
@@ -7569,10 +5700,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hourglass-1"> fa-hourglass-1</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOURGLASS_1() {
@@ -7580,10 +5708,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hourglass-start"> fa-hourglass-start</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOURGLASS_START() {
@@ -7591,10 +5716,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hourglass-2"> fa-hourglass-2</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOURGLASS_2() {
@@ -7602,10 +5724,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hourglass-half"> fa-hourglass-half</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOURGLASS_HALF() {
@@ -7613,10 +5732,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hourglass-3"> fa-hourglass-3</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOURGLASS_3() {
@@ -7624,10 +5740,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hourglass-end"> fa-hourglass-end</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOURGLASS_END() {
@@ -7635,10 +5748,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hourglass"> fa-hourglass</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOURGLASS() {
@@ -7646,10 +5756,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-rock-o"> fa-hand-rock-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_ROCK_O() {
@@ -7657,10 +5764,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-grab-o"> fa-hand-grab-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_GRAB_O() {
@@ -7668,10 +5772,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-paper-o"> fa-hand-paper-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_PAPER_O() {
@@ -7679,10 +5780,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-stop-o"> fa-hand-stop-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_STOP_O() {
@@ -7690,10 +5788,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-scissors-o"> fa-hand-scissors-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_SCISSORS_O() {
@@ -7701,10 +5796,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-lizard-o"> fa-hand-lizard-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_LIZARD_O() {
@@ -7712,10 +5804,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-spock-o"> fa-hand-spock-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_SPOCK_O() {
@@ -7723,10 +5812,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-pointer-o"> fa-hand-pointer-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_POINTER_O() {
@@ -7734,10 +5820,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-hand-peace-o"> fa-hand-peace-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HAND_PEACE_O() {
@@ -7745,10 +5828,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-trademark"> fa-trademark</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TRADEMARK() {
@@ -7756,10 +5836,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-registered"> fa-registered</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_REGISTERED() {
@@ -7767,10 +5844,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-creative-commons"> fa-creative-commons</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CREATIVE_COMMONS() {
@@ -7778,10 +5852,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-gg"> fa-gg</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GG() {
@@ -7789,10 +5860,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-gg-circle"> fa-gg-circle</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GG_CIRCLE() {
@@ -7800,10 +5868,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tripadvisor"> fa-tripadvisor</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TRIPADVISOR() {
@@ -7811,10 +5876,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-odnoklassniki"> fa-odnoklassniki</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ODNOKLASSNIKI() {
@@ -7822,10 +5884,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-odnoklassniki-square"> fa-odnoklassniki-square</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_ODNOKLASSNIKI_SQUARE() {
@@ -7833,10 +5892,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-get-pocket"> fa-get-pocket</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_GET_POCKET() {
@@ -7844,10 +5900,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-wikipedia-w"> fa-wikipedia-w</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_WIKIPEDIA_W() {
@@ -7855,10 +5908,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-safari"> fa-safari</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_SAFARI() {
@@ -7866,10 +5916,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-chrome"> fa-chrome</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CHROME() {
@@ -7877,10 +5924,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-firefox"> fa-firefox</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FIREFOX() {
@@ -7888,10 +5932,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-opera"> fa-opera</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_OPERA() {
@@ -7899,10 +5940,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-internet-explorer"> fa-internet-explorer</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_INTERNET_EXPLORER() {
@@ -7910,10 +5948,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-television"> fa-television</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TELEVISION() {
@@ -7921,10 +5956,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-tv"> fa-tv</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_TV() {
@@ -7932,10 +5964,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-contao"> fa-contao</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CONTAO() {
@@ -7943,10 +5972,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-500px"> fa-500px</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_500PX() {
@@ -7954,10 +5980,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-amazon"> fa-amazon</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_AMAZON() {
@@ -7965,10 +5988,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-calendar-plus-o"> fa-calendar-plus-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CALENDAR_PLUS_O() {
@@ -7976,10 +5996,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-calendar-minus-o"> fa-calendar-minus-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CALENDAR_MINUS_O() {
@@ -7987,10 +6004,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-calendar-times-o"> fa-calendar-times-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CALENDAR_TIMES_O() {
@@ -7998,10 +6012,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-calendar-check-o"> fa-calendar-check-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_CALENDAR_CHECK_O() {
@@ -8009,10 +6020,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-industry"> fa-industry</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_INDUSTRY() {
@@ -8020,10 +6028,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-map-pin"> fa-map-pin</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MAP_PIN() {
@@ -8031,10 +6036,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-map-signs"> fa-map-signs</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MAP_SIGNS() {
@@ -8042,10 +6044,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-map-o"> fa-map-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MAP_O() {
@@ -8053,10 +6052,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-map"> fa-map</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_MAP() {
@@ -8064,10 +6060,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-commenting"> fa-commenting</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COMMENTING() {
@@ -8075,10 +6068,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-commenting-o"> fa-commenting-o</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_COMMENTING_O() {
@@ -8086,10 +6076,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-houzz"> fa-houzz</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_HOUZZ() {
@@ -8097,10 +6084,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-vimeo"> fa-vimeo</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_VIMEO() {
@@ -8108,10 +6092,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-black-tie"> fa-black-tie</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_BLACK_TIE() {
@@ -8119,10 +6100,7 @@ public class FontAwesomeIcons {
 	}
 
 	/**
-	 * <link rel="stylesheet" href=
-	 * "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 * <i class="fa fa-fonticons"> fa-fonticons</i>
-	 *
+	 * 
 	 * @return the font icon instance
 	 */
 	public static FontIcon FA_FONTICONS() {

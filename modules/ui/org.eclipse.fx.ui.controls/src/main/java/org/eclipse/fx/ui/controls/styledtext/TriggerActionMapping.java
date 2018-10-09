@@ -20,7 +20,7 @@ import javafx.scene.input.KeyEvent;
 
 /**
  * Mapping for user input triggers to actions to allow customization.
- *
+ * <p>
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>
  * </p>

@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Content of the styled text area
- *
+ * <p>
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>
  * </p>

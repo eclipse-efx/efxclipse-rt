@@ -37,6 +37,7 @@ public interface TreeItemComparator<T> {
 	/**
 	 * Utility method to create a TreeViewComparator from a given {@link Comparator}
 	 * @param comparator the comparator
+	 * @param <T> the element type
 	 * @return new TreeViewComparator
 	 */
 	static <T> TreeItemComparator<T> create(Comparator<T> comparator) {

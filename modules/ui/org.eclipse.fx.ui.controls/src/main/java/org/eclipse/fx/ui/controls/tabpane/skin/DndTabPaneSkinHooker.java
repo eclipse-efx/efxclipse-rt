@@ -16,9 +16,9 @@ import java.util.function.Function;
 
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DragSetup;
-import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DropType;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DroppedData;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.FeedbackData;
+import org.eclipse.fx.ui.controls.tabpane.DropType;
 import org.eclipse.fx.ui.controls.tabpane.GenericTab;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;

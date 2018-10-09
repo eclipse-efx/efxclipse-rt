@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
+ * <p>
  * A string with styling informations
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>

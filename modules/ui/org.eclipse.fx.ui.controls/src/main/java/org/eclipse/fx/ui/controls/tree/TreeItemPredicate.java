@@ -43,6 +43,7 @@ public interface TreeItemPredicate<T> {
 	 * 
 	 * @param predicate
 	 *            the predicate
+	 * @param <T> the element type
 	 * @return new TreeItemPredicate
 	 */
 	static <T> TreeItemPredicate<T> create(Predicate<T> predicate) {

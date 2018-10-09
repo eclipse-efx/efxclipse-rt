@@ -224,6 +224,7 @@ public class TextNodeOriginal extends HBox implements TextNode {
 	 *
 	 * @param text
 	 *            the text
+	 * @param tabCharAdvance tab advance
 	 */
 	public TextNodeOriginal(String text, IntegerProperty tabCharAdvance) {
 		this.tabCharAdvance = tabCharAdvance;

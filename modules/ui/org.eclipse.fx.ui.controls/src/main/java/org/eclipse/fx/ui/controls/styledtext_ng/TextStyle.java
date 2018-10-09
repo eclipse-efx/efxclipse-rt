@@ -30,6 +30,7 @@ import javafx.scene.text.Font;
  * thus no <code>dispose()</code> method is provided.
  * </p>
  *
+ * <p>
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>
  * </p>

@@ -16,7 +16,6 @@ import static org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.teardown;
 import java.util.function.Consumer;
 
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DragSetup;
-import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.FeedbackType;
 import org.eclipse.fx.ui.controls.tabpane.skin.DnDTabPaneSkinHookerFullDrag;
 import org.eclipse.fx.ui.controls.tabpane.skin.DndTabPaneSkinHooker;
 import org.eclipse.jdt.annotation.Nullable;
@@ -145,9 +144,17 @@ public class DndTabPane extends TabPane {
 	public void setAllowDetach(boolean allowDetach) {
 		allowDetachProperty().set(allowDetach);
 	}
+	
+	/**
+	 * @param feedbackType
+	 *            the type of visual Feedback for the User
+	 */
+	public void setFeedbackType(FeedbackType feedbackType) {
+		feedbackTypeProperty().set(feedbackType);
+	}
 
 	/**
-	 * @return the type of visual Feedback for the User
+	 * @return the type of visual feedback for the User
 	 */
 	public ObjectProperty<FeedbackType> feedbackTypeProperty() {
 		if (this.feedbackType == null) {
@@ -157,17 +164,9 @@ public class DndTabPane extends TabPane {
 	}
 
 	/**
-	 * @return the type of visual Feedback for the User
+	 * @return the type of visual feedback for the User
 	 */
 	public FeedbackType getFeedbackType() {
 		return this.feedbackType != null ? this.feedbackType.get() : DEFAULT_FEEDBACK_TYPE;
-	}
-
-	/**
-	 * @param feedbackType
-	 *            the type of visual Feedback for the User
-	 */
-	public void setFeedbackType(FeedbackType feedbackType) {
-		feedbackTypeProperty().set(feedbackType);
 	}
 }

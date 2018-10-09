@@ -61,6 +61,12 @@
 		<!-- module>core/org.eclipse.fx.osgi.threex</module -->
 		<module>core/org.eclipse.fx.osgi.util</module>
 
+		<!-- UI -->
+		<module>ui/org.eclipse.fx.ui.panes</module>
+		<module>ui/org.eclipse.fx.ui.controls</module>
+		<module>ui/org.eclipse.fx.ui.emf.edit</module>
+		
+
 		<module>p2/org.eclipse.fx.target.feature</module>
 
 		<module>p2/org.eclipse.fx.core.repo</module>

@@ -628,7 +628,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	/**
 	 * Set if the dialog is maximizable
 	 *
-	 * @param maximizable
+	 * @param maximizeable
 	 *            <code>true</code> to support maximizable
 	 */
 	public final void setMaximizable(boolean maximizeable) {

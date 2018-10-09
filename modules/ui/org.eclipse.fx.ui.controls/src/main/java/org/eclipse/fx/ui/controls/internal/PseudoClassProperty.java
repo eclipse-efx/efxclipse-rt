@@ -12,6 +12,7 @@ import javafx.scene.Node;
  * </p>
  * <p>
  * Usage Example:
+ * </p>
  * <pre>
  * public class MyNode extends Node {
  *   // ..
@@ -28,8 +29,7 @@ import javafx.scene.Node;
  *   // ..
  * }
  * </pre>
- * </p>
- *
+ * 
  */
 public class PseudoClassProperty extends BooleanPropertyBase {
     private final PseudoClass cls;

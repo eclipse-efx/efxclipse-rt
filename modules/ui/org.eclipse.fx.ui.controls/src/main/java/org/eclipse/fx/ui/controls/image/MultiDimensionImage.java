@@ -75,6 +75,7 @@ public interface MultiDimensionImage {
 	 *            the domain object used a the input to create the image
 	 * @param imageComputer
 	 *            function to compute the image (called outside the UI-Thread)
+	 * @param <O> the data type
 	 * @return an image instance
 	 */
 	public static <O> MultiDimensionImage singleDimension(ThreadSynchronize threadSynchronize, Image placeholder, O data, Function<O, Image> imageComputer) {
@@ -95,6 +96,7 @@ public interface MultiDimensionImage {
 	 *            function to compute the image (called outside the UI-Thread)
 	 * @param cache
 	 *            added cache
+	 * @param <O> the data type
 	 * @return an image instance
 	 */
 	public static <O> MultiDimensionImage singleDimension(ThreadSynchronize threadSynchronize, Image placeholder, O data, Function<O, Image> imageComputer, Cache<O, Image> cache) {

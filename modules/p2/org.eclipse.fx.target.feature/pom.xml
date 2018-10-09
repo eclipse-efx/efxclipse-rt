@@ -154,6 +154,42 @@
   	</dependency>
   	
   	
+  	<!-- UI -->
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.ui.panes</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.ui.panes</artifactId>
+  		<version>${project.version}</version>
+  		<classifier>sources</classifier>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.ui.controls</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.ui.controls</artifactId>
+  		<version>${project.version}</version>
+  		<classifier>sources</classifier>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.ui.emf.edit</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.ui.emf.edit</artifactId>
+  		<version>${project.version}</version>
+  		<classifier>sources</classifier>
+  	</dependency>
+  	
+  	
   	
   	
   <!-- 

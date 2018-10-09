@@ -28,6 +28,8 @@ public class TreeColumnUtil {
 	 *            the preferred width
 	 * @param valueExtractor
 	 *            function to extract the cell value
+	 * @param <S> row value type
+	 * @param <T> cell value type 
 	 * @return the column instance
 	 */
 	public static <S, T> TreeTableColumn<S, T> createColumn(String label, double prefWidth, Function<S, T> valueExtractor) {

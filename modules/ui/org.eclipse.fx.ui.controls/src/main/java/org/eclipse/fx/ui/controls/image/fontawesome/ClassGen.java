@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  */
 public class ClassGen {
 	/**
-	 * @param args
+	 * @param args the cmd arguments
 	 */
 	public static void main(String[] args) {
 		try {

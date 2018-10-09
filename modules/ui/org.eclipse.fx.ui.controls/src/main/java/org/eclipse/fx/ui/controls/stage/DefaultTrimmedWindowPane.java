@@ -322,6 +322,7 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 	}
 
 	/**
+	 * @param <N> the node type
 	 * @return the title bar
 	 */
 	@SuppressWarnings("unchecked")

@@ -579,6 +579,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	 *
 	 * @param caretPosition
 	 *            the position
+	 * @param locationHint location hint
 	 * @return the point
 	 */
 	public Point2D getCaretLocation(int caretPosition, LineLocation locationHint) {

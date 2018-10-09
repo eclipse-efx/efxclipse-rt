@@ -57,7 +57,7 @@ public interface GenericTabPane {
 	
 	/**
 	 * Select the tab
-	 * @param draggedTab
+	 * @param draggedTab the dragged tab
 	 */
 	public void select(GenericTab draggedTab);
 }

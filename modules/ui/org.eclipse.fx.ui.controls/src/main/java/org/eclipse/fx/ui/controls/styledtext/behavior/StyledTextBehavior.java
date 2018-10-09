@@ -1456,7 +1456,7 @@ public class StyledTextBehavior {
 	/**
 	 * initializes the key mappings.
 	 *
-	 * @param keyMapping
+	 * @param m
 	 *            the mapping
 	 */
 	protected void initKeymapping(TriggerActionMapping m) {

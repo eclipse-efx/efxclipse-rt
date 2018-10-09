@@ -28,6 +28,7 @@ import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
+import org.eclipse.fx.core.bindings.FXBindings;
 import org.eclipse.fx.core.geom.Size;
 import org.eclipse.fx.core.text.TextUtil;
 import org.eclipse.fx.ui.controls.internal.PseudoClassProperty;
@@ -161,7 +162,6 @@ public class Util {
 	 *            the screen y
 	 * @return the node or <code>null</code>
 	 */
-	@SuppressWarnings("deprecation")
 	public static Node findNode(@Nullable Window w, double screenX, double screenY) {
 		if (w != null && new BoundingBox(w.getX(), w.getY(), w.getWidth(), w.getHeight()).contains(screenX, screenY)) {
 			return findNode(w.getScene().getRoot(), screenX, screenY);
@@ -216,8 +216,8 @@ public class Util {
 	}
 
 	/**
-	 * Find all node at the given x/y location starting the search from the given
-	 * node
+	 * Find all node at the given x/y location starting the search from the
+	 * given node
 	 *
 	 * @param n
 	 *            the node to use as the start
@@ -280,8 +280,8 @@ public class Util {
 	}
 
 	/**
-	 * Bind the content to the source list to the target and apply the converter in
-	 * between
+	 * Bind the content to the source list to the target and apply the converter
+	 * in between
 	 *
 	 * @param target
 	 *            the target list
@@ -295,8 +295,9 @@ public class Util {
 	 *            the source type
 	 * @return the subscription to dispose the binding
 	 * @deprecated use
-	 *             {@link FXObservableUtils#bindContent(List, ObservableList, Function)}
+	 *             {@link FXBindings#bindContent(List, ObservableList, Function)}
 	 */
+	@Deprecated
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static <T, E> Subscription bindContent(List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction) {
 		List<T> list = sourceList.stream().map(converterFunction).collect(Collectors.toList());
@@ -340,6 +341,10 @@ public class Util {
 	 *            the list
 	 * @param converterFunction
 	 *            the converter function
+	 * @param <T>
+	 *            the target type
+	 * @param <E>
+	 *            the source type
 	 * @return the list
 	 */
 	public static <T, E> List<T> transformList(List<? extends E> list, Function<E, T> converterFunction) {
@@ -459,6 +464,7 @@ public class Util {
 	 *
 	 * @param blockCondition
 	 *            the condition
+	 * @param <T> the return type
 	 * @return the return value of the condition
 	 * @since 2.3.0
 	 * @deprecated deprecated since 3.0 to to be replaced by
@@ -487,6 +493,8 @@ public class Util {
 	 *            the text
 	 * @param font
 	 *            the font
+	 * @param fontZoomFactor
+	 *            the zoom factor
 	 * @return the width
 	 * @since 2.3.0
 	 */
@@ -500,33 +508,77 @@ public class Util {
 	 * Create a binding for text width calculation.
 	 *
 	 * @param text
+	 *            the text
 	 * @param font
-	 * @return
+	 *            the font
+	 * @param fontZoomFactor
+	 *            the zoom factor
+	 * @return the width
 	 */
 	public static DoubleBinding createTextWidthBinding(ObservableValue<String> text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
 		return Bindings.createDoubleBinding(() -> {
-			return getTextWidth(text.getValue(), font.getValue(), fontZoomFactor.getValue().doubleValue());
+			return Double.valueOf(getTextWidth(text.getValue(), font.getValue(), fontZoomFactor.getValue().doubleValue()));
 		}, text, font, fontZoomFactor);
 	}
 
+	/**
+	 * Create a binding for text width calculation.
+	 *
+	 * @param text
+	 *            the text
+	 * @param font
+	 *            the font
+	 * @param fontZoomFactor
+	 *            the zoom factor
+	 * @return the width
+	 */
 	public static DoubleBinding createTextWidthBinding(String text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
 		return Bindings.createDoubleBinding(() -> {
-			return getTextWidth(text, font.getValue(), fontZoomFactor.getValue().doubleValue());
+			return Double.valueOf(getTextWidth(text, font.getValue(), fontZoomFactor.getValue().doubleValue()));
 		}, font, fontZoomFactor);
 	}
 
+	/**
+	 * Create a binding for text height calculation.
+	 *
+	 * @param text
+	 *            the text
+	 * @param font
+	 *            the font
+	 * @param fontZoomFactor
+	 *            the zoom factor
+	 * @return the width
+	 */
 	public static double getTextHeight(String text, Font font, double fontZoomFactor) {
 		Text t = new Text(text);
 		t.setFont(Font.font(font.getName(), font.getSize() * fontZoomFactor));
 		return t.getLayoutBounds().getHeight();
 	}
 
+	/**
+	 * Create a binding for text height calculation.
+	 *
+	 * @param text
+	 *            the text
+	 * @param font
+	 *            the font
+	 * @param fontZoomFactor
+	 *            the zoom factor
+	 * @return the width
+	 */
 	public static DoubleBinding createTextHeightBinding(String text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
 		return Bindings.createDoubleBinding(() -> {
-			return getTextHeight(text, font.getValue(), fontZoomFactor.getValue().doubleValue());
+			return Double.valueOf(getTextHeight(text, font.getValue(), fontZoomFactor.getValue().doubleValue()));
 		}, font, fontZoomFactor);
 	}
 
+	/**
+	 * Check if the mouse event is a copy
+	 * 
+	 * @param event
+	 *            the event
+	 * @return <code>true</code> if mouse event is a copy
+	 */
 	public static boolean isCopyEvent(MouseEvent event) {
 		if (SystemUtils.isMacOS()) {
 			return event.isAltDown();
@@ -551,7 +603,7 @@ public class Util {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + this.c;
-			result = prime * result + ((this.f == null) ? 0 : f.hashCode());
+			result = prime * result + ((this.f == null) ? 0 : this.f.hashCode());
 			return result;
 		}
 
@@ -621,8 +673,8 @@ public class Util {
 	 * @param node
 	 *            the container node
 	 * @param name
-	 *            the properties name (not to confuse with the pseudo class name,
-	 *            those may be different)
+	 *            the properties name (not to confuse with the pseudo class
+	 *            name, those may be different)
 	 * @param def
 	 *            the initial value
 	 * @return the new property
@@ -638,7 +690,8 @@ public class Util {
 	 * pseudo class state on invalidation.
 	 * </p>
 	 * <p>
-	 * Convenience method if you do not need to hold the instance of the PseudoClass
+	 * Convenience method if you do not need to hold the instance of the
+	 * PseudoClass
 	 * </p>
 	 * 
 	 * @param pseudoClass
@@ -646,8 +699,8 @@ public class Util {
 	 * @param node
 	 *            the container node
 	 * @param name
-	 *            the properties name (not to confuse with the pseudo class name,
-	 *            those may be different)
+	 *            the properties name (not to confuse with the pseudo class
+	 *            name, those may be different)
 	 * @param def
 	 *            the initial value
 	 * @return the new property

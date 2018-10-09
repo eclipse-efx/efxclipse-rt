@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Factory to create decoration a decoration strategy which is used in
- * {@link StyledTextNode}
+ * {@link StyledTextArea}
  */
 public interface DecorationStrategyFactory extends RankedService {
 	/**

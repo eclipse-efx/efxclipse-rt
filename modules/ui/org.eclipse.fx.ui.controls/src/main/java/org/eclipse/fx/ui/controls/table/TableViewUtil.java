@@ -77,6 +77,7 @@ public class TableViewUtil {
 	 * @param properties
 	 *            list of properties to restore or empty to restore all possible
 	 *            properties
+	 * @param <S> the row value type
 	 * @return the view you passed for fluent API useage
 	 */
 	public static <S> TableView<S> restoreState(TableView<S> view, Memento m, TableView_Properties... properties) {
@@ -95,6 +96,7 @@ public class TableViewUtil {
 	 * @param properties
 	 *            list of properties to restore or empty to restore all possible
 	 *            properties
+	 * @param <S> the row value type
 	 * @return the view you passed for fluent API useage
 	 */
 	public static <S> TableView<S> restoreState(TableView<S> view, Memento m, Function<TableColumn<S, ?>, String> columnKeyProvider, TableView_Properties... properties) {
@@ -195,6 +197,7 @@ public class TableViewUtil {
 	 * @param properties
 	 *            list of properties to restore or empty to restore all possible
 	 *            properties
+	 * @param <S> the row value type
 	 * @return the view you passed for fluent API useage
 	 */
 	public static <S> TableView<S> captureState(TableView<S> view, Memento m, TableView_Properties... properties) {
@@ -213,6 +216,7 @@ public class TableViewUtil {
 	 * @param properties
 	 *            list of properties to restore or empty to restore all possible
 	 *            properties
+	 * @param <S> the row value type
 	 * @return the view you passed for fluent API useage
 	 */
 	public static <S> TableView<S> captureState(TableView<S> view, Memento m, Function<TableColumn<S, ?>, String> columnKeyProvider, TableView_Properties... properties) {
@@ -263,6 +267,7 @@ public class TableViewUtil {
 	 * @param properties
 	 *            list of properties to restore or empty to restore all possible
 	 *            properties
+	 * @param <S> the row value type
 	 * @return subscription object who can be disposed to end the capturing
 	 */
 	public static <S> Subscription enableAutomaticCaptureing(TableView<S> view, Memento m, TableView_Properties... properties) {
@@ -281,6 +286,7 @@ public class TableViewUtil {
 	 * @param properties
 	 *            list of properties to restore or empty to restore all possible
 	 *            properties
+	 * @param <S> the row value type
 	 * @return subscription object who can be disposed to end the capturing
 	 */
 	public static <S> Subscription enableAutomaticCaptureing(TableView<S> view, Memento m, Function<TableColumn<S, ?>, String> columnKeyProvider, TableView_Properties... properties) {
