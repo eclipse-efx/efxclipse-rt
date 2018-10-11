@@ -70,6 +70,7 @@
 		<module>ui/org.eclipse.fx.ui.animation</module>
 		<module>ui/org.eclipse.fx.ui.databinding</module>
 		<module>ui/org.eclipse.fx.ui.di</module>
+		<module>ui/org.eclipse.fx.ui.dialogs</module>
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 
