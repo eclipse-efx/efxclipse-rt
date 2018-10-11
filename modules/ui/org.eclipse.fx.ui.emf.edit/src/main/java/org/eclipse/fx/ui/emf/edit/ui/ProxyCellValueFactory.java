@@ -8,7 +8,7 @@
  * Contributors: 
  *     Torsten Sommer <torsten.sommer@tesis.de> - initial API and implementation 
  *******************************************************************************/
-package org.eclipse.fx.emf.edit.ui;
+package org.eclipse.fx.ui.emf.edit.ui;
 
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ObservableValueBase;

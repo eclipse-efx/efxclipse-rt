@@ -8,14 +8,14 @@
  * Contributors: 
  *     Torsten Sommer <torsten.sommer@tesis.de> - initial API and implementation 
  *******************************************************************************/
-package org.eclipse.fx.emf.edit.ui.dnd;
+package org.eclipse.fx.ui.emf.edit.ui.dnd;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory;
-import org.eclipse.fx.emf.edit.ui.CellUtil;
-import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory.ICellCreationListener;
+import org.eclipse.fx.ui.emf.edit.ui.AdapterFactoryCellFactory;
+import org.eclipse.fx.ui.emf.edit.ui.AdapterFactoryCellFactory.ICellCreationListener;
+import org.eclipse.fx.ui.emf.edit.ui.CellUtil;
 
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;

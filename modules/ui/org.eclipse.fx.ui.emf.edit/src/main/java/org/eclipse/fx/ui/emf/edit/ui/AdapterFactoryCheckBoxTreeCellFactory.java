@@ -8,7 +8,7 @@
  * Contributors:
  *     Christoph Keimel <c.keimel@emsw.de> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.emf.edit.ui;
+package org.eclipse.fx.ui.emf.edit.ui;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;

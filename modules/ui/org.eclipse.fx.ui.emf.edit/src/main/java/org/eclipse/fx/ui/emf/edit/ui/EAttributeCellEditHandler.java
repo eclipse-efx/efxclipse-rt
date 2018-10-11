@@ -1,4 +1,14 @@
-package org.eclipse.fx.emf.edit.ui;
+/******************************************************************************* 
+ * Copyright (c) 2012 TESIS DYNAware GmbH and others. 
+ * All rights reserved. This program and the accompanying materials 
+ * are made available under the terms of the Eclipse Public License v1.0 
+ * which accompanies this distribution, and is available at 
+ * http://www.eclipse.org/legal/epl-v10.html 
+ * 
+ * Contributors: 
+ *     Torsten Sommer <torsten.sommer@tesis.de> - initial API and implementation 
+ *******************************************************************************/
+package org.eclipse.fx.ui.emf.edit.ui;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -10,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory.ICellEditHandler;
+import org.eclipse.fx.ui.emf.edit.ui.AdapterFactoryCellFactory.ICellEditHandler;
 
 /**
  * Cell editor handler for {@link EAttribute}

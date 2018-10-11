@@ -8,7 +8,7 @@
  * Contributors: 
  *     Torsten Sommer <torsten.sommer@tesis.de> - initial API and implementation 
  *******************************************************************************/
-package org.eclipse.fx.emf.edit.ui.dnd;
+package org.eclipse.fx.ui.emf.edit.ui.dnd;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,9 +22,9 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.command.DragAndDropCommand;
 import org.eclipse.emf.edit.command.DragAndDropFeedback;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory;
-import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory.ICellCreationListener;
-import org.eclipse.fx.emf.edit.ui.CellUtil;
+import org.eclipse.fx.ui.emf.edit.ui.AdapterFactoryCellFactory;
+import org.eclipse.fx.ui.emf.edit.ui.AdapterFactoryCellFactory.ICellCreationListener;
+import org.eclipse.fx.ui.emf.edit.ui.CellUtil;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**

@@ -8,7 +8,7 @@
  * Contributors: 
  *     Torsten Sommer <torsten.sommer@tesis.de> - initial API and implementation 
  *******************************************************************************/
-package org.eclipse.fx.emf.edit.ui;
+package org.eclipse.fx.ui.emf.edit.ui;
 
 import java.util.Collections;
 import java.util.List;
