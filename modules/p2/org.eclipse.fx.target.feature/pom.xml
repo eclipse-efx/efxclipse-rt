@@ -245,6 +245,19 @@
   		<classifier>sources</classifier>
   	</dependency>
   	
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.ui.keybindings</artifactId>
+  		<version>${project.version}</version>
+  		<classifier>sources</classifier>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.fx.runtime</groupId>
+  		<artifactId>org.eclipse.fx.ui.keybindings</artifactId>
+  		<version>${project.version}</version>
+  		<classifier>sources</classifier>
+  	</dependency>
+  	
   	
   	
   	
