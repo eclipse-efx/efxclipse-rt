@@ -65,7 +65,7 @@
 		<module>ui/org.eclipse.fx.ui.panes</module>
 		<module>ui/org.eclipse.fx.ui.controls</module>
 		<module>ui/org.eclipse.fx.ui.emf.edit</module>
-		
+		<module>ui/org.eclipse.fx.ui.animation</module>
 
 		<module>p2/org.eclipse.fx.target.feature</module>
 
