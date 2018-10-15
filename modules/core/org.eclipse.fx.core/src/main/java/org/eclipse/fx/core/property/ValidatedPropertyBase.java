@@ -92,7 +92,6 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 				DEFAULT_THREAD_SYNC = threadSync.get();
 			}
 		}
-		System.err.println(DEFAULT_THREAD_SYNC);
 		ThreadSynchronize sync = DEFAULT_THREAD_SYNC;
 		return sync == null ? (r) -> r.run() : sync::asyncExec;
 	}
