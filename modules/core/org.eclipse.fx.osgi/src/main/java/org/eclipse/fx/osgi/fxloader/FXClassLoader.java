@@ -54,6 +54,7 @@ public class FXClassLoader extends ClassLoaderHook {
 	private BundleContext frameworkContext;
 	private ClassLoader j9Classloader;
 	private Object moduleLayer;
+	private ClassLoader j11Classloader;
 	private static Boolean IS_EQUAL_GREATER_11;
 	private static Boolean IS_JAVA_8;
 	private static Map<String, ServiceTracker<Object, URLConverter>> urlTrackers = new HashMap<>();
@@ -147,23 +148,16 @@ public class FXClassLoader extends ClassLoaderHook {
 			System.err.println("Loading class '" + name + "'"); //$NON-NLS-1$//$NON-NLS-2$
 		}
 
-		ClassLoader parentClassloader = getSWTClassloader(this.frameworkContext);
-		if (parentClassloader == null) {
-			parentClassloader = getClass().getClassLoader();
+		if( this.j11Classloader == null ) {
+			// As all modules are loaded by the same classloader using javafx.base is OK
+			this.j11Classloader = createModuleLoader(getModuleLayer(), "javafx.base"); //$NON-NLS-1$			
 		}
 
 		if (FXClassloaderConfigurator.DEBUG) {
-			System.err.println("FXClassLoader#findClassJavaFX11 - Classloader used " + parentClassloader); //$NON-NLS-1$
+			System.err.println("FXClassLoader#findClassJavaFX11 - Using classloader " + this.j11Classloader); //$NON-NLS-1$
 		}
 
-		// As all modules are loaded by the same classloader using javafx.base is OK
-		ClassLoader javafxClassloader = createModuleLoader(getModuleLayer(), "javafx.base"); //$NON-NLS-1$
-
-		if (FXClassloaderConfigurator.DEBUG) {
-			System.err.println("FXClassLoader#findClassJavaFX11 - Using classloader " + javafxClassloader); //$NON-NLS-1$
-		}
-
-		Class<?> loadClass = javafxClassloader.loadClass(name);
+		Class<?> loadClass = this.j11Classloader.loadClass(name);
 
 		if (FXClassloaderConfigurator.DEBUG) {
 			System.err.println("FXClassLoader#findClassJavaFX11 - ended"); //$NON-NLS-1$
@@ -178,26 +172,32 @@ public class FXClassLoader extends ClassLoaderHook {
 		return loader;
 	}
 
-	private Object getModuleLayer() throws Throwable {
-		ClassLoader parentClassloader = getSWTClassloader(this.frameworkContext);
-		if (parentClassloader == null) {
-			parentClassloader = getClass().getClassLoader();
-		}
-
+	private synchronized Object getModuleLayer() throws Throwable {
 		if (isEqualGreaterJDK11()) {
 			if (this.moduleLayer == null) {
 				String javafxDir = System.getProperty("efxclipse.java-modules.dir"); //$NON-NLS-1$
 
-				List<FXProviderBundle> providers;
+				List<FXProviderBundle> providers = new ArrayList<>();
 
 				if (javafxDir == null) {
 					providers = getDeployedJavaModuleBundlePaths(this.frameworkContext);
 				} else {
-					providers = Files.list(Paths.get(javafxDir)) //
-							.filter(p -> p.toString().endsWith(".jar")) //$NON-NLS-1$
-							.map(p -> new FXProviderBundle(
-									p.getFileName().toString().replace(".jar", "").replace('-', '.'), p)) //$NON-NLS-1$//$NON-NLS-2$
-							.collect(Collectors.toList());
+					String[] paths = javafxDir.split(";"); //$NON-NLS-1$
+					for( String dir : paths ) {
+						Path path = Paths.get(dir);
+						if( Files.exists(path) ) {
+							providers = Files.list(path) //
+									.filter(p -> p.toString().endsWith(".jar")) //$NON-NLS-1$
+									.map(p -> new FXProviderBundle(
+											p.getFileName().toString().replace(".jar", "").replace('-', '.'), p)) //$NON-NLS-1$//$NON-NLS-2$
+									.collect(Collectors.toList());
+							break;
+						}
+					}
+				}
+				ClassLoader parentClassloader = getSWTClassloader(this.frameworkContext);
+				if (parentClassloader == null) {
+					parentClassloader = getClass().getClassLoader();
 				}
 
 				this.moduleLayer = initModuleLayer(parentClassloader, providers);
@@ -205,6 +205,12 @@ public class FXClassLoader extends ClassLoaderHook {
 		} else {
 			if (this.moduleLayer == null) {
 				Path path = Paths.get(System.getProperty("java.home")).resolve("lib").resolve("javafx-swt.jar"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+				ClassLoader parentClassloader = getSWTClassloader(this.frameworkContext);
+				if (parentClassloader == null) {
+					parentClassloader = getClass().getClassLoader();
+				}
+
 				this.moduleLayer = initModuleLayer(parentClassloader,
 						Collections.singletonList(new FXProviderBundle("javafx.swt", path))); //$NON-NLS-1$
 			}
