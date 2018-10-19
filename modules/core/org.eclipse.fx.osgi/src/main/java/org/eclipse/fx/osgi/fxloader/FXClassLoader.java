@@ -336,7 +336,8 @@ public class FXClassLoader extends ClassLoaderHook {
 		List<FXProviderBundle> paths = new ArrayList<>();
 
 		for (Bundle b : context.getBundles()) {
-			if (b.getHeaders().get("Java-Module") != null) { //$NON-NLS-1$
+			if (((b.getState() & Bundle.RESOLVED) == Bundle.RESOLVED
+					|| (b.getState() & Bundle.ACTIVE) == Bundle.ACTIVE) && b.getHeaders().get("Java-Module") != null) { //$NON-NLS-1$
 				String name = b.getHeaders().get("Java-Module"); //$NON-NLS-1$
 				URL entry = b.getEntry(name + ".jar"); //$NON-NLS-1$
 				// if it is an automatic module - is used
