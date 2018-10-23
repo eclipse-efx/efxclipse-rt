@@ -11,6 +11,8 @@
 package org.eclipse.fx.core;
 
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.fx.core.log.LoggerCreator;
 
@@ -20,6 +22,7 @@ import org.eclipse.fx.core.log.LoggerCreator;
  * @since 3.0
  */
 public class SystemUtils {
+	private static Pattern MAJOR_NUMBER = Pattern.compile("\\d+"); //$NON-NLS-1$
 	private static Boolean isOSGi;
 
 	/**
@@ -50,7 +53,11 @@ public class SystemUtils {
 	 * @since 3.3.0
 	 */
 	public static int getMajorFXVersion() {
-		return Integer.parseInt(System.getProperty("javafx.version").split("\\.")[0]); //$NON-NLS-1$ //$NON-NLS-2$
+		Matcher matcher = MAJOR_NUMBER.matcher(System.getProperty("javafx.version")); //$NON-NLS-1$
+		if( matcher.find() ) {
+			return Integer.parseInt(matcher.group());
+		}
+		return -1;
 	}
 
 	/**
