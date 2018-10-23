@@ -222,6 +222,12 @@ public class FXClassLoader extends ClassLoaderHook {
 	private Object initModuleLayer(ClassLoader parentClassloader, List<FXProviderBundle> bundles) throws Throwable {
 		Path[] paths = bundles.stream().map(p -> p.path).toArray(i -> new Path[i]);
 		Set<String> modules = bundles.stream().map(p -> p.module).collect(Collectors.toSet());
+		
+		if( FXClassloaderConfigurator.DEBUG ) {
+			for( FXProviderBundle b : bundles ) {
+				System.err.println( b.module + " => " + b.path); //$NON-NLS-1$
+			}
+		}
 
 		ClassLoader cl = getClass().getClassLoader();
 		Class<?> ModuleFinderClass = cl.loadClass("java.lang.module.ModuleFinder"); //$NON-NLS-1$
@@ -334,15 +340,25 @@ public class FXClassLoader extends ClassLoaderHook {
 
 	private static List<FXProviderBundle> getDeployedJavaModuleBundlePaths(BundleContext context) {
 		List<FXProviderBundle> paths = new ArrayList<>();
-
+		
+		if( FXClassloaderConfigurator.DEBUG ) {
+			System.err.println("Loading libraries from deployed modules"); //$NON-NLS-1$
+		}
 		for (Bundle b : context.getBundles()) {
 			if (((b.getState() & Bundle.RESOLVED) == Bundle.RESOLVED
 					|| (b.getState() & Bundle.ACTIVE) == Bundle.ACTIVE) && b.getHeaders().get("Java-Module") != null) { //$NON-NLS-1$
 				String name = b.getHeaders().get("Java-Module"); //$NON-NLS-1$
+				if( FXClassloaderConfigurator.DEBUG ) {
+					System.err.println("Found OSGi-Module with JPMS-Module '" + name + "'");  //$NON-NLS-1$//$NON-NLS-2$
+				}
 				URL entry = b.getEntry(name + ".jar"); //$NON-NLS-1$
 				// if it is an automatic module - is used
 				if (entry == null) {
 					entry = b.getEntry(name.replace('.', '-') + ".jar"); //$NON-NLS-1$
+				}
+				
+				if( FXClassloaderConfigurator.DEBUG ) {
+					System.err.println("Found Jar '"+entry+"'");  //$NON-NLS-1$//$NON-NLS-2$
 				}
 
 				if (entry != null) {
