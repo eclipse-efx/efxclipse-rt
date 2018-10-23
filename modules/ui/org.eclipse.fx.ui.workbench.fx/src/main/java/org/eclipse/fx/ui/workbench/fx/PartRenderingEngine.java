@@ -239,7 +239,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 		}
 
 		Object widget = createWidget(element);
-		if (widget != null && element.isToBeRendered()) {
+		if (widget != null) {
 			ElementRenderer<MUIElement, Object> r = getRendererFor(element);
 			r.processContent(element);
 			r.postProcess(element);
