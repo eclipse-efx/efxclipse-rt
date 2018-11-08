@@ -21,7 +21,7 @@
 		<mockito-version>1.8.4</mockito-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform-version>[3.7,3.8)</platform-version>
-		<efx_shared_runtime>http://download.eclipse.org/efxclipse/runtime-shared-3.4.2/site/</efx_shared_runtime>
+		<efx_shared_runtime>http://download.eclipse.org/efxclipse/runtime-shared-nightly-3.4.2/site/</efx_shared_runtime>
 		<efx_ext_site>http://download.eclipse.org/efxclipse/targets-nightly/</efx_ext_site>
 		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/runtime-3.4.2</download-publish-path>
 		<eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</eclipse-repo.url>
