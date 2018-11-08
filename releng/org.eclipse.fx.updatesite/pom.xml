@@ -10,7 +10,7 @@
 		<groupId>org.eclipse.fx</groupId>
 		<artifactId>releng</artifactId>
 		<relativePath>../org.eclipse.fx.releng/pom.xml</relativePath>
-		<version>3.4.1-SNAPSHOT</version>
+		<version>3.4.2-SNAPSHOT</version>
 	</parent>
 
 	<properties>

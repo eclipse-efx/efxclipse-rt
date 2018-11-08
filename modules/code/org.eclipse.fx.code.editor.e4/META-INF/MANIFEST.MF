@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Basic service APIs for an Editor into Eclipse 4
 Bundle-SymbolicName: org.eclipse.fx.code.editor.e4
-Bundle-Version: 3.4.1.qualifier
+Bundle-Version: 3.4.2.qualifier
 Bundle-Vendor: Eclipse.org
-Export-Package: org.eclipse.fx.code.editor.e4;version="3.4.1";x-internal:=true,
- org.eclipse.fx.code.editor.e4.addons;version="3.4.1";x-internal:=true,
- org.eclipse.fx.code.editor.e4.handlers;version="3.4.1";x-internal:=true
+Export-Package: org.eclipse.fx.code.editor.e4;version="3.4.2";x-internal:=true,
+ org.eclipse.fx.code.editor.e4.addons;version="3.4.2";x-internal:=true,
+ org.eclipse.fx.code.editor.e4.handlers;version="3.4.2";x-internal:=true
 Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.4.0",
  org.eclipse.e4.core.di;bundle-version="1.5.0",
  org.eclipse.text;bundle-version="3.5.400",
@@ -17,12 +17,12 @@ Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.4.0",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.annotation,
  javax.inject;version="1.0.0",
- org.eclipse.fx.code.editor;version="3.4.1",
- org.eclipse.fx.code.editor.services;version="3.4.1",
- org.eclipse.fx.core;version="3.4.1",
- org.eclipse.fx.core.di;version="3.4.1",
- org.eclipse.fx.core.di.context;version="3.4.1",
- org.eclipse.fx.core.event;version="3.4.1",
+ org.eclipse.fx.code.editor;version="3.4.2",
+ org.eclipse.fx.code.editor.services;version="3.4.2",
+ org.eclipse.fx.core;version="3.4.2",
+ org.eclipse.fx.core.di;version="3.4.2",
+ org.eclipse.fx.core.di.context;version="3.4.2",
+ org.eclipse.fx.core.event;version="3.4.2",
  org.osgi.service.component.annotations;version="1.2.0";resolution:=optional
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.DocumentPartitionerContextFunction.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.AnnotationModelContextFunction.xml,

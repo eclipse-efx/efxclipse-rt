@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.core.feature"
       label="e(fx)clipse core Feature"
-      version="3.4.1.qualifier"
+      version="3.4.2.qualifier"
       provider-name="Eclipse.org">
 
    <description>

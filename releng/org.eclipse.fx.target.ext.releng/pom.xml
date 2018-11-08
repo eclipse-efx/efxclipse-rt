@@ -11,7 +11,7 @@
 
 	<groupId>org.eclipse.fx</groupId>
 	<artifactId>ext.releng</artifactId>
-	<version>3.4.1-SNAPSHOT</version>
+	<version>3.4.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<tycho-version>1.0.0</tycho-version>
