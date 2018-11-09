@@ -86,7 +86,7 @@ public class FXClassLoader extends ClassLoaderHook {
 
 	@SuppressWarnings("resource")
 	@Override
-	public Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
+	public synchronized Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
 		// this is pre java 9
 		if (isJDK8()) {
 			if ((name.startsWith("javafx") //$NON-NLS-1$
@@ -291,7 +291,7 @@ public class FXClassLoader extends ClassLoaderHook {
 	}
 
 	@Override
-	public ModuleClassLoader createClassLoader(ClassLoader parent, EquinoxConfiguration configuration,
+	public synchronized ModuleClassLoader createClassLoader(ClassLoader parent, EquinoxConfiguration configuration,
 			BundleLoader delegate, Generation generation) {
 		// FIXME Can we get rid of this?
 		if (this.frameworkContext == null) {
