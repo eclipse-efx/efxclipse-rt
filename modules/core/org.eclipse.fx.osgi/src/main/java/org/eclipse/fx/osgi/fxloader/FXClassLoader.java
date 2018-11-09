@@ -86,7 +86,7 @@ public class FXClassLoader extends ClassLoaderHook {
 
 	@SuppressWarnings("resource")
 	@Override
-	public synchronized Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
+	public Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
 		// this is pre java 9
 		if (isJDK8()) {
 			if ((name.startsWith("javafx") //$NON-NLS-1$
@@ -121,21 +121,23 @@ public class FXClassLoader extends ClassLoaderHook {
 			// We only need special things for javafx.embed because osgi-bundles on java9
 			// have the ExtClassloader as its parent
 			if (name.startsWith("javafx.embed")) { //$NON-NLS-1$
-				if (this.j9Classloader == null) {
-					try {
-						this.j9Classloader = createModuleLoader(getModuleLayer(), "javafx.swt"); //$NON-NLS-1$
-
+				synchronized (this) {
+					if (this.j9Classloader == null) {
 						try {
-							this.j9Classloader.loadClass("javafx.application.Platform") //$NON-NLS-1$
-									.getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE);//$NON-NLS-1$
+							this.j9Classloader = createModuleLoader(getModuleLayer(), "javafx.swt"); //$NON-NLS-1$
+
+							try {
+								this.j9Classloader.loadClass("javafx.application.Platform") //$NON-NLS-1$
+										.getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE);//$NON-NLS-1$
+							} catch (Throwable e) {
+								e.printStackTrace();
+							}
 						} catch (Throwable e) {
-							e.printStackTrace();
+							throw new ClassNotFoundException("Could not find class '" + name + "'", e); //$NON-NLS-1$//$NON-NLS-2$
 						}
-					} catch (Throwable e) {
-						throw new ClassNotFoundException("Could not find class '" + name + "'", e); //$NON-NLS-1$//$NON-NLS-2$
 					}
+					return this.j9Classloader.loadClass(name);
 				}
-				return this.j9Classloader.loadClass(name);
 			}
 		}
 
@@ -144,13 +146,15 @@ public class FXClassLoader extends ClassLoaderHook {
 
 	private Class<?> findClassJavaFX11(String name, ModuleClassLoader moduleClassLoader) throws Throwable {
 		if (FXClassloaderConfigurator.DEBUG) {
-			System.err.println("FXClassLoader#findClassJavaFX11 - started"); //$NON-NLS-1$
+			System.err.println("FXClassLoader#findClassJavaFX11 - started on thread " + Thread.currentThread() ); //$NON-NLS-1$
 			System.err.println("Loading class '" + name + "'"); //$NON-NLS-1$//$NON-NLS-2$
 		}
 
-		if( this.j11Classloader == null ) {
-			// As all modules are loaded by the same classloader using javafx.base is OK
-			this.j11Classloader = createModuleLoader(getModuleLayer(), "javafx.base"); //$NON-NLS-1$			
+		synchronized (this) {
+			if( this.j11Classloader == null ) {
+				// As all modules are loaded by the same classloader using javafx.base is OK
+				this.j11Classloader = createModuleLoader(getModuleLayer(), "javafx.base"); //$NON-NLS-1$			
+			}
 		}
 
 		if (FXClassloaderConfigurator.DEBUG) {
