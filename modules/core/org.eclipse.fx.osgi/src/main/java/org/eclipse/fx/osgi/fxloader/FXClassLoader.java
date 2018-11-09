@@ -388,7 +388,13 @@ public class FXClassLoader extends ClassLoaderHook {
 						if( FXClassloaderConfigurator.DEBUG ) {
 							System.err.println("Converted URL: " + url); //$NON-NLS-1$
 						}						
-						paths.add(new FXProviderBundle(name, Paths.get(url.getFile())));
+						String file = url.getFile();
+						if( System.getProperty("os.name").toLowerCase().contains("windows") ) { //$NON-NLS-1$ //$NON-NLS-2$
+							if( file.startsWith("/") ) { //$NON-NLS-1$
+								file = file.substring(1); // remove the leading /
+							}
+						}
+						paths.add(new FXProviderBundle(name, Paths.get(file)));
 						if( FXClassloaderConfigurator.DEBUG ) {
 							System.err.println("Recorded in list"); //$NON-NLS-1$
 						}						
