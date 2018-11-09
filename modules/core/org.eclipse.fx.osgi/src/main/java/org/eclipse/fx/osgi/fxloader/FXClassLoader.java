@@ -389,10 +389,16 @@ public class FXClassLoader extends ClassLoaderHook {
 							System.err.println("Converted URL: " + url); //$NON-NLS-1$
 						}						
 						paths.add(new FXProviderBundle(name, Paths.get(url.getFile())));
-					} catch (IOException e) {
+						if( FXClassloaderConfigurator.DEBUG ) {
+							System.err.println("Recorded in list"); //$NON-NLS-1$
+						}						
+					} catch (Throwable e) {
+						if( FXClassloaderConfigurator.DEBUG ) {
+							System.err.println("Failed to load get path"); //$NON-NLS-1$
+							e.printStackTrace();
+						}
 						throw new IllegalStateException(e);
 					}
-
 				}
 			}
 		}
