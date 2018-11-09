@@ -50,6 +50,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.fx.DefPartRenderer.HandleGroup;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.SortedBorderPane;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -151,7 +152,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 						}
 					}
 				};
-				this.dataArea = new BorderPane();
+				this.dataArea = new SortedBorderPane();
 
 				AnchorPane.setTopAnchor(this.dataArea, Double.valueOf(0.0));
 				AnchorPane.setLeftAnchor(this.dataArea, Double.valueOf(0.0));

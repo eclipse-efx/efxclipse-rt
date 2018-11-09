@@ -27,6 +27,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.CustomContainerSupport;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.SortedBorderPane;
 import org.eclipse.fx.ui.workbench.renderers.fx.services.LightweightDialogTransitionService;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -204,7 +205,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 						}
 					}
 				};
-				this.dataArea = new BorderPane();
+				this.dataArea = new SortedBorderPane();
 
 				if( this.domElement != null && this.domElement.getTags().contains(WPart.SHOW_TOP_TRIM_AREA_TAG) ) {
 					HBox box = new HBox();
