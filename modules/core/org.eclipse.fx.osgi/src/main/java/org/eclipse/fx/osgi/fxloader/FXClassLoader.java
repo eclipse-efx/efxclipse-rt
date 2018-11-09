@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -367,16 +368,25 @@ public class FXClassLoader extends ClassLoaderHook {
 
 				if (entry != null) {
 					URLConverter converter = getURLConverter(entry, context);
+					if( FXClassloaderConfigurator.DEBUG ) {
+						System.err.println("Using URL-Converter: " + converter); //$NON-NLS-1$
+					}
 					try {
 						URL url = converter.toFileURL(entry);
+						if( FXClassloaderConfigurator.DEBUG ) {
+							System.err.println("Converted URL: " + url); //$NON-NLS-1$
+						}						
 						paths.add(new FXProviderBundle(name, Paths.get(url.getFile())));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						throw new IllegalStateException(e);
 					}
 
 				}
 			}
+		}
+		
+		if( FXClassloaderConfigurator.DEBUG ) {
+			System.err.println("Collected deployed modules: " + paths); //$NON-NLS-1$
 		}
 
 		return paths;
