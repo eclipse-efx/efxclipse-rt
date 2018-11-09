@@ -19,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -27,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import org.eclipse.osgi.internal.framework.EquinoxConfiguration;
@@ -50,6 +50,7 @@ public class FXClassLoader extends ClassLoaderHook {
 	private static final String FX_SYMBOLIC_NAME = "org.eclipse.fx.javafx"; //$NON-NLS-1$
 	private static final String SWT_SYMBOLIC_NAME = "org.eclipse.swt"; //$NON-NLS-1$
 
+	private AtomicBoolean boostrappingModules = new AtomicBoolean();
 	private URLClassLoader classLoader;
 //	private boolean swtAvailable;
 	private BundleContext frameworkContext;
@@ -150,11 +151,22 @@ public class FXClassLoader extends ClassLoaderHook {
 			System.err.println("FXClassLoader#findClassJavaFX11 - started on thread " + Thread.currentThread() ); //$NON-NLS-1$
 			System.err.println("Loading class '" + name + "'"); //$NON-NLS-1$//$NON-NLS-2$
 		}
-
+		
 		synchronized (this) {
+			if( this.boostrappingModules.get() ) {
+				// If classes are loaded why we boostrap we can just return
+				System.err.println("Loading '"+name+"' while we bootstrap. Returning null.");  //$NON-NLS-1$//$NON-NLS-2$
+				return null;
+			}
+
 			if( this.j11Classloader == null ) {
-				// As all modules are loaded by the same classloader using javafx.base is OK
-				this.j11Classloader = createModuleLoader(getModuleLayer(), "javafx.base"); //$NON-NLS-1$			
+				try {
+					this.boostrappingModules.set(true);
+					// As all modules are loaded by the same classloader using javafx.base is OK
+					this.j11Classloader = createModuleLoader(getModuleLayer(), "javafx.base"); //$NON-NLS-1$
+				} finally {
+					this.boostrappingModules.set(false);
+				}
 			}
 		}
 
@@ -269,7 +281,7 @@ public class FXClassLoader extends ClassLoaderHook {
 		return this.classLoader;
 	}
 
-	public static URLConverter getURLConverter(URL url, BundleContext ctx) {
+	private static URLConverter getURLConverter(URL url, BundleContext ctx) {
 		if (url == null || ctx == null) {
 			return null;
 		}
