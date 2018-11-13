@@ -136,6 +136,9 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 		widget.setToolbar(wtoolbar);
 	}
 
+	// Bug in IEclipseContext.activateBranch() sends a wrong MPart to the PartServiceImpl
+	static MPart CURRENTLY_ACTIVATED_PART;
+	
 	@Override
 	protected void initWidget(final MPart element, final WPart<N, T, M> widget) {
 		super.initWidget(element, widget);
@@ -144,15 +147,23 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 			@Override
 			public Void call(Boolean param) {
 				if (param.booleanValue()) {
-					MElementContainer<MUIElement> parent = element.getParent();
-					if(parent != null && parent.getSelectedElement() != element ) {
-						element.getParent().setSelectedElement(element);
+					if( CURRENTLY_ACTIVATED_PART != element ) {
+						return null;
 					}
-					boolean requiresFocus = requiresFocus(widget);
-					if (requiresFocus) {
-						activate(element, true);
-					} else {
-						activate(element, false);
+					try {
+						CURRENTLY_ACTIVATED_PART = element;
+						MElementContainer<MUIElement> parent = element.getParent();
+						if(parent != null && parent.getSelectedElement() != element ) {
+							element.getParent().setSelectedElement(element);
+						}
+						boolean requiresFocus = requiresFocus(widget);
+						if (requiresFocus) {
+							activate(element, true);
+						} else {
+							activate(element, false);
+						}
+					} finally {
+						CURRENTLY_ACTIVATED_PART = null;
 					}
 				}
 				return null;
