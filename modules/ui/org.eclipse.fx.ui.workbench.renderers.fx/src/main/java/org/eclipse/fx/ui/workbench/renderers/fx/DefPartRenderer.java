@@ -146,7 +146,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		@Override
 		protected Pane createWidget() {
 			Pane tmp = CustomContainerSupport.createContainerPane(this.logger, this.context);
-			final Pane p = tmp == null ? new BorderPane() : tmp;
+			final Pane p = tmp == null ? new SortedBorderPane() : tmp;
 
 			p.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 
