@@ -86,7 +86,7 @@ public abstract class BaseMenuRenderer<N> extends BaseItemContainerRenderer<MMen
 		this.currentVisibleMenus.remove(element);
 		IEclipseContext modelContext = getModelContext(element);
 		if( modelContext == null ) {
-			getLogger().error("Model context is null"); //$NON-NLS-1$
+			getLogger().info("Model context is null, probably already disposed"); //$NON-NLS-1$
 			return;
 		}
 		IEclipseContext context = modelContext.createChild("lifecycle"); //$NON-NLS-1$
