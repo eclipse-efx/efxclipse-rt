@@ -26,8 +26,13 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
  * Popup menu service implementation
  */
 public class PartPopupMenuServiceImpl implements EMenuService {
+	
+	private final MPart part;
+	
 	@Inject
-	private MPart part;
+	PartPopupMenuServiceImpl(MPart part) {
+		this.part = part;
+	}
 
 	@Override
 	public boolean registerContextMenu(Object w, String id) {
