@@ -19,7 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -27,8 +27,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.eclipse.fx.osgi.fxloader.jpms.ConfigurationWrapper;
+import org.eclipse.fx.osgi.fxloader.jpms.ModuleFinderWrapper;
+import org.eclipse.fx.osgi.fxloader.jpms.ModuleLayerWrapper;
+import org.eclipse.fx.osgi.fxloader.jpms.ModuleLayerWrapper.ControllerWrapper;
 import org.eclipse.osgi.internal.framework.EquinoxConfiguration;
 import org.eclipse.osgi.internal.hookregistry.ClassLoaderHook;
 import org.eclipse.osgi.internal.loader.BundleLoader;
@@ -55,7 +61,7 @@ public class FXClassLoader extends ClassLoaderHook {
 //	private boolean swtAvailable;
 	private BundleContext frameworkContext;
 	private ClassLoader j9Classloader;
-	private Object moduleLayer;
+	private ModuleLayerWrapper moduleLayer;
 	private ClassLoader j11Classloader;
 	private static Boolean IS_EQUAL_GREATER_11;
 	private static Boolean IS_JAVA_8;
@@ -126,7 +132,7 @@ public class FXClassLoader extends ClassLoaderHook {
 				synchronized (this) {
 					if (this.j9Classloader == null) {
 						try {
-							this.j9Classloader = createModuleLoader(getModuleLayer(), "javafx.swt"); //$NON-NLS-1$
+							this.j9Classloader = getModuleLayer().findLoader("javafx.swt"); //$NON-NLS-1$
 
 							try {
 								this.j9Classloader.loadClass("javafx.application.Platform") //$NON-NLS-1$
@@ -163,7 +169,7 @@ public class FXClassLoader extends ClassLoaderHook {
 				try {
 					this.boostrappingModules.set(true);
 					// As all modules are loaded by the same classloader using javafx.base is OK
-					this.j11Classloader = createModuleLoader(getModuleLayer(), "javafx.base"); //$NON-NLS-1$
+					this.j11Classloader = getModuleLayer().findLoader("javafx.base"); //$NON-NLS-1$
 				} finally {
 					this.boostrappingModules.set(false);
 				}
@@ -182,14 +188,7 @@ public class FXClassLoader extends ClassLoaderHook {
 		return loadClass;
 	}
 
-	private static ClassLoader createModuleLoader(Object moduleLayer, String moduleName) throws Throwable {
-//		ClassLoader loader = layer.findLoader("javafx.swt");
-		ClassLoader loader = (ClassLoader) moduleLayer.getClass().getMethod("findLoader", String.class) //$NON-NLS-1$
-				.invoke(moduleLayer, moduleName);
-		return loader;
-	}
-
-	private synchronized Object getModuleLayer() throws Throwable {
+	private synchronized ModuleLayerWrapper getModuleLayer() throws Throwable {
 		if (isEqualGreaterJDK11()) {
 			if (this.moduleLayer == null) {
 				String javafxDir = System.getProperty("efxclipse.java-modules.dir"); //$NON-NLS-1$
@@ -236,7 +235,71 @@ public class FXClassLoader extends ClassLoaderHook {
 		return this.moduleLayer;
 	}
 
-	private Object initModuleLayer(ClassLoader parentClassloader, List<FXProviderBundle> bundles) throws Throwable {
+	private static ModuleLayerWrapper initModuleLayer(ClassLoader parentClassloader, List<FXProviderBundle> bundles) throws Throwable {
+		try {
+			if( Boolean.getBoolean("efxclipse.osgi.hook.advanced-modules") ) { //$NON-NLS-1$
+				return advancedModuleLayerBoostrap(parentClassloader, bundles);
+			} else {
+				return defaultModuleLayerBootstrap(parentClassloader, bundles);
+			}
+		} catch( Throwable t ) {
+			t.printStackTrace();
+			throw t;
+		}
+	}
+	
+	private static ModuleLayerWrapper advancedModuleLayerBoostrap(ClassLoader parentClassloader, List<FXProviderBundle> bundles) throws Throwable {
+		if( FXClassloaderConfigurator.DEBUG ) {
+			System.err.println("Using advanced layer creation to apply patches"); //$NON-NLS-1$
+		}
+		
+		Path[] paths = bundles.stream().map(p -> p.path).toArray(i -> new Path[i]);
+		Set<String> modules = bundles.stream().map(p -> p.module).collect(Collectors.toSet());
+		
+		@SuppressWarnings("deprecation")
+		URL[] urls = Stream.of(paths).map( Path::toFile).map( f -> {
+			try {
+				return f.toURL();
+			} catch(Throwable t) {
+				return null;	
+			}
+		} ).toArray( i -> new URL[i]);
+		
+		if( FXClassloaderConfigurator.DEBUG ) {
+			for( FXProviderBundle b : bundles ) {
+				System.err.println( b.module + " => " + b.path); //$NON-NLS-1$
+			}
+		}
+		
+		URLClassLoader c = new URLClassLoader(urls, parentClassloader) {
+			// Method is defined on Java-9 onwards
+			@SuppressWarnings("unused")
+			protected java.lang.Class<?> findClass(String moduleName, String name) {
+				try {
+					return findClass(name);	
+				} catch (ClassNotFoundException e) { /* intentional empty */}
+				return null;
+			}
+			
+			// Method is defined on Java-9 onwards
+			@SuppressWarnings("unused")
+			protected URL findResource(String moduleName, String name) throws IOException {
+				return findResource(name);
+			}
+		};
+		
+		ModuleFinderWrapper fxModuleFinder = ModuleFinderWrapper.of(paths);
+		ModuleFinderWrapper empty = ModuleFinderWrapper.of();
+		ModuleLayerWrapper bootLayer = ModuleLayerWrapper.boot();
+		ConfigurationWrapper configuration = bootLayer.configuration();
+		ConfigurationWrapper newConfiguration = configuration.resolve(fxModuleFinder, empty, modules);
+		Function<String, ClassLoader> clComputer = s -> c;
+		ControllerWrapper moduleLayerController = ModuleLayerWrapper.defineModules(newConfiguration, Arrays.asList(bootLayer), clComputer);
+		
+		return moduleLayerController.layer();
+	}
+	
+	private static ModuleLayerWrapper defaultModuleLayerBootstrap(ClassLoader parentClassloader, List<FXProviderBundle> bundles) throws Throwable {
 		Path[] paths = bundles.stream().map(p -> p.path).toArray(i -> new Path[i]);
 		Set<String> modules = bundles.stream().map(p -> p.module).collect(Collectors.toSet());
 		
@@ -246,27 +309,13 @@ public class FXClassLoader extends ClassLoaderHook {
 			}
 		}
 
-		ClassLoader cl = getClass().getClassLoader();
-		Class<?> ModuleFinderClass = cl.loadClass("java.lang.module.ModuleFinder"); //$NON-NLS-1$
-		Class<?> LayerClass = cl.loadClass("java.lang.ModuleLayer"); //$NON-NLS-1$
-		Class<?> ConfigurationClass = cl.loadClass("java.lang.module.Configuration"); //$NON-NLS-1$
-
-//		ModuleFinder finder = ModuleFinder.of(path);
-		Object finder = ModuleFinderClass.getMethod("of", Path[].class).invoke(null, new Object[] { paths }); //$NON-NLS-1$
-//		Layer boot = Layer.boot();
-		Object boot = LayerClass.getMethod("boot").invoke(null); //$NON-NLS-1$
-//		Configuration configuration = boot.configuration();
-		Object configuration = LayerClass.getMethod("configuration").invoke(boot); //$NON-NLS-1$
-//		ModuleFinder of = ModuleFinder.of();
-		Object of = ModuleFinderClass.getMethod("of", Path[].class).invoke(null, new Object[] { new Path[0] }); //$NON-NLS-1$
-
-//		Configuration cf = configuration.resolveRequires(finder, of, set); // since u158 it is only resolve see https://github.com/eclipse/efxclipse-rt/issues/16
-		Object cf = ConfigurationClass.getMethod("resolve", ModuleFinderClass, ModuleFinderClass, Collection.class) //$NON-NLS-1$
-				.invoke(configuration, finder, of, modules);
-
-//		Layer layer = boot.defineModulesWithOneLoader(cf, Display.class.getClassLoader());
-		Object layer = LayerClass.getMethod("defineModulesWithOneLoader", ConfigurationClass, ClassLoader.class) //$NON-NLS-1$
-				.invoke(boot, cf, parentClassloader);
+		ModuleFinderWrapper finder = ModuleFinderWrapper.of(paths);
+		ModuleLayerWrapper boot = ModuleLayerWrapper.boot();
+		ConfigurationWrapper configuration = boot.configuration();
+		ModuleFinderWrapper of = ModuleFinderWrapper.of();
+		ConfigurationWrapper cf = configuration.resolve(finder, of, modules);
+		ModuleLayerWrapper layer = boot.defineModulesWithOneLoader(cf, parentClassloader);
+		
 		return layer;
 	}
 
