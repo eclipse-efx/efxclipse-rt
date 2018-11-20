@@ -23,15 +23,20 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.eclipse.fx.osgi.fxloader.jpms.AddOpenExports;
+import org.eclipse.fx.osgi.fxloader.jpms.AddReads;
 import org.eclipse.fx.osgi.fxloader.jpms.ConfigurationWrapper;
+import org.eclipse.fx.osgi.fxloader.jpms.JavaModuleLayerModification;
 import org.eclipse.fx.osgi.fxloader.jpms.ModuleFinderWrapper;
 import org.eclipse.fx.osgi.fxloader.jpms.ModuleLayerWrapper;
 import org.eclipse.fx.osgi.fxloader.jpms.ModuleLayerWrapper.ControllerWrapper;
@@ -154,14 +159,14 @@ public class FXClassLoader extends ClassLoaderHook {
 
 	private Class<?> findClassJavaFX11(String name, ModuleClassLoader moduleClassLoader) throws Throwable {
 		if (FXClassloaderConfigurator.DEBUG) {
-			System.err.println("FXClassLoader#findClassJavaFX11 - started on thread " + Thread.currentThread() ); //$NON-NLS-1$
-			System.err.println("Loading class '" + name + "'"); //$NON-NLS-1$//$NON-NLS-2$
+			System.err.println("FXClassLoader#findClassJavaFX11 - started" ); //$NON-NLS-1$
+			System.err.println("FXClassLoader#findClassJavaFX11 - Loading class '" + name + "'"); //$NON-NLS-1$//$NON-NLS-2$
 		}
 		
 		synchronized (this) {
 			if( this.boostrappingModules.get() ) {
 				// If classes are loaded why we boostrap we can just return
-				System.err.println("Loading '"+name+"' while we bootstrap. Returning null.");  //$NON-NLS-1$//$NON-NLS-2$
+				System.err.println("FXClassLoader#findClassJavaFX11 - Loading '"+name+"' while we bootstrap. Returning null.");  //$NON-NLS-1$//$NON-NLS-2$
 				return null;
 			}
 
@@ -216,7 +221,7 @@ public class FXClassLoader extends ClassLoaderHook {
 					parentClassloader = getClass().getClassLoader();
 				}
 
-				this.moduleLayer = initModuleLayer(parentClassloader, providers);
+				this.moduleLayer = initModuleLayer(parentClassloader, providers, collectModifications(this.frameworkContext));
 			}
 		} else {
 			if (this.moduleLayer == null) {
@@ -228,17 +233,81 @@ public class FXClassLoader extends ClassLoaderHook {
 				}
 
 				this.moduleLayer = initModuleLayer(parentClassloader,
-						Collections.singletonList(new FXProviderBundle("javafx.swt", path))); //$NON-NLS-1$
+						Collections.singletonList(new FXProviderBundle("javafx.swt", path)),JavaModuleLayerModification.empty()); //$NON-NLS-1$
 			}
 		}
 
 		return this.moduleLayer;
 	}
+	
+	private static JavaModuleLayerModification collectModifications(BundleContext context) {
+		Set<AddReads> reads = new HashSet<>();
+		Set<AddOpenExports> opens = new HashSet<>();
+		Set<AddOpenExports> exports = new HashSet<>();
+		
+		Bundle[] bundles = context.getBundles();
+		for (Bundle b : bundles) {
+			if (((b.getState() & Bundle.RESOLVED) == Bundle.RESOLVED
+					|| (b.getState() & Bundle.ACTIVE) == Bundle.ACTIVE)) { 
+				if( b.getHeaders().get("Java-Module-AddOpens") != null ) { //$NON-NLS-1$
+					opens.addAll(toOpenExports(b.getHeaders().get("Java-Module-AddOpens"),b)); //$NON-NLS-1$
+				} else if( b.getHeaders().get("Java-Module-AddExports") != null ) { //$NON-NLS-1$
+					exports.addAll(toOpenExports(b.getHeaders().get("Java-Module-AddExports"),b)); //$NON-NLS-1$
+				} else if( b.getHeaders().get("Java-Module-AddReads") != null ) { //$NON-NLS-1$
+					reads.addAll(toReads(b.getHeaders().get("Java-Module-AddReads"),b)); //$NON-NLS-1$
+				}
+			}
+		}
+		
+		String addReads = System.getProperty("efxclipse.osgi.hook.add-reads"); //$NON-NLS-1$
+		String addOpens = System.getProperty("efxclipse.osgi.hook.add-opens"); //$NON-NLS-1$
+		String addExports = System.getProperty("efxclipse.osgi.hook.add-exports"); //$NON-NLS-1$
+		
+		if( addReads != null ) {
+			reads.addAll(toReads(addReads, null));
+		}
+		
+		if( addExports != null ) {
+			exports.addAll(toOpenExports(addExports, null));
+		}
+		
+		if( addOpens != null ) {
+			opens.addAll(toOpenExports(addOpens, null));
+		}
+		
+		return new JavaModuleLayerModification(context.getBundles(),reads, exports, opens);
+	}
+	
+	private static String adaptAllUnnamed(String value, Bundle bundle) {
+		if( value.endsWith("=.") && bundle != null ) { //$NON-NLS-1$
+			return value.replace("=.", "=BUNDLE(@"+bundle.getBundleId()+")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
+		return value;
+	}
+	
+	private static Set<AddReads> toReads(String value, Bundle bundle) {
+		return Stream.of(value.split(",")) //$NON-NLS-1$
+				.map( v -> adaptAllUnnamed(v, bundle))
+				.map(AddReads::valueOf) //
+				.filter(Optional::isPresent) //
+				.map(Optional::get) //
+				.collect(Collectors.toSet());
+	}
 
-	private static ModuleLayerWrapper initModuleLayer(ClassLoader parentClassloader, List<FXProviderBundle> bundles) throws Throwable {
+	private static Set<AddOpenExports> toOpenExports(String value, Bundle bundle) {
+		return Stream.of(value.split(",")) //$NON-NLS-1$
+				.map( v -> adaptAllUnnamed(v, bundle))
+				.peek( v -> System.err.println(v))
+				.map(AddOpenExports::valueOf) //
+				.filter(Optional::isPresent) //
+				.map(Optional::get) //
+				.collect(Collectors.toSet());
+	}
+	
+	private static ModuleLayerWrapper initModuleLayer(ClassLoader parentClassloader, List<FXProviderBundle> bundles, JavaModuleLayerModification modifications) throws Throwable {
 		try {
-			if( Boolean.getBoolean("efxclipse.osgi.hook.advanced-modules") ) { //$NON-NLS-1$
-				return advancedModuleLayerBoostrap(parentClassloader, bundles);
+			if( Boolean.getBoolean("efxclipse.osgi.hook.advanced-modules") || ! modifications.isEmpty() ) { //$NON-NLS-1$
+				return advancedModuleLayerBoostrap(parentClassloader, bundles, modifications);
 			} else {
 				return defaultModuleLayerBootstrap(parentClassloader, bundles);
 			}
@@ -248,9 +317,9 @@ public class FXClassLoader extends ClassLoaderHook {
 		}
 	}
 	
-	private static ModuleLayerWrapper advancedModuleLayerBoostrap(ClassLoader parentClassloader, List<FXProviderBundle> bundles) throws Throwable {
+	private static ModuleLayerWrapper advancedModuleLayerBoostrap(ClassLoader parentClassloader, List<FXProviderBundle> bundles, JavaModuleLayerModification modifications) throws Throwable {
 		if( FXClassloaderConfigurator.DEBUG ) {
-			System.err.println("Using advanced layer creation to apply patches"); //$NON-NLS-1$
+			System.err.println("FXClassLoader#advancedModuleLayerBoostrap - Using advanced layer creation to apply patches"); //$NON-NLS-1$
 		}
 		
 		Path[] paths = bundles.stream().map(p -> p.path).toArray(i -> new Path[i]);
@@ -267,7 +336,7 @@ public class FXClassLoader extends ClassLoaderHook {
 		
 		if( FXClassloaderConfigurator.DEBUG ) {
 			for( FXProviderBundle b : bundles ) {
-				System.err.println( b.module + " => " + b.path); //$NON-NLS-1$
+				System.err.println( "FXClassLoader#advancedModuleLayerBoostrap - " + b.module + " => " + b.path); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 		
@@ -295,17 +364,18 @@ public class FXClassLoader extends ClassLoaderHook {
 		ConfigurationWrapper newConfiguration = configuration.resolve(fxModuleFinder, empty, modules);
 		Function<String, ClassLoader> clComputer = s -> c;
 		ControllerWrapper moduleLayerController = ModuleLayerWrapper.defineModules(newConfiguration, Arrays.asList(bootLayer), clComputer);
+		modifications.applyConfigurations(moduleLayerController);
 		
 		return moduleLayerController.layer();
 	}
-	
+		
 	private static ModuleLayerWrapper defaultModuleLayerBootstrap(ClassLoader parentClassloader, List<FXProviderBundle> bundles) throws Throwable {
 		Path[] paths = bundles.stream().map(p -> p.path).toArray(i -> new Path[i]);
 		Set<String> modules = bundles.stream().map(p -> p.module).collect(Collectors.toSet());
 		
 		if( FXClassloaderConfigurator.DEBUG ) {
 			for( FXProviderBundle b : bundles ) {
-				System.err.println( b.module + " => " + b.path); //$NON-NLS-1$
+				System.err.println( "FXClassLoader#defaultModuleLayerBootstrap" +  b.module + " => " + b.path); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 
@@ -408,14 +478,14 @@ public class FXClassLoader extends ClassLoaderHook {
 		List<FXProviderBundle> paths = new ArrayList<>();
 		
 		if( FXClassloaderConfigurator.DEBUG ) {
-			System.err.println("Loading libraries from deployed modules"); //$NON-NLS-1$
+			System.err.println("FXClassLoader#getDeployedJavaModuleBundlePaths - Loading libraries from deployed modules"); //$NON-NLS-1$
 		}
 		for (Bundle b : context.getBundles()) {
 			if (((b.getState() & Bundle.RESOLVED) == Bundle.RESOLVED
 					|| (b.getState() & Bundle.ACTIVE) == Bundle.ACTIVE) && b.getHeaders().get("Java-Module") != null) { //$NON-NLS-1$
 				String name = b.getHeaders().get("Java-Module"); //$NON-NLS-1$
 				if( FXClassloaderConfigurator.DEBUG ) {
-					System.err.println("Found OSGi-Module with JPMS-Module '" + name + "'");  //$NON-NLS-1$//$NON-NLS-2$
+					System.err.println("FXClassLoader#getDeployedJavaModuleBundlePaths - Found OSGi-Module with JPMS-Module '" + name + "'");  //$NON-NLS-1$//$NON-NLS-2$
 				}
 				URL entry = b.getEntry(name + ".jar"); //$NON-NLS-1$
 				// if it is an automatic module - is used
@@ -424,18 +494,15 @@ public class FXClassLoader extends ClassLoaderHook {
 				}
 				
 				if( FXClassloaderConfigurator.DEBUG ) {
-					System.err.println("Found Jar '"+entry+"'");  //$NON-NLS-1$//$NON-NLS-2$
+					System.err.println("FXClassLoader#getDeployedJavaModuleBundlePaths - Found Jar '"+entry+"'");  //$NON-NLS-1$//$NON-NLS-2$
 				}
 
 				if (entry != null) {
 					URLConverter converter = getURLConverter(entry, context);
-					if( FXClassloaderConfigurator.DEBUG ) {
-						System.err.println("Using URL-Converter: " + converter); //$NON-NLS-1$
-					}
 					try {
 						URL url = converter.toFileURL(entry);
 						if( FXClassloaderConfigurator.DEBUG ) {
-							System.err.println("Converted URL: " + url); //$NON-NLS-1$
+							System.err.println("FXClassLoader#getDeployedJavaModuleBundlePaths - Converted URL: " + url); //$NON-NLS-1$
 						}						
 						String file = url.getFile();
 						if( System.getProperty("os.name").toLowerCase().contains("windows") ) { //$NON-NLS-1$ //$NON-NLS-2$
@@ -444,9 +511,6 @@ public class FXClassLoader extends ClassLoaderHook {
 							}
 						}
 						paths.add(new FXProviderBundle(name, Paths.get(file)));
-						if( FXClassloaderConfigurator.DEBUG ) {
-							System.err.println("Recorded in list"); //$NON-NLS-1$
-						}						
 					} catch (Throwable e) {
 						if( FXClassloaderConfigurator.DEBUG ) {
 							System.err.println("Failed to load get path"); //$NON-NLS-1$
@@ -458,10 +522,6 @@ public class FXClassLoader extends ClassLoaderHook {
 			}
 		}
 		
-		if( FXClassloaderConfigurator.DEBUG ) {
-			System.err.println("Collected deployed modules: " + paths); //$NON-NLS-1$
-		}
-
 		return paths;
 	}
 

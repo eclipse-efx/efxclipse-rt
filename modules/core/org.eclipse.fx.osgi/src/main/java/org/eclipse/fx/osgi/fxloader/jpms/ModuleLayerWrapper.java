@@ -1,8 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2018 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.osgi.fxloader.jpms;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -14,6 +25,7 @@ public class ModuleLayerWrapper {
 	private static Method defineModules;
 	private static Method defineModulesWithOneLoader;
 	private static Method findLoader;
+	private static Method findModule;
 
 	public final Object self;
 
@@ -38,6 +50,7 @@ public class ModuleLayerWrapper {
 				defineModulesWithOneLoader = CLASS.getMethod("defineModulesWithOneLoader", ConfigurationWrapper.CLASS(), //$NON-NLS-1$
 						ClassLoader.class);
 				findLoader = CLASS.getMethod("findLoader", String.class); //$NON-NLS-1$
+				findModule = CLASS.getMethod("findModule", String.class); //$NON-NLS-1$
 			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
 				throw new RuntimeException(e);
 			}
@@ -90,11 +103,24 @@ public class ModuleLayerWrapper {
 			throw new RuntimeException(e);
 		} 
 	}
+	
+	public Optional<ModuleWrapper> findModule(String n) {
+		init();
+		try {
+			Optional<?> invoke = (Optional<?>)findModule.invoke(this.self, n);
+			return invoke.map( o -> new ModuleWrapper(o));
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public static class ControllerWrapper {
 
 		private static Class<?> CLASS; // need to derive from instance
 		private static Method layer;
+		private static Method addExports;
+		private static Method addOpens;
+		private static Method addReads;
 
 		public final Object self;
 
@@ -104,6 +130,9 @@ public class ModuleLayerWrapper {
 				CLASS = self.getClass();
 				try {
 					layer = CLASS.getMethod("layer"); //$NON-NLS-1$
+					addReads = CLASS.getMethod("addReads", ModuleWrapper.CLASS(), ModuleWrapper.CLASS()); //$NON-NLS-1$
+					addExports = CLASS.getMethod("addExports", ModuleWrapper.CLASS(), String.class, ModuleWrapper.CLASS()); //$NON-NLS-1$
+					addOpens = CLASS.getMethod("addOpens", ModuleWrapper.CLASS(), String.class, ModuleWrapper.CLASS()); //$NON-NLS-1$
 				} catch (NoSuchMethodException | SecurityException e) {
 					throw new RuntimeException(e);
 				}
@@ -117,5 +146,34 @@ public class ModuleLayerWrapper {
 				throw new RuntimeException(e);
 			}
 		}
+		
+		public ControllerWrapper addExports(ModuleWrapper source, String pn, ModuleWrapper target) {
+			try {
+				addExports.invoke(this.self, source.self, pn, target.self);
+				return this;
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
+		public ControllerWrapper addOpens(ModuleWrapper source, String pn, ModuleWrapper target) {
+			try {
+				addOpens.invoke(this.self, source.self, pn, target.self);
+				return this;
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
+		public ControllerWrapper addReads(ModuleWrapper source, ModuleWrapper target) {
+			try {
+				addReads.invoke(this.self, source.self, target.self);
+				return this;
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
+
+	
 }

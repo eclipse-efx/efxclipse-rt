@@ -1,11 +1,22 @@
+/*******************************************************************************
+ * Copyright (c) 2018 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.osgi.fxloader.jpms;
 
 import java.util.Optional;
 
-class AddOpenExports {
-		final String source;
-		final String pn;
-		final String target;
+@SuppressWarnings("javadoc")
+public class AddOpenExports {
+		public final String source;
+		public final String pn;
+		public final String target;
 
 		public AddOpenExports(String source, String pn, String target) {
 			this.source = source;
