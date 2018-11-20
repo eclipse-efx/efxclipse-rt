@@ -297,7 +297,6 @@ public class FXClassLoader extends ClassLoaderHook {
 	private static Set<AddOpenExports> toOpenExports(String value, Bundle bundle) {
 		return Stream.of(value.split(",")) //$NON-NLS-1$
 				.map( v -> adaptAllUnnamed(v, bundle))
-				.peek( v -> System.err.println(v))
 				.map(AddOpenExports::valueOf) //
 				.filter(Optional::isPresent) //
 				.map(Optional::get) //
