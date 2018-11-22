@@ -10,11 +10,10 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.tree;
 
-import java.util.Comparator;
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TreeItem;
 
@@ -26,9 +25,9 @@ import javafx.scene.control.TreeItem;
  * @param <T> The type of the {@link #getValue() value} property within {@link TreeItem}.
  */
 public class SortableTreeItem<T> extends FilterableTreeItem<T> {
-	final private SortedList<TreeItem<T>> sortedList;
+	private SortedList<TreeItem<T>> sortedList;
 
-	private ObjectProperty<TreeItemComparator<T>> comparator = new SimpleObjectProperty<TreeItemComparator<T>>();
+	private ObjectProperty<TreeItemComparator<T>> comparator;
 
 	/**
 	 * Creates a new {@link TreeItem} with sorted children. To enable sorting it is
@@ -39,26 +38,34 @@ public class SortableTreeItem<T> extends FilterableTreeItem<T> {
 	 */
 	public SortableTreeItem(T value) {
 		super(value);
-		this.sortedList = new SortedList<>(super.getChildren());
-		this.sortedList.comparatorProperty().bind(Bindings.createObjectBinding(() -> {
-			if (this.comparator.get() == null)
-				return null;
-			// Regression in Mars.1 JDT-Core see https://bugs.eclipse.org/bugs/show_bug.cgi?id=482416
-			Comparator<TreeItem<T>> cp = (o1, o2) -> this.comparator.get().compare(this, o1.getValue(), o2.getValue());
-			return cp;
-		}, this.comparator));
 		parentProperty().addListener((o, oV, nV) -> {
-			if (nV != null && nV instanceof SortableTreeItem && this.comparator.get() == null) {
-				this.comparator.bind(((SortableTreeItem<T>) nV).comparatorProperty());
+			if (nV != null && nV instanceof SortableTreeItem && getComparator() == null) {
+				comparatorProperty().bind(((SortableTreeItem<T>) nV).comparatorProperty());
 			}
 		});
-		setHiddenFieldChildren(this.sortedList);
+	}
+	
+	@Override
+	protected ObservableList<TreeItem<T>> getBackingList() {
+		if (this.sortedList == null) {
+			this.sortedList = new SortedList<>(super.getBackingList());
+			this.sortedList.comparatorProperty().bind(Bindings.createObjectBinding(() -> {
+				if (getComparator() == null) {
+					return null;
+				}
+				return  (o1, o2) -> getComparator().compare(this, o1.getValue(), o2.getValue());
+			}, comparatorProperty()));
+		}
+		return this.sortedList;
 	}
 
 	/**
 	 * @return the comparator property
 	 */
 	public final ObjectProperty<TreeItemComparator<T>> comparatorProperty() {
+		if (this.comparator == null) {
+			this.comparator = new SimpleObjectProperty<>();
+		}
         return this.comparator;
     }
 
@@ -66,7 +73,7 @@ public class SortableTreeItem<T> extends FilterableTreeItem<T> {
 	 * @return the comparator
 	 */
     public final TreeItemComparator<T> getComparator() {
-        return this.comparator.get();
+        return comparatorProperty().get();
     }
 
     /**
@@ -74,6 +81,6 @@ public class SortableTreeItem<T> extends FilterableTreeItem<T> {
      * @param comparator the comparator
      */
     public final void setComparator(TreeItemComparator<T> comparator) {
-    	this.comparator.set(comparator);
+    	comparatorProperty().set(comparator);
     }
 }
