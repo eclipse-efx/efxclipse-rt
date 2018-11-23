@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.core.observable;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import org.eclipse.fx.core.DisposeableCollector;
@@ -90,6 +91,22 @@ public class FXObservableUtil {
 	 */
 	public static <T> Subscription onChange(ObservableValue<T> o, Consumer<? super T> l) {
 		ChangeListener<? super T> listener = (ob, ol, ne) -> l.accept(ne);
+		o.addListener(listener);
+		return () -> o.removeListener(listener);
+	}
+	
+	/**
+	 * Subscribe to the value change of an {@link ObservableValue}
+	 *
+	 * @param o
+	 *            the observable
+	 * @param l
+	 *            the listener
+	 * @return subscription used to unsubscribe
+	 * @since 3.5.0
+	 */
+	public static <T> Subscription onChange(ObservableValue<T> o, BiConsumer<? super T,? super T> l) {
+		ChangeListener<? super T> listener = (ob, ol, ne) -> l.accept(ol,ne);
 		o.addListener(listener);
 		return () -> o.removeListener(listener);
 	}
@@ -217,6 +234,20 @@ public class FXObservableUtil {
 		 */
 		public <T> Subscription onChange(ObservableValue<T> o, Consumer<? super T> l) {
 			return onChange(o, (ob, ol, ne) -> l.accept(ne));
+		}
+		
+		/**
+		 * Subscribe to the value change of an {@link ObservableValue}
+		 *
+		 * @param o
+		 *            the observable
+		 * @param l
+		 *            the listener
+		 * @return subscription used to unsubscribe
+		 * @since 3.5.0
+		 */
+		public <T> Subscription onChange(ObservableValue<T> o, BiConsumer<? super T,? super T> l) {
+			return onChange(o, (ob, ol, ne) -> l.accept(ol,ne));
 		}
 
 		/**
