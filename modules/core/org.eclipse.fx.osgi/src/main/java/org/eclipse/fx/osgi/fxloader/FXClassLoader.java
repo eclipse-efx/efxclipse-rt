@@ -26,7 +26,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
@@ -205,7 +207,8 @@ public class FXClassLoader extends ClassLoaderHook {
 				} else {
 					String[] paths = javafxDir.split(";"); //$NON-NLS-1$
 					for( String dir : paths ) {
-						Path path = Paths.get(dir);
+						
+						Path path = Paths.get(replaceProperties(dir));
 						if( Files.exists(path) ) {
 							providers = Files.list(path) //
 									.filter(p -> p.toString().endsWith(".jar")) //$NON-NLS-1$
@@ -238,6 +241,22 @@ public class FXClassLoader extends ClassLoaderHook {
 		}
 
 		return this.moduleLayer;
+	}
+	
+	private static String replaceProperties(String path) {
+		Properties properties = System.getProperties();
+		
+		String rv = path;
+		for( Entry<Object, Object> e : properties.entrySet() ) {
+			String value = e.getValue() + ""; //$NON-NLS-1$
+			if( System.getProperty("os.name").toLowerCase().contains("windows") ) { //$NON-NLS-1$ //$NON-NLS-2$
+				value = value.replace("file:/", "");  //$NON-NLS-1$//$NON-NLS-2$
+			} else {
+				value = value.replace("file:", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		}
+		
+		return rv;
 	}
 	
 	private static JavaModuleLayerModification collectModifications(BundleContext context) {
