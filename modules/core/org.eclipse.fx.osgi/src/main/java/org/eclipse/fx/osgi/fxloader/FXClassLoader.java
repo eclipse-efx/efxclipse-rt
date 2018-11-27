@@ -254,6 +254,8 @@ public class FXClassLoader extends ClassLoaderHook {
 			} else {
 				value = value.replace("file:", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			}
+			
+			rv = rv.replace("${"+e.getKey()+"}", value);  //$NON-NLS-1$//$NON-NLS-2$
 		}
 		
 		return rv;
