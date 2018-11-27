@@ -205,10 +205,15 @@ public class FXClassLoader extends ClassLoaderHook {
 				if (javafxDir == null) {
 					providers = getDeployedJavaModuleBundlePaths(this.frameworkContext);
 				} else {
+					if( FXClassloaderConfigurator.DEBUG ) {
+						System.err.println("FXClassLoader#getModuleLayer - Use directory '" + javafxDir +"'");  //$NON-NLS-1$//$NON-NLS-2$
+					}
 					String[] paths = javafxDir.split(";"); //$NON-NLS-1$
 					for( String dir : paths ) {
-						
 						Path path = Paths.get(replaceProperties(dir));
+						if( FXClassloaderConfigurator.DEBUG ) {
+							System.err.println("FXClassLoader#getModuleLayer - Inspecting path '"+path+"'");  //$NON-NLS-1$//$NON-NLS-2$
+						}
 						if( Files.exists(path) ) {
 							providers = Files.list(path) //
 									.filter(p -> p.toString().endsWith(".jar")) //$NON-NLS-1$
@@ -255,7 +260,7 @@ public class FXClassLoader extends ClassLoaderHook {
 				value = value.replace("file:", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			
-			rv = rv.replace("${"+e.getKey()+"}", value);  //$NON-NLS-1$//$NON-NLS-2$
+			rv = rv.replace("$("+e.getKey()+")", value);  //$NON-NLS-1$//$NON-NLS-2$
 		}
 		
 		return rv;
