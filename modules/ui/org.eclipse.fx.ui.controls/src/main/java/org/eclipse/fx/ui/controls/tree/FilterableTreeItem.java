@@ -12,13 +12,10 @@ package org.eclipse.fx.ui.controls.tree;
 
 import java.util.function.Predicate;
 
-import org.eclipse.fx.core.ReflectionUtil;
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.CheckBoxTreeItem;
@@ -40,10 +37,10 @@ import javafx.scene.control.cell.CheckBoxTreeCell;
  * @param <T> The type of the {@link #getValue() value} property within {@link TreeItem}.
  */
 public class FilterableTreeItem<T> extends CheckBoxTreeItem<T> {
-	final private ObservableList<TreeItem<T>> sourceList;
-	final private FilteredList<TreeItem<T>> filteredList;
+	private final ObservableList<TreeItem<T>> sourceList = FXCollections.observableArrayList();
+	private final FilteredList<TreeItem<T>> filteredList =new FilteredList<>(this.sourceList);
 
-	private ObjectProperty<TreeItemPredicate<T>> predicate = new SimpleObjectProperty<TreeItemPredicate<T>>();
+	private final ObjectProperty<TreeItemPredicate<T>> predicate = new SimpleObjectProperty<>();
 
 	/**
 	 * Creates a new {@link TreeItem} with sorted children. To enable sorting it is
@@ -54,8 +51,6 @@ public class FilterableTreeItem<T> extends CheckBoxTreeItem<T> {
 	 */
 	public FilterableTreeItem(T value) {
 		super(value);
-		this.sourceList = FXCollections.observableArrayList();
-		this.filteredList = new FilteredList<>(this.sourceList);
 		this.filteredList.predicateProperty().bind(Bindings.createObjectBinding(() -> {
 			Predicate<TreeItem<T>> p =  child -> {
 				// Set the predicate of child items to force filtering
@@ -75,19 +70,14 @@ public class FilterableTreeItem<T> extends CheckBoxTreeItem<T> {
 			return p;
 		}, this.predicate));
 
-		setHiddenFieldChildren(this.filteredList);
+		Bindings.bindContent(getChildren(), getBackingList());
 	}
-
+	
 	/**
-	 * Set the hidden private field {@link TreeItem#children} through reflection and hook the hidden
-	 * {@link ListChangeListener} in {@link TreeItem#childrenListener} to the list
-	 * @param list the list to set
+	 * @return the backing list
 	 */
-	@SuppressWarnings({ "unchecked", "javadoc" })
-	protected void setHiddenFieldChildren(ObservableList<TreeItem<T>> list) {
-		ReflectionUtil.setFieldValue(this, "children", list); //$NON-NLS-1$
-		Object childrenListener = ReflectionUtil.getFieldValue(this, "childrenListener"); //$NON-NLS-1$
-		list.addListener((ListChangeListener<? super TreeItem<T>>) childrenListener);
+	protected ObservableList<TreeItem<T>> getBackingList() {
+		return this.filteredList;
 	}
 
 	/**
