@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.fx.target.ext.feature_3.4.2.qualifier.jar" id="org.eclipse.fx.target.ext.feature" version="3.4.2.qualifier"/>
-   <feature url="features/org.eclipse.fx.code.target.ext.feature_3.4.2.qualifier.jar" id="org.eclipse.fx.code.target.ext.feature" version="3.4.2.qualifier"/>
-   <feature url="features/org.eclipse.fx.slf4j.target.feature_3.4.2.qualifier.jar" id="org.eclipse.fx.slf4j.target.feature" version="3.4.2.qualifier"/>
+   <feature url="features/org.eclipse.fx.target.ext.feature_3.4.3.qualifier.jar" id="org.eclipse.fx.target.ext.feature" version="3.4.3.qualifier"/>
+   <feature url="features/org.eclipse.fx.code.target.ext.feature_3.4.3.qualifier.jar" id="org.eclipse.fx.code.target.ext.feature" version="3.4.3.qualifier"/>
+   <feature url="features/org.eclipse.fx.slf4j.target.feature_3.4.3.qualifier.jar" id="org.eclipse.fx.slf4j.target.feature" version="3.4.3.qualifier"/>
 </site>
