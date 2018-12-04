@@ -159,7 +159,7 @@ public class MessageDialog extends Dialog {
 	private final int okButton;
 	private final int cancelButton;
 
-	MessageDialog(@Nullable Window parent, @NonNull String windowTitle,
+	public MessageDialog(@Nullable Window parent, @NonNull String windowTitle,
 			@NonNull String message, @NonNull Type type, int okButton,
 			int cancelButton, String... dialogButtonLabels) {
 		super(parent, windowTitle);
