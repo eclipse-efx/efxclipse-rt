@@ -451,6 +451,9 @@ public abstract class AbstractE4Application {
 		ExceptionHandler exceptionHandler = new ExceptionHandler();
 		ReflectionContributionFactory contributionFactory = new ReflectionContributionFactory(registry);
 		appContext.set(IContributionFactory.class.getName(), contributionFactory);
+		appContext.set(IExtensionRegistry.class.getName(), registry);
+		appContext.set(IExceptionHandler.class.getName(), exceptionHandler);
+		appContext.set(TranslationService.LOCALE, Locale.getDefault());
 
 		// No default log provider available
 		if (appContext.get(ILoggerProvider.class) == null) {
@@ -461,21 +464,15 @@ public abstract class AbstractE4Application {
 
 		appContext.set(EModelService.class, new ModelServiceImpl(appContext));
 		appContext.set(EPlaceholderResolver.class, new PlaceholderResolver());
-
-		appContext.set(TranslationService.LOCALE, Locale.getDefault());
+		
 		TranslationService bundleTranslationProvider = TranslationProviderFactory.bundleTranslationService(appContext);
 		appContext.set(TranslationService.class, bundleTranslationProvider);
 
 		appContext.set(Adapter.class.getName(), ContextInjectionFactory.make(EclipseAdapter.class, appContext));
 
 		appContext.set(IServiceConstants.ACTIVE_PART, new ActivePartLookupFunction());
-		appContext.set(IExceptionHandler.class.getName(), exceptionHandler);
-		appContext.set(IExtensionRegistry.class.getName(), registry);
-
 		appContext.set(IServiceConstants.ACTIVE_SHELL, new ActiveChildLookupFunction(IServiceConstants.ACTIVE_SHELL, E4Workbench.LOCAL_ACTIVE_SHELL));
-
-		appContext.set(IExtensionRegistry.class.getName(), registry);
-		appContext.set(IContributionFactory.class.getName(), contributionFactory);
+		
 
 		return appContext;
 	}
