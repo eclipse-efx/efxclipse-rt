@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.fx.runtime</groupId>
+	<artifactId>org.eclipse.fx.test</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<properties>
+		<junit.version>4.12</junit.version>
+		<efxclipse.version>3.5.0-SNAPSHOT</efxclipse.version>
+	</properties>
+	<modules>
+		<module>org.eclipse.fx.test.junit</module>
+		<module>org.eclipse.fx.test.junit.e4</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.2</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<name>BestSolution e(fx)clipse releases</name>
+			<id>efxclipse-releases</id>
+			<url>http://maven.bestsolution.at/efxclipse-releases/</url>
+		</repository>
+		<repository>
+			<name>BestSolution e(fx)clipse snapshots</name>
+			<id>efxclipse-snapshots</id>
+			<url>http://maven.bestsolution.at/efxclipse-snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+</project>
