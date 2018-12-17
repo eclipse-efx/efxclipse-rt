@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -53,6 +54,7 @@ import javafx.beans.value.WeakChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Insets;
@@ -216,8 +218,8 @@ public class Util {
 	}
 
 	/**
-	 * Find all node at the given x/y location starting the search from the given
-	 * node
+	 * Find all node at the given x/y location starting the search from the
+	 * given node
 	 *
 	 * @param n
 	 *            the node to use as the start
@@ -280,8 +282,8 @@ public class Util {
 	}
 
 	/**
-	 * Bind the content to the source list to the target and apply the converter in
-	 * between
+	 * Bind the content to the source list to the target and apply the converter
+	 * in between
 	 *
 	 * @param target
 	 *            the target list
@@ -621,8 +623,8 @@ public class Util {
 	 * @param node
 	 *            the container node
 	 * @param name
-	 *            the properties name (not to confuse with the pseudo class name,
-	 *            those may be different)
+	 *            the properties name (not to confuse with the pseudo class
+	 *            name, those may be different)
 	 * @param def
 	 *            the initial value
 	 * @return the new property
@@ -638,7 +640,8 @@ public class Util {
 	 * pseudo class state on invalidation.
 	 * </p>
 	 * <p>
-	 * Convenience method if you do not need to hold the instance of the PseudoClass
+	 * Convenience method if you do not need to hold the instance of the
+	 * PseudoClass
 	 * </p>
 	 * 
 	 * @param pseudoClass
@@ -646,13 +649,42 @@ public class Util {
 	 * @param node
 	 *            the container node
 	 * @param name
-	 *            the properties name (not to confuse with the pseudo class name,
-	 *            those may be different)
+	 *            the properties name (not to confuse with the pseudo class
+	 *            name, those may be different)
 	 * @param def
 	 *            the initial value
 	 * @return the new property
 	 */
 	public static BooleanProperty createPseudoClassProperty(String pseudoClass, Node node, String name, boolean def) {
 		return PseudoClassProperty.create(pseudoClass, node, name, def);
+	}
+
+	/**
+	 * Run the provided runnable when the event occurs
+	 * 
+	 * @param r
+	 *            the runnable
+	 * @return the event handler
+	 * @since 3.5.0
+	 */
+	public static <E extends Event> EventHandler<E> onEvent(Runnable r) {
+		return (E e) -> r.run();
+	}
+
+	/**
+	 * Run the provided supplier when the event occurs and if true is returned
+	 * consume the event
+	 * 
+	 * @param r
+	 *            the supplier
+	 * @return the event handler
+	 * @since 3.5.0
+	 */
+	public static <@NonNull E extends Event> EventHandler<E> onEventConsume(BooleanSupplier r) {
+		return (E e) -> {
+			if (r.getAsBoolean()) {
+				e.consume();
+			}
+		};
 	}
 }
