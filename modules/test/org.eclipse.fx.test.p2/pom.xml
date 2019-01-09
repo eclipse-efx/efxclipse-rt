@@ -9,6 +9,10 @@
 	</parent>
 	<artifactId>org.eclipse.fx.test.p2</artifactId>
 	<packaging>pom</packaging>
+	
+	<properties>
+		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/fxtest-nightly</download-publish-path>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -117,4 +121,40 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>build-server</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>deploy</id>
+								<phase>install</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<delete includeemptydirs="false">
+											<fileset dir="${download-publish-path}">
+												<include name="**" />
+											</fileset>
+										</delete>
+										<copy includeemptydirs="false" todir="${download-publish-path}">
+											<fileset dir="target">
+												<include name="**" />
+											</fileset>
+										</copy>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
