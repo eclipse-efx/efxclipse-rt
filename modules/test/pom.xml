@@ -88,7 +88,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.0.1</version>
 				<configuration>
-				    <failOnWarnings>true</failOnWarnings>
+				    <failOnWarnings>false</failOnWarnings>
 				</configuration>
 				<executions>
 					<execution>
