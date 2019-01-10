@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
+import com.google.common.math.DoubleMath;
+
 /**
  * Utilities to deal with numbers
  *
@@ -19,12 +21,9 @@ public class NumberUtils {
 	/**
 	 * Constraint the given value to the upper and lower bound
 	 *
-	 * @param v
-	 *            the value to constraint
-	 * @param min
-	 *            the lower bound (only values >= 0 are applied)
-	 * @param max
-	 *            the upper bound (only values >= 0 are applied)
+	 * @param v   the value to constraint
+	 * @param min the lower bound (only values >= 0 are applied)
+	 * @param max the upper bound (only values >= 0 are applied)
 	 * @return the value
 	 * @since 2.2.0
 	 */
@@ -38,5 +37,29 @@ public class NumberUtils {
 			rv = Math.min(rv, max);
 		}
 		return rv;
+	}
+
+	/**
+	 * Compare 2 doubles using {@link Double#compare(double, double)}
+	 * 
+	 * @param d1 the first double
+	 * @param d2 the second double
+	 * @return the result
+	 * @since 3.5.0
+	 */
+	public static boolean equals(double d1, double d2) {
+		return Double.compare(d1, d2) == 0;
+	}
+
+	/**
+	 * Compare 2 doubles if they are equal if the delta is less than 0.01
+	 * 
+	 * @param d1 the first double
+	 * @param d2 the second double
+	 * @return the result
+	 * @since 3.5.0
+	 */
+	public static boolean fuzzyEquals(double d1, double d2) {
+		return DoubleMath.fuzzyEquals(d1, d2, 0.01);
 	}
 }
