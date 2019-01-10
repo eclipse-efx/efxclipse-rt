@@ -447,6 +447,7 @@ public abstract class AbstractE4Application {
 	protected IEclipseContext createApplicationContext() {
 		IEclipseContext serviceContext = E4Workbench.getServiceContext();
 		final IEclipseContext appContext = serviceContext.createChild("WorkbenchContext"); //$NON-NLS-1$
+		appContext.set(IWorkbench.APPLICATION_CONTEXT_KEY, appContext);
 		IExtensionRegistry registry = RegistryFactory.getRegistry();
 		ExceptionHandler exceptionHandler = new ExceptionHandler();
 		ReflectionContributionFactory contributionFactory = new ReflectionContributionFactory(registry);
