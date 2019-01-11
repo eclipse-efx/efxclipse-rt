@@ -46,7 +46,7 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		return MenuImpl.class;
 	}
 
-	static class MenuImpl extends WWidgetImpl<Menu, MMenu> implements WMenu<Menu> {
+	public static class MenuImpl extends WWidgetImpl<Menu, MMenu> implements WMenu<Menu> {
 		private ToggleGroup group;
 		Runnable showingCallback;
 		Runnable hidingCallback;

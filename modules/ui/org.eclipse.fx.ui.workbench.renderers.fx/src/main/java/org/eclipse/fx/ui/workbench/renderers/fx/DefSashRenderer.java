@@ -62,7 +62,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 	}
 
-	static class WFixedSashImpl extends WLayoutedWidgetImpl<GridPane, Node, MPartSashContainer> implements WSash<Node> {
+	public static class WFixedSashImpl extends WLayoutedWidgetImpl<GridPane, Node, MPartSashContainer> implements WSash<Node> {
 
 		static RowConstraints toRowConstraint(Map<String, String> dataMap) {
 			RowConstraints r;
@@ -298,7 +298,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 	}
 
-	static class WResizableSashImpl extends WLayoutedWidgetImpl<SplitPane, Node, MPartSashContainer> implements WSash<Node> {
+	public static class WResizableSashImpl extends WLayoutedWidgetImpl<SplitPane, Node, MPartSashContainer> implements WSash<Node> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		ChangeListener<Number> listener = new ChangeListener<Number>() {
@@ -514,7 +514,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 	}
 
-	static class WResizableSashImpl_2 extends WLayoutedWidgetImpl<SashPane, Node, MPartSashContainer> implements WSash<Node> {
+	public static class WResizableSashImpl_2 extends WLayoutedWidgetImpl<SashPane, Node, MPartSashContainer> implements WSash<Node> {
 		private List<WLayoutedWidget<?>> items = new ArrayList<>();
 
 		@NonNull

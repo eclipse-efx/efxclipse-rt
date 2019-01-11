@@ -38,7 +38,7 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 		return WToolBarImpl.class;
 	}
 
-	static class WToolBarImpl extends WLayoutedWidgetImpl<ToolBar, ToolBar, MToolBar> implements WToolBar<ToolBar> {
+	public static class WToolBarImpl extends WLayoutedWidgetImpl<ToolBar, ToolBar, MToolBar> implements WToolBar<ToolBar> {
 		private ToggleGroup group;
 		private ToolBar toolbar;
 		private InvalidationListener orientationSync;

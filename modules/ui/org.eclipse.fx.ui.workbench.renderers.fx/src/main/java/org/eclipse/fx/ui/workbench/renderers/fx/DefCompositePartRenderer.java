@@ -237,7 +237,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 
 	}
 
-	static class WFixedSashImpl extends AbstractCompositePartImpl<GridLayoutPane> {
+	public static class WFixedSashImpl extends AbstractCompositePartImpl<GridLayoutPane> {
 		private StackPane overlayContainer;
 		
 		@Inject
@@ -404,7 +404,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 		}
 	}
 
-	static class WResizableSashImpl extends AbstractCompositePartImpl<SplitPane> {
+	public static class WResizableSashImpl extends AbstractCompositePartImpl<SplitPane> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		private StackPane overlayContainer;

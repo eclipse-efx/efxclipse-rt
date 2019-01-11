@@ -36,7 +36,7 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 		return ContextMenuImpl.class;
 	}
 
-	static class ContextMenuImpl extends WWidgetImpl<ContextMenu, MPopupMenu> implements WPopupMenu<ContextMenu> {
+	public static class ContextMenuImpl extends WWidgetImpl<ContextMenu, MPopupMenu> implements WPopupMenu<ContextMenu> {
 		private ToggleGroup group;
 		Runnable showingCallback;
 		Runnable hidingCallback;

@@ -41,7 +41,7 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 		return WAreaImpl.class;
 	}
 
-	static class WAreaImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MArea> implements WArea<SplitPane> {
+	public static class WAreaImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MArea> implements WArea<SplitPane> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		private ChangeListener<Number> listener = new ChangeListener<Number>() {

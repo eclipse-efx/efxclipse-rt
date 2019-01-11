@@ -44,7 +44,7 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 		return PerspectiveStackImpl.class;
 	}
 
-	static class PerspectiveStackItemImpl implements WStackItem<PerspectiveStackItem, Node> {
+	public static class PerspectiveStackItemImpl implements WStackItem<PerspectiveStackItem, Node> {
 		private PerspectiveStackItem item;
 		private MPerspective domElement;
 		WCallback<WStackItem<PerspectiveStackItem, Node>, Node> initCallback;

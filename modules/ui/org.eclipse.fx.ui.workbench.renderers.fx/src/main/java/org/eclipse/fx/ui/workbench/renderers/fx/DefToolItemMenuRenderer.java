@@ -44,7 +44,7 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 		return WMenuImpl.class;
 	}
 
-	static class WMenuImpl extends WWidgetImpl<ToolItemMenu, MMenu> implements WMenu<ToolItemMenu> {
+	public static class WMenuImpl extends WWidgetImpl<ToolItemMenu, MMenu> implements WMenu<ToolItemMenu> {
 		private ToggleGroup group;
 		private SplitMenuButton button;
 		Runnable showingCallback;

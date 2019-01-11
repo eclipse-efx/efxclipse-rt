@@ -90,7 +90,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 	}
 
-	static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
+	public static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
 
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 		WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
@@ -430,7 +430,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 	}
 
-	static class StackItemImpl implements WStackItem<Object, Node> {
+	public static class StackItemImpl implements WStackItem<Object, Node> {
 		Tab tab;
 		private WCallback<WStackItem<Object, Node>, Node> initCallback;
 		WCallback<WStackItem<Object, Node>, Boolean> closeCallback;
@@ -590,7 +590,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 	}
 
-	static class PaginationWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
+	public static class PaginationWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
 		@NonNull
 		List<@NonNull WStackItem<Object, Node>> items = new ArrayList<>();
 		@Nullable
@@ -734,7 +734,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 	}
 
-	static class PagninationItemImpl implements WStackItem<Object, Node> {
+	public static class PagninationItemImpl implements WStackItem<Object, Node> {
 		private WCallback<WStackItem<Object, Node>, Node> initCallback;
 		private PaginationItem item = new PaginationItem();
 		private MStackElement domElement;
@@ -777,7 +777,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 	}
 
-	static class StackPaneWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
+	public static class StackPaneWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
 		@NonNull
 		List<@NonNull WStackItem<Object, Node>> items = new ArrayList<>();
 		@Nullable
@@ -920,7 +920,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 	}
 
-	static class StackPaneItemImpl implements WStackItem<Object, Node> {
+	public static class StackPaneItemImpl implements WStackItem<Object, Node> {
 		private WCallback<WStackItem<Object, Node>, Node> initCallback;
 		private StackPane internalPane = new StackPane();
 		private MStackElement domElement;

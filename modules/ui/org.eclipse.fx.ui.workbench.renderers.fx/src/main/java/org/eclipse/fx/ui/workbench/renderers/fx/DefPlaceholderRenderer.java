@@ -30,7 +30,7 @@ public class DefPlaceholderRenderer extends BasePlaceholderRenderer<FillLayoutPa
 		return PlaceholderWidget.class;
 	}
 
-	static class PlaceholderWidget extends WLayoutedWidgetImpl<FillLayoutPane, FillLayoutPane, MPlaceholder> implements WPlaceholderWidget {
+	public static class PlaceholderWidget extends WLayoutedWidgetImpl<FillLayoutPane, FillLayoutPane, MPlaceholder> implements WPlaceholderWidget {
 
 		@Override
 		public void setContent(WLayoutedWidget<? extends MUIElement> contentWidget) {
