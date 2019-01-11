@@ -110,7 +110,10 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * @noreference
+	 */
 	public static class PartImpl extends WLayoutedWidgetImpl<Pane, AnchorPane, MPart> implements WPart<Pane, Node, Node> {
 
 		@Inject

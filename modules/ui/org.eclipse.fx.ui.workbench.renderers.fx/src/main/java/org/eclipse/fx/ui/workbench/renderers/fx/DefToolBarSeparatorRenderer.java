@@ -29,6 +29,10 @@ public class DefToolBarSeparatorRenderer extends BaseToolBarSeparatorRenderer<Se
 		return ToolbarSeparatorImpl.class;
 	}
 
+	
+	/**
+	 * @noreference
+	 */
 	public static class ToolbarSeparatorImpl extends WWidgetImpl<Separator, MToolBarSeparator> implements WToolBarSeparator<Separator> {
 
 		@Override

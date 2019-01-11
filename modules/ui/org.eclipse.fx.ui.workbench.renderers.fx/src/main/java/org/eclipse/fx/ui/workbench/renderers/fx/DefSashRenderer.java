@@ -62,6 +62,10 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 	}
 
+	
+	/**
+	 * @noreference
+	 */
 	public static class WFixedSashImpl extends WLayoutedWidgetImpl<GridPane, Node, MPartSashContainer> implements WSash<Node> {
 
 		static RowConstraints toRowConstraint(Map<String, String> dataMap) {

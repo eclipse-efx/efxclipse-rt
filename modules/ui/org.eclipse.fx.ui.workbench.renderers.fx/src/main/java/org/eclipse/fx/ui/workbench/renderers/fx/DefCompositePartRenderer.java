@@ -237,6 +237,9 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 
 	}
 
+	/**
+	 * @noreference
+	 */
 	public static class WFixedSashImpl extends AbstractCompositePartImpl<GridLayoutPane> {
 		private StackPane overlayContainer;
 		
@@ -404,6 +407,9 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 		}
 	}
 
+	/**
+	 * @noreference
+	 */
 	public static class WResizableSashImpl extends AbstractCompositePartImpl<SplitPane> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 

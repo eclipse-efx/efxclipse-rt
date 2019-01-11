@@ -56,7 +56,10 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 	protected Class<? extends WMenuItem<MenuItem>> getWidgetClass(MMenuItem item) {
 		return MenuItemImpl.class;
 	}
-
+	
+	/**
+	 * @noreference
+	 */
 	public static class MenuItemImpl extends WWidgetImpl<MenuItem, MMenuItem> implements WMenuItem<MenuItem> {
 		private ItemType type;
 		Runnable runnable;

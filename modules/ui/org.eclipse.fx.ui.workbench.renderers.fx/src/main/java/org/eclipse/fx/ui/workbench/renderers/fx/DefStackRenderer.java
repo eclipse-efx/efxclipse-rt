@@ -90,6 +90,10 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 	}
 
+	
+	/**
+	 * @noreference
+	 */
 	public static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
 
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
@@ -336,7 +340,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public BorderPane getWidgetNode() {
+		public Node getWidgetNode() {
 			if( this.pane == null ) {
 				this.pane = new BorderPane();
 
@@ -429,7 +433,10 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			this.dragStartCallback = dragStackCallback;
 		}
 	}
-
+	
+	/**
+	 * @noreference
+	 */
 	public static class StackItemImpl implements WStackItem<Object, Node> {
 		Tab tab;
 		private WCallback<WStackItem<Object, Node>, Node> initCallback;
@@ -589,7 +596,10 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			this.tab = null;
 		}
 	}
-
+	
+	/**
+	 * @noreference
+	 */
 	public static class PaginationWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
 		@NonNull
 		List<@NonNull WStackItem<Object, Node>> items = new ArrayList<>();
@@ -733,7 +743,10 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			// not implemented yet
 		}
 	}
-
+	
+	/**
+	 * @noreference
+	 */
 	public static class PagninationItemImpl implements WStackItem<Object, Node> {
 		private WCallback<WStackItem<Object, Node>, Node> initCallback;
 		private PaginationItem item = new PaginationItem();
@@ -776,7 +789,10 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			this.initCallback = null;
 		}
 	}
-
+	
+	/**
+	 * @noreference
+	 */
 	public static class StackPaneWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
 		@NonNull
 		List<@NonNull WStackItem<Object, Node>> items = new ArrayList<>();
@@ -919,7 +935,10 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			// no drag in this control
 		}
 	}
-
+	
+	/**
+	 * @noreference
+	 */
 	public static class StackPaneItemImpl implements WStackItem<Object, Node> {
 		private WCallback<WStackItem<Object, Node>, Node> initCallback;
 		private StackPane internalPane = new StackPane();

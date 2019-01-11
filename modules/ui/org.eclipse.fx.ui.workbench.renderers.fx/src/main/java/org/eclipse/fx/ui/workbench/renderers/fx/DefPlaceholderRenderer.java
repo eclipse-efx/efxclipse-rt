@@ -30,6 +30,10 @@ public class DefPlaceholderRenderer extends BasePlaceholderRenderer<FillLayoutPa
 		return PlaceholderWidget.class;
 	}
 
+	
+	/**
+	 * @noreference
+	 */
 	public static class PlaceholderWidget extends WLayoutedWidgetImpl<FillLayoutPane, FillLayoutPane, MPlaceholder> implements WPlaceholderWidget {
 
 		@Override

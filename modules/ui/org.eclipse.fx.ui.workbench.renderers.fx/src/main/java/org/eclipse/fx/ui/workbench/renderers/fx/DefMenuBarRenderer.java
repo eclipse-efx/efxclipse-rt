@@ -35,7 +35,10 @@ public class DefMenuBarRenderer extends BaseMenuBarRenderer<MenuBar> {
 	protected Class<? extends WMenuBar<MenuBar>> getWidgetClass(MMenu menu) {
 		return WMenuBarImpl.class;
 	}
-
+	
+	/**
+	 * @noreference
+	 */
 	public static class WMenuBarImpl extends WLayoutedWidgetImpl<MenuBar, MenuBar, MMenu> implements WMenuBar<MenuBar> {
 		private boolean nativeMenu;
 
