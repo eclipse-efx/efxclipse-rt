@@ -10,9 +10,15 @@
  *******************************************************************************/
 package org.eclipse.fx.osgi.fxloader.jpms;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Set;
+
 @SuppressWarnings("javadoc")
 public class ModuleWrapper {
 	private static Class<?> CLASS;
+	private static Method getName;
+	private static Method getPackages;
 	
 	public final Object self;
 	
@@ -30,9 +36,29 @@ public class ModuleWrapper {
 		if( CLASS == null ) {
 			try {
 				CLASS = ModuleWrapper.class.getClassLoader().loadClass("java.lang.Module"); //$NON-NLS-1$
-			} catch (ClassNotFoundException e) {
+				getName = CLASS.getMethod("getName"); //$NON-NLS-1$
+				getPackages = CLASS.getMethod("getPackages"); //$NON-NLS-1$
+			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
 				throw new RuntimeException(e);
 			}
+		}
+	}
+
+	public String getName() {
+		init();
+		try {
+			return (String) getName.invoke(this.self);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public Set<String> getPackages() {
+		init();
+		try {
+			return (Set<String>) getPackages.invoke(this.self);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

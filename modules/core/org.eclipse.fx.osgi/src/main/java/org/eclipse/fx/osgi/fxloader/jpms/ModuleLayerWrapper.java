@@ -12,9 +12,11 @@ package org.eclipse.fx.osgi.fxloader.jpms;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
+import java.util.Set;
+import java.util.function.Function; 
 import java.util.stream.Collectors;
 
 @SuppressWarnings("javadoc")
@@ -26,6 +28,7 @@ public class ModuleLayerWrapper {
 	private static Method defineModulesWithOneLoader;
 	private static Method findLoader;
 	private static Method findModule;
+	private static Method modules;
 
 	public final Object self;
 
@@ -51,6 +54,7 @@ public class ModuleLayerWrapper {
 						ClassLoader.class);
 				findLoader = CLASS.getMethod("findLoader", String.class); //$NON-NLS-1$
 				findModule = CLASS.getMethod("findModule", String.class); //$NON-NLS-1$
+				modules = CLASS.getMethod("modules"); //$NON-NLS-1$
 			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
 				throw new RuntimeException(e);
 			}
@@ -109,6 +113,20 @@ public class ModuleLayerWrapper {
 		try {
 			Optional<?> invoke = (Optional<?>)findModule.invoke(this.self, n);
 			return invoke.map( o -> new ModuleWrapper(o));
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public Set<ModuleWrapper> modules() {
+		init();
+		try {
+			Set<?> invoke = (Set<?>) modules.invoke(this.self);
+			Set<ModuleWrapper> rv = new HashSet<>(invoke.size());
+			for( Object o : invoke ) {
+				rv.add(new ModuleWrapper(o));
+			}
+			return rv;
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}

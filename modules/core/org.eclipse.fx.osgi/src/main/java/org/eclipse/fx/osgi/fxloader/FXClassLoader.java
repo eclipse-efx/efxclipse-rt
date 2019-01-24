@@ -42,6 +42,7 @@ import org.eclipse.fx.osgi.fxloader.jpms.JavaModuleLayerModification;
 import org.eclipse.fx.osgi.fxloader.jpms.ModuleFinderWrapper;
 import org.eclipse.fx.osgi.fxloader.jpms.ModuleLayerWrapper;
 import org.eclipse.fx.osgi.fxloader.jpms.ModuleLayerWrapper.ControllerWrapper;
+import org.eclipse.fx.osgi.fxloader.jpms.ModuleWrapper;
 import org.eclipse.osgi.internal.framework.EquinoxConfiguration;
 import org.eclipse.osgi.internal.hookregistry.ClassLoaderHook;
 import org.eclipse.osgi.internal.loader.BundleLoader;
@@ -73,6 +74,8 @@ public class FXClassLoader extends ClassLoaderHook {
 	private static Boolean IS_EQUAL_GREATER_11;
 	private static Boolean IS_JAVA_8;
 	private static Map<String, ServiceTracker<Object, URLConverter>> urlTrackers = new HashMap<>();
+	private Set<String> j11ModulePackages;
+	private boolean reentrance;
 
 	static boolean isJDK8() {
 		if (IS_JAVA_8 != null) {
@@ -102,70 +105,93 @@ public class FXClassLoader extends ClassLoaderHook {
 	@SuppressWarnings("resource")
 	@Override
 	public Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
-		// this is pre java 9
-		if (isJDK8()) {
-			if ((name.startsWith("javafx") //$NON-NLS-1$
-					|| name.startsWith("netscape.javascript") //$NON-NLS-1$
-					|| name.startsWith("com.sun.glass.events") //$NON-NLS-1$
-					|| name.startsWith("com.sun.glass.ui") //$NON-NLS-1$
-					|| name.startsWith("com.sun.javafx") //$NON-NLS-1$
-					|| name.startsWith("com.sun.media.jfxmedia") //$NON-NLS-1$
-					|| name.startsWith("com.sun.media.jfxmediaimpl") //$NON-NLS-1$
-					|| name.startsWith("com.sun.openpisces") //$NON-NLS-1$
-					|| name.startsWith("com.sun.pisces") //$NON-NLS-1$
-					|| name.startsWith("com.sun.prism") //$NON-NLS-1$
-					|| name.startsWith("com.sun.scenario") //$NON-NLS-1$
-					|| name.startsWith("com.sun.webkit") //$NON-NLS-1$
-			) && !moduleClassLoader.getBundle().getSymbolicName().equals("org.eclipse.swt")) { //$NON-NLS-1$
-				URLClassLoader fxClassloader = getFXClassloader();
-				if (fxClassloader != null) {
-					return fxClassloader.loadClass(name);
-				} else {
-					throw new ClassNotFoundException(
-							"Unable to locate JavaFX. Please make sure you have a JDK with JavaFX installed eg on Linux you require an Oracle JDK"); //$NON-NLS-1$
-				}
+		if( this.reentrance ) {
+			if (FXClassloaderConfigurator.DEBUG) {
+				System.err.println("FXClassLoader#postFindClass - Loop detected returning null");
 			}
-		} else if (isEqualGreaterJDK11()) {
-			// JavaFX is not part of JDK anymore need to install modules on the fly
-			try {
-				return findClassJavaFX11(name, moduleClassLoader);
-			} catch (Throwable e) {
-				return null;
-			}
-		} else {
-			// We only need special things for javafx.embed because osgi-bundles on java9
-			// have the ExtClassloader as its parent
-			if (name.startsWith("javafx.embed")) { //$NON-NLS-1$
-				synchronized (this) {
-					if (this.j9Classloader == null) {
-						try {
-							this.j9Classloader = getModuleLayer().findLoader("javafx.swt"); //$NON-NLS-1$
-
-							try {
-								this.j9Classloader.loadClass("javafx.application.Platform") //$NON-NLS-1$
-										.getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE);//$NON-NLS-1$
-							} catch (Throwable e) {
-								e.printStackTrace();
-							}
-						} catch (Throwable e) {
-							throw new ClassNotFoundException("Could not find class '" + name + "'", e); //$NON-NLS-1$//$NON-NLS-2$
-						}
+			return null;
+		}
+		this.reentrance = true;
+		try {
+			// this is pre java 9
+			if (isJDK8()) {
+				if ((name.startsWith("javafx") //$NON-NLS-1$
+						|| name.startsWith("netscape.javascript") //$NON-NLS-1$
+						|| name.startsWith("com.sun.glass.events") //$NON-NLS-1$
+						|| name.startsWith("com.sun.glass.ui") //$NON-NLS-1$
+						|| name.startsWith("com.sun.javafx") //$NON-NLS-1$
+						|| name.startsWith("com.sun.media.jfxmedia") //$NON-NLS-1$
+						|| name.startsWith("com.sun.media.jfxmediaimpl") //$NON-NLS-1$
+						|| name.startsWith("com.sun.openpisces") //$NON-NLS-1$
+						|| name.startsWith("com.sun.pisces") //$NON-NLS-1$
+						|| name.startsWith("com.sun.prism") //$NON-NLS-1$
+						|| name.startsWith("com.sun.scenario") //$NON-NLS-1$
+						|| name.startsWith("com.sun.webkit") //$NON-NLS-1$
+				) && !moduleClassLoader.getBundle().getSymbolicName().equals("org.eclipse.swt")) { //$NON-NLS-1$
+					URLClassLoader fxClassloader = getFXClassloader();
+					if (fxClassloader != null) {
+						return fxClassloader.loadClass(name);
+					} else {
+						throw new ClassNotFoundException(
+								"Unable to locate JavaFX. Please make sure you have a JDK with JavaFX installed eg on Linux you require an Oracle JDK"); //$NON-NLS-1$
 					}
-					return this.j9Classloader.loadClass(name);
+				}
+			} else if (isEqualGreaterJDK11()) {
+				// JavaFX is not part of JDK anymore need to install modules on the fly
+				try {
+					return findClassJavaFX11(name, moduleClassLoader);
+				} catch (Throwable e) {
+					if (FXClassloaderConfigurator.DEBUG) {
+						System.err.println("FXClassLoader#postFindClass - exception while loading " + e.getMessage() + ". Continue delegation by returning NULL" ); //$NON-NLS-1$
+						e.printStackTrace();
+					}
+					return null;
+				}
+			} else {
+				// We only need special things for javafx.embed because osgi-bundles on java9
+				// have the ExtClassloader as its parent
+				if (name.startsWith("javafx.embed")) { //$NON-NLS-1$
+					synchronized (this) {
+						if (this.j9Classloader == null) {
+							try {
+								this.j9Classloader = getModuleLayer().findLoader("javafx.swt"); //$NON-NLS-1$
+
+								try {
+									this.j9Classloader.loadClass("javafx.application.Platform") //$NON-NLS-1$
+											.getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE);//$NON-NLS-1$
+								} catch (Throwable e) {
+									e.printStackTrace();
+								}
+							} catch (Throwable e) {
+								throw new ClassNotFoundException("Could not find class '" + name + "'", e); //$NON-NLS-1$//$NON-NLS-2$
+							}
+						}
+						return this.j9Classloader.loadClass(name);
+					}
 				}
 			}
+
+			return super.postFindClass(name, moduleClassLoader);
+		} finally {
+			this.reentrance = false;
 		}
 
-		return super.postFindClass(name, moduleClassLoader);
 	}
 
 	private Class<?> findClassJavaFX11(String name, ModuleClassLoader moduleClassLoader) throws Throwable {
 		if (FXClassloaderConfigurator.DEBUG) {
 			System.err.println("FXClassLoader#findClassJavaFX11 - started" ); //$NON-NLS-1$
-			System.err.println("FXClassLoader#findClassJavaFX11 - Loading class '" + name + "'"); //$NON-NLS-1$//$NON-NLS-2$
+			System.err.println("FXClassLoader#findClassJavaFX11 - Loading class '" + name + "' for " + moduleClassLoader); //$NON-NLS-1$//$NON-NLS-2$
 		}
 		
 		synchronized (this) {
+			if( this.j11ModulePackages != null && this.j11ModulePackages.isEmpty() ) {
+				if (FXClassloaderConfigurator.DEBUG) {
+					System.err.println("FXClassLoader#findClassJavaFX11 - Loader is empty. Returning null." ); //$NON-NLS-1$
+				}
+				
+				return null;
+			}
 			if( this.boostrappingModules.get() ) {
 				// If classes are loaded why we boostrap we can just return
 				System.err.println("FXClassLoader#findClassJavaFX11 - Loading '"+name+"' while we bootstrap. Returning null.");  //$NON-NLS-1$//$NON-NLS-2$
@@ -175,8 +201,27 @@ public class FXClassLoader extends ClassLoaderHook {
 			if( this.j11Classloader == null ) {
 				try {
 					this.boostrappingModules.set(true);
-					// As all modules are loaded by the same classloader using javafx.base is OK
-					this.j11Classloader = getModuleLayer().findLoader("javafx.base"); //$NON-NLS-1$
+					// As all modules are loaded by the same classloader using the first one is OK
+					ModuleLayerWrapper layer = getModuleLayer();
+					Set<ModuleWrapper> modules = layer.modules();
+					if( ! modules.isEmpty() ) {
+						this.j11Classloader = layer.findLoader(modules.iterator().next().getName());
+						this.j11ModulePackages = modules.stream().flatMap( m -> m.getPackages().stream()).collect(Collectors.toSet());
+						
+						if( getSWTClassloader(this.frameworkContext) != null ) {
+							if (FXClassloaderConfigurator.DEBUG) {
+								System.err.println("FXClassLoader#findClassJavaFX11 - We run inside SWT don't let the platform quit automatically" ); //$NON-NLS-1$
+							}
+							try {
+								this.j11Classloader.loadClass("javafx.application.Platform") //$NON-NLS-1$
+										.getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE);//$NON-NLS-1$
+							} catch (Throwable e) {
+								e.printStackTrace();
+							}
+						}
+					} else {
+						return null;
+					}
 				} finally {
 					this.boostrappingModules.set(false);
 				}
@@ -187,12 +232,21 @@ public class FXClassLoader extends ClassLoaderHook {
 			System.err.println("FXClassLoader#findClassJavaFX11 - Using classloader " + this.j11Classloader); //$NON-NLS-1$
 		}
 
-		Class<?> loadClass = this.j11Classloader.loadClass(name);
-
-		if (FXClassloaderConfigurator.DEBUG) {
-			System.err.println("FXClassLoader#findClassJavaFX11 - ended"); //$NON-NLS-1$
+		int lastIndexOf = name.lastIndexOf('.');
+		Class<?> loadedClass = null;
+		try {
+			if( lastIndexOf < 0 ) {
+				return null;
+			} else if( ! this.j11ModulePackages.contains(name.substring(0,lastIndexOf)) ) {
+				return null;
+			}
+			
+			return loadedClass = this.j11Classloader.loadClass(name);
+		} finally {
+			if (FXClassloaderConfigurator.DEBUG) {
+				System.err.println("FXClassLoader#findClassJavaFX11 - "+loadedClass+" - ended"); //$NON-NLS-1$
+			}			
 		}
-		return loadClass;
 	}
 
 	private synchronized ModuleLayerWrapper getModuleLayer() throws Throwable {
@@ -224,12 +278,21 @@ public class FXClassLoader extends ClassLoaderHook {
 						}
 					}
 				}
+				
 				ClassLoader parentClassloader = getSWTClassloader(this.frameworkContext);
 				if (parentClassloader == null) {
 					parentClassloader = getClass().getClassLoader();
 				}
+				
+				if( FXClassloaderConfigurator.DEBUG ) {
+					System.err.println("FXClassLoader#getModuleLayer - Parent Classloader: " + parentClassloader);
+				}
 
 				this.moduleLayer = initModuleLayer(parentClassloader, providers, collectModifications(this.frameworkContext));
+				
+				if( FXClassloaderConfigurator.DEBUG ) {
+					System.err.println("FXClassLoader#getModuleLayer - Module created: " + moduleLayer);
+				}
 			}
 		} else {
 			if (this.moduleLayer == null) {
@@ -471,6 +534,10 @@ public class FXClassLoader extends ClassLoaderHook {
 	}
 
 	private static ClassLoader getSWTClassloader(BundleContext context) {
+		if( FXClassloaderConfigurator.DEBUG ) {
+			System.err.println("FXClassLoader#getSWTClassloader - Fetching SWT-Classloader");
+		}
+
 		try {
 			// Should we better use findProviders() see PackageAdminImpl?
 			for (Bundle b : context.getBundles()) {
@@ -494,6 +561,8 @@ public class FXClassLoader extends ClassLoaderHook {
 		} catch (Throwable t) {
 			System.err.println("Failed to access swt classloader"); //$NON-NLS-1$
 			t.printStackTrace();
+		} finally {
+			System.err.println("FXClassLoader#getSWTClassloader - Done SWT-Classloader");
 		}
 
 		return null;
