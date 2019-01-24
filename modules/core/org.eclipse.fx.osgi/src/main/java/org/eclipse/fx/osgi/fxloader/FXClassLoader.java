@@ -32,6 +32,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -801,49 +803,60 @@ public class FXClassLoader extends ClassLoaderHook {
 					
 					// On JDK-8 we need to check for GTK3
 					if( isJDK8() ) {
-						Boolean isGTK3 = Boolean.FALSE;
-						try {
-							
-							if (FXClassloaderConfigurator.DEBUG) {
-								System.err.println(
-										"FXModuleClassloader#findLocalClass - Someone is trying to load FXCanvas. Need to check for GTK3"); //$NON-NLS-1$
-							}
-
-							// Check for GTK3
-							String value = (String) loadClass("org.eclipse.swt.SWT").getDeclaredMethod("getPlatform") //$NON-NLS-1$ //$NON-NLS-2$
-									.invoke(null);
-							if ("gtk".equals(value)) { //$NON-NLS-1$
+						boolean supportsGtk3 = false;
+						String version = System.getProperty("java.version", "");  //$NON-NLS-1$//$NON-NLS-2$
+						
+						Matcher matcher = Pattern.compile(".+_(\\d+).*").matcher(version); //$NON-NLS-1$
+						if( matcher.matches() && matcher.groupCount() > 0 ) {
+							supportsGtk3 = Integer.parseInt(matcher.group(1)) >= 202;
+						}
+						
+						if( ! supportsGtk3 ) {
+							Boolean isGTK3 = Boolean.FALSE;
+							try {
+								
 								if (FXClassloaderConfigurator.DEBUG) {
 									System.err.println(
-											"FXModuleClassloader#findLocalClass - We are on GTK need to take a closer look"); //$NON-NLS-1$
+											"FXModuleClassloader#findLocalClass - Someone is trying to load FXCanvas. Need to check for GTK3"); //$NON-NLS-1$
 								}
-								
-								// Constants moved with Photon
-								try {
-									isGTK3 = (Boolean) loadClass("org.eclipse.swt.internal.gtk.GTK").getDeclaredField("GTK3") //$NON-NLS-1$//$NON-NLS-2$
-											.get(null);
-								} catch( Throwable t) {
-									isGTK3 = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3") //$NON-NLS-1$//$NON-NLS-2$
-											.get(null);
+
+								// Check for GTK3
+								String value = (String) loadClass("org.eclipse.swt.SWT").getDeclaredMethod("getPlatform") //$NON-NLS-1$ //$NON-NLS-2$
+										.invoke(null);
+								if ("gtk".equals(value)) { //$NON-NLS-1$
+									if (FXClassloaderConfigurator.DEBUG) {
+										System.err.println(
+												"FXModuleClassloader#findLocalClass - We are on GTK need to take a closer look"); //$NON-NLS-1$
+									}
+									
+									// Constants moved with Photon
+									try {
+										isGTK3 = (Boolean) loadClass("org.eclipse.swt.internal.gtk.GTK").getDeclaredField("GTK3") //$NON-NLS-1$//$NON-NLS-2$
+												.get(null);
+									} catch( Throwable t) {
+										isGTK3 = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3") //$NON-NLS-1$//$NON-NLS-2$
+												.get(null);
+									}
+								} else {
+									if (FXClassloaderConfigurator.DEBUG) {
+										System.err.println("FXModuleClassloader#findLocalClass - OS is '" + value //$NON-NLS-1$
+												+ "' no need to get upset all is fine"); //$NON-NLS-1$
+									}
 								}
-							} else {
-								if (FXClassloaderConfigurator.DEBUG) {
-									System.err.println("FXModuleClassloader#findLocalClass - OS is '" + value //$NON-NLS-1$
-											+ "' no need to get upset all is fine"); //$NON-NLS-1$
-								}
+							} catch (Throwable e) {
+								System.err.println("FXModuleClassloader#findLocalClass - Failed to check for Gtk3"); //$NON-NLS-1$
+								e.printStackTrace();
 							}
-						} catch (Throwable e) {
-							System.err.println("FXModuleClassloader#findLocalClass - Failed to check for Gtk3"); //$NON-NLS-1$
-							e.printStackTrace();
+
+							if (isGTK3.booleanValue()) {
+								if (FXClassloaderConfigurator.DEBUG) {
+									System.err.println(
+											"FXModuleClassloader#findLocalClass - We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
+								}
+								throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
+							}							
 						}
 
-						if (isGTK3.booleanValue()) {
-							if (FXClassloaderConfigurator.DEBUG) {
-								System.err.println(
-										"FXModuleClassloader#findLocalClass - We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
-							}
-							throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
-						}
 					}
 					
 					try {
