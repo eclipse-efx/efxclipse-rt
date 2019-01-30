@@ -245,6 +245,9 @@ public class Reference {
 		 * @return the value
 		 */
 		public static ReferenceCardinality fromString(String data) {
+			if (data == null || data.equals("")) { //$NON-NLS-1$
+				return ReferenceCardinality.MANDATORY;
+			}
 			switch (data) {
 			case "0..1": //$NON-NLS-1$
 				return ReferenceCardinality.OPTIONAL;

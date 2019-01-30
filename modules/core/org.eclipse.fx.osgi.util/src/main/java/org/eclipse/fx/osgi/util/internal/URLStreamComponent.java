@@ -10,9 +10,10 @@
  *******************************************************************************/
 package org.eclipse.fx.osgi.util.internal;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.fx.core.URLStreamHandler;
 import org.osgi.framework.BundleContext;
@@ -30,7 +31,7 @@ import org.osgi.service.url.URLStreamHandlerService;
 @Component(immediate = true)
 public class URLStreamComponent {
 	private final BundleContext context;
-	private final List<ServiceRegistration<URLStreamHandlerService>> l = new ArrayList<>();
+	private final Map<String, ServiceRegistration<URLStreamHandlerService>> serviceRegistrations = new HashMap<>();
 
 	public URLStreamComponent() {
 		this.context = FrameworkUtil.getBundle(URLStreamComponent.class).getBundleContext();
@@ -40,13 +41,15 @@ public class URLStreamComponent {
 	public void registerUrlStreamHandler(URLStreamHandler handler) {
 		Hashtable<String, Object> t = new Hashtable<>();
 		t.put(URLConstants.URL_HANDLER_PROTOCOL, new String[] { handler.getProtocol() });
-		this.l.add(this.context.registerService(URLStreamHandlerService.class, new DelegatingURLStreamHandlerService(handler), t));
+		ServiceRegistration<URLStreamHandlerService> serviceRegistration = this.context
+				.registerService(URLStreamHandlerService.class, new DelegatingURLStreamHandlerService(handler), t);
+		this.serviceRegistrations.put(handler.getProtocol(), serviceRegistration);
 	}
-	
+
 	public void unregisterUrlStreamHandler(URLStreamHandler handler) {
-		this.l.stream()
-			.filter( s -> ((String[])s.getReference().getProperty(URLConstants.URL_HANDLER_PROTOCOL))[0].equals(handler.getProtocol()))
-			.findFirst()
-			.ifPresent( ServiceRegistration::unregister);
+		Optional.ofNullable(this.serviceRegistrations.get(handler.getProtocol())).ifPresent(sr -> {
+			sr.unregister();
+			this.serviceRegistrations.remove(handler.getProtocol());
+		});
 	}
 }
