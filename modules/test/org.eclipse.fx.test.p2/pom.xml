@@ -70,6 +70,18 @@
 									<classifier>sources</classifier>
 								</artifactItem>
 
+								<artifactItem>
+									<groupId>org.eclipse.fx.runtime</groupId>
+									<artifactId>org.eclipse.fx.test.rcontrol</artifactId>
+									<version>${project.version}</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.eclipse.fx.runtime</groupId>
+									<artifactId>org.eclipse.fx.test.rcontrol</artifactId>
+									<version>${project.version}</version>
+									<classifier>sources</classifier>
+								</artifactItem>
+
 							</artifactItems>
 							<outputDirectory>${project.basedir}/target/source/plugins</outputDirectory>
 						</configuration>
