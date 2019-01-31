@@ -1,2 +1,6 @@
 -exportcontents: \
  org.eclipse.fx.test.junit.e4
+Import-Package: \
+ !javafx.*, \
+ !com.sun.javafx.*, \
+ *
