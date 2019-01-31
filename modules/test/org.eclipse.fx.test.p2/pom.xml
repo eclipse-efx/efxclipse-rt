@@ -25,6 +25,11 @@
 			<artifactId>org.eclipse.fx.test.junit.e4</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.fx.runtime</groupId>
+			<artifactId>org.eclipse.fx.test.rcontrol</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
