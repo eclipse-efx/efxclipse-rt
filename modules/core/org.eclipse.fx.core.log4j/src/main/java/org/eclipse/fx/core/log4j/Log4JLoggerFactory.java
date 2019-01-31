@@ -15,6 +15,7 @@ import javax.inject.Provider;
 import org.apache.log4j.Appender;
 import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.fx.core.RankedService;
+import org.eclipse.fx.core.log.LogListener;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.jdt.annotation.NonNull;
@@ -51,6 +52,10 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
 	public void registerAppender(Appender appender) {
 		org.apache.log4j.Logger.getRootLogger().addAppender(appender);
+	}
+	
+	public void registerLogListener(LogListener listener) {
+		
 	}
 
 	/**
