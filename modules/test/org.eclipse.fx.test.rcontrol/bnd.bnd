@@ -1,0 +1,7 @@
+-exportcontents: \
+ org.eclipse.fx.test.rcontrol
+Import-Package: \
+ !javafx.*, \
+ !com.sun.javafx.*, \
+ !com.sun.glass.ui.*, \
+ *
