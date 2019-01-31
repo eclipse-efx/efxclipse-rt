@@ -9,5 +9,14 @@
    <bundle id="org.eclipse.fx.test.rcontrol">
    	<category name="efx-test"/>
    </bundle>
+   <bundle id="org.eclipse.fx.test.junit.source">
+   	<category name="efx-test"/>
+   </bundle>
+   <bundle id="org.eclipse.fx.test.junit.e4.source">
+   	<category name="efx-test"/>
+   </bundle>
+   <bundle id="org.eclipse.fx.test.rcontrol.source">
+   	<category name="efx-test"/>
+   </bundle>
    <category-def name="efx-test" label="Test Bundles"/>
 </site>
