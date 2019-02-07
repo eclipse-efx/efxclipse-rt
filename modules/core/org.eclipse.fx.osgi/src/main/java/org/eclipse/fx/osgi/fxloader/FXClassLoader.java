@@ -564,7 +564,9 @@ public class FXClassLoader extends ClassLoaderHook {
 			System.err.println("Failed to access swt classloader"); //$NON-NLS-1$
 			t.printStackTrace();
 		} finally {
-			System.err.println("FXClassLoader#getSWTClassloader - Done SWT-Classloader");
+			if( FXClassloaderConfigurator.DEBUG ) {
+				System.err.println("FXClassLoader#getSWTClassloader - Done SWT-Classloader");
+			}
 		}
 
 		return null;
