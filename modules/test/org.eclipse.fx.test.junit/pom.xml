@@ -11,11 +11,21 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.eclipse.fx.runtime</groupId>
+			<artifactId>org.eclipse.fx.test.rcontrol</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>at.bestsolution.efxclipse.rt</groupId>
+			<artifactId>org.eclipse.fx.core</artifactId>
+			<version>${efxclipse.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 		</dependency>
 	</dependencies>
 
-	
+
 </project>
