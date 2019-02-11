@@ -31,7 +31,29 @@ public interface WMinMaxableWidget {
 		/**
 		 * Restored
 		 */
-		RESTORE
+		RESTORE,
+		/**
+		 * Minimize
+		 */
+		MINIMIZE
+	}
+
+	/**
+	 * 
+	 */
+	public enum WMinMaxWidgetState {
+		/**
+		 * Minimize
+		 */
+		MINIMIZED,
+		/**
+		 * Maximize
+		 */
+		MAXIMIZED,
+		/**
+		 * Default
+		 */
+		DEFAULT
 	}
 
 	/**
@@ -44,7 +66,19 @@ public interface WMinMaxableWidget {
 
 	/**
 	 * Set the actual state
+	 * 
 	 * @param state
 	 */
+	@Deprecated
 	public void setMinMaxState(@NonNull WMinMaxState state);
+
+	/**
+	 * Update the widget state
+	 * 
+	 * @param state
+	 *            the new state
+	 */
+	public default void setMinMaxState(@NonNull WMinMaxWidgetState state) {
+		// nothing
+	}
 }

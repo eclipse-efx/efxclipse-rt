@@ -42,6 +42,8 @@ import org.osgi.service.event.EventHandler;
 public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContainer, WSash<N>> {
 	@Inject
 	RendererFactory factory;
+	
+	private static final String AUTOHIDDEN_TAG = "_efx_AutoHidden"; //$NON-NLS-1$
 
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
@@ -146,6 +148,12 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		} else {
 			this.logger.error("The widget for element '"+element+"' should not be null");  //$NON-NLS-1$//$NON-NLS-2$
 		}
+		
+		// Make sure we don't render any child
+		if( ! parentElement.isVisible() && parentElement.getTags().contains(AUTOHIDDEN_TAG) ) {
+			parentElement.getTags().remove(AUTOHIDDEN_TAG);
+			parentElement.setVisible(true);
+		}
 	}
 
 	@Override
@@ -160,6 +168,14 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		WLayoutedWidget<MPartSashContainerElement> widget = (WLayoutedWidget<MPartSashContainerElement>) changedObj.getWidget();
 		if (widget != null) {
 			sash.removeItem(widget);
+		}
+		
+		// Hide renderers who don't render any child
+		if( container.isVisible() && container.getChildren().stream().noneMatch(MUIElement::isVisible)) {
+			if( ! container.getTags().contains(AUTOHIDDEN_TAG) ) {
+				container.getTags().add(AUTOHIDDEN_TAG);
+				container.setVisible(false);
+			}
 		}
 	}
 
