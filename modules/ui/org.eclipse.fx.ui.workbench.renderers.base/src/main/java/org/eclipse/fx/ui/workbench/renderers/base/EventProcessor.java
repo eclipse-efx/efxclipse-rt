@@ -131,11 +131,7 @@ public class EventProcessor {
 									changedObj.getTransientData().put(BaseRenderer.CALCULATED_VISIBILITY, Boolean.valueOf(newVisibility));
 
 									if (newVisibility) {
-										// TODO Is childRendered not dangerous
-										// to
-										// call
-										// here??
-										renderer.childRendered((M) parent, changedObj);
+										renderer.showChild((M) parent, changedObj);
 									} else {
 										renderer.hideChild((M) parent, changedObj);
 									}
