@@ -156,9 +156,11 @@ public class MinMaxAddonWithPartialRestore {
 		});
 	}
 	
-	private static void handleMinMaxToggle(MUIElement fStateElement) {
+	private void handleMinMaxToggle(MUIElement fStateElement) {
 		if (!fStateElement.getTags().contains(MAXIMIZED)) {
-			setState(fStateElement, MAXIMIZED);
+			if( this.minMaxRestoreService.isMaximizable(fStateElement) ) {
+				setState(fStateElement, MAXIMIZED);
+			}
 		} else {
 			setState(fStateElement, null);
 		}
@@ -417,13 +419,17 @@ public class MinMaxAddonWithPartialRestore {
 
 
 
-	private static void setCTFButtons(WMinMaxableWidget ctf, MUIElement stateElement, boolean hideButtons) {
-		if (stateElement.getTags().contains(MINIMIZED)) {
-			ctf.setMinMaxState(WMinMaxWidgetState.MINIMIZED);
-		} else if (stateElement.getTags().contains(MAXIMIZED)) {
-			ctf.setMinMaxState(WMinMaxWidgetState.MAXIMIZED);
+	private void setCTFButtons(WMinMaxableWidget ctf, MUIElement stateElement, boolean hideButtons) {
+		if( ! this.minMaxRestoreService.isMaximizable(stateElement) ) {
+			ctf.setMinMaxState(WMinMaxWidgetState.NONE);
 		} else {
-			ctf.setMinMaxState(WMinMaxWidgetState.DEFAULT);
+			if (stateElement.getTags().contains(MINIMIZED)) {
+				ctf.setMinMaxState(WMinMaxWidgetState.MINIMIZED);
+			} else if (stateElement.getTags().contains(MAXIMIZED)) {
+				ctf.setMinMaxState(WMinMaxWidgetState.MAXIMIZED);
+			} else {
+				ctf.setMinMaxState(WMinMaxWidgetState.DEFAULT);
+			}			
 		}
 	}
 
@@ -870,6 +876,7 @@ public class MinMaxAddonWithPartialRestore {
 			trimStack.setElementId(trimId);
 			trimStack.setContributionURI(getTrimStackContributionURI());
 			trimStack.getTags().add("TrimStack"); //$NON-NLS-1$
+			trimStack.getTags().add("Container:StackPane"); //$NON-NLS-1$
 
 			// Check if we have a cached location
 			MTrimBar bar = this.minMaxRestoreService.findTrimBarForElement(this.modelService,element, window);

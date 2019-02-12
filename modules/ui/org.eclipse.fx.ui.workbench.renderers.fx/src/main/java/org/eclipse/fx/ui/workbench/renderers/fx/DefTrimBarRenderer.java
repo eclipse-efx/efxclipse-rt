@@ -60,9 +60,11 @@ public class DefTrimBarRenderer extends BaseTrimBarRenderer<Pane> {
 			// TODO Can we get dynamic here, what when the orientation changes
 			if (isVertical()) {
 				VBox box = new VBox();
+				box.getStyleClass().add(this.sideValue.getName());
 				return box;
 			} else {
 				HBox box = new HBox();
+				box.getStyleClass().add(this.sideValue.getName());
 				return box;
 			}
 		}

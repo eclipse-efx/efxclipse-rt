@@ -45,19 +45,20 @@ import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.renderers.base.addons.TrimStackIdHelper;
 import org.eclipse.fx.ui.workbench.renderers.base.addons.TrimStackIdHelper.TrimStackIdPart;
+import org.eclipse.fx.ui.workbench.renderers.base.services.PartialRestoreMinMaxService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.PartialRestoreMinMaxService.TrimStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMaximizationHost;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMaximizationHost.Location;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 
 import com.google.common.base.Strings;
-
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
@@ -86,6 +87,9 @@ public class DefaultTrimStackImpl implements TrimStack {
 	
 	@Inject
 	EPartService partService;
+	
+	@Inject
+	PartialRestoreMinMaxService minMaxService;
 	
 	@Inject
 	private GraphicsLoader graphicsLoader;
@@ -298,7 +302,7 @@ public class DefaultTrimStackImpl implements TrimStack {
 	}
 	
 	@PostConstruct
-	void createWidget(Group parent, MToolControl me/*, CSSRenderingUtils cssUtils*/) {
+	void createWidget(Parent parent, MToolControl me/*, CSSRenderingUtils cssUtils*/) {
 		if (this.minimizedElement == null) {
 			this.minimizedElement = findElement();
 		}
@@ -313,10 +317,18 @@ public class DefaultTrimStackImpl implements TrimStack {
 			}
 		}
 		
-		parent.getChildren().add(this.trimStackTB);
-		parent.getStyleClass().add("trim-stack"); //$NON-NLS-1$
+		if( parent instanceof Pane ) {
+			((Pane)parent).getChildren().add(this.trimStackTB);
+		} else {
+			((Group)parent).getChildren().add(this.trimStackTB);
+		}
 		
-		this.trimStackTB.getChildren().add(createRestoreButton());
+		this.trimStackTB.getStyleClass().add("trim-stack"); //$NON-NLS-1$
+		
+		if( this.minMaxService.supportPartialRestore(this.minimizedElement) ) {
+			this.trimStackTB.getChildren().add(createRestoreButton());
+		}
+		
 		updateTrimStackItems();
 	}
 	
@@ -388,11 +400,7 @@ public class DefaultTrimStackImpl implements TrimStack {
 				}
 			} else if (theStack.getTags().contains(IPresentationEngine.NO_AUTO_COLLAPSE)) {
 				// OK to be empty and still minimized
-				ToggleButton ti = new ToggleButton();
-				ti.setTooltip(new Tooltip(Messages.getString("TrimStack.EmptyStack"))); //$NON-NLS-1$
-//				ti.setImage(getLayoutImage());
-//				ti.setOnAction(toolItemSelectionListener);
-				this.trimStackTB.getChildren().add(ti);
+				this.trimStackTB.getChildren().add(createEmptyStackButton());
 			} else {
 				// doesn't have any children that's showing, place it back in the presentation
 				restoreStack();
@@ -479,6 +487,15 @@ public class DefaultTrimStackImpl implements TrimStack {
 		}
 		ti.setText(getLabelText(element));
 		ti.setTooltip(new Tooltip(getLabelText(element)));
+		ti.setOnAction(this.toolItemSelectionListener);
+		return ti;
+	}
+	
+	protected Node createEmptyStackButton() {
+		ToggleButton ti = new ToggleButton();
+		ti.setTooltip(new Tooltip(Messages.getString("TrimStack.EmptyStack"))); //$NON-NLS-1$
+		ti.getStyleClass().add("empty-stack"); //$NON-NLS-1$
+		ti.setGraphic(new GraphicNode());
 		ti.setOnAction(this.toolItemSelectionListener);
 		return ti;
 	}

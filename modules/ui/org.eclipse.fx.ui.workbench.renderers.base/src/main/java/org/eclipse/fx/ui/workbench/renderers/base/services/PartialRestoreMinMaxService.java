@@ -28,6 +28,11 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
  */
 public interface PartialRestoreMinMaxService {
 	/**
+	 * Tag to prevent an element to get maximized
+	 */
+	public static final String TAG_NOT_MAXIMIZABLE = "efx_notMaximizable"; //$NON-NLS-1$
+	
+	/**
 	 * Find the trimbar who holds the model element
 	 * 
 	 * @param modelService
@@ -44,6 +49,25 @@ public interface PartialRestoreMinMaxService {
 	 * @return class representing a trim stack
 	 */
 	public Class<? extends TrimStack> getTrimStackType();
+
+	/**
+	 * Check if the element supports partial restoring
+	 * 
+	 * @param element
+	 *            the element
+	 * @return <code>true</code> if partial restore is supported
+	 */
+	public boolean supportPartialRestore(MUIElement element);
+
+	/**
+	 * Check if the element support maximization
+	 * 
+	 * @param element
+	 *            the element
+	 * 
+	 * @return <code>true</code> if min-max is supported
+	 */
+	public boolean isMaximizable(MUIElement element);
 
 	/**
 	 * A trim stack

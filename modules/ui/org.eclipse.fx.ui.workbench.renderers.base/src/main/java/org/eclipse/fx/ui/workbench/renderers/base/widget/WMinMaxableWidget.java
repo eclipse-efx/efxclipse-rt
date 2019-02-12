@@ -53,7 +53,11 @@ public interface WMinMaxableWidget {
 		/**
 		 * Default
 		 */
-		DEFAULT
+		DEFAULT,
+		/**
+		 * None
+		 */
+		NONE
 	}
 
 	/**

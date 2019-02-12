@@ -2,6 +2,7 @@ package org.eclipse.fx.ui.workbench.renderers.fx.services;
 
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.SideValue;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimmedWindow;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -42,4 +43,13 @@ public class DefaultPartialMinMaxService implements PartialRestoreMinMaxService 
 		return DefaultTrimStackImpl.class;
 	}
 
+	@Override
+	public boolean supportPartialRestore(MUIElement element) {
+		return true;
+	}
+	
+	@Override
+	public boolean isMaximizable(MUIElement element) {
+		return element instanceof MPartStack && ! element.getTags().contains(TAG_NOT_MAXIMIZABLE);
+	}
 }
