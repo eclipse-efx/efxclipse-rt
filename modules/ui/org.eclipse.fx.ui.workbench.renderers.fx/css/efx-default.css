@@ -41,3 +41,7 @@
 .trim-stack .toggle-button.part-button {
 	-fx-graphic: url("defaultview_misc.png");
 }
+
+.trim-stack .toggle-button.empty-stack {
+	-fx-graphic: url("layout_co.png");
+}
