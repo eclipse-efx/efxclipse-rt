@@ -104,7 +104,20 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 			}
 		});
 	}
-
+	
+	/**
+	 * @return <code>true</code> if a hidden child needs to be detached from the UI-Tree
+	 */
+	@SuppressWarnings("static-method")
+	protected boolean detachHiddenChild() {
+		return true;
+	}
+	
+	@Override
+	public boolean isChildRenderedAndVisible(@NonNull MUIElement u) {
+		return detachHiddenChild() ? super.isChildRenderedAndVisible(u) : u.isToBeRendered();
+	}
+	
 	@Override
 	public void doProcessContent(MPartSashContainer element) {
 		WSash<N> sash = getWidget(element);
@@ -124,6 +137,20 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		}
 
 		sash.addItems(list);
+	}
+	
+	@Override
+	public void showChild(@NonNull MPartSashContainer parent, @NonNull MUIElement element) {
+		if( detachHiddenChild() ) {
+			super.showChild(parent, element);
+		} else {
+			((WLayoutedWidget<?>)element.getWidget()).setHidden(false);
+		}
+		// Make sure we don't render any child
+		if( ! parent.isVisible() && parent.getTags().contains(AUTOHIDDEN_TAG) ) {
+			parent.getTags().remove(AUTOHIDDEN_TAG);
+			parent.setVisible(true);
+		}
 	}
 
 	@SuppressWarnings("null")
@@ -148,16 +175,25 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		} else {
 			this.logger.error("The widget for element '"+element+"' should not be null");  //$NON-NLS-1$//$NON-NLS-2$
 		}
-		
-		// Make sure we don't render any child
-		if( ! parentElement.isVisible() && parentElement.getTags().contains(AUTOHIDDEN_TAG) ) {
-			parentElement.getTags().remove(AUTOHIDDEN_TAG);
-			parentElement.setVisible(true);
+	}
+	
+	@Override
+	public void hideChild(MPartSashContainer container, MUIElement changedObj) {
+		if( detachHiddenChild() ) {
+			hideChildDetach(container, changedObj);
+		} else {
+			((WLayoutedWidget<?>)changedObj.getWidget()).setHidden(true);
+		}
+		// Hide renderers who don't render any child
+		if( container.isVisible() && container.getChildren().stream().noneMatch(MUIElement::isVisible)) {
+			if( ! container.getTags().contains(AUTOHIDDEN_TAG) ) {
+				container.getTags().add(AUTOHIDDEN_TAG);
+				container.setVisible(false);
+			}
 		}
 	}
 
-	@Override
-	public void hideChild(MPartSashContainer container, MUIElement changedObj) {
+	private void hideChildDetach(MPartSashContainer container, MUIElement changedObj) {
 		WSash<N> sash = getWidget(container);
 
 		if (sash == null) {
@@ -168,14 +204,6 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		WLayoutedWidget<MPartSashContainerElement> widget = (WLayoutedWidget<MPartSashContainerElement>) changedObj.getWidget();
 		if (widget != null) {
 			sash.removeItem(widget);
-		}
-		
-		// Hide renderers who don't render any child
-		if( container.isVisible() && container.getChildren().stream().noneMatch(MUIElement::isVisible)) {
-			if( ! container.getTags().contains(AUTOHIDDEN_TAG) ) {
-				container.getTags().add(AUTOHIDDEN_TAG);
-				container.setVisible(false);
-			}
 		}
 	}
 

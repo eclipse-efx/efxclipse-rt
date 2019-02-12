@@ -61,7 +61,11 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			return WResizableSashImpl.class;
 		}
 	}
-
+	
+	@Override
+	protected boolean detachHiddenChild() {
+		return ! Boolean.getBoolean("efxclipse.eclipse.compat.sash"); //$NON-NLS-1$
+	}
 	
 	/**
 	 * @noreference
