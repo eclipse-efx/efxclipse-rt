@@ -54,6 +54,8 @@ import org.eclipse.fx.ui.controls.stage.Frame;
 import org.eclipse.fx.ui.controls.stage.TrimmedWindow;
 import org.eclipse.fx.ui.di.InjectingFXMLLoader;
 import org.eclipse.fx.ui.panes.FillLayoutPane;
+import org.eclipse.fx.ui.panes.SimpleTrimPane;
+import org.eclipse.fx.ui.panes.TrimPane;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
@@ -219,7 +221,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	public static class WWindowImpl extends WLayoutedWidgetImpl<Stage, Pane, MWindow> implements WWindow<Stage> {
 		private boolean support3d;
 		private Pane rootPane;
-		private BorderPane trimPane;
+		private TrimPane trimPane;
 		private FillLayoutPane contentPane;
 		private KeyBindingDispatcher dispatcher;
 		private BorderPane decoratorPane;
@@ -482,8 +484,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				this.stage.addEventFilter(KeyEvent.KEY_PRESSED, this.dispatcher.getKeyHandler());
 			}
 
-			this.trimPane = new BorderPane();
-			this.trimPane.getStyleClass().add(CSS_TRIM_CONTAINER);
+			this.trimPane = createTrimPane();
+			this.trimPane.getPane().getStyleClass().add(CSS_TRIM_CONTAINER);
 			this.contentPane = new FillLayoutPane();
 			this.contentPane.getStyleClass().add(CSS_CONTENT_CONTAINER);
 			this.trimPane.setCenter(new ContentAreaContainer(this.contentPane));
@@ -492,13 +494,13 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				this.rootPane = createRootContainer(stage);
 				if (this.rootPane != null) {
 					if (this.rootPane instanceof org.eclipse.fx.ui.controls.stage.Frame) {
-						((org.eclipse.fx.ui.controls.stage.Frame) this.rootPane).setClientArea(this.trimPane);
+						((org.eclipse.fx.ui.controls.stage.Frame) this.rootPane).setClientArea(this.trimPane.getPane());
 					} else if (this.rootPane instanceof BorderPane) {
 						Node clientArea = this.rootPane.lookup("#" + ID_CLIENT_AREA); //$NON-NLS-1$
 						if (clientArea != null) {
-							addNodeToCustomParent(java.util.Optional.ofNullable(this.trimPane), clientArea, ID_CLIENT_AREA);
+							addNodeToCustomParent(java.util.Optional.ofNullable(this.trimPane.getPane()), clientArea, ID_CLIENT_AREA);
 						} else {
-							((BorderPane) this.rootPane).setCenter(this.trimPane);
+							((BorderPane) this.rootPane).setCenter(this.trimPane.getPane());
 						}
 					} else {
 						this.logger.warning("Unhandled type of root pane: " + this.rootPane.getClass().getName()); //$NON-NLS-1$
@@ -520,7 +522,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				};
 				this.rootPane = rootPane;
 
-				rootPane.setCenter(this.trimPane);
+				rootPane.setCenter(this.trimPane.getPane());
 
 				if (this.decorationFXML != null) {
 					this.windowResizeButton = new WindowResizeButton(this.stage, 50, 50);
@@ -562,7 +564,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			// Add a css which sets defaults
 			{
-				URL url = getClass().getClassLoader().getResource("css/efx-default.css"); //$NON-NLS-1$
+				URL url = DefWindowRenderer.class.getClassLoader().getResource("css/efx-default.css"); //$NON-NLS-1$
 				if (url != null) {
 					s.getStylesheets().add(url.toExternalForm());
 				} else {
@@ -595,6 +597,15 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			this.modelContext.set(Scene.class, s);
 
 			return stage;
+		}
+		
+		/**
+		 * @return a new trim pane
+		 * @since 3.5.0
+		 */
+		@SuppressWarnings("static-method")
+		protected TrimPane createTrimPane() {
+			return new SimpleTrimPane();
 		}
 
 		private void handleOnCloseRequest(WindowEvent event) {
@@ -1069,7 +1080,6 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			// I don't think sub-windows should be activated
 			for (WWindow<?> c : this.windows) {
-				System.err.println("SHOW CHILD: " + c);
 				c.show();
 				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 			}
