@@ -12,6 +12,7 @@ package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Basic interface all layouted widgets implement
@@ -43,7 +44,9 @@ public interface WLayoutedWidget<M extends MUIElement> extends WWidget<M>, WDrag
 	 */
 	@SuppressWarnings("boxing")
 	public default boolean isHidden() {
-		return (Boolean) getDomElement().getTransientData().getOrDefault("efx_widgetHidden", Boolean.FALSE); //$NON-NLS-1$
+		@Nullable
+		M domElement = getDomElement();
+		return domElement == null ? Boolean.FALSE : (Boolean) domElement.getTransientData().getOrDefault("efx_widgetHidden", Boolean.FALSE); //$NON-NLS-1$
 	}
 
 	/**
@@ -55,6 +58,10 @@ public interface WLayoutedWidget<M extends MUIElement> extends WWidget<M>, WDrag
 	 */
 	@SuppressWarnings("boxing")
 	public default void setHidden(boolean hidden) {
-		getDomElement().getTransientData().put("efx_widgetHidden", hidden); //$NON-NLS-1$
+		@Nullable
+		M domElement = getDomElement();
+		if( domElement != null ) {
+			domElement.getTransientData().put("efx_widgetHidden", hidden); //$NON-NLS-1$
+		}
 	}
 }
