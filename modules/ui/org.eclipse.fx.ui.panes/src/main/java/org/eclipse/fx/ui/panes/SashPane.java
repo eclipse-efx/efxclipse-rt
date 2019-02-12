@@ -540,11 +540,15 @@ public class SashPane extends Region {
 		public long weight;
 	}
 
-	static class Sash extends Region {
+	static class Sash extends StackPane {
 		public Sash() {
 			getStyleClass().add("sash"); //$NON-NLS-1$
 			setManaged(false);
 			setMouseTransparent(false);
+			
+			Region r = new Region();
+			r.getStyleClass().add("sash-handle"); //$NON-NLS-1$
+			getChildren().add(r);
 		}
 	}
 
