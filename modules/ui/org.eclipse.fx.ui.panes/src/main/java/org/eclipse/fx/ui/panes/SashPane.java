@@ -543,7 +543,6 @@ public class SashPane extends Region {
 	static class Sash extends Region {
 		public Sash() {
 			getStyleClass().add("sash"); //$NON-NLS-1$
-			// setStyle("-fx-background-color: black;");
 			setManaged(false);
 			setMouseTransparent(false);
 		}
