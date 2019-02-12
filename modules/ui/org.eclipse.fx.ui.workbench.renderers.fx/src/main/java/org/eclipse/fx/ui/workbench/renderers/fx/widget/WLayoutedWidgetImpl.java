@@ -233,4 +233,14 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 
 		this.weight = 10;
 	}
+	
+	@Override
+	public void setHidden(boolean hidden) {
+		getStaticLayoutNode().setVisible(!hidden);
+	}
+	
+	@Override
+	public boolean isHidden() {
+		return ! getStaticLayoutNode().isVisible();
+	}
 }

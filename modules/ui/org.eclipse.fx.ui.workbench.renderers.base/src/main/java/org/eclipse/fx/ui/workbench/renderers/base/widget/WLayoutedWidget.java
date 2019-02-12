@@ -30,10 +30,31 @@ public interface WLayoutedWidget<M extends MUIElement> extends WWidget<M>, WDrag
 	 * @return the weight when layouted
 	 */
 	public double getWeight();
-	
+
 	/**
 	 * @return the widget container
 	 */
 	@NonNull
 	public Object getWidgetNode();
+
+	/**
+	 * @return <code>true</code> if the widget should be hidden
+	 * @since 3.5.0
+	 */
+	@SuppressWarnings("boxing")
+	public default boolean isHidden() {
+		return (Boolean) getDomElement().getTransientData().getOrDefault("efx_widgetHidden", Boolean.FALSE); //$NON-NLS-1$
+	}
+
+	/**
+	 * Show/Hide a the widget
+	 * 
+	 * @param hidden
+	 *            the new value
+	 * @since 3.5.0
+	 */
+	@SuppressWarnings("boxing")
+	public default void setHidden(boolean hidden) {
+		getDomElement().getTransientData().put("efx_widgetHidden", hidden); //$NON-NLS-1$
+	}
 }
