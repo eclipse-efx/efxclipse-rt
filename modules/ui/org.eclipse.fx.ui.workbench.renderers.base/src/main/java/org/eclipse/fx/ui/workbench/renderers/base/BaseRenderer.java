@@ -79,7 +79,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	public static final String CONTEXT_DOM_ELEMENT = "fx.rendering.domElement"; //$NON-NLS-1$
 
 	private static final String RENDER_KEY = "_renderer"; //$NON-NLS-1$
-	
+
 	/**
 	 * Make rendered content scrollable
 	 */
@@ -548,8 +548,6 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		}
 	}
 
-
-
 	private void unbindWidget(@NonNull M me, @NonNull W widget) {
 		widget.setDomElement(null);
 		me.setWidget(null);
@@ -807,7 +805,18 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 */
 	@Override
 	public boolean isChildRenderedAndVisible(@NonNull MUIElement u) {
-		return u.isToBeRendered() && u.isVisible() && getVisibleWhen(u, getModelContext(u));
+		return u.isToBeRendered() && isChildVisible(u);
+	}
+
+	/**
+	 * Check if the item is visible
+	 * 
+	 * @param u
+	 *            the element
+	 * @return <code>true</code> if item is to be shown
+	 */
+	protected boolean isChildVisible(@NonNull MUIElement u) {
+		return u.isVisible() && getVisibleWhen(u, getModelContext(u));
 	}
 
 	/**
