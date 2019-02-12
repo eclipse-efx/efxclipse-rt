@@ -133,8 +133,13 @@ public class SashPane extends Region {
 		this.items.addListener((Change<? extends Node> c) -> {
 			while (c.next()) {
 				if (c.wasRemoved()) {
-					getChildren().removeIf(n -> n instanceof SashChild
-							&& c.getRemoved().contains(((SashChild) n).getChildren().get(0)));
+					getChildren().removeIf(n -> {
+						boolean rv = n instanceof SashChild && c.getRemoved().contains(((SashChild) n).getChildren().get(0));
+						if( rv ) {
+							((SashChild)n).dispose();
+						}
+						return rv;
+					});
 				}
 				if (c.wasAdded()) {
 					getChildren().addAll(c.getFrom(),
@@ -143,10 +148,10 @@ public class SashPane extends Region {
 			}
 			clearCache();
 		});
-		this.sashWidth.addListener( o -> {
+		this.sashWidth.addListener(o -> {
 			clearCache();
 			requestLayout();
-		} );
+		});
 		pseudoClassStateChanged(HORIZONTAL, true);
 		pseudoClassStateChanged(VERTICAL, false);
 		this.horizontal.addListener((o, ol, ne) -> {
@@ -173,6 +178,10 @@ public class SashPane extends Region {
 
 	@Override
 	protected void layoutChildren() {
+		layoutChildren(false);
+	}
+
+	void layoutChildren(boolean force) {
 		int x = (int) Math.ceil(getPadding().getLeft());
 		int y = (int) Math.ceil(getPadding().getTop());
 		int w = (int) Math.floor(getWidth()) - (int) Math.ceil(getPadding().getLeft())
@@ -182,7 +191,7 @@ public class SashPane extends Region {
 
 		Bounds b = new BoundingBox(x, y, w, h);
 
-		if (this.clientArea != null && this.clientArea.equals(b)) {
+		if (!force && this.clientArea != null && this.clientArea.equals(b)) {
 			return;
 		}
 
@@ -372,11 +381,13 @@ public class SashPane extends Region {
 		this.start = this.horizontal.get() ? e.getScreenX() : e.getScreenY();
 		this.draggedSash = sash;
 
-		this.c1 = getManagedChildren().get(sashIndex);
+		List<Node> visibleNodes = getManagedChildren().stream().filter(Node::isVisible).collect(Collectors.toList());
+
+		this.c1 = visibleNodes.get(sashIndex);
 		Bounds b = this.c1.getLayoutBounds();
 		this.resize_1 = this.horizontal.get() ? b.getWidth() : b.getHeight();
 
-		this.c2 = getManagedChildren().get(sashIndex + 1);
+		this.c2 = visibleNodes.get(sashIndex + 1);
 		b = this.c2.getLayoutBounds();
 		this.resize_2 = this.horizontal.get() ? b.getWidth() : b.getHeight();
 		this.resize_total = this.resize_1 + this.resize_2;
@@ -392,10 +403,10 @@ public class SashPane extends Region {
 
 	/**
 	 * <p>
-	 * Specify the relative weight of each child in the {@link SashPane}. This
-	 * will determine what percent of the total width (if {@link SashPane} has
-	 * Horizontal orientation) or total height (if {@link SashPane} has Vertical
-	 * orientation) each control will occupy.
+	 * Specify the relative weight of each child in the {@link SashPane}. This will
+	 * determine what percent of the total width (if {@link SashPane} has Horizontal
+	 * orientation) or total height (if {@link SashPane} has Vertical orientation)
+	 * each control will occupy.
 	 * </p>
 	 * <p>
 	 * The weights must be positive values and there must be an entry for each
@@ -445,8 +456,8 @@ public class SashPane extends Region {
 	 * orientation) each control occupies.
 	 * </p>
 	 * <p>
-	 * The weights are returned in order of the creation of the widgets
-	 * (weight[0] corresponds to the weight of the first child created).
+	 * The weights are returned in order of the creation of the widgets (weight[0]
+	 * corresponds to the weight of the first child created).
 	 * </p>
 	 *
 	 * @return the relative weight of each child
@@ -519,8 +530,7 @@ public class SashPane extends Region {
 	/**
 	 * Set the width of a sash
 	 *
-	 * @param sashWidth
-	 *            the width
+	 * @param sashWidth the width
 	 */
 	public final void setSashWidth(final int sashWidth) {
 		this.sashWidthProperty().set(sashWidth);
@@ -545,6 +555,10 @@ public class SashPane extends Region {
 		public SashChild(Node c) {
 			getChildren().add(c);
 			setClip(this.r);
+			visibleProperty().bind(c.visibleProperty());
+			visibleProperty().addListener((ob, ol, ne) -> {
+				((SashPane) getParent()).layoutChildren(true);
+			});
 		}
 
 		@Override
@@ -552,6 +566,10 @@ public class SashPane extends Region {
 			super.resize(width, height);
 			this.r.setWidth(width);
 			this.r.setHeight(height);
+		}
+
+		public void dispose() {
+			visibleProperty().unbind();
 		}
 	}
 
