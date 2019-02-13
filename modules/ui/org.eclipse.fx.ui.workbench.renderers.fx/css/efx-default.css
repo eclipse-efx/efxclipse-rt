@@ -38,10 +38,10 @@
 	-fx-graphic: url("fastview_restore.png");
 }
 
-.trim-stack .toggle-button.part-button {
+.trim-stack .toggle-button.part-button .graphic-node {
 	-fx-graphic: url("defaultview_misc.png");
 }
 
-.trim-stack .toggle-button.empty-stack {
+.trim-stack .toggle-button.empty-stack .graphic-node {
 	-fx-graphic: url("layout_co.png");
 }
