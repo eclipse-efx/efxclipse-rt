@@ -366,8 +366,12 @@ public class DefaultTrimStackImpl implements TrimStack {
 	}
 	
 	private void updateTrimStackItems() {
-		Node restore = this.trimStackTB.getChildren().get(0);
-		this.trimStackTB.getChildren().removeIf( n -> n != restore);
+		if( ! this.trimStackTB.getChildren().isEmpty() ) {
+			if( this.minMaxService.supportPartialRestore(this.minimizedElement) ) {
+				Node restore = this.trimStackTB.getChildren().get(0);
+				this.trimStackTB.getChildren().removeIf( n -> n != restore);
+			}
+		}
 		
 		if (isEditorStack() && this.trimStackTB.getChildren().size() == 1) {
 			ToggleButton ti = new ToggleButton();
