@@ -150,6 +150,10 @@ public class MinMaxAddonWithPartialRestore {
 		ctf.setMinMaxCallback( param -> {
 			if( param == WMinMaxState.TOGGLE ) {
 				handleMinMaxToggle(fStateElement);
+			} else if( param == WMinMaxState.MINIMIZE ) {
+				setState(fStateElement, MINIMIZED);
+			} else if( param == WMinMaxState.RESTORE ) {
+				setState(fStateElement, null);
 			}
 			
 			return null;

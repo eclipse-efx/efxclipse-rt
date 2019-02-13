@@ -100,7 +100,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
 		WCallback<@NonNull DragData, @NonNull Boolean> dragStartCallback;
 
-		private WCallback<WMinMaxState, Void> minMaxCallback;
+		protected WCallback<WMinMaxState, Void> minMaxCallback;
 		// private MinMaxGroup minMaxGroup;
 		boolean inKeyTraversal;
 
