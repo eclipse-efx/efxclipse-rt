@@ -182,7 +182,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 	
 	@Override
 	public void hideChild(MPartSashContainer container, MUIElement changedObj) {
-		if( detachHiddenChild() ) {
+		if( detachHiddenChild() || ! changedObj.isToBeRendered() ) {
 			hideChildDetach(container, changedObj);
 		} else {
 			((WLayoutedWidget<?>)changedObj.getWidget()).setHidden(true);
@@ -231,7 +231,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		while (iterator.hasNext()) {
 			MPartSashContainerElement element = (MPartSashContainerElement) iterator.next();
 			if (element.isToBeRendered() && element.getWidget() != null) {
-				hideChild(parent, element);
+				hideChildDetach(parent, element);
 			}
 		}
 		checkSelectedElement(parent);
