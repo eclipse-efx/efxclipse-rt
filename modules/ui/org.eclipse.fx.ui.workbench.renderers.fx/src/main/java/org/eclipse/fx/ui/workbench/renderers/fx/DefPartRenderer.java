@@ -37,6 +37,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
@@ -84,10 +85,30 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				return;
 			if (!checkFocusControl((Node) part.getStaticLayoutNode())) {
 				Node node = (Node) part.getWidget();
-				node.requestFocus();
+				if (node instanceof Parent) {
+					getFirstFocusableNode((Parent) node).ifPresent(Node::requestFocus);
+				} else {
+					node.requestFocus();
+				}
 			}
 		}
 
+	}
+
+	static java.util.Optional<Node> getFirstFocusableNode(Parent parent) {
+		for (Node node : parent.getChildrenUnmodifiable()) {
+			if (node instanceof Parent) {
+				java.util.Optional<Node> opt = getFirstFocusableNode((Parent) node);
+				if (opt.isPresent()) {
+					return opt;
+				}
+			}
+
+			if (node.isFocusTraversable()) {
+				return java.util.Optional.of(node);
+			}
+		}
+		return java.util.Optional.empty();
 	}
 
 	static boolean checkFocusControl(Node check) {
