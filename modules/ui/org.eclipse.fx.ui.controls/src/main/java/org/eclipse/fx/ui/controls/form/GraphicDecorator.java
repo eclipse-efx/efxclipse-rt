@@ -4,6 +4,7 @@ import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.Status.State;
 import org.osgi.service.component.annotations.Component;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -50,12 +51,12 @@ public class GraphicDecorator implements NodeDecorator {
 
 	static class GraphicDecoratedControl implements DecoratedNode {
 		private final Label icon;
-		private final ObjectProperty<Status> statusProperty = new SimpleObjectProperty<Status>(this, "status", Status.ok()); //$NON-NLS-1$
+		private final ObjectProperty<Status> statusProperty = new SimpleObjectProperty<>(this, "status", Status.ok()); //$NON-NLS-1$
 
-		private static PseudoClass error = PseudoClass.getPseudoClass("error");
-		private static PseudoClass warning = PseudoClass.getPseudoClass("warning");
-		private static PseudoClass ok = PseudoClass.getPseudoClass("ok");
-		private static PseudoClass cancel = PseudoClass.getPseudoClass("cancel");
+		private static PseudoClass error = PseudoClass.getPseudoClass("error"); //$NON-NLS-1$
+		private static PseudoClass warning = PseudoClass.getPseudoClass("warning"); //$NON-NLS-1$
+		private static PseudoClass ok = PseudoClass.getPseudoClass("ok"); //$NON-NLS-1$
+		private static PseudoClass cancel = PseudoClass.getPseudoClass("cancel"); //$NON-NLS-1$
 
 		public GraphicDecoratedControl(Control c, Location location) {
 			this.icon = new Label() {
@@ -104,7 +105,8 @@ public class GraphicDecorator implements NodeDecorator {
 				}, this.icon.heightProperty(), c.heightProperty()));
 			}
 
-			updatePseudoState(this.icon, this.statusProperty.getValue());
+			// FIXME Platform.runLater is not perfectly correct, we should become part of the layout bus
+			Platform.runLater(() -> updatePseudoState(this.icon, this.statusProperty.getValue()));
 			this.statusProperty.addListener( (o, ol, ne) -> {
 				updatePseudoState(this.icon, ne);
 			});
