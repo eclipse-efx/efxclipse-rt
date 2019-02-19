@@ -55,6 +55,7 @@ public class E4MainThreadApplication extends E4Application {
 			PlatformImpl.startup(() -> {
 				try {
 					JFXRealm.createDefault();
+					DefaultJFXApp.setProductApplicationName();
 					jfxStart(getApplicationContext(), null, null);
 				} catch( Throwable t ) {
 					t.printStackTrace();
