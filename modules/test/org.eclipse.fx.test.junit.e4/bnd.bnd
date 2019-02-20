@@ -2,7 +2,10 @@
 Bundle-Version: ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${osgi.modifier}
 -exportcontents: \
  org.eclipse.fx.test.junit.e4
+Require-Bundle: \
+ org.eclipse.equinox.registry
 Import-Package: \
  !javafx.*, \
  !com.sun.javafx.*, \
+ !org.eclipse.core.runtime.*, \
  *
