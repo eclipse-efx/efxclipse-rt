@@ -47,24 +47,25 @@ public final class BoxShadow extends Region {
 	private static CssMetaData<BoxShadow, Number> META_BLUR = FACTORY.createSizeCssMetaData("-box-blur", n -> n.blur, Double.valueOf(10.0)); //$NON-NLS-1$
 	private static CssMetaData<BoxShadow, Number> META_SPREAD = FACTORY.createSizeCssMetaData("-box-spread", n -> n.spread, Double.valueOf(0)); //$NON-NLS-1$
 	private static CssMetaData<BoxShadow, Color> META_COLOR = FACTORY.createColorCssMetaData("-box-color", n -> n.color, Color.BLACK); //$NON-NLS-1$
-	
+
 	private StyleableBooleanProperty shadowVisible = new SimpleStyleableBooleanProperty(META_VISIBLE, this, "shadowVisible", false); //$NON-NLS-1$
 	private StyleableDoubleProperty hOffset = new SimpleStyleableDoubleProperty(META_H_OFFSET, this, "hOffset", Double.valueOf(0.0)); //$NON-NLS-1$
 	private StyleableDoubleProperty vOffset = new SimpleStyleableDoubleProperty(META_V_OFFSET, this, "hOffset", Double.valueOf(0.0)); //$NON-NLS-1$
 	private StyleableDoubleProperty blur = new SimpleStyleableDoubleProperty(META_BLUR, this, "blur", Double.valueOf(10.0)); //$NON-NLS-1$
 	private StyleableDoubleProperty spread = new SimpleStyleableDoubleProperty(META_SPREAD, this, "spread", Double.valueOf(0.0)); //$NON-NLS-1$
 	private StyleableObjectProperty<Color> color = new SimpleStyleableObjectProperty<>(META_COLOR, this, "color", Color.BLACK); //$NON-NLS-1$
-	
+
 	/**
+	 * Create a new shadow
 	 * 
 	 * @param node
+	 *            the node to wrap
 	 */
 	public BoxShadow(Region node) {
 		getStyleClass().add("box-shadow"); //$NON-NLS-1$
 		this.node = node;
 		this.shadowNode = new Region();
 		this.shadowNode.getStyleClass().add("shadow-node"); //$NON-NLS-1$
-		
 
 		DropShadow s = new DropShadow();
 		s.setBlurType(BlurType.GAUSSIAN);
@@ -75,20 +76,20 @@ public final class BoxShadow extends Region {
 		this.shadowNode.translateXProperty().bind(this.hOffset);
 		this.shadowNode.translateYProperty().bind(this.vOffset);
 		getChildren().addAll(this.shadowNode, node);
-		
+
 		FXObservableUtil.onChange(this.node.backgroundProperty(), this::handleBackgroundChange);
 		handleBackgroundChange(node.getBackground());
 	}
-	
+
 	private void handleBackgroundChange(Background background) {
 		Background newBackground = new Background(new BackgroundFill(new Color(1, 1, 1, 0.1), CornerRadii.EMPTY, Insets.EMPTY));
-		if( background != null && ! background.getFills().isEmpty() ) {
+		if (background != null && !background.getFills().isEmpty()) {
 			CornerRadii radii = background.getFills().get(0).getRadii();
-			if( radii != null ) {
+			if (radii != null) {
 				newBackground = new Background(new BackgroundFill(new Color(1, 1, 1, 0.1), radii, Insets.EMPTY));
 			}
 		}
-		
+
 		this.shadowNode.setBackground(newBackground);
 	}
 
