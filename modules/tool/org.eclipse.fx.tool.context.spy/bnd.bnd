@@ -1,0 +1,19 @@
+-snapshot: ${osgi.qualifier}
+Bundle-ActivationPolicy: lazy
+Bundle-SymbolicName: org.eclipse.fx.tool.context.spy;singleton:=true
+
+Import-Package: \
+	!javafx.*,\
+	*
+
+Export-Package: \
+    org.eclipse.fx.tool.context.spy
+
+-runee: JavaSE-1.8
+-exportcontents: ${packages;VERSIONED}
+
+-privatepackage: org.eclipse.fx.tool.context.spy.internal.*
+
+-includeresource: ${basedir}/target/classes/plugin.xml
+
+-dsannotations: *

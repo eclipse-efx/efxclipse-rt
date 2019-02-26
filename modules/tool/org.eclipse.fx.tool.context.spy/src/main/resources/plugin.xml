@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+ <extension point="org.eclipse.fx.tool.spies.spyPart">
+      <spyPart
+            description="Context Spy to understand what is behind the scene of injection"
+            icon="icons/annotation_obj.png"
+            name="Context spy"
+            part="org.eclipse.fx.tool.context.spy.ContextSpyPart"
+            shortcut="M2+M3+F10">
+      </spyPart>
+   </extension>
+</plugin>
