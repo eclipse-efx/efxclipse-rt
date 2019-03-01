@@ -63,6 +63,7 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 
 		registerEventListener(eventBroker, UIEvents.Part.TOPIC_DESCRIPTION);
 		registerEventListener(eventBroker, UIEvents.Part.TOPIC_LOCALIZED_DESCRIPTION);
+		registerEventListener(eventBroker, UIEvents.Part.TOPIC_CLOSEABLE);
 
 		registerEventListener(eventBroker, UIEvents.Dirtyable.TOPIC_DIRTY);
 		eventBroker.subscribe(UIEvents.Part.TOPIC_MENUS, new EventHandler() {
