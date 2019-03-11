@@ -57,7 +57,7 @@ import org.osgi.service.event.EventHandler;
  *            the native item content widget type
  */
 public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStack, WStack<N, I, IC>> {
-	private static final String MAP_ITEM_KEY = "fx.rendering.stackitem"; //$NON-NLS-1$
+	static final String MAP_ITEM_KEY = "fx.rendering.stackitem"; //$NON-NLS-1$
 	/**
 	 * Transient tag to inform about a move operation
 	 */

@@ -376,6 +376,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			IEclipseContext ctx = (IEclipseContext) element.getTransientData().get(RENDERING_CONTEXT_KEY);
 			ctx.dispose();
 			element.getTransientData().remove(RENDERING_CONTEXT_KEY);
+			element.getTransientData().remove(BaseStackRenderer.MAP_ITEM_KEY);
 		}
 	}
 
