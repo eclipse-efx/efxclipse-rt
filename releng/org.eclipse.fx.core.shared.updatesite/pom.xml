@@ -29,7 +29,7 @@
 		</plugins>
 	</build>
 
-	<profiles>
+	<!-- profiles>
 		<profile>
 			<id>build-server</id>
 			<build>
@@ -63,6 +63,6 @@
 				</plugins>
 			</build>
 		</profile>
-	</profiles>
+	</profiles -->
 
 </project>
