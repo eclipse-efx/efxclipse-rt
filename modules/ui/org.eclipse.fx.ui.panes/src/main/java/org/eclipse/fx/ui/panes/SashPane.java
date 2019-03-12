@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.panes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
@@ -58,6 +60,7 @@ public class SashPane extends Region {
 
 	private static final String LAYOUT_KEY = "sashData"; //$NON-NLS-1$
 	static final int DRAG_MINIMUM = 20;
+	private boolean syncInProgress;
 
 	private Sash[] sashes = new Sash[0];
 	private BooleanProperty horizontal = new SimpleBooleanProperty(this, "horizontal", true) {//$NON-NLS-1$
@@ -124,6 +127,8 @@ public class SashPane extends Region {
 
 	private static PseudoClass HORIZONTAL = PseudoClass.getPseudoClass("horizontal"); //$NON-NLS-1$
 	private static PseudoClass VERTICAL = PseudoClass.getPseudoClass("vertical"); //$NON-NLS-1$
+	
+	private ObjectProperty<int[]> weights = null;
 
 	/**
 	 * Create a new sash pane
@@ -215,7 +220,7 @@ public class SashPane extends Region {
 			}
 			return;
 		}
-
+		
 		// TODO Adjust sash numbers
 
 		long[] ratios = new long[children.size()];
@@ -297,6 +302,21 @@ public class SashPane extends Region {
 		}
 
 		this.clientArea = b;
+		syncWeightProperty();
+	}
+	
+	private void syncWeightProperty() {
+		if( this.weights != null ) {
+			try {
+				this.syncInProgress = true;
+				int[] newVal = getWeights();
+				if( !Arrays.equals(newVal, this.weights.get()) ) {
+					this.weights.set(newVal);
+				}
+			} finally {
+				this.syncInProgress = false;
+			}
+		}
 	}
 
 	private void handleDragSash(MouseEvent e) {
@@ -361,6 +381,7 @@ public class SashPane extends Region {
 					rectangle.width, newSize_2);
 			this.draggedSash.relocate(this.draggedSash.getLayoutX(), this.c1.getLayoutY() + newSize_1);
 		}
+		syncWeightProperty();
 		requestLayout();
 	}
 
@@ -474,6 +495,18 @@ public class SashPane extends Region {
 			}
 		}
 		return ratios;
+	}
+	
+	public ObjectProperty<int[]> weightsProperty() {
+		if( this.weights == null ) {
+			this.weights = new SimpleObjectProperty<>(this, "weights"); //$NON-NLS-1$
+			this.weights.addListener( (ob, ol, ne) -> {
+				if( ! this.syncInProgress ) {
+					setWeights(ne);
+				}
+			} );
+		}
+		return this.weights;
 	}
 
 	/**
