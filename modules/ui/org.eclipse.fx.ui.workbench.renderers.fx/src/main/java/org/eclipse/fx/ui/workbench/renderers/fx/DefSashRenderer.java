@@ -611,7 +611,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 
 		@Override
 		public void updateLayout() {
-//			updateDividers();
+			// nothing to be done
 		}
 
 		private void syncWeights() {
