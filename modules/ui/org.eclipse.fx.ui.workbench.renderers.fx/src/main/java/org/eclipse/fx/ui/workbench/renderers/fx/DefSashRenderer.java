@@ -639,7 +639,12 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		@Override
 		protected @NonNull SashPane createWidget() {
 			SashPane p = new SashPane();
+			p.weightsProperty().addListener( (ob,ol,ne) -> handleWeightsChanged(ne));
 			return p;
+		}
+		
+		private void handleWeightsChanged(int[] ne) {
+			syncWeights();
 		}
 
 		@Inject
