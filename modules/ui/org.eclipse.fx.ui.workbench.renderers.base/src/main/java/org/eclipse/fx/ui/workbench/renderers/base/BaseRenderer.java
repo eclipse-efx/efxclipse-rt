@@ -36,12 +36,14 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.MUILabel;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.ApplicationElement;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -281,6 +283,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			// FIXME We need to redesign the translation of events into
 			// IEclipseContext values
 			initDefaultEventListeners(broker);
+			broker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, this::handleChildAddition);
 		} else {
 			this.logger.error("No event broker was found. Most things will not operate appropiately!"); //$NON-NLS-1$
 		}
@@ -293,6 +296,38 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		registerEventListener(broker, UIEvents.UIElement.TOPIC_CONTAINERDATA);
 
 		broker.subscribe(UIEvents.UIElement.TOPIC_VISIBLEWHEN, this::handleVisibleWhen);
+	}
+	
+	private void handleChildAddition(Event event) {
+		if (UIEvents.isADD(event)) {
+			Collection<MUIElement> added = Util.asCollection(event, UIEvents.EventTags.NEW_VALUE);
+
+			for( MUIElement element : added ) {
+				// While being detached the object could have changed and we did not notice
+				// we need to sync its context otherwise our controls are not in sync anymore
+				if( element instanceof MUIElement ) {
+					MUIElement curElement = (MUIElement) element;
+					syncElement(curElement);
+					TreeIterator<EObject> it = ((EObject)curElement).eAllContents();
+					while( it.hasNext() ) {
+						EObject next = it.next();
+						if( next instanceof MUIElement ) {
+							syncElement((MUIElement) next);
+						}
+					}
+				}	
+			}
+					
+		}
+	}
+	
+	private void syncElement(@NonNull MUIElement curElement) {
+		if( isRenderer(curElement) ) {
+			IEclipseContext ctx = (IEclipseContext) curElement.getTransientData().get(RENDERING_CONTEXT_KEY);
+			if( ctx != null ) {
+				syncModelToContext((EObject) curElement, ctx);
+			}
+		}
 	}
 
 	private void handleVisibleWhen(Event event) {
@@ -388,8 +423,17 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @param context
 	 *            the context
 	 */
-	@SuppressWarnings("static-method")
 	protected void initContext(@NonNull EObject eo, @NonNull IEclipseContext context) {
+		syncModelToContext(eo, context);
+	}
+	
+	/**
+	 * Synchronizes the model state to the rendering context
+	 * @param eo the object
+	 * @param context the context
+	 */
+	@SuppressWarnings("static-method")
+	protected void syncModelToContext(@NonNull EObject eo, @NonNull IEclipseContext context) {
 		for (EAttribute e : eo.eClass().getEAllAttributes()) {
 			context.set(e.getName(), eo.eGet(e));
 		}
@@ -400,13 +444,6 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 						+ e.getKey(), e.getValue());
 			}
 		}
-
-		// // Localized Label/Tooltip treatment
-		// if (eo instanceof MUILabel) {
-		// MUILabel l = (MUILabel) eo;
-		// context.set(ATTRIBUTE_localizedLabel, l.getLocalizedLabel());
-		// context.set(ATTRIBUTE_localizedTooltip, l.getLocalizedTooltip());
-		// }
 	}
 
 	/**
