@@ -17,7 +17,7 @@
 		<p2repo-zip-path>${project.build.directory}/site_assembly.zip</p2repo-zip-path>
 	</properties>
 
-	<profiles>
+	<!-- profiles>
 		<profile>
 			<id>build-server</id>
 			<build>
