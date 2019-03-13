@@ -261,6 +261,7 @@ public class FXObservableUtil {
 		 * @param l
 		 *            the listener
 		 * @return subscription used to unsubscribe
+		 * @param <T> the value type
 		 * @since 3.5.0
 		 */
 		public <T> Subscription onChange(ObservableValue<T> o, BiConsumer<? super T,? super T> l) {
@@ -277,7 +278,6 @@ public class FXObservableUtil {
 		 * @param l
 		 *            the listener
 		 * @return subscription used to unsubscribe
-		 * @param <E> the value type
 		 * @see ObservableList#addListener(ListChangeListener)
 		 */
 		public <E> Subscription onChange(ObservableList<E> o, ListChangeListener<? super E> l) {
