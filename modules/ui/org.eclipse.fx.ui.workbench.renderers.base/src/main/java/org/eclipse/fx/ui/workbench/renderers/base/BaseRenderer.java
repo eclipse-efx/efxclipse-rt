@@ -53,6 +53,7 @@ import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
+import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
@@ -283,7 +284,6 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			// FIXME We need to redesign the translation of events into
 			// IEclipseContext values
 			initDefaultEventListeners(broker);
-			broker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, this::handleChildAddition);
 		} else {
 			this.logger.error("No event broker was found. Most things will not operate appropiately!"); //$NON-NLS-1$
 		}
@@ -298,30 +298,25 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		broker.subscribe(UIEvents.UIElement.TOPIC_VISIBLEWHEN, this::handleVisibleWhen);
 	}
 	
-	private void handleChildAddition(Event event) {
-		if (UIEvents.isADD(event)) {
-			Collection<MUIElement> added = Util.asCollection(event, UIEvents.EventTags.NEW_VALUE);
-
-			for( MUIElement element : added ) {
-				// While being detached the object could have changed and we did not notice
-				// we need to sync its context otherwise our controls are not in sync anymore
-				if( element instanceof MUIElement ) {
-					MUIElement curElement = (MUIElement) element;
-					syncElement(curElement);
-					TreeIterator<EObject> it = ((EObject)curElement).eAllContents();
-					while( it.hasNext() ) {
-						EObject next = it.next();
-						if( next instanceof MUIElement ) {
-							syncElement((MUIElement) next);
-						}
-					}
-				}	
+	protected void syncElementTree(@NonNull MUIElement element) {
+		syncElement(element);
+		TreeIterator<EObject> it = ((EObject) element).eAllContents();
+		while (it.hasNext()) {
+			EObject next = it.next();
+			if (next instanceof MUIElement) {
+				syncElement((MUIElement) next);
 			}
-					
+		}
+	}
+
+	private void syncElement(@NonNull MUIElement element) {
+		ElementRenderer<@NonNull ?, ?> renderer =  this._context.get(RendererFactory.class).getRenderer(element);
+		if (renderer instanceof BaseRenderer<?, ?>) {
+			((BaseRenderer<?, ?>) renderer).internalSyncElement(element);
 		}
 	}
 	
-	private void syncElement(@NonNull MUIElement curElement) {
+	private void internalSyncElement(@NonNull MUIElement curElement) {
 		if( isRenderer(curElement) ) {
 			IEclipseContext ctx = (IEclipseContext) curElement.getTransientData().get(RENDERING_CONTEXT_KEY);
 			if( ctx != null ) {
@@ -435,6 +430,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	@SuppressWarnings("static-method")
 	protected void syncModelToContext(@NonNull EObject eo, @NonNull IEclipseContext context) {
 		for (EAttribute e : eo.eClass().getEAllAttributes()) {
+//			System.err.println(e.getName() + " => " + eo.eGet(e));
 			context.set(e.getName(), eo.eGet(e));
 		}
 

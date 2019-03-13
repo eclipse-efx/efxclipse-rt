@@ -214,7 +214,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		Iterator<MPartSashContainerElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MPartSashContainerElement element = (MPartSashContainerElement) iterator.next();
-
+			syncElementTree(element);
 			if (element.isToBeRendered()) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
