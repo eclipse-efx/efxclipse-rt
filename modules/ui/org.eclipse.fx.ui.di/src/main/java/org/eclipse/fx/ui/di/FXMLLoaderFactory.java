@@ -30,7 +30,7 @@ public interface FXMLLoaderFactory {
 	/**
 	 * Load the fxml file relative to the bundle the loading class is in,
 	 * similar to pure java {@link ClassLoader#getResource(String)}
-	 *
+	 * @param <N> the root type
 	 * @param relativePath
 	 *            the relative path to the bundle classpath
 	 * @return the builder
@@ -41,7 +41,7 @@ public interface FXMLLoaderFactory {
 	/**
 	 * Load the fxml file relative to the class requesting the loading, similar
 	 * to pure java {@link Class#getResource(String)}
-	 *
+	 * @param <N> the root type
 	 * @param relativePath
 	 *            the relative path from the class
 	 * @return the builder
@@ -51,7 +51,7 @@ public interface FXMLLoaderFactory {
 
 	/**
 	 * Load the fxml file from the given input stream
-	 *
+	 * @param <N> the root type
 	 * @param stream
 	 *            the stream
 	 * @param path
@@ -64,7 +64,7 @@ public interface FXMLLoaderFactory {
 
 	/**
 	 * Load the fxml file from the given url
-	 *
+	 * @param <N> the root type
 	 * @param url
 	 *            the url
 	 * @return the builder

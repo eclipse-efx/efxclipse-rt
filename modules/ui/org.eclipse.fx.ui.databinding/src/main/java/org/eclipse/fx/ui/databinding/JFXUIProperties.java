@@ -40,7 +40,8 @@ public class JFXUIProperties {
 	 * <li>{@link TreeView}</li>
 	 * <li>{@link TreeTableView}</li>
 	 * </ul>
-	 *
+	 * @param <S> type of the source object
+	 * @param <T> type of the value of the property
 	 * @return the property
 	 */
 	@NonNull
@@ -49,6 +50,7 @@ public class JFXUIProperties {
 	}
 
 	/**
+	 * @param <T> type of the value of the property
 	 * @return single selection property for {@link ListView}
 	 * @since 3.0.0
 	 */
@@ -58,6 +60,7 @@ public class JFXUIProperties {
 	}
 
 	/**
+	 * @param <T> type of the value of the property
 	 * @return single selection property for {@link ComboBox}
 	 * @since 3.0.0
 	 */
@@ -67,6 +70,7 @@ public class JFXUIProperties {
 	}
 
 	/**
+	 * @param <T> type of the value of the property
 	 * @return single selection property for {@link TreeView}
 	 * @since 3.0.0
 	 */
@@ -76,6 +80,7 @@ public class JFXUIProperties {
 	}
 
 	/**
+	 * @param <T> type of the value of the property
 	 * @return single selection property for {@link TreeView}
 	 * @since 3.0.0
 	 */
@@ -86,7 +91,7 @@ public class JFXUIProperties {
 
 	/**
 	 * Create a property for the text-property of a javafx bean
-	 *
+	 * @param <S> the source type
 	 * @return the text property
 	 * @since 2.4.0
 	 */
@@ -142,7 +147,7 @@ public class JFXUIProperties {
 
 	/**
 	 * Create a date property of the {@link DatePicker}
-	 *
+	 * @param <S> the source type
 	 * @return the property
 	 */
 	@NonNull

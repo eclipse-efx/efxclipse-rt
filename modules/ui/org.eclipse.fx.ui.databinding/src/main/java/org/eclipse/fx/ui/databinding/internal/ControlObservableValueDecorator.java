@@ -17,9 +17,6 @@ import org.eclipse.fx.ui.databinding.IJFXControlValueObservable;
 @SuppressWarnings("javadoc")
 public class ControlObservableValueDecorator<T> extends DecoratingObservableValue<T> implements IJFXControlValueObservable<T> {
 
-	/**
-	 * @param decorated
-	 */
 	public ControlObservableValueDecorator(IObservableValue<T> decorated) {
 		super(decorated, true);
 	}

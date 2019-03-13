@@ -46,7 +46,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 
 	/**
 	 * Create a loader which operates relative to the requestor
-	 *
+	 * @param <N> the root type
 	 * @param context
 	 *            the di context
 	 * @param requester
@@ -63,7 +63,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 	/**
 	 * Create a loader which operates relative to the requestor and uses the
 	 * {@link ExtendedFXMLLoader} if requested to do so
-	 *
+	 * @param <N> the root type
 	 * @param context
 	 *            the di context
 	 * @param requester
@@ -113,7 +113,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 
 	/**
 	 * Create a loader which operates relative to the bundle classpath
-	 *
+	 * @param <N> the root type
 	 * @param context
 	 *            the di context
 	 * @param bundle
@@ -129,7 +129,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 	/**
 	 * Create a loader which operates relative to the bundle classpath and uses
 	 * the {@link ExtendedFXMLLoader} if requested to do so
-	 *
+	 * @param <N> the root type
 	 * @param context
 	 *            the di context
 	 * @param bundle
@@ -208,7 +208,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 
 	/**
 	 * Create a loader which uses the given classloader
-	 *
+	 * @param <N> the root type
 	 * @param context
 	 *            the di context
 	 * @param classloader
@@ -251,7 +251,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 
 	/**
 	 * Create a loader which uses a give classloader and reads from the stream
-	 *
+	 * @param <N> the root type
 	 * @param context
 	 *            the di context
 	 * @param classloader

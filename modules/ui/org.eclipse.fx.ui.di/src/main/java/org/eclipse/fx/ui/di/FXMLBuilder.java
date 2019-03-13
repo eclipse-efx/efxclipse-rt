@@ -58,7 +58,7 @@ public interface FXMLBuilder<N> {
 
 	/**
 	 * Load the FXML and return the root node and the controller
-	 * 
+	 * @param <C> the controller type
 	 * @return a structure holding root node and controller
 	 * @throws IOException
 	 *             if there is a problem loading the fxml

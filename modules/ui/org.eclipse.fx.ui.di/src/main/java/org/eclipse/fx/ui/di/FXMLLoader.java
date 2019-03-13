@@ -23,7 +23,7 @@ import org.eclipse.fx.core.fxml.ExtendedFXMLLoader;
 /**
  * Annotation to mark an injection of an {@link FXMLLoaderFactory}
  *
- * @Deprecated Use @LocalInstance {@link javafx.fxml.FXMLLoader} instead
+ * Deprecated Use @LocalInstance {@link javafx.fxml.FXMLLoader} instead
  */
 @Qualifier
 @Documented
@@ -34,6 +34,7 @@ public @interface FXMLLoader {
 	/**
 	 * If set to true the {@link ExtendedFXMLLoader} will be used and
 	 * {@link FXMLBuilder#builderFactory(javafx.util.BuilderFactory)} is ignored
+	 * @return <code>true</code> to use an extended loader
 	 */
 	boolean useExtendedLoader() default false;
 }

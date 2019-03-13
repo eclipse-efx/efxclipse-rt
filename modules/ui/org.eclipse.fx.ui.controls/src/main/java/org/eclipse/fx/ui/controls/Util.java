@@ -713,7 +713,7 @@ public class Util {
 
 	/**
 	 * Run the provided runnable when the event occurs
-	 * 
+	 * @param <E> event type
 	 * @param r
 	 *            the runnable
 	 * @return the event handler
@@ -727,6 +727,7 @@ public class Util {
 	 * Run the provided supplier when the event occurs and if true is returned
 	 * consume the event
 	 * 
+	 * @param <E> event type
 	 * @param r
 	 *            the supplier
 	 * @return the event handler

@@ -23,7 +23,7 @@ import org.eclipse.fx.core.Callback;
 public abstract class Util<T> {
 	/**
 	 * Wrap a give callback to always run on the javafx threa
-	 * 
+	 * @param <T> the value type
 	 * @param callback
 	 *            the callback
 	 * @return a wrapped callback
@@ -51,7 +51,7 @@ public abstract class Util<T> {
 		};
 	}
 
-	static abstract class SyncCallback<T> implements Callback<T> {
+	abstract static class SyncCallback<T> implements Callback<T> {
 		// nothing to to do
 	}
 }

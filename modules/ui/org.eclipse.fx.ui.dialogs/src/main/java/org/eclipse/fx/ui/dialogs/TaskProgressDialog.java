@@ -30,12 +30,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * @param <R>
+ * @param <R> the result type
  */
 public class TaskProgressDialog<R> extends Dialog<R> {
 	
 	/**
-	 * @param <T>
+	 * @param <T> the value type
 	 */
 	@FunctionalInterface
 	public interface CancelledHandler<T> {
@@ -47,7 +47,7 @@ public class TaskProgressDialog<R> extends Dialog<R> {
 	}
 	
 	/**
-	 * @param <T>
+	 * @param <T> the value type 
 	 */
 	@FunctionalInterface
 	public interface FailedHandler<T> {
