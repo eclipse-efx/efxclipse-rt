@@ -1,7 +1,5 @@
 package org.eclipse.fx.core.text;
 
-import org.eclipse.fx.core.text.TextEditAction;
-
 /**
  * basic {@link TextEditAction} constants
  *

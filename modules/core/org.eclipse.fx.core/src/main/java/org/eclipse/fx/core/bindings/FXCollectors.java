@@ -12,7 +12,6 @@
 package org.eclipse.fx.core.bindings;
 
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.eclipse.fx.core.bindings.internal.BindingStreamImpl;
 import org.eclipse.fx.core.bindings.internal.BindingStreamImpl.StreamBinding;
