@@ -36,12 +36,14 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.MUILabel;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.ApplicationElement;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -51,6 +53,7 @@ import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
+import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
@@ -79,7 +82,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	public static final String CONTEXT_DOM_ELEMENT = "fx.rendering.domElement"; //$NON-NLS-1$
 
 	private static final String RENDER_KEY = "_renderer"; //$NON-NLS-1$
-	
+
 	/**
 	 * Make rendered content scrollable
 	 */
@@ -294,6 +297,33 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 		broker.subscribe(UIEvents.UIElement.TOPIC_VISIBLEWHEN, this::handleVisibleWhen);
 	}
+	
+	protected void syncElementTree(@NonNull MUIElement element) {
+		syncElement(element);
+		TreeIterator<EObject> it = ((EObject) element).eAllContents();
+		while (it.hasNext()) {
+			EObject next = it.next();
+			if (next instanceof MUIElement) {
+				syncElement((MUIElement) next);
+			}
+		}
+	}
+
+	private void syncElement(@NonNull MUIElement element) {
+		ElementRenderer<@NonNull ?, ?> renderer =  this._context.get(RendererFactory.class).getRenderer(element);
+		if (renderer instanceof BaseRenderer<?, ?>) {
+			((BaseRenderer<?, ?>) renderer).internalSyncElement(element);
+		}
+	}
+	
+	private void internalSyncElement(@NonNull MUIElement curElement) {
+		if( isRenderer(curElement) ) {
+			IEclipseContext ctx = (IEclipseContext) curElement.getTransientData().get(RENDERING_CONTEXT_KEY);
+			if( ctx != null ) {
+				syncModelToContext((EObject) curElement, ctx);
+			}
+		}
+	}
 
 	private void handleVisibleWhen(Event event) {
 		Object element = event.getProperty(UIEvents.EventTags.ELEMENT);
@@ -376,6 +406,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			IEclipseContext ctx = (IEclipseContext) element.getTransientData().get(RENDERING_CONTEXT_KEY);
 			ctx.dispose();
 			element.getTransientData().remove(RENDERING_CONTEXT_KEY);
+			element.getTransientData().remove(BaseStackRenderer.MAP_ITEM_KEY);
 		}
 	}
 
@@ -387,9 +418,19 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @param context
 	 *            the context
 	 */
-	@SuppressWarnings("static-method")
 	protected void initContext(@NonNull EObject eo, @NonNull IEclipseContext context) {
+		syncModelToContext(eo, context);
+	}
+	
+	/**
+	 * Synchronizes the model state to the rendering context
+	 * @param eo the object
+	 * @param context the context
+	 */
+	@SuppressWarnings("static-method")
+	protected void syncModelToContext(@NonNull EObject eo, @NonNull IEclipseContext context) {
 		for (EAttribute e : eo.eClass().getEAllAttributes()) {
+//			System.err.println(e.getName() + " => " + eo.eGet(e));
 			context.set(e.getName(), eo.eGet(e));
 		}
 
@@ -399,13 +440,6 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 						+ e.getKey(), e.getValue());
 			}
 		}
-
-		// // Localized Label/Tooltip treatment
-		// if (eo instanceof MUILabel) {
-		// MUILabel l = (MUILabel) eo;
-		// context.set(ATTRIBUTE_localizedLabel, l.getLocalizedLabel());
-		// context.set(ATTRIBUTE_localizedTooltip, l.getLocalizedTooltip());
-		// }
 	}
 
 	/**
@@ -547,8 +581,6 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			this.visibleWhenElements.remove(element);
 		}
 	}
-
-
 
 	private void unbindWidget(@NonNull M me, @NonNull W widget) {
 		widget.setDomElement(null);
@@ -807,7 +839,18 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 */
 	@Override
 	public boolean isChildRenderedAndVisible(@NonNull MUIElement u) {
-		return u.isToBeRendered() && u.isVisible() && getVisibleWhen(u, getModelContext(u));
+		return u.isToBeRendered() && isChildVisible(u);
+	}
+
+	/**
+	 * Check if the item is visible
+	 * 
+	 * @param u
+	 *            the element
+	 * @return <code>true</code> if item is to be shown
+	 */
+	protected boolean isChildVisible(@NonNull MUIElement u) {
+		return u.isVisible() && getVisibleWhen(u, getModelContext(u));
 	}
 
 	/**

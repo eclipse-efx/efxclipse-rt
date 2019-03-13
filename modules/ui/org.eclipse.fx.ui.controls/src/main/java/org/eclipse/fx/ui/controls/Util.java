@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -54,6 +55,7 @@ import javafx.beans.value.WeakChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Insets;
@@ -707,5 +709,34 @@ public class Util {
 	 */
 	public static BooleanProperty createPseudoClassProperty(String pseudoClass, Node node, String name, boolean def) {
 		return PseudoClassProperty.create(pseudoClass, node, name, def);
+	}
+
+	/**
+	 * Run the provided runnable when the event occurs
+	 * 
+	 * @param r
+	 *            the runnable
+	 * @return the event handler
+	 * @since 3.5.0
+	 */
+	public static <E extends Event> EventHandler<E> onEvent(Runnable r) {
+		return (E e) -> r.run();
+	}
+
+	/**
+	 * Run the provided supplier when the event occurs and if true is returned
+	 * consume the event
+	 * 
+	 * @param r
+	 *            the supplier
+	 * @return the event handler
+	 * @since 3.5.0
+	 */
+	public static <@NonNull E extends Event> EventHandler<E> onEventConsume(BooleanSupplier r) {
+		return (E e) -> {
+			if (r.getAsBoolean()) {
+				e.consume();
+			}
+		};
 	}
 }

@@ -13,8 +13,6 @@ package org.eclipse.fx.core;
 import java.nio.file.Path;
 import java.util.function.BiConsumer;
 
-import org.eclipse.fx.core.Subscription;
-
 /**
  * Service to deal with filesystems
  *

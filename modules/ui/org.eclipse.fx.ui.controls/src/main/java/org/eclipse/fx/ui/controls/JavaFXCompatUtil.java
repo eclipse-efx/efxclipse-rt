@@ -212,7 +212,7 @@ public class JavaFXCompatUtil {
 		Object hitInfo = null;
 		if (SystemUtils.getMajorFXVersion() > 8) {
 			try {
-				Method m = Text.class.getDeclaredMethod("impl_hitTestChar", Point2D.class); //$NON-NLS-1$
+				Method m = Text.class.getDeclaredMethod("hitTest", Point2D.class); //$NON-NLS-1$
 				hitInfo = m.invoke(t, point);
 			} catch (Throwable e) {
 				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#impl_hitTestChar(Point2D)"); //$NON-NLS-1$
@@ -220,7 +220,7 @@ public class JavaFXCompatUtil {
 			}
 		} else {
 			try {
-				Method m = Text.class.getDeclaredMethod("hitTest", Point2D.class); //$NON-NLS-1$
+				Method m = Text.class.getDeclaredMethod("impl_hitTestChar", Point2D.class); //$NON-NLS-1$
 				hitInfo = m.invoke(t, point);
 			} catch (Throwable e) {
 				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#impl_hitTestChar(Point2D)"); //$NON-NLS-1$

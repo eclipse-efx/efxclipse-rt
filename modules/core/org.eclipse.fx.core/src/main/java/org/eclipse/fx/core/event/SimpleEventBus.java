@@ -13,8 +13,6 @@ package org.eclipse.fx.core.event;
 import java.util.function.Consumer;
 
 import org.eclipse.fx.core.Subscription;
-import org.eclipse.fx.core.event.Event;
-import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.google.common.eventbus.Subscribe;

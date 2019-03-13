@@ -403,8 +403,9 @@ public class KeyBindingDispatcher {
 		boolean commandHandled;
 
 		try {
-			// commandEnabled = handlerService.canExecute(parameterizedCommand,
-			// staticContext);
+			 if( ! handlerService.canExecute(parameterizedCommand, staticContext) ) {
+				 return false;
+			 }
 			commandHandled = HandlerServiceImpl.lookUpHandler(this.context, command.getId()) != null;
 
 			try {

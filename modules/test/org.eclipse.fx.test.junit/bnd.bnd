@@ -1,0 +1,8 @@
+-snapshot: ${osgi.modifier}
+Bundle-Version: ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${osgi.modifier}
+-exportcontents: \
+ org.eclipse.fx.test.junit
+Import-Package: \
+ !javafx.*, \
+ !com.sun.javafx.*, \
+ *

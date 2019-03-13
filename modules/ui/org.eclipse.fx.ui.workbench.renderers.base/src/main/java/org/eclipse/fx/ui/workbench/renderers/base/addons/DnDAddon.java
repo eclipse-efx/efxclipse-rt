@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.workbench.renderers.base.addons;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -179,9 +180,11 @@ public class DnDAddon {
 		owner.getChildren().remove(toSplit);
 
 		MPartSashContainer container = this.modelService.createModelElement(MPartSashContainer.class);
+		container.setElementId(UUID.randomUUID().toString());
 		container.setContainerData(toSplit.getContainerData());
 
 		MPartStack childContainer = this.modelService.createModelElement(MPartStack.class);
+		childContainer.setElementId(UUID.randomUUID().toString());
 		childContainer.getChildren().add((MStackElement) child);
 
 		toSplit.setContainerData(null);

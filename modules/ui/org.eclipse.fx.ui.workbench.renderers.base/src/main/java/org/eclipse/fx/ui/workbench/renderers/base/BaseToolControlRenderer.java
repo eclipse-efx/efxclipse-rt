@@ -43,6 +43,7 @@ public abstract class BaseToolControlRenderer<N> extends BaseRenderer<MToolContr
 			return;
 		}
 		IEclipseContext context = modelContext.createChild("ToolControl"); //$NON-NLS-1$
+		context.set(MToolControl.class, element);
 		do {
 			context.set(cl.getName(), widget.getWidget());
 			cl = cl.getSuperclass();

@@ -22,3 +22,26 @@
 .maximization-container {
 	-fx-background-color: -fx-background;
 }
+
+.partial-restore-parent {
+	-fx-background-color: -fx-background;
+	-fx-padding: 0 5 5 0;
+	-fx-border-color: derive(-fx-background,-30%);
+}
+
+.trim-stack .button,
+.trim-stack .toggle-button {
+	-fx-content-display: graphic-only;
+}
+
+.trim-stack .button.restore .graphic-node {
+	-fx-graphic: url("fastview_restore.png");
+}
+
+.trim-stack .toggle-button.part-button .graphic-node {
+	-fx-graphic: url("defaultview_misc.png");
+}
+
+.trim-stack .toggle-button.empty-stack .graphic-node {
+	-fx-graphic: url("layout_co.png");
+}

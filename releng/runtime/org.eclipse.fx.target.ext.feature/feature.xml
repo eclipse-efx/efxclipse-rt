@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.target.ext.feature"
       label="Target Feature with all non-efxclipse bundles"
-      version="3.5.0.qualifier">
+      version="3.6.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -1930,6 +1930,16 @@
          fragment="true"/>
 
    <plugin
+         id="org.eclipse.equinox.security.linux.x86_64"
+         os="linux"
+         ws="gtk"
+         arch="x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
          id="org.eclipse.equinox.security.macosx.source"
          download-size="0"
          install-size="0"
@@ -1943,6 +1953,12 @@
 
    <plugin
          id="org.eclipse.equinox.security.win32.x86.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.equinox.security.linux.x86_64.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>

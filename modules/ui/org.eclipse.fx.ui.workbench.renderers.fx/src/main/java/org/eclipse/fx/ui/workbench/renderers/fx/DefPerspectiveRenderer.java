@@ -41,8 +41,11 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 	protected Class<? extends WPerspective<FillLayoutPane>> getWidgetClass(MPerspective perspective) {
 		return PerspectiveWidgetImpl.class;
 	}
-
-	static class PerspectiveWidgetImpl extends WLayoutedWidgetImpl<FillLayoutPane, FillLayoutPane, MPerspective> implements WPerspective<FillLayoutPane> {
+	
+	/**
+	 * @noreference
+	 */
+	public static class PerspectiveWidgetImpl extends WLayoutedWidgetImpl<FillLayoutPane, FillLayoutPane, MPerspective> implements WPerspective<FillLayoutPane> {
 		private StackPane overlayContainer;
 		/**
 		 * Pane used to mask background while maximized content is displayed

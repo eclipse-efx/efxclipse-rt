@@ -47,7 +47,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
-		eventBroker.subscribe(UIEvents.Perspective.TOPIC_WINDOWS, new EventHandler() {
+		EventHandler eventHandler = new EventHandler() {
 
 			@Override
 			public void handleEvent(Event event) {
@@ -61,7 +61,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 							if (element instanceof MWindow) {
 								handleWindowAdd((MWindow) element);
 							} else if (element instanceof MPartSashContainerElement) {
-								handleChildAdd((MPartSashContainerElement) element);
+								handleChildAdd(perspective,(MPartSashContainerElement) element);
 							} else {
 								getLogger().error("ERROR: Unhandled child addition: " + element); //$NON-NLS-1$
 							}
@@ -70,7 +70,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 							if (element instanceof MWindow) {
 								handleWindowRemove((MWindow) element);
 							} else if (element instanceof MPartSashContainerElement) {
-								handleChildRemove((MPartSashContainerElement) element);
+								handleChildRemove(perspective,(MPartSashContainerElement) element);
 							} else {
 								getLogger().error("ERROR: Unhandled child removal: " + element); //$NON-NLS-1$
 							}
@@ -78,7 +78,9 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 					}
 				}
 			}
-		});
+		};
+		eventBroker.subscribe(UIEvents.Perspective.TOPIC_WINDOWS, eventHandler);
+		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, eventHandler);
 	}
 
 	void handleWindowAdd(@NonNull MWindow window) {
@@ -89,12 +91,18 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		// Nothing to be done
 	}
 
-	void handleChildAdd(@NonNull MPartSashContainerElement element) {
-		engineCreateWidget(element);
+	void handleChildAdd(@NonNull MPerspective perspective, @NonNull MPartSashContainerElement element) {
+		if( element.getWidget() == null ) {
+			engineCreateWidget(element);
+		} else {
+			childRendered(perspective, element);
+		}
 	}
 
-	void handleChildRemove(MPartSashContainerElement element) {
-		// Nothing to be done
+	void handleChildRemove(@NonNull MPerspective perspective, MPartSashContainerElement element) {
+		if (element.isToBeRendered() && element.getWidget() != null) {
+			hideChild(perspective, element);
+		}
 	}
 
 	@Override
@@ -189,7 +197,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		if (perspective == null) {
 			return;
 		}
-
+		
 		if (changedObj instanceof MPartSashContainerElement) {
 			WLayoutedWidget<MUIElement> widget = (WLayoutedWidget<MUIElement>) changedObj.getWidget();
 			if (widget != null) {

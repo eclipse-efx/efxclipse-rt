@@ -43,8 +43,11 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 	protected Class<? extends WMenu<Control>> getWidgetClass(MMenu element) {
 		return MenuImpl.class;
 	}
-
-	static class MenuImpl extends WWidgetImpl<Control, MMenu> implements WMenu<Control> {
+	
+	/**
+	 * @noreference
+	 */
+	public static class MenuImpl extends WWidgetImpl<Control, MMenu> implements WMenu<Control> {
 		ContextMenu menu;
 		private ToggleGroup group;
 		Runnable showingCallback;

@@ -27,6 +27,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.CustomContainerSupport;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.SortedBorderPane;
 import org.eclipse.fx.ui.workbench.renderers.fx.services.LightweightDialogTransitionService;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -36,6 +37,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
@@ -83,10 +85,30 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				return;
 			if (!checkFocusControl((Node) part.getStaticLayoutNode())) {
 				Node node = (Node) part.getWidget();
-				node.requestFocus();
+				if (node instanceof Parent) {
+					getFirstFocusableNode((Parent) node).ifPresent(Node::requestFocus);
+				} else {
+					node.requestFocus();
+				}
 			}
 		}
 
+	}
+
+	static java.util.Optional<Node> getFirstFocusableNode(Parent parent) {
+		for (Node node : parent.getChildrenUnmodifiable()) {
+			if (node instanceof Parent) {
+				java.util.Optional<Node> opt = getFirstFocusableNode((Parent) node);
+				if (opt.isPresent()) {
+					return opt;
+				}
+			}
+
+			if (node.isFocusTraversable()) {
+				return java.util.Optional.of(node);
+			}
+		}
+		return java.util.Optional.empty();
 	}
 
 	static boolean checkFocusControl(Node check) {
@@ -109,8 +131,11 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		}
 		return false;
 	}
-
-	static class PartImpl extends WLayoutedWidgetImpl<Pane, AnchorPane, MPart> implements WPart<Pane, Node, Node> {
+	
+	/**
+	 * @noreference
+	 */
+	public static class PartImpl extends WLayoutedWidgetImpl<Pane, AnchorPane, MPart> implements WPart<Pane, Node, Node> {
 
 		@Inject
 		@NonNull
@@ -145,7 +170,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		@Override
 		protected Pane createWidget() {
 			Pane tmp = CustomContainerSupport.createContainerPane(this.logger, this.context);
-			final Pane p = tmp == null ? new BorderPane() : tmp;
+			final Pane p = tmp == null ? new SortedBorderPane() : tmp;
 
 			p.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 
@@ -204,7 +229,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 						}
 					}
 				};
-				this.dataArea = new BorderPane();
+				this.dataArea = new SortedBorderPane();
 
 				if( this.domElement != null && this.domElement.getTags().contains(WPart.SHOW_TOP_TRIM_AREA_TAG) ) {
 					HBox box = new HBox();

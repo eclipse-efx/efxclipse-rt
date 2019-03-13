@@ -43,8 +43,11 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 	protected Class<? extends WPerspectiveStack<BorderPane, PerspectiveStackItem, Node>> getWidgetClass(MPerspectiveStack stack) {
 		return PerspectiveStackImpl.class;
 	}
-
-	static class PerspectiveStackItemImpl implements WStackItem<PerspectiveStackItem, Node> {
+	
+	/**
+	 * @noreference
+	 */
+	public static class PerspectiveStackItemImpl implements WStackItem<PerspectiveStackItem, Node> {
 		private PerspectiveStackItem item;
 		private MPerspective domElement;
 		WCallback<WStackItem<PerspectiveStackItem, Node>, Node> initCallback;
@@ -102,7 +105,11 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 
 	}
 
-	static class PerspectiveStackImpl extends WLayoutedWidgetImpl<BorderPane, BorderPane, MPerspectiveStack> implements WPerspectiveStack<BorderPane, PerspectiveStackItem, Node> {
+	
+	/**
+	 * @noreference
+	 */
+	public static class PerspectiveStackImpl extends WLayoutedWidgetImpl<BorderPane, BorderPane, MPerspectiveStack> implements WPerspectiveStack<BorderPane, PerspectiveStackItem, Node> {
 		@NonNull
 		private List<@NonNull WStackItem<PerspectiveStackItem, Node>> items = new ArrayList<>();
 		private int currentIndex;

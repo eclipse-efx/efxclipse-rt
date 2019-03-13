@@ -28,8 +28,11 @@ public class DefMenuSeparatorRenderer extends BaseMenuSeparatorRenderer<Separato
 	protected Class<? extends WMenuSeparator<SeparatorMenuItem>> getWidgetClass(MMenuSeparator separator) {
 		return MenuSeparatorImpl.class;
 	}
-
-	static class MenuSeparatorImpl extends WWidgetImpl<SeparatorMenuItem, MMenuSeparator> implements WMenuSeparator<SeparatorMenuItem> {
+	
+	/**
+	 * @noreference
+	 */
+	public static class MenuSeparatorImpl extends WWidgetImpl<SeparatorMenuItem, MMenuSeparator> implements WMenuSeparator<SeparatorMenuItem> {
 
 		@Override
 		public void addStyleClasses(List<String> classnames) {

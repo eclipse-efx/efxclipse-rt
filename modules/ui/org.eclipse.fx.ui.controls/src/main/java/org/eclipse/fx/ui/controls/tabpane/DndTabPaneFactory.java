@@ -124,7 +124,7 @@ public final class DndTabPaneFactory {
 		if (e instanceof DragEvent) {
 			return ((DragEvent) e).getDragboard().hasContent(DndTabPaneSkinHooker.TAB_MOVE);
 		} else if (e instanceof EFXDragEvent) {
-			return ((EFXDragEvent) e).getDraggedContent() != null;
+			return ((EFXDragEvent) e).getDraggedContent() instanceof String;
 		}
 		return false;
 	}
@@ -140,7 +140,10 @@ public final class DndTabPaneFactory {
 		if (e instanceof DragEvent) {
 			return (String) ((DragEvent) e).getDragboard().getContent(DndTabPaneSkinHooker.TAB_MOVE);
 		} else if (e instanceof EFXDragEvent) {
-			return (String) ((EFXDragEvent) e).getDraggedContent();
+			Object content = ((EFXDragEvent) e).getDraggedContent();
+			if( content instanceof String ) {
+				return (String) content;
+			}
 		}
 		return null;
 	}

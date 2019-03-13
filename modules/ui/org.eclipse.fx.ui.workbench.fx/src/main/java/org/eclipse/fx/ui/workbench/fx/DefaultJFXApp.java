@@ -13,7 +13,9 @@ package org.eclipse.fx.ui.workbench.fx;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import org.eclipse.core.runtime.IProduct;
 import org.eclipse.fx.core.databinding.JFXRealm;
+import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
@@ -49,6 +51,7 @@ public class DefaultJFXApp extends Application {
 	 */
 	public DefaultJFXApp(@NonNull final E4Application e4Application) {
 		this.e4Application = e4Application;
+		setProductApplicationName();
 	}
 
 	@Override
@@ -69,5 +72,18 @@ public class DefaultJFXApp extends Application {
 	@SuppressWarnings("static-method")
 	protected void initialize() {
 		JFXRealm.createDefault();
+	}
+	
+	
+	static void setProductApplicationName() {
+		try {
+			IProduct product = org.eclipse.core.runtime.Platform.getProduct();
+			if (product != null && product.getName() != null) {
+				com.sun.glass.ui.Application.GetApplication().setName(product.getName());
+			}
+		} catch (Throwable e) {
+			LoggerCreator.createLogger(DefaultJFXApp.class).errorf("Failed to set application name", e); //$NON-NLS-1$
+		}
+		
 	}
 }

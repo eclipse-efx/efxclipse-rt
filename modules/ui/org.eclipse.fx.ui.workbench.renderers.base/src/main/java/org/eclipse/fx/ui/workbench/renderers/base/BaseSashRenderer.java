@@ -42,6 +42,8 @@ import org.osgi.service.event.EventHandler;
 public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContainer, WSash<N>> {
 	@Inject
 	RendererFactory factory;
+	
+	private static final String AUTOHIDDEN_TAG = "_efx_AutoHidden"; //$NON-NLS-1$
 
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
@@ -102,7 +104,20 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 			}
 		});
 	}
-
+	
+	/**
+	 * @return <code>true</code> if a hidden child needs to be detached from the UI-Tree
+	 */
+	@SuppressWarnings("static-method")
+	protected boolean detachHiddenChild() {
+		return true;
+	}
+	
+	@Override
+	public boolean isChildRenderedAndVisible(@NonNull MUIElement u) {
+		return detachHiddenChild() ? super.isChildRenderedAndVisible(u) : u.isToBeRendered();
+	}
+	
 	@Override
 	public void doProcessContent(MPartSashContainer element) {
 		WSash<N> sash = getWidget(element);
@@ -116,12 +131,29 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 			if (e.isToBeRendered()) {
 				WLayoutedWidget<MPartSashContainerElement> widget = engineCreateWidget(e);
 				if (widget != null && isChildRenderedAndVisible(e)) {
+					if( ! detachHiddenChild() ) {
+						widget.setHidden(!isChildVisible(e));
+					}
 					list.add(widget);
 				}
 			}
 		}
 
 		sash.addItems(list);
+	}
+	
+	@Override
+	public void showChild(@NonNull MPartSashContainer parent, @NonNull MUIElement element) {
+		if( detachHiddenChild() ) {
+			super.showChild(parent, element);
+		} else {
+			((WLayoutedWidget<?>)element.getWidget()).setHidden(false);
+		}
+		// Make sure we don't render any child
+		if( ! parent.isVisible() && parent.getTags().contains(AUTOHIDDEN_TAG) ) {
+			parent.getTags().remove(AUTOHIDDEN_TAG);
+			parent.setVisible(true);
+		}
 	}
 
 	@SuppressWarnings("null")
@@ -147,9 +179,24 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 			this.logger.error("The widget for element '"+element+"' should not be null");  //$NON-NLS-1$//$NON-NLS-2$
 		}
 	}
-
+	
 	@Override
 	public void hideChild(MPartSashContainer container, MUIElement changedObj) {
+		if( detachHiddenChild() || ! changedObj.isToBeRendered() ) {
+			hideChildDetach(container, changedObj);
+		} else {
+			((WLayoutedWidget<?>)changedObj.getWidget()).setHidden(true);
+		}
+		// Hide renderers who don't render any child
+		if( container.isVisible() && container.getChildren().stream().noneMatch(MUIElement::isVisible)) {
+			if( ! container.getTags().contains(AUTOHIDDEN_TAG) ) {
+				container.getTags().add(AUTOHIDDEN_TAG);
+				container.setVisible(false);
+			}
+		}
+	}
+
+	private void hideChildDetach(MPartSashContainer container, MUIElement changedObj) {
 		WSash<N> sash = getWidget(container);
 
 		if (sash == null) {
@@ -167,7 +214,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		Iterator<MPartSashContainerElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MPartSashContainerElement element = (MPartSashContainerElement) iterator.next();
-
+			syncElementTree(element);
 			if (element.isToBeRendered()) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
@@ -184,7 +231,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		while (iterator.hasNext()) {
 			MPartSashContainerElement element = (MPartSashContainerElement) iterator.next();
 			if (element.isToBeRendered() && element.getWidget() != null) {
-				hideChild(parent, element);
+				hideChildDetach(parent, element);
 			}
 		}
 		checkSelectedElement(parent);

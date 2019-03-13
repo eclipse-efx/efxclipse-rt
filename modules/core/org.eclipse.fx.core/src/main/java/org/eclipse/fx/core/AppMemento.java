@@ -13,7 +13,6 @@ package org.eclipse.fx.core;
 import java.util.Optional;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

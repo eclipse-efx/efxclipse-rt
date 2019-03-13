@@ -108,6 +108,18 @@ public interface ElementRenderer<M extends MUIElement, C> {
 	 *            the element to hide
 	 */
 	public void hideChild(@NonNull M parent, @NonNull MUIElement element);
+	
+	/**
+	 * Show the child of the element
+	 * @param parent 
+	 * 			the element container
+	 * @param element 
+	 * 			the element to show
+	 * @since 3.5.0
+	 */
+	public default void showChild(@NonNull M parent, @NonNull MUIElement element) {
+		childRendered(parent, element);
+	}
 
 	/**
 	 * Destroy the widget associated with the element

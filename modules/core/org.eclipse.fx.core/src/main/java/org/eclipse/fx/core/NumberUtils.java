@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
+import com.google.common.math.DoubleMath;
+
 /**
  * Utilities to deal with numbers
  *
@@ -38,5 +40,53 @@ public class NumberUtils {
 			rv = Math.min(rv, max);
 		}
 		return rv;
+	}
+
+	/**
+	 * Compare 2 doubles using {@link Double#compare(double, double)}
+	 * 
+	 * @param d1 the first double
+	 * @param d2 the second double
+	 * @return the result
+	 * @since 3.5.0
+	 */
+	public static boolean equals(double d1, double d2) {
+		return Double.compare(d1, d2) == 0;
+	}
+	
+	/**
+	 * Compare 2 doubles using {@link Double#compare(double, double)}
+	 * 
+	 * @param d1 the first double
+	 * @param d2 the second double
+	 * @return the result
+	 * @since 3.5.0
+	 */
+	public static boolean notEquals(double d1, double d2) {
+		return ! equals(d1, d2);
+	}
+
+	/**
+	 * Compare 2 doubles if they are equal if the delta is less than 0.01
+	 * 
+	 * @param d1 the first double
+	 * @param d2 the second double
+	 * @return the result
+	 * @since 3.5.0
+	 */
+	public static boolean fuzzyEquals(double d1, double d2) {
+		return DoubleMath.fuzzyEquals(d1, d2, 0.01);
+	}
+	
+	/**
+	 * Compare 2 doubles if they are NOT equal if the delta is less than 0.01
+	 * 
+	 * @param d1 the first double
+	 * @param d2 the second double
+	 * @return the result
+	 * @since 3.5.0
+	 */
+	public static boolean fuzzyNotEquals(double d1, double d2) {
+		return ! fuzzyEquals(d1, d2);
 	}
 }

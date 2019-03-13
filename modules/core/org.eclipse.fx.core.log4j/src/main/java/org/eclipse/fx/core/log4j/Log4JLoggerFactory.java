@@ -52,7 +52,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 	public void registerAppender(Appender appender) {
 		org.apache.log4j.Logger.getRootLogger().addAppender(appender);
 	}
-
+	
 	/**
 	 * Remove the appender
 	 *
