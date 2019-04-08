@@ -12,20 +12,25 @@ package org.eclipse.fx.ui.databinding;
 
 import java.time.LocalDate;
 
+import org.eclipse.fx.ui.databinding.internal.ColorValueProperty;
 import org.eclipse.fx.ui.databinding.internal.DateValueProperty;
 import org.eclipse.fx.ui.databinding.internal.SingleSelectionProperty;
+import org.eclipse.fx.ui.databinding.internal.SpinnerValueProperty;
 import org.eclipse.fx.ui.databinding.internal.TextValueProperty;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.scene.control.Cell;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
+import javafx.scene.paint.Color;
 
 /**
  * Factory to create JavaFX properties
@@ -157,5 +162,23 @@ public class JFXUIProperties {
 	@NonNull
 	public static IJFXControlValueProperty<DatePicker,LocalDate> datePickerDate() {
 		return new DateValueProperty<>();
+	}
+
+	/**
+	 * @return color property of a {@link ColorPicker}
+	 * @since 3.6.0
+	 */
+	@NonNull
+	public static IJFXControlValueProperty<ColorPicker,Color> colorPicker() {
+		return new ColorValueProperty<>();
+	}
+
+	/**
+	 * @return color property of a {@link ColorPicker}
+	 * @since 3.6.0
+	 */
+	@NonNull
+	public static <T> IJFXControlValueProperty<Spinner<T>,T> spinner() {
+		return new SpinnerValueProperty<>();
 	}
 }
