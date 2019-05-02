@@ -10,9 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.fx;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -247,17 +245,6 @@ public class E4Application extends AbstractE4Application implements IApplication
 					throw new IllegalStateException("The workbench has no context assigned"); //$NON-NLS-1$
 				}
 
-				try {
-					RandomAccessFile raFile = new RandomAccessFile("/Users/tomschindl/workspaces/runtime-sample.app.product/.metadata/.lock", "rw"); //$NON-NLS-1$ //$NON-NLS-2$
-					raFile.getChannel().tryLock(0, 1, false);
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
 				ThreadSynchronize uiSync = workbench.getContext().get(ThreadSynchronize.class);
 				uiSync.syncExec(() -> {
 					E4Application.this.instanceLocation = (ApplicationLocation) wbContext.get(E4Workbench.INSTANCE_LOCATION);
