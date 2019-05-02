@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.fx;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -73,6 +75,8 @@ import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -243,13 +247,25 @@ public class E4Application extends AbstractE4Application implements IApplication
 					throw new IllegalStateException("The workbench has no context assigned"); //$NON-NLS-1$
 				}
 
+				try {
+					RandomAccessFile raFile = new RandomAccessFile("/Users/tomschindl/workspaces/runtime-sample.app.product/.metadata/.lock", "rw"); //$NON-NLS-1$ //$NON-NLS-2$
+					raFile.getChannel().tryLock(0, 1, false);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				ThreadSynchronize uiSync = workbench.getContext().get(ThreadSynchronize.class);
 				uiSync.syncExec(() -> {
 					E4Application.this.instanceLocation = (ApplicationLocation) wbContext.get(E4Workbench.INSTANCE_LOCATION);
 					try {
 						if (!checkInstanceLocation(E4Application.this.instanceLocation, wbContext)) {
 							updateStartupState(DefaultProgressState.LOCATION_CHECK_FAILED);
-							return;
+							showLockedError();
+							System.exit(0);
 						}
 
 						// Create and run the UI (if any)
@@ -267,6 +283,13 @@ public class E4Application extends AbstractE4Application implements IApplication
 		} else {
 			startRunnable.run();
 		}
+	}
+	
+	static void showLockedError() {
+		Alert a = new Alert(AlertType.ERROR);
+		a.setTitle(Messages.E4Application_LockFail_Title);
+		a.setContentText(Messages.E4Application_LockFail_Message);
+		a.showAndWait();
 	}
 
 	@Override
