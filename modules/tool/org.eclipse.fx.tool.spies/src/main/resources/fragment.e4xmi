@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_Yv7zwLnQEeWXX4KE4W3FyQ">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_ZeXAALnQEeWXX4KE4W3FyQ" featurename="children" parentElementId="xpath://mainMenu" positionInList="">
+    <elements xsi:type="menu:Menu" xmi:id="_fUHHELn_EeWJoqtWvx7b2g" elementId="window" label="Window">
+      <children xsi:type="menu:MenuSeparator" xmi:id="_Xncg4LoAEeWJoqtWvx7b2g" elementId="org.eclipse.fx.tool.spies.menuseparator.0"/>
+      <children xsi:type="menu:Menu" xmi:id="_9DJHILnQEeWXX4KE4W3FyQ" elementId="org.eclipse.fx.tool.spies.menu.e4spies" label="Spies" iconURI="platform:/plugin/org.eclipse.fx.tool.spies/icons/spyicon.png" tooltip="">
+        <children xsi:type="menu:DynamicMenuContribution" xmi:id="_iCu00LnQEeWXX4KE4W3FyQ" elementId="org.eclipse.fx.tool.spies.dynamicmenucontribution.0" label="E4 Spies" contributionURI="bundleclass://org.eclipse.fx.tool.spies/org.eclipse.fx.tool.spies.DynamicMenuContributionHandler"/>
+      </children>
+    </elements>
+  </fragments>
+</fragment:ModelFragments>
