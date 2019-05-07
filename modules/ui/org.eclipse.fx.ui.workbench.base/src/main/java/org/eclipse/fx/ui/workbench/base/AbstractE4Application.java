@@ -73,6 +73,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.app.ApplicationContext;
 import org.eclipse.fx.core.app.ApplicationLocation;
@@ -143,6 +144,8 @@ public abstract class AbstractE4Application {
 	protected static final String EXIT_CODE = "e4.osgi.exit.code"; //$NON-NLS-1$
 
 	private static final String SCREEN_SETUP = "efx.screensetup"; //$NON-NLS-1$
+	
+	private static final String RESTORE_SIZE = "efx.restore-size"; //$NON-NLS-1$
 
 	Object lcManager;
 	private IModelResourceHandler handler;
@@ -370,21 +373,54 @@ public abstract class AbstractE4Application {
 			.collect(Collectors.toList());
 		
 		for( MWindow w : windows ) {
+			String restoreSize = w.getPersistedState().get(RESTORE_SIZE);
 			Bounds b = new Bounds(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			if( bounds.stream().noneMatch( v -> v.intersects(b))) {
 				// Move 50 because eg on OS-X there might be the menubar in the top 
 				int x = 50;
 				int y = 50;
-				if( ! screens.isEmpty() ) {
+				int width = 800;
+				int height = 600;
+				if( restoreSize != null && ! screens.isEmpty() ) {
 					ScreenStruct screen = screens.stream()
 						.filter(s -> s.primary)
 						.findFirst()
 						.orElse( screens.get(0));
 					x = screen.x;
 					y = screen.y;
+				} else {
+					if( restoreSize != null ) {
+						try {
+							String[] parts = restoreSize.split(" "); //$NON-NLS-1$
+							if( parts.length == 4 ) {
+								x = Integer.parseInt(parts[0]);
+								y = Integer.parseInt(parts[1]);
+								width = Integer.parseInt(parts[2]);
+								height = Integer.parseInt(parts[3]);
+							}
+						} catch (Exception e) {
+							LOGGER.errorf("Unable to parse restore size %s",e, restoreSize); //$NON-NLS-1$
+						}
+					}
 				}
+				
 				w.setX(x);
 				w.setY(y);
+				
+				if( SystemUtils.isWindows() ) {
+					if( w.getHeight() < 50 ) {
+						w.setWidth(width);
+						w.setHeight(height);
+					}
+				}
+			}
+			
+			if( restoreSize == null ) {
+				w.getPersistedState().put(RESTORE_SIZE, String.format("%s %s %s %s", //$NON-NLS-1$
+						Integer.valueOf(w.getX()), 
+						Integer.valueOf(w.getY()), 
+						Integer.valueOf(w.getWidth()), 
+						Integer.valueOf(w.getHeight()))); 
 			}
 		}
 	}

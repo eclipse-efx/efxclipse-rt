@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<artifactId>parent</artifactId>
+	<groupId>org.eclipse.fx.tool</groupId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+
+	<properties>
+		<osgi.qualifier>${maven.build.timestamp}</osgi.qualifier>
+		<maven.build.timestamp>snapshot</maven.build.timestamp>
+
+		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<pluginxml.bundleroot.prefix></pluginxml.bundleroot.prefix>
+		<efxclipse.version>3.4.1.201809241052</efxclipse.version>
+	</properties>
+
+	<profiles>
+		<profile>
+			<!-- Activate this profile within the Eclipse IDE to setup some tooling. 
+				This profile can be activated in Eclipse for all projects by referencing 
+				the eclipse-settings.xml located in this module. Do to this do the following 
+				* got to Eclipse -> Preferences -> Maven -> User Settings * enter the absolute 
+				path to <checkout_dir>/build/eclipse-settings.xml into the field User Settings 
+				That activates the profil globally. With that in place the maven resource 
+				filtering is configured to prepend the prefix target/classes anywhere where 
+				the maven variable ${pluginxml.bundleroot.prefix} is used. That is in plugin.xml 
+				files. This is necessary to make the Eclipse tooling working if application 
+				models and fragments should be find in serveral model dialogs. Without the 
+				profile the plugin.xml is in the form that can be used at runtime. There 
+				must not be any target/classes prefix be used in plugin.xml -->
+			<id>eclipse</id>
+			<properties>
+				<pluginxml.bundleroot.prefix>target/classes/</pluginxml.bundleroot.prefix>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>at.bestsolution.efxclipse.rt</groupId>
+				<artifactId>org.eclipse.fx.runtime.e4fx.feature</artifactId>
+				<version>${efxclipse.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.fxml</include>
+				</includes>
+			</resource>
+
+		</resources>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>biz.aQute.bnd</groupId>
+					<artifactId>bnd-maven-plugin</artifactId>
+					<version>3.3.0</version>
+				</plugin>
+				<plugin>
+					<groupId>at.bestsolution</groupId>
+					<artifactId>maven-osgi-package-plugin</artifactId>
+					<version>0.0.2-SNAPSHOT</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-bnd-process</id>
+						<goals>
+							<goal>bnd-process</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<!-- The following configuration is required because bnd-maven-plugin 
+				generates the manifest to target/classes/META-INF/MANIFEST.MF but the normal 
+				maven-jar-plugin does not use it. If the jar-plugin is patched to pick up 
+				the manifest from this location, then the following config is not needed. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<archive>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
