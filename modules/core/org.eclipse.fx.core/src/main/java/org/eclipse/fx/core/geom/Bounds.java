@@ -70,7 +70,10 @@ public class Bounds {
 	public boolean intersects(double x, double y, double w, double h) {
 		if (w < 0 || h < 0)
 			return false;
-		return (x + w >= this.x && y + h >= this.y && x <= this.x + this.width && y <= this.x + this.height);
+		return x + w >= this.x 
+				&& y + h >= this.y 
+				&& x <= this.x + this.width 
+				&& y <= this.y + this.height;
 	}
 
 	@Override
