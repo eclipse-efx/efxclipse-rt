@@ -37,6 +37,7 @@ public class SpinnerValueProperty<@NonNull S,T> extends ControlReadOnlyPropertyV
 	protected void doSetValue(S source, T value) {
 		if( source instanceof Spinner ) {
 			((Spinner<T>) source).getValueFactory().setValue(value);
+			return;
 		}
 		throw new IllegalArgumentException("Unable to set "+ value +" on " + source); //$NON-NLS-1$ //$NON-NLS-2$
 	}
