@@ -90,6 +90,8 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	 *
 	 * @param contextKey
 	 *            the key
+	 * @param scope
+	 *            the scope
 	 */
 	public void setContextKey(@NonNull final String contextKey, final ContextScope scope) {
 		this.contextKey = contextKey;
@@ -152,7 +154,7 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	public Subscription subscribeOnValueChange(final Callback<T> callback) {
 		checkContextDisposed();
 		if (this.callbacks == null) {
-			this.callbacks = new ArrayList<Callback<T>>();
+			this.callbacks = new ArrayList<>();
 		}
 
 		if (this.callbacks != null) {
@@ -175,7 +177,7 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	public Subscription subscribeOnDispose(final Callback<Void> callback) {
 		checkContextDisposed();
 		if (this.disposalCallbacks == null) {
-			this.disposalCallbacks = new ArrayList<Callback<Void>>();
+			this.disposalCallbacks = new ArrayList<>();
 		}
 		if (this.disposalCallbacks != null) {
 			this.disposalCallbacks.add(callback);
