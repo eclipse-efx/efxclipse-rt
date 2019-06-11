@@ -51,6 +51,7 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	List<Callback<Void>> disposalCallbacks;
 	@NonNull
 	private AdapterService adapterService;
+	private boolean contextDisposed;
 
 	@Inject
 	@Optional
@@ -89,6 +90,8 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	 *
 	 * @param contextKey
 	 *            the key
+	 * @param scope
+	 *            the scope
 	 */
 	public void setContextKey(@NonNull final String contextKey, final ContextScope scope) {
 		this.contextKey = contextKey;
@@ -120,6 +123,7 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	@Override
 	@Nullable
 	public T getValue() {
+		checkContextDisposed();
 		if (this.contextKey == null) {
 			// If no contextKey has been set, the value is always null.
 			// This needs to be done in order to be conform to the
@@ -131,6 +135,7 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 
 	@Override
 	public void publish(@Nullable T value) {
+		checkContextDisposed();
 		if (this.scope == ContextScope.LOCAL) {
 			this.context.set(this.contextKey, value);
 		} else if (this.scope == ContextScope.APPLICATION) {
@@ -147,8 +152,9 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 
 	@Override
 	public Subscription subscribeOnValueChange(final Callback<T> callback) {
+		checkContextDisposed();
 		if (this.callbacks == null) {
-			this.callbacks = new ArrayList<Callback<T>>();
+			this.callbacks = new ArrayList<>();
 		}
 
 		if (this.callbacks != null) {
@@ -169,8 +175,9 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 
 	@Override
 	public Subscription subscribeOnDispose(final Callback<Void> callback) {
+		checkContextDisposed();
 		if (this.disposalCallbacks == null) {
-			this.disposalCallbacks = new ArrayList<Callback<Void>>();
+			this.disposalCallbacks = new ArrayList<>();
 		}
 		if (this.disposalCallbacks != null) {
 			this.disposalCallbacks.add(callback);
@@ -190,16 +197,19 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 
 	@Override
 	public <A> A adaptTo(@NonNull Class<A> adapt) {
+		checkContextDisposed();
 		return this.adapterService.adapt(this, adapt, new ValueAccessImpl(this.context));
 	}
 
 	@Override
 	public boolean canAdaptTo(Class<?> adapt) {
+		checkContextDisposed();
 		return this.adapterService.canAdapt(this, adapt);
 	}
 
 	@PreDestroy
 	void dispose() {
+		this.contextDisposed = true;
 		List<Callback<Void>> disposalCallbacks = this.disposalCallbacks;
 		if (disposalCallbacks != null) {
 			for (Callback<?> callback : disposalCallbacks.toArray(new Callback<?>[0])) {
@@ -235,5 +245,12 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 			return this.context.get(key);
 		}
 
+	}
+
+	private void checkContextDisposed() {
+		if (this.contextDisposed) {
+			this.logger.warningf("Context was already disposed. ContextKey=%s is not accessible anymore.", //$NON-NLS-1$
+					new Exception(), this.contextKey);
+		}
 	}
 }

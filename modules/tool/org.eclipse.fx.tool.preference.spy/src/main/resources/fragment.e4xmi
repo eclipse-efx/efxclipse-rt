@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_YKjYcGxMEeSQ7v0akw7aRA">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_VTEKsPJGEeiKgsiUhEa99w" featurename="addons" parentElementId="xpath:/">
+    <elements xsi:type="application:Addon" xmi:id="_Zx9-8PJGEeiKgsiUhEa99w" elementId="org.eclipse.fx.tool.preference.spy.internal.addon.PreferenceSpyAddon" contributionURI="bundleclass://org.eclipse.fx.tool.preference.spy/org.eclipse.fx.tool.preference.spy.internal.addon.PreferenceSpyAddon"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_P3fYQGxbEeSQ7v0akw7aRA" featurename="descriptors" parentElementId="xpath:/">
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_T4iy4GxbEeSQ7v0akw7aRA" elementId="org.eclipse.fx.tool.preference.spy.PreferenceSpyPart" label="Preference Spy" iconURI="platform:/plugin/org.eclipse.fx.tool.preference.spy/icons/preference_spy.png" category="Eclipse runtime spies" closeable="true" contributionURI="bundleclass://org.eclipse.fx.tool.preference.spy/org.eclipse.fx.tool.preference.spy.PreferenceSpyPart">
+      <tags>View</tags>
+      <tags>Spy</tags>
+      <tags>categoryTag:Eclipse runtime spies</tags>
+      <toolbar xmi:id="_z17t0GxhEeSQ7v0akw7aRA" elementId="org.eclipse.fx.tool.preference.spy.toolbar">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_WhdsMHY7EeSuTdKDH5hMwg" elementId="org.eclipse.fx.tool.preference.spy.handledtoolitem.showall" iconURI="platform:/plugin/org.eclipse.fx.tool.preference.spy/icons/show_all_preferences.png" tooltip="Show all preferences" command="_ufxRsHY2EeSuTdKDH5hMwg"/>
+        <children xsi:type="menu:ToolBarSeparator" xmi:id="_B-uMQOygEeiC-dj8R4fV9w" elementId="org.eclipse.fx.tool.preference.spy.toolbarseparator.0"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_zYuuEH_hEeSk-4v3KnNHPw" elementId="org.eclipse.fx.tool.preference.spy.handledtoolitem.expandall" iconURI="platform:/plugin/org.eclipse.fx.tool.preference.spy/icons/expandall.png" tooltip="Expand all" command="_4NM_IH_gEeSk-4v3KnNHPw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_4wyX4H_hEeSk-4v3KnNHPw" elementId="org.eclipse.fx.tool.preference.spy.handledtoolitem.collapseall" iconURI="platform:/plugin/org.eclipse.fx.tool.preference.spy/icons/collapseall.png" tooltip="Collapse all" command="_68UQwH_gEeSk-4v3KnNHPw"/>
+      </toolbar>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_YcT00GxiEeSQ7v0akw7aRA" featurename="commands" parentElementId="xpath:/">
+    <elements xsi:type="commands:Command" xmi:id="_ufxRsHY2EeSuTdKDH5hMwg" elementId="org.eclipse.fx.tool.preference.spy.command.showAllPreferences" commandName="Show All Preferences"/>
+    <elements xsi:type="commands:Command" xmi:id="_4NM_IH_gEeSk-4v3KnNHPw" elementId="org.eclipse.fx.tool.preference.spy.command.expandAll" commandName="Expand All"/>
+    <elements xsi:type="commands:Command" xmi:id="_68UQwH_gEeSk-4v3KnNHPw" elementId="org.eclipse.fx.tool.preference.spy.command.collapseAll" commandName="Collapse All"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_k-5ysGxiEeSQ7v0akw7aRA" featurename="handlers" parentElementId="xpath:/">
+    <elements xsi:type="commands:Handler" xmi:id="_zPHVsHY2EeSuTdKDH5hMwg" elementId="org.eclipse.fx.tool.preference.spy.handler.showall" contributionURI="bundleclass://org.eclipse.fx.tool.preference.spy/org.eclipse.fx.tool.preference.spy.internal.handler.ShowAllPreferencesHandler" command="_ufxRsHY2EeSuTdKDH5hMwg"/>
+    <elements xsi:type="commands:Handler" xmi:id="_3S1ooH_gEeSk-4v3KnNHPw" elementId="org.eclipse.fx.tool.preference.spy.handler.expandall" contributionURI="bundleclass://org.eclipse.fx.tool.preference.spy/org.eclipse.fx.tool.preference.spy.internal.handler.ExpandAllHandler" command="_4NM_IH_gEeSk-4v3KnNHPw"/>
+    <elements xsi:type="commands:Handler" xmi:id="_9SoA0H_gEeSk-4v3KnNHPw" elementId="org.eclipse.fx.tool.preference.spy.handler.collapseall" contributionURI="bundleclass://org.eclipse.fx.tool.preference.spy/org.eclipse.fx.tool.preference.spy.internal.handler.CollapseAllHandler" command="_68UQwH_gEeSk-4v3KnNHPw"/>
+  </fragments>
+</fragment:ModelFragments>
