@@ -29,6 +29,7 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MDynamicMenuContribution;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MPopupMenu;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
@@ -47,10 +48,10 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 @SuppressWarnings("restriction")
 public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer<MPopupMenu, MMenuElement, WPopupMenu<N>> implements ChildrenHandler<MPopupMenu, MMenuElement> {
-	//FIXME Can we merge this with the BaseMenuRenderer????
+	// FIXME Can we merge this with the BaseMenuRenderer????
 	@Inject
 	ELifecycleService lifecycleService;
-	
+
 	@Inject
 	private IContributionFactory contributionFactory;
 
@@ -58,27 +59,34 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 	@Inject
 	private Logger logger;
 
+	/**
+	 * Context key to access the owner of the popup menu from a application
+	 * model point of view
+	 */
+	public static final String POPUPMENU_PARENT_ELEMENT = "popupmenu-parent"; //$NON-NLS-1$
+
 	private static final String DYNAMIC_MENU_CONTRIBUTION = "DYNAMIC_MENU_CONTRIBUTION"; //$NON-NLS-1$
 
 	private Set<MPopupMenu> currentVisibleMenus = new HashSet<>();
-	
+
 	@Override
 	protected void do_init(@NonNull IEventBroker broker) {
 		// nothing to do
 	}
-	
+
 	@Override
 	protected void initWidget(final MPopupMenu element, WPopupMenu<N> widget) {
 		super.initWidget(element, widget);
-		widget.setShowingCallback( () -> handleShowing(element));
-		widget.setHidingCallback( () -> handleHiding(element));
+		widget.setShowingCallback(() -> handleShowing(element));
+		widget.setHidingCallback(() -> handleHiding(element));
+		element.getContext().set(POPUPMENU_PARENT_ELEMENT, ((EObject) element).eContainer());
 	}
-	
+
 	@SuppressWarnings("null")
 	void handleHiding(@NonNull MPopupMenu element) {
 		this.currentVisibleMenus.remove(element);
 		IEclipseContext modelContext = getModelContext(element);
-		if( modelContext == null ) {
+		if (modelContext == null) {
 			getLogger().info("Model context is null, probably already disposed"); //$NON-NLS-1$
 			return;
 		}
@@ -116,7 +124,7 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 	void handleShowing(@NonNull MPopupMenu element) {
 		this.currentVisibleMenus.add(element);
 		IEclipseContext modelContext = getModelContext(element);
-		if( modelContext == null ) {
+		if (modelContext == null) {
 			getLogger().error("The model context is null"); //$NON-NLS-1$
 			return;
 		}
@@ -171,7 +179,7 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 	protected boolean skipEnablementCheck() {
 		return this.currentVisibleMenus.isEmpty();
 	}
-	
+
 	@Override
 	protected boolean isShowing(MMenuElement item) {
 		return this.currentVisibleMenus.contains(item.getParent());
@@ -181,11 +189,11 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 	public void doProcessContent(MPopupMenu element) {
 		// TODO Should we do this creation lazy????
 		WPopupMenu<N> menu = getWidget(element);
-		if( menu == null ) {
-			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		if (menu == null) {
+			getLogger().error("No widget found for '" + element + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
-		
+
 		for (MMenuElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WMenuElement<MMenuElement> widget = engineCreateWidget(e);
@@ -201,7 +209,7 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
-			if( element == null ) {
+			if (element == null) {
 				getLogger().error("Found a null element in " + elements); //$NON-NLS-1$
 				continue;
 			}
@@ -222,7 +230,7 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 			// c.getContributionURI());
 			// continue;
 			// }
-			if( element == null ) {
+			if (element == null) {
 				getLogger().error("Found a null element in " + elements); //$NON-NLS-1$
 				continue;
 			}
@@ -238,27 +246,27 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 
 	@Override
 	public void do_childRendered(@NonNull MPopupMenu parentElement, @NonNull MUIElement element) {
-		if (inContentProcessing(parentElement)|| ! isChildRenderedAndVisible(element)) {
+		if (inContentProcessing(parentElement) || !isChildRenderedAndVisible(element)) {
 			return;
 		}
 
 		int idx = getRenderedIndex(parentElement, element);
 		WPopupMenu<N> menu = getWidget(parentElement);
-		if( menu == null ) {
-			getLogger().error("No widget found for '"+parentElement+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		if (menu == null) {
+			getLogger().error("No widget found for '" + parentElement + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget();
-		if( menuElement != null ) {
-			menu.addElement(idx, menuElement);	
+		if (menuElement != null) {
+			menu.addElement(idx, menuElement);
 		} else {
-			getLogger().error("The widget of the element '"+element+"' is null");  //$NON-NLS-1$//$NON-NLS-2$
+			getLogger().error("The widget of the element '" + element + "' is null"); //$NON-NLS-1$//$NON-NLS-2$
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean isChildRenderedAndVisible(MUIElement u) {
 		return super.isChildRenderedAndVisible(u) && !(u instanceof MDynamicMenuContribution);
