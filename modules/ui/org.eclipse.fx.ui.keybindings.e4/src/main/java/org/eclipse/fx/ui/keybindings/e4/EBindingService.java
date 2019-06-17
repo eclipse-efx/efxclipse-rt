@@ -60,6 +60,13 @@ public interface EBindingService {
 	 * Tag prefix for the deleted
 	 */
 	public static final String DELETED_BINDING_TAG = "deleted"; //$NON-NLS-1$
+	
+	/**
+	 * Tag prefix used by (platform- or locale-specific) KeyBindings 
+	 * to indicate which (generic) binding they override
+	 * @since 3.6
+	 */
+	public static final String OVERRIDE = "override"; //$NON-NLS-1$
 
 	/**
 	 * Create a binding between a sequence and a command

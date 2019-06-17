@@ -10,9 +10,11 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.keybindings.e4;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -39,6 +41,7 @@ import org.eclipse.e4.ui.services.EContextService;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.keybindings.Binding;
@@ -113,6 +116,7 @@ public class BindingProcessingAddon {
 	}
 
 	private void defineBindingTables() {
+		handleOverrides(this.application.getBindingTables());
 		for (MBindingTable bindingTable : this.application.getBindingTables()) {
 			defineBindingTable(bindingTable);
 		}
@@ -133,6 +137,80 @@ public class BindingProcessingAddon {
 		}
 	}
 
+	/**
+	 * Mark overridden bindings as {@link EBindingService#DELETED_BINDING_TAG DELETED}
+	 * 
+	 * @param allTables
+	 * 		All the binding tables in the application model
+	 */
+	private static void handleOverrides(Collection<MBindingTable> allTables) {
+		Map<String, MKeyBinding> bindingsById = new HashMap<>();
+		for (MBindingTable table : allTables) {
+			for (MKeyBinding binding : table.getBindings()) {
+				bindingsById.put(binding.getElementId(), binding);
+			}
+		}
+		
+		String prefix = EBindingService.OVERRIDE + ":"; //$NON-NLS-1$
+		for (MKeyBinding binding : bindingsById.values()) {
+			for (String tag : binding.getTags()) {
+				if (tag.startsWith(prefix)) {
+					String bindingId = tag.substring(prefix.length());
+					if (bindingId != null && bindingsById.containsKey(bindingId)) {
+						if (appliesToPlatformAndLocale(binding)) {
+							MKeyBinding overridden = bindingsById.get(bindingId);
+							overridden.getTags().add(EBindingService.DELETED_BINDING_TAG);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private static boolean appliesToPlatformAndLocale(MKeyBinding binding) {
+		if (binding == null) {
+			return false;
+		}
+		
+		for (String tag : binding.getTags()) {
+			if (tag.startsWith(EBindingService.LOCALE_ATTR_TAG)) {
+				String locale = tag.substring(7);
+				if (locale != null && !isCurrentLocale(locale)) {
+					return false;
+				}
+			} else if (tag.startsWith(EBindingService.PLATFORM_ATTR_TAG)) {
+				String platform = tag.substring(9);
+				if (platform != null && ! isCurrentPlatform(platform)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	private static boolean isCurrentLocale(@NonNull String locale) {
+		Locale currentLocale = Locale.getDefault();
+		return currentLocale.toString().equals(locale);
+	}
+	
+	// Bindings were defined with SWT Platforms in mind, so reuse
+	// the SWT Platform Constants (gtk, cocoa, win32)
+	private static boolean isCurrentPlatform(@NonNull String platform) {
+		switch (platform) {
+		case "gtk": //$NON-NLS-1$
+			String osName = System.getProperty("os.name").toLowerCase(); //$NON-NLS-1$
+			return osName.contains("linux"); //$NON-NLS-1$
+		case "cocoa": //$NON-NLS-1$
+			return SystemUtils.isMacOS();
+		case "win32": //$NON-NLS-1$
+		case "wpf": //$NON-NLS-1$
+			// For windows, it doesn't matter if we specify win32 or wpf,
+			// as JavaFX isn't as platform-dependent as SWT
+			return SystemUtils.isWindows();
+		}
+		return false;
+	}
+	
 	private void defineBinding(BindingTable bindingTable, Context bindingContext, MKeyBinding binding) {
 		String keySequence = binding.getKeySequence();
 		if( keySequence != null ) {
@@ -145,6 +223,10 @@ public class BindingProcessingAddon {
 
 	@SuppressWarnings("null")
 	private Binding createBinding(Context bindingContext, MCommand cmdModel, List<MParameter> modelParms, @NonNull String keySequence, MKeyBinding binding) {
+		if (! appliesToPlatformAndLocale(binding)) {
+			return null;
+		}
+		
 		Binding keyBinding = null;
 
 		if (binding.getTransientData().get(EBindingService.MODEL_TO_BINDING_KEY) != null) {
