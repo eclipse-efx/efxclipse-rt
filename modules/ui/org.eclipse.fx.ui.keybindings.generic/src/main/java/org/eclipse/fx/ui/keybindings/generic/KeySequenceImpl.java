@@ -11,13 +11,16 @@
 package org.eclipse.fx.ui.keybindings.generic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 import org.eclipse.fx.ui.keybindings.KeyLookup;
 import org.eclipse.fx.ui.keybindings.KeySequence;
 import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.keybindings.ParseException;
+import org.eclipse.fx.ui.keybindings.Trigger;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
 import org.eclipse.jdt.annotation.NonNull;
 
@@ -58,8 +61,18 @@ public class KeySequenceImpl extends TriggerSequenceImpl implements KeySequence 
 
 	@Override
 	public String format() {
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.stream(getTriggers())
+				.map(this::formatTrigger)
+				.collect(Collectors.joining(" ")); //$NON-NLS-1$
+	}
+	
+	@Override
+	public String toString() {
+		return format();
+	}
+	
+	private String formatTrigger(Trigger trigger) {
+		return trigger.toString();
 	}
 
 	static final @NonNull KeySequence getInstance() {
