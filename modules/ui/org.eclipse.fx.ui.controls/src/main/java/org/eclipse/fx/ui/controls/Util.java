@@ -89,6 +89,11 @@ public class Util {
 	 * Tag used to exclude a node from finding
 	 */
 	public static final String FIND_NODE_EXCLUDE = "findNodeExclude"; //$NON-NLS-1$
+	
+	/**
+	 * System property to force {@link #findNode(Node, double, double)} to respect the drawing order
+	 */
+	public static final String FIND_NODE_RESPECT_DRAWING_ORDER = "efxclipse.findnode.respectdrawing"; //$NON-NLS-1$
 
 	/**
 	 * Boolean to indicate if mnemonic fixing is enabled
@@ -230,7 +235,9 @@ public class Util {
 
 		for (Window window : sortedWindows) {
 			if (!FIND_NODE_EXCLUDE.equals(window.getUserData()) && new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
-				return findNode(window.getScene().getRoot(), screenX, screenY);
+				Node findNode = findNode(window.getScene().getRoot(), screenX, screenY);
+				System.err.println(findNode);
+				return findNode;
 			}
 		}
 
@@ -258,13 +265,26 @@ public class Util {
 		if (n.getBoundsInLocal().contains(b) && !FIND_NODE_EXCLUDE.equals(n.getUserData())) {
 			rv = n;
 			if (n instanceof Parent) {
-				List<Node> cList = ((Parent) n).getChildrenUnmodifiable().stream().filter(no -> no.isVisible()).collect(Collectors.toList());
-
-				for (Node c : cList) {
-					Node cn = findNode(c, screenX, screenY);
-					if (cn != null) {
-						rv = cn;
-						break;
+				List<Node> cList = ((Parent) n).getChildrenUnmodifiable().stream()
+						.filter(no -> no.isVisible())
+						.collect(Collectors.toList());
+				if( Boolean.getBoolean(FIND_NODE_RESPECT_DRAWING_ORDER) ) {
+					for (int i = cList.size()-1; i >= 0; i--) {
+						Node c = cList.get(i);
+						Node cn = findNode(c, screenX, screenY);
+						if (cn != null) {
+							rv = cn;
+							break;
+						}
+					}
+				} else {
+					for (int i = 0; i < cList.size(); i++) {
+						Node c = cList.get(i);
+						Node cn = findNode(c, screenX, screenY);
+						if (cn != null) {
+							rv = cn;
+							break;
+						}
 					}
 				}
 			}
