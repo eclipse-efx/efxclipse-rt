@@ -93,11 +93,13 @@ public class PreferenceUI {
 
 	private final PreferencePageFactory factory;
 
-	protected String currentFilter = "";
+	protected static String currentFilter = "";
 
+	private Comparator<PreferencePageProvider> comparator;
+	private Predicate<PreferencePageProvider> filter;
 	private final ObservableList<PreferencePageProvider> providers = FXCollections.observableArrayList();
-	private final SortedList<PreferencePageProvider> sortedProviders = providers.sorted(getComparator());
-	private final FilteredList<PreferencePageProvider> filteredProviders = sortedProviders.filtered(getFilter());
+	private final SortedList<PreferencePageProvider> sortedProviders = providers.sorted(comparator);
+	private final FilteredList<PreferencePageProvider> filteredProviders = sortedProviders.filtered(filter);
 	private PageCache currentPage;
 
 	private HBox actions;
@@ -116,7 +118,27 @@ public class PreferenceUI {
 
 	@Inject
 	public PreferenceUI(PreferencePageFactory factory) {
+		this(factory, null, null);
+	}
+
+	protected PreferenceUI(PreferencePageFactory factory, Comparator<PreferencePageProvider> comparator, Predicate<PreferencePageProvider> filter) {
 		this.factory = factory;
+		if (comparator != null) {
+			this.comparator = comparator;
+		} else {
+			this.comparator = (p1, p2) -> Collator.getInstance().compare(p1.titleProperty().getValue().toString(),
+					p2.titleProperty().getValue().toString());
+		}
+
+		if (filter != null) {
+			this.filter = filter;
+		} else {
+			this.filter = provider -> {
+				String term = currentFilter == null ? "*" : "*" + currentFilter + "*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				return provider.select(term);
+			};
+		}
+
 		this.providerView = new ListView<>();
 		this.providerView.getStyleClass().add(PAGE_LIST_STYLE);
 		this.contentAreaWrapper = new TitledPane();
@@ -169,7 +191,7 @@ public class PreferenceUI {
 			searchField = new TextField();
 			searchField.getStyleClass().add(SEARCH_STYLE);
 			FXObservableUtil.onChange(searchField.textProperty(), newFilter -> {
-				this.currentFilter = newFilter == null ? "" : newFilter;
+				PreferenceUI.currentFilter = newFilter == null ? "" : newFilter;
 				refreshFilter();
 			});
 
@@ -256,7 +278,9 @@ public class PreferenceUI {
 		// If we already had a selection, preserve it; otherwise, select the first
 		// visible item
 		PreferencePageProvider selectedItem = selectionModel.getSelectedItem();
-		this.filteredProviders.predicateProperty().set(getFilter());
+		//reset filter predicate
+		this.filteredProviders.predicateProperty().set(null);
+		this.filteredProviders.predicateProperty().set(filter);
 		if (selectionModel.isEmpty()) {
 			if (selectedItem == null || !filteredProviders.contains(selectedItem)) {
 				selectionModel.selectFirst();
@@ -274,16 +298,6 @@ public class PreferenceUI {
 	@Inject
 	public void setPreferencePageProviders(@Service List<PreferencePageProvider> providers) {
 		this.providers.setAll(providers);
-	}
-
-	protected Predicate<PreferencePageProvider> getFilter() {
-		String filter = currentFilter == null ? "*" : "*" + currentFilter + "*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		return provider -> provider.select(filter);
-	}
-
-	protected Comparator<PreferencePageProvider> getComparator() {
-		return (p1, p2) -> Collator
-		.getInstance().compare(p1.titleProperty().getValue().toString(), p2.titleProperty().getValue().toString());
 	}
 
 	public Subscription registerOnCancelHandler(Consumer<PreferencePage> handler) {
