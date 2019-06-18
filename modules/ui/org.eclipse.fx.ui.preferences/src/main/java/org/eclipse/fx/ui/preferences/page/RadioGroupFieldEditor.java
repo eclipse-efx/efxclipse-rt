@@ -98,7 +98,7 @@ public class RadioGroupFieldEditor extends FieldEditor<String> {
 	}
 
 	@Override
-	protected ObservableValue<String> getValue() {
+	public ObservableValue<String> getValue() {
 		return currentValue;
 	}
 	

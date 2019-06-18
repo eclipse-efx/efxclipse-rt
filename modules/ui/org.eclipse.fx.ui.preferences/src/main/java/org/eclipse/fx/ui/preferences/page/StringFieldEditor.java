@@ -67,7 +67,7 @@ public class StringFieldEditor extends FieldEditor<String>{
 	}
 
 	@Override
-	protected ObservableValue<String> getValue() {
+	public ObservableValue<String> getValue() {
 		return this.textField.textProperty();
 	}
 

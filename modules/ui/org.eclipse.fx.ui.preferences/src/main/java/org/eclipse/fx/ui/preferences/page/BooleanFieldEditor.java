@@ -49,7 +49,7 @@ public class BooleanFieldEditor extends FieldEditor<Boolean> {
 	}
 
 	@Override
-	protected ObservableValue<Boolean> getValue() {
+	public ObservableValue<Boolean> getValue() {
 		return this.checkBox.selectedProperty();
 	}
 	

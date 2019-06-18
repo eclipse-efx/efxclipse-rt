@@ -104,7 +104,7 @@ public class FloatFieldEditor extends FieldEditor<Float> {
 	}
 
 	@Override
-	protected ObservableValue<Float> getValue() {
+	public ObservableValue<Float> getValue() {
 		return value.asObject();
 	}
 }

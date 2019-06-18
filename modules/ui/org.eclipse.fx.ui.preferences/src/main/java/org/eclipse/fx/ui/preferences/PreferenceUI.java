@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.preferences;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,8 +96,7 @@ public class PreferenceUI {
 	private String currentFilter = "";
 
 	private final ObservableList<PreferencePageProvider> providers = FXCollections.observableArrayList();
-	private final SortedList<PreferencePageProvider> sortedProviders = providers.sorted((p1, p2) -> Collator
-			.getInstance().compare(p1.titleProperty().getValue().toString(), p2.titleProperty().getValue().toString()));
+	private final SortedList<PreferencePageProvider> sortedProviders = providers.sorted(getComparator());
 	private final FilteredList<PreferencePageProvider> filteredProviders = sortedProviders.filtered(getFilter());
 	private PageCache currentPage;
 
@@ -276,9 +276,14 @@ public class PreferenceUI {
 		this.providers.setAll(providers);
 	}
 
-	private Predicate<PreferencePageProvider> getFilter() {
+	protected Predicate<PreferencePageProvider> getFilter() {
 		String filter = currentFilter == null ? "*" : "*" + currentFilter + "*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		return provider -> provider.select(filter);
+	}
+
+	protected Comparator<PreferencePageProvider> getComparator() {
+		return (p1, p2) -> Collator
+		.getInstance().compare(p1.titleProperty().getValue().toString(), p2.titleProperty().getValue().toString());
 	}
 
 	public Subscription registerOnCancelHandler(Consumer<PreferencePage> handler) {

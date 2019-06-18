@@ -124,11 +124,11 @@ public abstract class FieldEditor<T> extends Region {
 		}
 	}
 
-	void setMemento(Memento memento) {
+	public void setMemento(Memento memento) {
 		this.memento = memento;
 	}
 
-	protected Memento getMemento() {
+	public Memento getMemento() {
 		return this.memento;
 	}
 
@@ -140,7 +140,7 @@ public abstract class FieldEditor<T> extends Region {
 		this.isDefault = isDefault;
 	}
 
-	final void load() {
+	public final void load() {
 		if (getMemento() != null) {
 			this.isDefault = false;
 			doLoad();
@@ -153,7 +153,7 @@ public abstract class FieldEditor<T> extends Region {
 		}
 	}
 
-	final void persist() {
+	public final void persist() {
 		if (getMemento() != null) {
 			if (this.isDefault) {
 				getMemento().remove(getName());
@@ -164,7 +164,7 @@ public abstract class FieldEditor<T> extends Region {
 		}
 	}
 
-	final void restoreDefaults() {
+	public final void restoreDefaults() {
 		doRestoreDefaults();
 		this.setDefault(true);
 	}
@@ -197,7 +197,7 @@ public abstract class FieldEditor<T> extends Region {
 	 * manage {@link #setDefault(boolean)}.
 	 * </p>
 	 */
-	protected abstract ObservableValue<T> getValue();
+	public abstract ObservableValue<T> getValue();
 
 	/**
 	 * <p>
@@ -210,7 +210,7 @@ public abstract class FieldEditor<T> extends Region {
 	 * override this method and return false.
 	 * </p>
 	 */
-	protected boolean displayLabel() {
+	public boolean displayLabel() {
 		return true;
 	}
 
