@@ -93,7 +93,7 @@ public class PreferenceUI {
 
 	private final PreferencePageFactory factory;
 
-	private String currentFilter = "";
+	protected String currentFilter = "";
 
 	private final ObservableList<PreferencePageProvider> providers = FXCollections.observableArrayList();
 	private final SortedList<PreferencePageProvider> sortedProviders = providers.sorted(getComparator());
