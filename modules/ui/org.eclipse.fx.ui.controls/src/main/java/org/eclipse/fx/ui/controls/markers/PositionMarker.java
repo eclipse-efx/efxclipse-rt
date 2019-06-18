@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.fx.ui.controls.Util;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.beans.property.ObjectProperty;
@@ -40,6 +41,7 @@ public final class PositionMarker extends Group {
 	 * Create a new marker
 	 */
 	public PositionMarker() {
+		setUserData(Util.FIND_NODE_EXCLUDE);
 		setMouseTransparent(true);
 		getStyleClass().add("position-marker"); //$NON-NLS-1$
 		Circle outer = new Circle(8);

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.markers;
 
+import org.eclipse.fx.ui.controls.Util;
+
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -62,6 +64,7 @@ public final class AreaOverlay extends Region {
 	 *            the ration used by the left and right areas
 	 */
 	public AreaOverlay(double leftRightRatio) {
+		setUserData(Util.FIND_NODE_EXCLUDE);
 		getStyleClass().add("area-overlay"); //$NON-NLS-1$
 
 		this.leftRightRatio = leftRightRatio;

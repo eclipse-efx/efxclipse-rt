@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.fx.ui.controls.Util;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.beans.property.ObjectProperty;
@@ -52,6 +53,7 @@ public final class TabOutlineMarker extends Group {
 	 *            bounds
 	 */
 	public TabOutlineMarker(@NonNull Bounds containerBounds, @NonNull Bounds referenceBounds, boolean before) {
+		setUserData(Util.FIND_NODE_EXCLUDE);
 		this.containerBounds = containerBounds;
 		this.referenceBounds = referenceBounds;
 		updateBounds(containerBounds, referenceBounds, before);
