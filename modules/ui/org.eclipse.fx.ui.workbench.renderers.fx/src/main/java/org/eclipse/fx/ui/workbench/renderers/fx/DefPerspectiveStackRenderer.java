@@ -23,6 +23,7 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
+import org.eclipse.fx.ui.controls.Util;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.workbench.renderers.base.BasePerspectiveStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.services.PerspectiveTransitionService;
@@ -157,7 +158,7 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 					if( curDomElement != null && nexDomElement != null ) {
 						AnimationDelegate<BorderPane, Node> a = this.perspectiveSwitch.getDelegate(curDomElement, nexDomElement);
 						if (a == null) {
-							getWidget().setCenter(node);
+							Util.attachNode(node, getWidget()::setCenter );
 						} else {
 							a.animate(getWidget(), node, () -> {
 								this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
@@ -165,12 +166,12 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 							});
 						}	
 					} else {
-						getWidget().setCenter(node);
+						Util.attachNode(node, getWidget()::setCenter );
 						this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
 						this.eventBroker.send(Constants.PERSPECTIVE_SHOWN, nexDomElement);
 					}
 				} else {
-					getWidget().setCenter(node);
+					Util.attachNode(node, getWidget()::setCenter );
 					this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
 					this.eventBroker.send(Constants.PERSPECTIVE_SHOWN, nexDomElement);
 				}
