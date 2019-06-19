@@ -93,13 +93,13 @@ public class PreferenceUI {
 
 	private final PreferencePageFactory factory;
 
-	protected static String currentFilter = "";
+	protected String currentFilterTerm = "";
 
 	private Comparator<PreferencePageProvider> comparator;
 	private Predicate<PreferencePageProvider> filter;
 	private final ObservableList<PreferencePageProvider> providers = FXCollections.observableArrayList();
-	private final SortedList<PreferencePageProvider> sortedProviders = providers.sorted(comparator);
-	private final FilteredList<PreferencePageProvider> filteredProviders = sortedProviders.filtered(filter);
+	private final SortedList<PreferencePageProvider> sortedProviders;
+	private final FilteredList<PreferencePageProvider> filteredProviders;
 	private PageCache currentPage;
 
 	private HBox actions;
@@ -118,27 +118,7 @@ public class PreferenceUI {
 
 	@Inject
 	public PreferenceUI(PreferencePageFactory factory) {
-		this(factory, null, null);
-	}
-
-	protected PreferenceUI(PreferencePageFactory factory, Comparator<PreferencePageProvider> comparator, Predicate<PreferencePageProvider> filter) {
 		this.factory = factory;
-		if (comparator != null) {
-			this.comparator = comparator;
-		} else {
-			this.comparator = (p1, p2) -> Collator.getInstance().compare(p1.titleProperty().getValue().toString(),
-					p2.titleProperty().getValue().toString());
-		}
-
-		if (filter != null) {
-			this.filter = filter;
-		} else {
-			this.filter = provider -> {
-				String term = currentFilter == null ? "*" : "*" + currentFilter + "*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				return provider.select(term);
-			};
-		}
-
 		this.providerView = new ListView<>();
 		this.providerView.getStyleClass().add(PAGE_LIST_STYLE);
 		this.contentAreaWrapper = new TitledPane();
@@ -150,10 +130,28 @@ public class PreferenceUI {
 		this.contentAreaWrapper.setMaxWidth(Double.MAX_VALUE);
 		this.contentAreaWrapper.setCollapsible(false);
 
+		this.filter = createFilter();
+		this.comparator = createComparator();
+		this.sortedProviders = providers.sorted(comparator);
+		this.filteredProviders = sortedProviders.filtered(filter);
 		this.providerView.setCellFactory(v -> new SimpleListCell<>(pp -> pp.titleProperty().getValue()));
 		FXObservableUtil.onChange(this.providerView.getSelectionModel().selectedItemProperty(),
 				this::handleSelectedPageChange);
 		providerView.setItems(filteredProviders);
+	}
+
+	/** Create the predicate used for filtering the list of providers. */
+	protected Predicate<PreferencePageProvider> createFilter() {
+		return provider -> {
+			String term = currentFilterTerm == null ? "*" : "*" + currentFilterTerm + "*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			return provider.select(term);
+		};
+	}
+
+	/** Create the comparator used for sorting the list of providers. */
+	protected Comparator<PreferencePageProvider> createComparator() {
+		return (p1, p2) -> Collator.getInstance().compare(p1.titleProperty().getValue().toString(),
+				p2.titleProperty().getValue().toString());
 	}
 
 	private void handleSelectedPageChange(PreferencePageProvider provider) {
@@ -191,7 +189,7 @@ public class PreferenceUI {
 			searchField = new TextField();
 			searchField.getStyleClass().add(SEARCH_STYLE);
 			FXObservableUtil.onChange(searchField.textProperty(), newFilter -> {
-				PreferenceUI.currentFilter = newFilter == null ? "" : newFilter;
+				currentFilterTerm = newFilter == null ? "" : newFilter;
 				refreshFilter();
 			});
 
