@@ -15,6 +15,7 @@ import java.util.List;
 
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -42,7 +43,113 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 
 	@Override
 	protected Class<? extends WPerspectiveStack<BorderPane, PerspectiveStackItem, Node>> getWidgetClass(MPerspectiveStack stack) {
-		return PerspectiveStackImpl.class;
+		if( stack.getTags().contains("efx-nodetach") ) { //$NON-NLS-1$
+			return PerspectiveStackNoDetachImpl.class;
+		} else {
+			return PerspectiveStackImpl.class;
+		}
+		
+	}
+	
+	/**
+	 * @noreference
+	 */
+	public static class PerspectiveStackNoDetachImpl extends WLayoutedWidgetImpl<StackPane, StackPane, MPerspectiveStack> implements WPerspectiveStack<BorderPane, PerspectiveStackItem, Node> {
+		@NonNull
+		private List<@NonNull WStackItem<PerspectiveStackItem, Node>> items = new ArrayList<>();
+
+		@Inject
+		@Optional
+		private PerspectiveTransitionService<BorderPane, Node> perspectiveSwitch;
+
+		@Inject
+		IEventBroker eventBroker;
+		
+		@Override
+		public Class<? extends WStackItem<PerspectiveStackItem, Node>> getStackItemClass() {
+			return PerspectiveStackItemImpl.class;
+		}
+
+		@Override
+		public void addItem(WStackItem<PerspectiveStackItem, Node> item) {
+			this.items.add(item);
+		}
+
+		@Override
+		public void addItems(List<@NonNull WStackItem<PerspectiveStackItem, Node>> items) {
+			this.items.addAll(items);
+		}
+
+		@Override
+		public void addItems(int index, List<@NonNull WStackItem<PerspectiveStackItem, Node>> items) {
+			this.items.addAll(index, items);
+		}
+
+		@Override
+		public void selectItem(int idx) {
+			WStackItem<PerspectiveStackItem, Node> item = this.items.get(idx);
+			PerspectiveStackItem nativeItem = item.getNativeItem();
+			if( nativeItem != null ) {
+				Node node = nativeItem.getContent();
+				if( node == null ) {
+					return;
+				}
+				
+				getWidget().getChildren().stream().forEach( c -> {
+					if( c == node ) {
+						c.setManaged(true);
+						c.setVisible(true);
+					} else {
+						c.setManaged(false);
+						c.setVisible(false);
+					}
+				});
+				
+				if( ! getWidget().getChildren().contains(node) ) {
+					getWidget().getChildren().add(node);
+				}
+			}
+		}
+
+		@Override
+		public int indexOf(WStackItem<PerspectiveStackItem, Node> item) {
+			return this.items.indexOf(item);
+		}
+
+		@Override
+		public List<WStackItem<PerspectiveStackItem, Node>> getItems() {
+			return this.items;
+		}
+
+		@Override
+		public void removeItems(List<WStackItem<PerspectiveStackItem, Node>> items) {
+			this.items.removeAll(items);
+		}
+
+		@Override
+		public void setMouseSelectedItemCallback(WCallback<WStackItem<PerspectiveStackItem, Node>, Void> selectedItemCallback) {
+			// empty
+		}
+
+		@Override
+		public void setKeySelectedItemCallback(WCallback<WStackItem<PerspectiveStackItem, Node>, Void> selectedItemCallback) {
+			// empty
+		}
+
+		@Override
+		public int getItemCount() {
+			return this.items.size();
+		}
+
+		@Override
+		public StackPane getWidgetNode() {
+			return getWidget();
+		}
+
+		@Override
+		protected StackPane createWidget() {
+			return new StackPane();
+		}
 	}
 	
 	/**
