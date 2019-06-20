@@ -97,7 +97,7 @@ public class IntegerFieldEditor extends FieldEditor<Integer> {
 	}
 
 	@Override
-	protected ObservableValue<Integer> getValue() {
+	public ObservableValue<Integer> getValue() {
 		return this.value.asObject();
 	}
 

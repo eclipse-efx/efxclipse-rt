@@ -107,7 +107,7 @@ public class ColorFieldEditor extends FieldEditor<Color> {
 	}
 
 	@Override
-	protected ObservableValue<Color> getValue() {
+	public ObservableValue<Color> getValue() {
 		return this.colorPicker.valueProperty();
 	}
 	
