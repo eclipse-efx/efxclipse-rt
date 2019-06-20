@@ -51,3 +51,4 @@ Import-Package: com.google.common.cache;version="15.0.0",
  org.eclipse.fx.ui.panes;version="3.6.0",
  org.osgi.service.component.annotations;resolution:=optional
 Java-Module-AddExports: javafx.graphics/com.sun.javafx.scene=.
+Java-Module-AddOpens: javafx.graphics/javafx.scene=.
