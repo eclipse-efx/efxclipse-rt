@@ -51,7 +51,7 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	List<Callback<Void>> disposalCallbacks;
 	@NonNull
 	private AdapterService adapterService;
-	private boolean contextDisposed;
+	boolean contextDisposed;
 
 	@Inject
 	@Optional
@@ -100,6 +100,9 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 
 			@Override
 			public boolean changed(IEclipseContext context) {
+				if( EclipseContextBoundValue.this.contextDisposed ) {
+					return false;
+				}
 				notifySubscriptions(getValue());
 				return true;
 			}
