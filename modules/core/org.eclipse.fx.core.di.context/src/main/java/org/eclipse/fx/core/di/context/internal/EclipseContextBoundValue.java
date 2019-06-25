@@ -101,7 +101,6 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 			@Override
 			public boolean changed(IEclipseContext context) {
 				if( EclipseContextBoundValue.this.contextDisposed ) {
-					notifySubscriptions(null);
 					return false;
 				}
 				notifySubscriptions(getValue());
