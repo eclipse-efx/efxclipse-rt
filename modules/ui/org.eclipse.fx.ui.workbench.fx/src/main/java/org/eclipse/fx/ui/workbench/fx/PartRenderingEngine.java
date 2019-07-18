@@ -423,6 +423,14 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 				element.setRenderer(null);
 			} else {
+				if (!(element instanceof MWindow) && parentRenderer != null && container != null) {
+					try {
+						parentRenderer.hideChild(container, element);
+					} catch (Throwable t) {
+						this.logger.error(t.getMessage(), t);
+					}
+				}
+				
 				ElementRenderer<@NonNull MUIElement, Object> r = getRenderer(element);
 				// Renderer might be NULL eg for MDynamicMenuContribution
 				if( r != null ) {
