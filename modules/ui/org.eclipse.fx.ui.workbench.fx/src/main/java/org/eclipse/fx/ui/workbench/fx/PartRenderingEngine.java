@@ -235,6 +235,10 @@ public class PartRenderingEngine implements IPresentationEngine {
 		}
 
 		if (element instanceof MContext && ((MContext) element).getContext() == null) {
+			if( parentContext == null ) {
+				this.logger.infof("Unable to render %s because no parent-context has been provided.", element); //$NON-NLS-1$
+				return null;
+			}
 			createContext((MContext) element, parentContext);
 		}
 
