@@ -236,7 +236,6 @@ public class Util {
 		for (Window window : sortedWindows) {
 			if (!FIND_NODE_EXCLUDE.equals(window.getUserData()) && new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
 				Node findNode = findNode(window.getScene().getRoot(), screenX, screenY);
-				System.err.println(findNode);
 				return findNode;
 			}
 		}
