@@ -21,7 +21,7 @@
    <feature url="features/org.eclipse.fx.code.target.feature_3.6.1.qualifier.jar" id="org.eclipse.fx.code.target.feature" version="3.6.1.qualifier">
       <category name="fxtarget"/>
    </feature>
-   <feature url="features/org.eclipse.fx.slf4j.target.feature_3.6.1.qualifier.jar" id="org.eclipse.fx.slf4j.target.feature" version="3.6.1.qualifier">
+   <feature url="features/org.eclipse.fx.slf4j.target.feature_3.6.0.qualifier.jar" id="org.eclipse.fx.slf4j.target.feature" version="3.6.0.qualifier">
       <category name="fxtarget"/>
    </feature>
    <feature url="features/org.eclipse.fx.nl.feature_3.6.1.qualifier.jar" id="org.eclipse.fx.nl.feature" version="3.6.1.qualifier">
