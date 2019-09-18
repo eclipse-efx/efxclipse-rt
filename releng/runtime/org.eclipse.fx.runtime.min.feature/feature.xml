@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.runtime.min.feature"
       label="e(fx)clipse - Minimal JavaFX OSGi integration bundles"
-      version="3.6.0.qualifier"
+      version="3.6.1.qualifier"
       provider-name="Eclipse.org">
 
    <description>
