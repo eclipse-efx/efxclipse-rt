@@ -401,7 +401,7 @@ public class DefaultTrimStackImpl implements TrimStack {
 					}
 					
 					if (stackElement instanceof MPlaceholder) {
-						this.trimStackTB.getChildren().add(createButton((MUILabel) stackElement.getRef()));
+						this.trimStackTB.getChildren().add(createButton((MUILabel) ((MPlaceholder) stackElement).getRef()));
 					}
 					else {
 						this.trimStackTB.getChildren().add(createButton((MUILabel) stackElement));
