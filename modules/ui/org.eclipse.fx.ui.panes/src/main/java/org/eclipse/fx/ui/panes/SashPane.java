@@ -364,6 +364,15 @@ public class SashPane extends Region {
 			double delta = e.getScreenY() - this.start;
 			long newSize_1 = (long) (this.resize_1 + delta);
 			long newSize_2 = (long) (this.resize_2 - delta);
+			if (newSize_1 < DRAG_MINIMUM) {
+				newSize_2 = (long) this.resize_total - DRAG_MINIMUM;
+				newSize_1 = DRAG_MINIMUM;
+			}
+
+			if (newSize_2 < DRAG_MINIMUM) {
+				newSize_1 = (long) this.resize_total - DRAG_MINIMUM;
+				newSize_2 = DRAG_MINIMUM;
+			}
 
 			Object data1 = this.c1.getProperties().get(LAYOUT_KEY);
 			if (data1 == null || !(data1 instanceof SashFormData)) {
