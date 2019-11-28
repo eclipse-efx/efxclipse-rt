@@ -53,6 +53,7 @@ import org.eclipse.e4.ui.internal.workbench.SelectionAggregator;
 import org.eclipse.e4.ui.internal.workbench.SelectionServiceImpl;
 import org.eclipse.e4.ui.model.application.MAddon;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.impl.BasicPackageImpl;
@@ -152,6 +153,7 @@ public abstract class AbstractE4Application {
 
 	private static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(AbstractE4Application.class);
 	private MApplication applicationModel;
+	private EModelService modelService;
 
 	/**
 	 * Create a databinding realm
@@ -214,6 +216,8 @@ public abstract class AbstractE4Application {
 	@Nullable
 	public E4Workbench createE4Workbench(ApplicationContext applicationContext, final IEclipseContext appContext) {
 		ContextInjectionFactory.setDefault(appContext);
+		
+		this.modelService = appContext.get(EModelService.class);
 
 		appContext.set(Realm.class, createRealm(appContext));
 		appContext.set(ApplicationContext.class, applicationContext);
@@ -453,9 +457,19 @@ public abstract class AbstractE4Application {
 	 */
 	public void saveModel() {
 		try {
+			if( this.modelService != null ) {
+				this.modelService.findElements(this.applicationModel, null, MElementContainer.class, null, EModelService.ANYWHERE).forEach(AbstractE4Application::sanitizeContainer);
+			}
 			this.handler.save();
 		} catch (IOException e) {
 			LOGGER.error("Unable to persist the model", e); //$NON-NLS-1$
+		}
+	}
+	
+	private static void sanitizeContainer(MElementContainer<MUIElement> container) {
+		if( container.getSelectedElement() != null && ! container.getSelectedElement().isToBeRendered() ) {
+			MUIElement selectedElement = container.getChildren().stream().filter(MUIElement::isToBeRendered).findFirst().orElse(null);
+			container.setSelectedElement(selectedElement);
 		}
 	}
 
