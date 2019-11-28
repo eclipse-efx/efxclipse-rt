@@ -339,7 +339,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	public void removeGui(MUIElement element) {
 		MUIElement container = (element.getCurSharedRef() != null) ? element.getCurSharedRef()
 				: (MUIElement) ((EObject) element).eContainer();
-
+		
 		if (container != null || element instanceof MWindow) {
 			ElementRenderer<MUIElement, Object> parentRenderer = (ElementRenderer<MUIElement, Object>) (container == null
 					? null : getRendererFor(container));
@@ -441,6 +441,16 @@ public class PartRenderingEngine implements IPresentationEngine {
 					r.destroyRenderingContext(element);	
 				}
 			}
+			
+			if( container instanceof MElementContainer<?> ) {
+				checkSelection((MElementContainer<MUIElement>) container);
+			}
+		}
+	}
+	
+	private static void checkSelection(MElementContainer<MUIElement> container) {
+		if( container.getSelectedElement() != null && container.getChildren().stream().noneMatch(MUIElement::isToBeRendered) ) {
+			container.setSelectedElement(null);
 		}
 	}
 
