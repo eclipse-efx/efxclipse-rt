@@ -25,9 +25,12 @@ jobs:
       run: tar xzvf zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64.tar.gz
     - name: Test Java
       run: zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64/bin/java -version
-#    - name: Download old Maven
-#      run: wget -q https://archive.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip
-#    - name: Unzip old maven
-#      run: unzip apache-maven-3.5.4-bin.zip
-#    - name: Build with old Maven
+    - name: Export JAVA_HOME
+      run: export JAVA_HOME=${GITHUB_WORKSPACE}/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64
+    - name: Download old Maven
+      run: wget -q https://archive.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip
+    - name: Unzip old maven
+      run: unzip apache-maven-3.5.4-bin.zip
+    - name: Build with old Maven
+      run: ./apache-maven-3.5.4/bin/mvn --version
 #      run: ./apache-maven-3.5.4/bin/mvn -q -B clean package integration-test --file releng/org.eclipse.fx.releng/pom.xml
