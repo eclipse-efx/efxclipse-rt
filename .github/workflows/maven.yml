@@ -44,7 +44,7 @@ jobs:
     - name: Unzip old maven
       run: unzip apache-maven-3.5.4-bin.zip
     - name: Build with old Maven
-      run: cat ./apache-maven-3.5.4/bin/mvn ./apache-maven-3.5.4/bin/mvn-dummy; chmod 775 ./apache-maven-3.5.4/bin/mvn-dummy
+      run: cat ./apache-maven-3.5.4/bin/mvn > ./apache-maven-3.5.4/bin/mvn-dummy; chmod 775 ./apache-maven-3.5.4/bin/mvn-dummy
     - name: Append debug
       run: echo "echo $JAVA_CMD" >> ./apache-maven-3.5.4/bin/mvn-dummy
     - name: Run Maven
