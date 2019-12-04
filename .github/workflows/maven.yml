@@ -51,5 +51,5 @@ jobs:
 #    - name: Print Debug
 #      run: cat ./apache-maven-3.5.4/bin/mvn-dummy
     - name: Run Maven
-      run: ./apache-maven-3.5.4/bin/mvn-dummy --version
+      run: ./apache-maven-3.5.4/bin/mvn --version
 #      run: ./apache-maven-3.5.4/bin/mvn -q -B clean package integration-test --file releng/org.eclipse.fx.releng/pom.xml
