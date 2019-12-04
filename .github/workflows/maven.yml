@@ -15,40 +15,41 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-#    - name: Set up JDK 1.8
-#      uses: actions/setup-java@v1
-#      with:
-#        java-version: 1.8
-    - name: Java Info
-      run: which java
-    - name: Install ZuluFX
-      run: wget -q https://cdn.azul.com/zulu/bin/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64.tar.gz
-    - name: Extract ZuluFX
-      run: tar xzvf zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64.tar.gz
-    - name: Test Java
-      run: zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64/bin/java -version
-    - name: Export JAVA_HOME
-      run: export JAVA_HOME=${GITHUB_WORKSPACE}/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64; echo $JAVA_HOME
-    - name: Cur Dir
-      run: pwd
-    - name: Update Path
-      run: export PATH=${GITHUB_WORKSPACE}/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64/bin:$PATH; echo $PATH
-    - name: Print Content
-      run: ls -la $JAVA_HOME/bin
-    - name: Test Java 2
-      run: java -version
-    - name: Java Info
-      run: which java
-    - name: Download old Maven
-      run: wget -q https://archive.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip
-    - name: Unzip old maven
-      run: unzip apache-maven-3.5.4-bin.zip
-    - name: Build with old Maven
-      run: cat ./apache-maven-3.5.4/bin/mvn > ./apache-maven-3.5.4/bin/mvn-dummy; chmod 775 ./apache-maven-3.5.4/bin/mvn-dummy
-    - name: Append debug
-      run: echo "echo ${JAVA_CMD@Q}" >> ./apache-maven-3.5.4/bin/mvn-dummy
-    - name: Print Debug
-      run: cat ./apache-maven-3.5.4/bin/mvn-dummy
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+        java-package: jdk+fx 
+#    - name: Java Info
+#      run: which java
+#    - name: Install ZuluFX
+#      run: wget -q https://cdn.azul.com/zulu/bin/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64.tar.gz
+#    - name: Extract ZuluFX
+#      run: tar xzvf zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64.tar.gz
+#    - name: Test Java
+#      run: zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64/bin/java -version
+#    - name: Export JAVA_HOME
+#      run: export JAVA_HOME=${GITHUB_WORKSPACE}/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64; echo $JAVA_HOME
+#    - name: Cur Dir
+#      run: pwd
+#    - name: Update Path
+#      run: export PATH=${GITHUB_WORKSPACE}/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64/bin:$PATH; echo $PATH
+#    - name: Print Content
+#      run: ls -la $JAVA_HOME/bin
+#    - name: Test Java 2
+#      run: java -version
+#    - name: Java Info
+#      run: which java
+#    - name: Download old Maven
+#      run: wget -q https://archive.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip
+#    - name: Unzip old maven
+#      run: unzip apache-maven-3.5.4-bin.zip
+#    - name: Build with old Maven
+#      run: cat ./apache-maven-3.5.4/bin/mvn > ./apache-maven-3.5.4/bin/mvn-dummy; chmod 775 ./apache-maven-3.5.4/bin/mvn-dummy
+#    - name: Append debug
+#      run: echo "echo $JAVA_CMD" >> ./apache-maven-3.5.4/bin/mvn-dummy
+#    - name: Print Debug
+#      run: cat ./apache-maven-3.5.4/bin/mvn-dummy
     - name: Run Maven
       run: ./apache-maven-3.5.4/bin/mvn-dummy --version
 #      run: ./apache-maven-3.5.4/bin/mvn -q -B clean package integration-test --file releng/org.eclipse.fx.releng/pom.xml
