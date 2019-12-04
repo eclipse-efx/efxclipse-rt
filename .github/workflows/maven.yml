@@ -28,7 +28,7 @@ jobs:
     - name: Test Java
       run: zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64/bin/java -version
     - name: Export JAVA_HOME
-      run: export JAVA_HOME=${GITHUB_WORKSPACE}/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64
+      run: export JAVA_HOME=${GITHUB_WORKSPACE}/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64; echo $PATH
     - name: Update Path
       run: export PATH=${GITHUB_WORKSPACE}/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64/bin:$PATH
     - name: Test Java 2
