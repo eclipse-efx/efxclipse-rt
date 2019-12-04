@@ -46,7 +46,7 @@ jobs:
     - name: Build with old Maven
       run: cat ./apache-maven-3.5.4/bin/mvn > ./apache-maven-3.5.4/bin/mvn-dummy; chmod 775 ./apache-maven-3.5.4/bin/mvn-dummy
     - name: Append debug
-      run: echo "\necho $JAVA_CMD" >> ./apache-maven-3.5.4/bin/mvn-dummy
+      run: echo "echo ${JAVA_CMD@Q}" >> ./apache-maven-3.5.4/bin/mvn-dummy
     - name: Print Debug
       run: cat ./apache-maven-3.5.4/bin/mvn-dummy
     - name: Run Maven
