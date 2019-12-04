@@ -24,4 +24,4 @@ jobs:
     - name: Unzip old maven
       run: unzip apache-maven-3.5.4-bin.zip
     - name: Build with old Maven
-      run: ./apache-maven-3.5.4/bin/mvn -B clean package integration-test --file releng/org.eclipse.fx.releng/pom.xml
+      run: ./apache-maven-3.5.4/bin/mvn -q -B clean package integration-test --file releng/org.eclipse.fx.releng/pom.xml
