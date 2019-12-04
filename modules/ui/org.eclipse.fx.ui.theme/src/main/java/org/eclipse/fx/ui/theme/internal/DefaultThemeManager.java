@@ -51,7 +51,9 @@ public class DefaultThemeManager implements ThemeManager {
 	@SuppressWarnings("null")
 	private final @NonNull ObservableMap<@NonNull String, @NonNull Theme> unmodifiableThemes = FXCollections.unmodifiableObservableMap(this.themes);
 	private String currentThemeId;
-	ObservableList<Scene> managedScenes = FXCollections.observableArrayList();
+	final ObservableList<Scene> managedScenes = FXCollections.observableArrayList();
+	@SuppressWarnings("null")
+	private final @NonNull ObservableList<@NonNull Scene> unmodifiableManagedScenes = FXCollections.unmodifiableObservableList(this.managedScenes);
 	
 	private final ListChangeListener<? super @NonNull URL> listener = this::handleStylesheetUrlChange;
 
@@ -105,6 +107,11 @@ public class DefaultThemeManager implements ThemeManager {
 	@Override
 	public @NonNull ObservableMap<@NonNull String, @NonNull Theme> getAvailableThemes() {
 		return this.unmodifiableThemes;
+	}
+
+	@Override
+	public @NonNull ObservableList<@NonNull Scene> getManagedScenes() {
+		return this.unmodifiableManagedScenes;
 	}
 
 	@SuppressWarnings("null")

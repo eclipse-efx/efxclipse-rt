@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.services.theme;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 
@@ -52,6 +53,16 @@ public interface ThemeManager {
 	 */
 	@NonNull
 	public Registration registerScene(@NonNull Scene scene);
+
+	/**
+	 * Get a list of all managed Scenes
+	 * 
+	 * @return unmodifiable ObservableList of all managed Scenes
+	 */
+	@NonNull
+	default ObservableList<@NonNull Scene> getManagedScenes() {
+		throw new UnsupportedOperationException("getManagedScenes is not implemented"); //$NON-NLS-1$
+	}
 	
 	/**
 	 * Registration
