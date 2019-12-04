@@ -25,10 +25,10 @@ jobs:
       run: sudo add-apt-repository ppa:webupd8team/java
     - name: Update repos
       run: sudo apt-get update
-    - name: Agree Java License 1
-      run: sudo echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
-    - name: Agree Java License 2
-      run: sudo echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
+#    - name: Agree Java License 1
+#      run: sudo echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
+#    - name: Agree Java License 2
+#      run: sudo echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
     - name: Install Oracle JDK 8
       run: sudo apt-get install -y oracle-java8-installer
     - name: Test Java Version
