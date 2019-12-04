@@ -19,6 +19,8 @@ jobs:
 #      uses: actions/setup-java@v1
 #      with:
 #        java-version: 1.8
+    - name: Java Info
+      run: which java
     - name: Install ZuluFX
       run: wget -q https://cdn.azul.com/zulu/bin/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64.tar.gz
     - name: Extract ZuluFX
