@@ -34,7 +34,7 @@ jobs:
     - name: Update Path
       run: export PATH=${GITHUB_WORKSPACE}/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64/bin:$PATH; echo $PATH
     - name: Print Content
-      run: ls -la ${GITHUB_WORKSPACE}/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64/bin
+      run: ls -la $JAVA_HOME/bin
     - name: Test Java 2
       run: java -version
     - name: Java Info
