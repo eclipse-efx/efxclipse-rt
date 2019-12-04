@@ -19,5 +19,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Download old Maven
+      run: wget -q https://archive.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip
+    - name: Unzip old maven
+      run: unzip apache-maven-3.5.4-bin.zip
     - name: Build with Maven
-      run: mvn -B clean package integration-test --file releng/org.eclipse.fx.releng/pom.xml
+      run: ./apache-maven-3.5.4/bin/mvn -B clean package integration-test --file releng/org.eclipse.fx.releng/pom.xml
