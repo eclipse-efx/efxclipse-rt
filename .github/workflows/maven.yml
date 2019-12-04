@@ -33,6 +33,8 @@ jobs:
       run: export PATH=${GITHUB_WORKSPACE}/zulu8.42.0.23-ca-fx-jdk8.0.232-linux_x64/bin:$PATH
     - name: Test Java 2
       run: java -version
+    - name: Java Info
+      run: which java
     - name: Download old Maven
       run: wget -q https://archive.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip
     - name: Unzip old maven
