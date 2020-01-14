@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Basic service APIs for an Editor into Eclipse 4
 Bundle-SymbolicName: org.eclipse.fx.code.editor.e4
-Bundle-Version: 3.6.1.qualifier
+Bundle-Version: 3.6.2.qualifier
 Bundle-Vendor: Eclipse.org
 Export-Package: org.eclipse.fx.code.editor.e4;version="3.6.1";x-internal:=true,
  org.eclipse.fx.code.editor.e4.addons;version="3.6.1";x-internal:=true,
