@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -228,7 +229,7 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 
 		@Inject
 		IEventBroker eventBroker;
-		
+
 		@Override
 		public Class<? extends WStackItem<PerspectiveStackItem, Node>> getStackItemClass() {
 			return PerspectiveStackItemImpl.class;
@@ -249,41 +250,64 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 			this.items.addAll(index, items);
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		public void selectItem(int idx) {
+			// sanity check
+			if (idx >= this.items.size()) {
+				this.logger.error(MessageFormat.format("Passed perspective index out of bounds in perspective stack: index={0}, size={1}", //$NON-NLS-1$
+						Integer.valueOf(idx), Integer.valueOf(this.items.size())));
+				return;
+			}
+
 			WStackItem<PerspectiveStackItem, Node> item = this.items.get(idx);
 			PerspectiveStackItem nativeItem = item.getNativeItem();
-			if( nativeItem != null ) {
+			if (nativeItem != null) {
 				Node node = nativeItem.getContent();
-				if( node == null ) {
+				if (node == null) {
 					return;
 				}
-				
-				MPerspective curDomElement = this.items.get(this.currentIndex).getDomElement();
+
+				WStackItem<PerspectiveStackItem, Node> currentItem = getCurrentItem();
+				MPerspective curDomElement = currentItem != null ? currentItem.getDomElement() : null;
 				MPerspective nexDomElement = item.getDomElement();
+
 				if (getWidget().getCenter() != null && this.perspectiveSwitch != null) {
-					if( curDomElement != null && nexDomElement != null ) {
+					if (curDomElement != null && nexDomElement != null) {
 						AnimationDelegate<BorderPane, Node> a = this.perspectiveSwitch.getDelegate(curDomElement, nexDomElement);
 						if (a == null) {
-							Util.attachNode(node, getWidget()::setCenter );
+							Util.attachNode(node, getWidget()::setCenter);
 						} else {
 							a.animate(getWidget(), node, () -> {
-								this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
+								if (curDomElement != null) {
+									this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
+								}
 								this.eventBroker.send(Constants.PERSPECTIVE_SHOWN, nexDomElement);
 							});
-						}	
+						}
 					} else {
-						Util.attachNode(node, getWidget()::setCenter );
-						this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
+						Util.attachNode(node, getWidget()::setCenter);
+						if (curDomElement != null) {
+							this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
+						}
 						this.eventBroker.send(Constants.PERSPECTIVE_SHOWN, nexDomElement);
 					}
 				} else {
-					Util.attachNode(node, getWidget()::setCenter );
-					this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
+					Util.attachNode(node, getWidget()::setCenter);
+					if (curDomElement != null) {
+						this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
+					}
 					this.eventBroker.send(Constants.PERSPECTIVE_SHOWN, nexDomElement);
 				}
-				this.currentIndex = idx;				
+				this.currentIndex = idx;
 			}
+		}
+
+		private WStackItem<PerspectiveStackItem, Node> getCurrentItem() {
+			if (this.currentIndex >= 0 && this.currentIndex < this.items.size()) {
+				return this.items.get(this.currentIndex);
+			}
+			return null;
 		}
 
 		@Override
@@ -298,7 +322,17 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 
 		@Override
 		public void removeItems(List<WStackItem<PerspectiveStackItem, Node>> items) {
+			final WStackItem<PerspectiveStackItem, Node> currentItem = getCurrentItem();
 			this.items.removeAll(items);
+			if (currentItem != null && !items.contains(currentItem)) {
+				this.currentIndex = items.indexOf(currentItem);
+			} else {
+				// active element was removed or did not exist in the first place
+				this.currentIndex = -1;
+				if (currentItem != null) {
+					this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, currentItem.getDomElement());
+				}
+			}
 		}
 
 		@Override
