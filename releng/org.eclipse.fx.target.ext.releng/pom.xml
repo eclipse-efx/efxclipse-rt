@@ -11,7 +11,7 @@
 
 	<groupId>org.eclipse.fx</groupId>
 	<artifactId>ext.releng</artifactId>
-	<version>3.6.2-SNAPSHOT</version>
+	<version>3.7.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<tycho-version>1.4.0</tycho-version>
@@ -34,24 +34,24 @@
 	<repositories>
 		<repository>
 			<!-- Important changing this requires to publish the platform bundles to maven -->
-			<id>oxygen.0</id>
+			<id>2019-12</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/eclipse/updates/4.9/R-4.9-201809060745/</url>
+			<url>https://download.eclipse.org/eclipse/updates/4.14/R-4.14-201912100610/</url>
 		</repository>
 		<repository>
 			<id>orbit</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository/</url>
+			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository/</url>
 		</repository>
 		<repository>
 			<id>xtext</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.15.0</url>
+			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.20.0</url>
 		</repository>
 		<repository>
 			<id>mwe</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.1</url>
+			<url>http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.11.1</url>
 		</repository>
 		<repository>
 			<id>xpand</id>
@@ -61,12 +61,12 @@
 		<repository>
 			<id>emf</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/modeling/emf/emf/builds/release/2.15</url>
+			<url>http://download.eclipse.org/modeling/emf/emf/builds/release/2.20</url>
 		</repository>
 		<repository>
 			<id>m2e</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/m2e/releases</url>
+			<url>http://download.eclipse.org/technology/m2e/releases/1.14</url>
 		</repository>
 	</repositories>
 
@@ -132,17 +132,7 @@
 						<environment>
 							<os>linux</os>
 							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
 							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
 						</environment>
 						<environment>
 							<os>win32</os>

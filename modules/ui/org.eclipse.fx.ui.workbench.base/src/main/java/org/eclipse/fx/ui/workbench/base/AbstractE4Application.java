@@ -577,7 +577,7 @@ public abstract class AbstractE4Application {
 		appContext.set(IWorkbench.APPLICATION_CONTEXT_KEY, appContext);
 		IExtensionRegistry registry = RegistryFactory.getRegistry();
 		ExceptionHandler exceptionHandler = new ExceptionHandler();
-		ReflectionContributionFactory contributionFactory = new ReflectionContributionFactory(registry);
+		ReflectionContributionFactory contributionFactory = new ReflectionContributionFactory();
 		appContext.set(IContributionFactory.class.getName(), contributionFactory);
 		appContext.set(IExtensionRegistry.class.getName(), registry);
 		appContext.set(IExceptionHandler.class.getName(), exceptionHandler);

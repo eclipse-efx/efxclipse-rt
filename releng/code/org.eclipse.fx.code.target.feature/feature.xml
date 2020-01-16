@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.code.target.feature"
       label="e(fx)clipse - Code Editing - Code editing target platform"
-      version="3.6.2.qualifier"
+      version="3.7.0.qualifier"
       provider-name="Eclipse.org">
 
    <description>
@@ -209,20 +209,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.eclipse.xtext.xbase.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.xtext.generator"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.xtext.generator.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -631,6 +617,20 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.eclipse.fx.code.editor.langs.themes.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="io.github.classgraph"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="io.github.classgraph.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

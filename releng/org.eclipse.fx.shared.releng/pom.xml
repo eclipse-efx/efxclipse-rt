@@ -11,7 +11,7 @@
 
 	<groupId>org.eclipse.fx.shared</groupId>
 	<artifactId>releng</artifactId>
-	<version>3.6.2-SNAPSHOT</version>
+	<version>3.7.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<!-- KEEP VERSION 0.22.0 other one will fail on hudson -->
@@ -116,17 +116,7 @@
 						<environment>
 							<os>linux</os>
 							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
 							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
 						</environment>
 						<environment>
 							<os>win32</os>

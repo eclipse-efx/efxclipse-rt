@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Configuration
 Bundle-SymbolicName: org.eclipse.fx.code.editor.configuration
-Bundle-Version: 3.6.2.qualifier
+Bundle-Version: 3.7.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
-Export-Package: org.eclipse.fx.code.editor.configuration;version="3.6.1";x-internal:=true
+Export-Package: org.eclipse.fx.code.editor.configuration;version="3.7.0";x-internal:=true
 Require-Bundle: com.google.gson;bundle-version="2.2.4"

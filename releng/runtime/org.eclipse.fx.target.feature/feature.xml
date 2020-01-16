@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.target.feature"
       label="e(fx)clipse - Target Platform Feature"
-      version="3.6.2.qualifier"
+      version="3.7.0.qualifier"
       provider-name="Eclipse.org">
 
    <description>
@@ -1097,20 +1097,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.equinox.util"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.util.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.osgi"
          download-size="0"
          install-size="0"
@@ -1951,29 +1937,14 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ecf.provider.filetransfer.httpclient4"
+         id="org.eclipse.ecf.provider.filetransfer.httpclient45"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ecf.provider.filetransfer.httpclient4.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ecf.provider.filetransfer.httpclient4.ssl"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ecf.provider.filetransfer.httpclient4.ssl.source"
+         id="org.eclipse.ecf.provider.filetransfer.httpclient45.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -2411,30 +2382,10 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          fragment="true"/>
 
    <plugin
-         id="org.eclipse.equinox.launcher.gtk.linux.x86"
-         os="linux"
-         ws="gtk"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
          id="org.eclipse.equinox.launcher.gtk.linux.x86_64"
          os="linux"
          ws="gtk"
          arch="x86_64"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="org.eclipse.equinox.launcher.win32.win32.x86"
-         os="win32"
-         ws="win32"
-         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -2461,16 +2412,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          fragment="true"/>
 
    <plugin
-         id="org.eclipse.equinox.security.win32.x86"
-         os="win32"
-         ws="win32"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
          id="org.eclipse.equinox.security.win32.x86_64"
          os="win32"
          ws="win32"
@@ -2488,12 +2429,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.eclipse.equinox.security.win32.x86_64.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.equinox.security.win32.x86.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>

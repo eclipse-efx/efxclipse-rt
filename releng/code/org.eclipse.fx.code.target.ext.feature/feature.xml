@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.code.target.ext.feature"
       label="Feature"
-      version="3.6.2.qualifier">
+      version="3.7.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -306,20 +306,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.xtext.generator"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.xtext.generator.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.xtext.source"
          download-size="0"
          install-size="0"
@@ -447,6 +433,20 @@
 
    <plugin
          id="javax.annotation.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="io.github.classgraph"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="io.github.classgraph.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
