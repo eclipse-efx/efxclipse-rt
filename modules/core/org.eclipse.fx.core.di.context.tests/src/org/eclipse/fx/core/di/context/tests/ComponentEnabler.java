@@ -4,6 +4,7 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
+@SuppressWarnings("javadoc")
 @Component(service = ComponentEnabler.class)
 public class ComponentEnabler {
 
@@ -15,18 +16,18 @@ public class ComponentEnabler {
 	}
 
 	public void enableDisabledServiceA() {
-		this.context.enableComponent("DisabledServiceA");
+		this.context.enableComponent("DisabledServiceA"); //$NON-NLS-1$
 	}
 
 	public void disableDisabledServiceA() {
-		this.context.disableComponent("DisabledServiceA");
+		this.context.disableComponent("DisabledServiceA"); //$NON-NLS-1$
 	}
 
 	public void enableDisabledServiceB() {
-		this.context.enableComponent("DisabledServiceB");
+		this.context.enableComponent("DisabledServiceB"); //$NON-NLS-1$
 	}
 
 	public void disableDisabledServiceB() {
-		this.context.disableComponent("DisabledServiceB");
+		this.context.disableComponent("DisabledServiceB"); //$NON-NLS-1$
 	}
 }
