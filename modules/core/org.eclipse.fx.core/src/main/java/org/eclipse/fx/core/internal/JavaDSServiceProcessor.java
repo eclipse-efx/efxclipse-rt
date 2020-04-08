@@ -37,6 +37,7 @@ import org.eclipse.fx.core.KeyValueStore;
 import org.eclipse.fx.core.ServiceUtils;
 import org.eclipse.fx.core.ServiceUtils.ServiceReference;
 import org.eclipse.fx.core.internal.sm.Component;
+import org.eclipse.fx.core.internal.sm.Component10;
 import org.eclipse.fx.core.internal.sm.Component11;
 import org.eclipse.fx.core.internal.sm.Component12;
 import org.eclipse.fx.core.internal.sm.Component13;
@@ -359,7 +360,9 @@ public class JavaDSServiceProcessor {
 		try (InputStream in = resource.openStream()) {
 			String data = IOUtils.readToString(in, Charset.forName("UTF-8")); //$NON-NLS-1$
 			JAXBContext jaxbContext;
-			if (data.contains("http://www.osgi.org/xmlns/scr/v1.1.0")) { //$NON-NLS-1$
+			if (data.contains("http://www.osgi.org/xmlns/scr/v1.0.0")) { //$NON-NLS-1$
+				jaxbContext = JAXBContext.newInstance(Component10.class);
+			} else if (data.contains("http://www.osgi.org/xmlns/scr/v1.1.0")) { //$NON-NLS-1$
 				jaxbContext = JAXBContext.newInstance(Component11.class);
 			} else if( data.contains("http://www.osgi.org/xmlns/scr/v1.2.0") ) { //$NON-NLS-1$
 				jaxbContext = JAXBContext.newInstance(Component12.class);
