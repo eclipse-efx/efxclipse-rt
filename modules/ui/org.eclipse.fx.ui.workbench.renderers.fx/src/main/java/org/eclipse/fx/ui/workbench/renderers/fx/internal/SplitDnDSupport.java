@@ -254,7 +254,13 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 				e.consume();
 			} else if (m instanceof MPart && isSplit(e)) {
 				e.consume();
-				if ((MUIElement) m.getParent() instanceof MPartStack) {
+				MPart part = (MPart) m;
+				// If parent is NULL it is a shared part
+				if( m.getParent() == null && part.getCurSharedRef() != null && (MUIElement)part.getCurSharedRef().getParent() instanceof MPartStack ) {
+					DropData d = new DropData(screenX(e), screenY(e), part.getCurSharedRef(), draggedElement, getSplitType(e));
+					dropDroppedCallback.call(d);
+					setDropComplete(e, true);
+				} else if ((MUIElement) m.getParent() instanceof MPartStack) {
 					DropData d = new DropData(screenX(e), screenY(e), this.widget.getDomElement(), draggedElement, getSplitType(e));
 					dropDroppedCallback.call(d);
 					setDropComplete(e, true);
