@@ -10,7 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.core.internal.sm;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.namespace.QName;
 
 /**
  * The provided interface
@@ -18,6 +23,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 public class Provide {
 
 	private String iface;
+	
+	private Map<QName, String> otherAttributes = new HashMap<>();
 
 	/**
 	 * @return the interface
@@ -37,4 +44,12 @@ public class Provide {
 		this.iface = iface;
 	}
 
+	@XmlAnyAttribute
+    public Map<QName, String> getOtherAttributes() {
+		return this.otherAttributes;
+	}
+	
+	public void setOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+	}
 }

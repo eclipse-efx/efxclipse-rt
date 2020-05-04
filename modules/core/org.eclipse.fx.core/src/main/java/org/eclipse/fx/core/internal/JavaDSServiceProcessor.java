@@ -41,6 +41,7 @@ import org.eclipse.fx.core.internal.sm.Component10;
 import org.eclipse.fx.core.internal.sm.Component11;
 import org.eclipse.fx.core.internal.sm.Component12;
 import org.eclipse.fx.core.internal.sm.Component13;
+import org.eclipse.fx.core.internal.sm.Component14;
 import org.eclipse.fx.core.internal.sm.Properties;
 import org.eclipse.fx.core.internal.sm.Property;
 import org.eclipse.fx.core.internal.sm.Reference;
@@ -366,8 +367,10 @@ public class JavaDSServiceProcessor {
 				jaxbContext = JAXBContext.newInstance(Component11.class);
 			} else if( data.contains("http://www.osgi.org/xmlns/scr/v1.2.0") ) { //$NON-NLS-1$
 				jaxbContext = JAXBContext.newInstance(Component12.class);
-			} else {
+			} else if( data.contains("http://www.osgi.org/xmlns/scr/v1.3.0") ) { //$NON-NLS-1$
 				jaxbContext = JAXBContext.newInstance(Component13.class);
+			} else {
+				jaxbContext = JAXBContext.newInstance(Component14.class);
 			}
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
