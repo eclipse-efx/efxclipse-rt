@@ -817,8 +817,8 @@ public class Util {
 	 *            The node to attach to an existing scene graph
 	 * @param attachToParent
 	 *            The method used to attach the node to the scene graph (e.g.
-	 *            <code>() -> pane.getChildren().add(node)</code> or
-	 *            <code>() -> borderPane.setCenter(node)</code>)
+	 *            <code>() -&gt; pane.getChildren().add(node)</code> or
+	 *            <code>() -&gt; borderPane.setCenter(node)</code>)
 	 * 
 	 * @see #OPTIMIZE_ATTACH
 	 */
@@ -857,7 +857,7 @@ public class Util {
 
 	/**
 	 * <p>
-	 * Restore & reapply styling on the given node, if {@link #OPTIMIZE_ATTACH} is
+	 * Restore &amp; reapply styling on the given node, if {@link #OPTIMIZE_ATTACH} is
 	 * <code>true</code>.
 	 * </p>
 	 * 

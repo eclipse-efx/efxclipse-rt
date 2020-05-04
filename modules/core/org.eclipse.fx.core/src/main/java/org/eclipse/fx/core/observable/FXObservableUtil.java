@@ -125,7 +125,8 @@ public class FXObservableUtil {
 
 	/**
 	 * Subscribe to the value change of an {@link ObservableValue}
-	 *
+	 * @param <T>
+	 * 			  the value type
 	 * @param o
 	 *            the observable
 	 * @param c
@@ -324,7 +325,8 @@ public class FXObservableUtil {
 
 		/**
 		 * Subscribe to the value change of an {@link ObservableValue}
-		 *
+		 * @param <T>
+		 * 			  the value type
 		 * @param o
 		 *            the observable
 		 * @param c

@@ -183,6 +183,7 @@ public class JFXUIProperties {
 	}
 
 	/**
+	 * @param <T> the value type
 	 * @return color property of a {@link ColorPicker}
 	 * @since 3.6.0
 	 */
@@ -196,7 +197,7 @@ public class JFXUIProperties {
 	 * @since 3.6.0
 	 */
 	@NonNull
-	public static <T> IJFXControlValueProperty<CheckBox, Boolean> checkBox() {
+	public static IJFXControlValueProperty<CheckBox, Boolean> checkBox() {
 		return new SelectedValueProperty<>();
 	}
 
@@ -205,7 +206,7 @@ public class JFXUIProperties {
 	 * @since 3.6.0
 	 */
 	@NonNull
-	public static <T> IJFXControlValueProperty<ToggleButton, Boolean> toggleButton() {
+	public static IJFXControlValueProperty<ToggleButton, Boolean> toggleButton() {
 		return new SelectedValueProperty<>();
 	}
 
@@ -214,7 +215,7 @@ public class JFXUIProperties {
 	 * @since 3.6.0
 	 */
 	@NonNull
-	public static <T> IJFXControlValueProperty<CheckMenuItem, Boolean> checkMenuItem() {
+	public static IJFXControlValueProperty<CheckMenuItem, Boolean> checkMenuItem() {
 		return new SelectedValueProperty<>();
 	}
 }
