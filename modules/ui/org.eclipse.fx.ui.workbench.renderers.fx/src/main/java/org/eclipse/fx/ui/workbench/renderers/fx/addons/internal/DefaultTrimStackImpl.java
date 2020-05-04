@@ -400,7 +400,12 @@ public class DefaultTrimStackImpl implements TrimStack {
 						continue;
 					}
 					
-					this.trimStackTB.getChildren().add(createButton((MUILabel) stackElement));
+					if (stackElement instanceof MPlaceholder) {
+						this.trimStackTB.getChildren().add(createButton((MUILabel) ((MPlaceholder) stackElement).getRef()));
+					}
+					else {
+						this.trimStackTB.getChildren().add(createButton((MUILabel) stackElement));
+					}
 				}
 			} else if (theStack.getTags().contains(IPresentationEngine.NO_AUTO_COLLAPSE)) {
 				// OK to be empty and still minimized

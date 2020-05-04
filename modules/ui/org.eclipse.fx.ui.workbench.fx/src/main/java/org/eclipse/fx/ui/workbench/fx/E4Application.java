@@ -17,10 +17,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -68,7 +70,11 @@ import org.osgi.service.prefs.BackingStoreException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -94,6 +100,7 @@ public class E4Application extends AbstractE4Application implements IApplication
 	ApplicationContext applicationContext;
 	ExitStatus returnValue;
 	protected EventAdmin eventAdmin;
+	
 
 	StartupProgressTrackerService startupService;
 
@@ -153,6 +160,16 @@ public class E4Application extends AbstractE4Application implements IApplication
 		},Executors.newSingleThreadExecutor());
 
 		return rv;
+	}
+	
+	@Override
+	protected List<ScreenStruct> getScreensetup() {
+		return Screen.getScreens().stream()
+				.map( s -> {
+					Rectangle2D b = s.getVisualBounds();
+					return new ScreenStruct(s.equals(Screen.getPrimary()), (int)b.getMinX(), (int)b.getMinY(), (int)b.getWidth(), (int)b.getHeight());
+				} )
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -234,7 +251,8 @@ public class E4Application extends AbstractE4Application implements IApplication
 					try {
 						if (!checkInstanceLocation(E4Application.this.instanceLocation, wbContext)) {
 							updateStartupState(DefaultProgressState.LOCATION_CHECK_FAILED);
-							return;
+							showLockedError();
+							System.exit(0);
 						}
 
 						// Create and run the UI (if any)
@@ -252,6 +270,13 @@ public class E4Application extends AbstractE4Application implements IApplication
 		} else {
 			startRunnable.run();
 		}
+	}
+	
+	static void showLockedError() {
+		Alert a = new Alert(AlertType.ERROR);
+		a.setTitle(Messages.E4Application_LockFail_Title);
+		a.setContentText(Messages.E4Application_LockFail_Message);
+		a.showAndWait();
 	}
 
 	@Override

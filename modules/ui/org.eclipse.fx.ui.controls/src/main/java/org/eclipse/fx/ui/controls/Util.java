@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BooleanSupplier;
@@ -31,6 +33,8 @@ import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
 import org.eclipse.fx.core.bindings.FXBindings;
 import org.eclipse.fx.core.geom.Size;
+import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.core.text.TextUtil;
 import org.eclipse.fx.ui.controls.internal.PseudoClassProperty;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
@@ -86,6 +90,11 @@ public class Util {
 	 * Tag used to exclude a node from finding
 	 */
 	public static final String FIND_NODE_EXCLUDE = "findNodeExclude"; //$NON-NLS-1$
+	
+	/**
+	 * System property to force {@link #findNode(Node, double, double)} to respect the drawing order
+	 */
+	public static final String FIND_NODE_RESPECT_DRAWING_ORDER = "efxclipse.findnode.respectdrawing"; //$NON-NLS-1$
 
 	/**
 	 * Boolean to indicate if mnemonic fixing is enabled
@@ -93,6 +102,22 @@ public class Util {
 	 * @noreference
 	 */
 	public static final boolean MNEMONICS_FIX = !Boolean.getBoolean("efxclipse.mnemonicfix.disabled"); //$NON-NLS-1$
+
+	/**
+	 * <p>
+	 * An application property to optimize the performances of attaching a
+	 * sub-graph to a Scene.
+	 * </p>
+	 * 
+	 * <p>
+	 * Set this property to <code>true</code> to workaround performance issues
+	 * from https://bugs.openjdk.java.net/browse/JDK-8151756 and 
+	 * https://bugs.openjdk.java.net/browse/JDK-8193445
+	 * </p>
+	 */
+	public static final String OPTIMIZE_ATTACH = "efxclipse.optimize.attach"; //$NON-NLS-1$
+
+	private static final Logger logger = LoggerCreator.createLogger(Util.class);
 
 	/**
 	 * Dump the scene graph to a formatted string
@@ -210,7 +235,8 @@ public class Util {
 
 		for (Window window : sortedWindows) {
 			if (!FIND_NODE_EXCLUDE.equals(window.getUserData()) && new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
-				return findNode(window.getScene().getRoot(), screenX, screenY);
+				Node findNode = findNode(window.getScene().getRoot(), screenX, screenY);
+				return findNode;
 			}
 		}
 
@@ -238,13 +264,26 @@ public class Util {
 		if (n.getBoundsInLocal().contains(b) && !FIND_NODE_EXCLUDE.equals(n.getUserData())) {
 			rv = n;
 			if (n instanceof Parent) {
-				List<Node> cList = ((Parent) n).getChildrenUnmodifiable().stream().filter(no -> no.isVisible()).collect(Collectors.toList());
-
-				for (Node c : cList) {
-					Node cn = findNode(c, screenX, screenY);
-					if (cn != null) {
-						rv = cn;
-						break;
+				List<Node> cList = ((Parent) n).getChildrenUnmodifiable().stream()
+						.filter(no -> no.isVisible())
+						.collect(Collectors.toList());
+				if( Boolean.getBoolean(FIND_NODE_RESPECT_DRAWING_ORDER) ) {
+					for (int i = cList.size()-1; i >= 0; i--) {
+						Node c = cList.get(i);
+						Node cn = findNode(c, screenX, screenY);
+						if (cn != null) {
+							rv = cn;
+							break;
+						}
+					}
+				} else {
+					for (int i = 0; i < cList.size(); i++) {
+						Node c = cList.get(i);
+						Node cn = findNode(c, screenX, screenY);
+						if (cn != null) {
+							rv = cn;
+							break;
+						}
 					}
 				}
 			}
@@ -739,5 +778,139 @@ public class Util {
 				e.consume();
 			}
 		};
+	}
+
+	/**
+	 * Attach the given node to an existing scene graph, via the given consumer.
+	 * This method is meant to increase performances for this operation, on some
+	 * JavaFX versions, and should be used when attaching a significant
+	 * sub-graph to an existing scene.
+	 * 
+	 * Since the performance patch is related to the current JavaFX version, it
+	 * has to be explicitly enabled via the
+	 * <code>efxclipse.optimize.attach</code> system property
+	 * 
+	 * @param node
+	 *            The node to attach to an existing scene graph
+	 * @param attachToParent
+	 *            The method used to attach the node to the scene graph (e.g.
+	 *            <code>pane.getChildren()::add</code> or
+	 *            <code>borderPane::setCenter</code>)
+	 * 
+	 * @see #OPTIMIZE_ATTACH
+	 */
+	public static void attachNode(Node node, Consumer<Node> attachToParent) {
+		attachNode(node, () -> attachToParent.accept(node));
+	}
+
+	/**
+	 * Attach the given node to an existing scene graph, via the given runnable.
+	 * This method is meant to increase performances for this operation, on some
+	 * JavaFX versions, and should be used when attaching a significant
+	 * sub-graph to an existing scene.
+	 * 
+	 * Since the performance patch is related to the current JavaFX version, it
+	 * has to be explicitly enabled via the
+	 * <code>efxclipse.optimize.attach</code> system property
+	 * 
+	 * @param node
+	 *            The node to attach to an existing scene graph
+	 * @param attachToParent
+	 *            The method used to attach the node to the scene graph (e.g.
+	 *            <code>() -> pane.getChildren().add(node)</code> or
+	 *            <code>() -> borderPane.setCenter(node)</code>)
+	 * 
+	 * @see #OPTIMIZE_ATTACH
+	 */
+	public static void attachNode(Node node, Runnable attachToParent) {
+		disableStyle(node);
+		attachToParent.run();
+		restoreStyle(node);
+	}
+
+	/**
+	 * <p>
+	 * Disable styling on the given node, if {@link #OPTIMIZE_ATTACH} is
+	 * <code>true</code>. This method can be called before attaching a sub-graph
+	 * to a scene, to increase performances. After invoking this method,
+	 * styling should be explicitly re-enabled with {@link #restoreStyle(Node)}
+	 * </p>
+	 * 
+	 * <p>
+	 * If {@link #OPTIMIZE_ATTACH} is <code>false</code>, this is a no-op.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method will be applied recursively on the node's children.
+	 * </p>
+	 * 
+	 * @param node
+	 * 		The node for which styling should be disabled
+	 * 
+	 * @see #OPTIMIZE_ATTACH
+	 */
+	public static void disableStyle(Node node) {
+		if (Boolean.getBoolean(OPTIMIZE_ATTACH)) {
+			disableCSS(node);
+		}
+	}
+
+	/**
+	 * <p>
+	 * Restore & reapply styling on the given node, if {@link #OPTIMIZE_ATTACH} is
+	 * <code>true</code>.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method will be applied recursively on the node's children.
+	 * </p>
+	 * 
+	 * <p>
+	 * If {@link #OPTIMIZE_ATTACH} is <code>false</code>, this is a no-op.
+	 * </p>
+	 * 
+	 * @param node
+	 * 		The node for which styling should be restored
+	 */
+	public static void restoreStyle(Node node) {
+		if (Boolean.getBoolean(OPTIMIZE_ATTACH)) {
+			enableCSS(node);
+		}
+	}
+
+	// WORKAROUND
+	// Attaching an entire sub-graph to a Scene will cause CSS to be reapplied
+	// with a quadratic complexity
+	// https://bugs.openjdk.java.net/browse/JDK-8151756
+	// https://bugs.openjdk.java.net/browse/JDK-8193445
+	@SuppressWarnings("restriction")
+	private static void disableCSS(Node node) {
+		changeCSS(node, com.sun.javafx.scene.CssFlags.REAPPLY);
+	}
+
+	private static void changeCSS(Node node, @SuppressWarnings("restriction") com.sun.javafx.scene.CssFlags flag) {
+		try {
+			Field cssFlag = Node.class.getDeclaredField("cssFlag"); //$NON-NLS-1$
+			boolean wasAccessible = cssFlag.isAccessible();
+			cssFlag.setAccessible(true);
+
+			Stack<Node> nodes = new Stack<>();
+			nodes.add(node);
+			while (!nodes.isEmpty()) {
+				Node next = nodes.pop();
+				if (next instanceof Parent) {
+					nodes.addAll(((Parent) next).getChildrenUnmodifiable());
+				}
+				cssFlag.set(next, flag);
+			}
+			cssFlag.setAccessible(wasAccessible);
+		} catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException e) {
+			logger.warning("An error occurred while trying to disable styling; this may cause performance issues", e); //$NON-NLS-1$
+			return;
+		}
+	}
+
+	private static void enableCSS(Node node) {
+		node.applyCss();
 	}
 }

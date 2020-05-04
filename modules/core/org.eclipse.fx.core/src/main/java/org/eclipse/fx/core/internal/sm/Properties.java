@@ -10,13 +10,19 @@
  *******************************************************************************/
 package org.eclipse.fx.core.internal.sm;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.namespace.QName;
 
 /**
  * Properties model
  */
 public class Properties {
 	private String entry;
+	private Map<QName, String> otherAttributes = new HashMap<>();
 
 	/**
 	 * @return the entry path
@@ -36,4 +42,12 @@ public class Properties {
 		this.entry = entry;
 	}
 
+	@XmlAnyAttribute
+    public Map<QName, String> getOtherAttributes() {
+		return this.otherAttributes;
+	}
+	
+	public void setOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+	}
 }

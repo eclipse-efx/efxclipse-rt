@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.preferences;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,12 +93,13 @@ public class PreferenceUI {
 
 	private final PreferencePageFactory factory;
 
-	private String currentFilter = "";
+	protected String currentFilterTerm = "";
 
+	private Comparator<PreferencePageProvider> comparator;
+	private Predicate<PreferencePageProvider> filter;
 	private final ObservableList<PreferencePageProvider> providers = FXCollections.observableArrayList();
-	private final SortedList<PreferencePageProvider> sortedProviders = providers.sorted((p1, p2) -> Collator
-			.getInstance().compare(p1.titleProperty().getValue().toString(), p2.titleProperty().getValue().toString()));
-	private final FilteredList<PreferencePageProvider> filteredProviders = sortedProviders.filtered(getFilter());
+	private final SortedList<PreferencePageProvider> sortedProviders;
+	private final FilteredList<PreferencePageProvider> filteredProviders;
 	private PageCache currentPage;
 
 	private HBox actions;
@@ -128,10 +130,28 @@ public class PreferenceUI {
 		this.contentAreaWrapper.setMaxWidth(Double.MAX_VALUE);
 		this.contentAreaWrapper.setCollapsible(false);
 
+		this.filter = createFilter();
+		this.comparator = createComparator();
+		this.sortedProviders = providers.sorted(comparator);
+		this.filteredProviders = sortedProviders.filtered(filter);
 		this.providerView.setCellFactory(v -> new SimpleListCell<>(pp -> pp.titleProperty().getValue()));
 		FXObservableUtil.onChange(this.providerView.getSelectionModel().selectedItemProperty(),
 				this::handleSelectedPageChange);
 		providerView.setItems(filteredProviders);
+	}
+
+	/** Create the predicate used for filtering the list of providers. */
+	protected Predicate<PreferencePageProvider> createFilter() {
+		return provider -> {
+			String term = currentFilterTerm == null ? "*" : "*" + currentFilterTerm + "*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			return provider.select(term);
+		};
+	}
+
+	/** Create the comparator used for sorting the list of providers. */
+	protected Comparator<PreferencePageProvider> createComparator() {
+		return (p1, p2) -> Collator.getInstance().compare(p1.titleProperty().getValue().toString(),
+				p2.titleProperty().getValue().toString());
 	}
 
 	private void handleSelectedPageChange(PreferencePageProvider provider) {
@@ -169,7 +189,7 @@ public class PreferenceUI {
 			searchField = new TextField();
 			searchField.getStyleClass().add(SEARCH_STYLE);
 			FXObservableUtil.onChange(searchField.textProperty(), newFilter -> {
-				this.currentFilter = newFilter == null ? "" : newFilter;
+				currentFilterTerm = newFilter == null ? "" : newFilter;
 				refreshFilter();
 			});
 
@@ -256,7 +276,9 @@ public class PreferenceUI {
 		// If we already had a selection, preserve it; otherwise, select the first
 		// visible item
 		PreferencePageProvider selectedItem = selectionModel.getSelectedItem();
-		this.filteredProviders.predicateProperty().set(getFilter());
+		//reset filter predicate
+		this.filteredProviders.predicateProperty().set(null);
+		this.filteredProviders.predicateProperty().set(filter);
 		if (selectionModel.isEmpty()) {
 			if (selectedItem == null || !filteredProviders.contains(selectedItem)) {
 				selectionModel.selectFirst();
@@ -274,11 +296,6 @@ public class PreferenceUI {
 	@Inject
 	public void setPreferencePageProviders(@Service List<PreferencePageProvider> providers) {
 		this.providers.setAll(providers);
-	}
-
-	private Predicate<PreferencePageProvider> getFilter() {
-		String filter = currentFilter == null ? "*" : "*" + currentFilter + "*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		return provider -> provider.select(filter);
 	}
 
 	public Subscription registerOnCancelHandler(Consumer<PreferencePage> handler) {

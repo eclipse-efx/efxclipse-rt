@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+  <extension
+         point="org.eclipse.fx.tool.spies.spyPart">
+      <spyPart
+            description="Open the Event Spy"
+            icon="icons/eventspy.png"
+            name="Event Spy"
+            part="org.eclipse.fx.tool.event.spy.EventSpyPart"
+            shortcut="M2+M3+F8">
+      </spyPart>
+   </extension>
+</plugin>

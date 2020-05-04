@@ -44,6 +44,8 @@ public class CleanUpAddon {
 
 	@Inject
 	EModelService modelService;
+	
+	int inTearDown;
 
 	@PostConstruct
 	void init(IEventBroker broker) {
@@ -70,7 +72,7 @@ public class CleanUpAddon {
 				}
 			}
 
-			this.synchronize.scheduleExecution(200, () -> {
+			Runnable runnable = () -> {
 				int tbrCount = this.modelService.toBeRenderedCount(container);
 
 				// Cache the value since setting the TBR may change the result
@@ -94,9 +96,9 @@ public class CleanUpAddon {
 					} else {
 						LoggerCreator.createLogger(getClass()).error("Container has a NULL value as a child"); //$NON-NLS-1$
 					}
-
 				}
-			});
+			};
+			this.synchronize.scheduleExecution(200, runnable);
 		}
 	}
 
@@ -144,12 +146,23 @@ public class CleanUpAddon {
 			// model)
 			final MElementContainer<MUIElement> theContainer = container;
 			if (visCount == 0) {
-				this.synchronize.scheduleExecution(200, () -> {
-						int _visCount = this.modelService.countRenderableChildren(theContainer);
-						if (!isLastEditorStack(theContainer) && _visCount == 0) {
-							theContainer.setToBeRendered(false);
+				Runnable runnable = () -> {
+						this.inTearDown++;
+						try {
+							int _visCount = this.modelService.countRenderableChildren(theContainer);
+							if (!isLastEditorStack(theContainer) && _visCount == 0) {
+								theContainer.setToBeRendered(false);
+							}
+						} finally {
+							this.inTearDown--;
 						}
-					});
+						
+					};
+				if( this.inTearDown > 0 ) {
+					runnable.run();
+				} else {
+					this.synchronize.scheduleExecution(200, runnable);
+				}
 			} else {
 				// if there are rendered elements but none are 'visible' we should
 				// make the container invisible as well

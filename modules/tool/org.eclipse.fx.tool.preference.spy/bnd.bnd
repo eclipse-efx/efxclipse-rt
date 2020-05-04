@@ -1,0 +1,16 @@
+-snapshot: ${osgi.qualifier}
+Bundle-ActivationPolicy: lazy
+Bundle-SymbolicName: org.eclipse.fx.tool.preference.spy;singleton:=true
+
+Import-Package: \
+	!javafx.*,\
+	*
+
+-runee: JavaSE-1.8
+-exportcontents: ${packages;VERSIONED}
+
+-privatepackage: org.eclipse.fx.tool.preference.spy.*
+
+-includeresource: ${basedir}/target/classes/fragment.e4xmi,${basedir}/target/classes/plugin.xml
+
+-dsannotations: *

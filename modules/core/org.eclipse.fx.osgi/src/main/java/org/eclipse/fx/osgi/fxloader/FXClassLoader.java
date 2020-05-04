@@ -836,8 +836,13 @@ public class FXClassLoader extends ClassLoaderHook {
 										isGTK3 = (Boolean) loadClass("org.eclipse.swt.internal.gtk.GTK").getDeclaredField("GTK3") //$NON-NLS-1$//$NON-NLS-2$
 												.get(null);
 									} catch( Throwable t) {
-										isGTK3 = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3") //$NON-NLS-1$//$NON-NLS-2$
-												.get(null);
+										try {
+											isGTK3 = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3") //$NON-NLS-1$//$NON-NLS-2$
+													.get(null);
+										} catch (Throwable e) {
+											// On recent versions only GTK3 is supported
+											isGTK3 = Boolean.TRUE;
+										}
 									}
 								} else {
 									if (FXClassloaderConfigurator.DEBUG) {

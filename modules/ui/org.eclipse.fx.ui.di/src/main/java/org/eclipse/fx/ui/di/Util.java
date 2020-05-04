@@ -19,7 +19,9 @@ import org.eclipse.fx.core.Callback;
  * 
  * @param <T>
  *            the type passed to the callback
+ * @deprecated
  */
+@Deprecated
 public abstract class Util<T> {
 	/**
 	 * Wrap a give callback to always run on the javafx threa

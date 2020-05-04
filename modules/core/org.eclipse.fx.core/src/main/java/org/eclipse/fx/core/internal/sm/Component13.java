@@ -13,7 +13,7 @@ package org.eclipse.fx.core.internal.sm;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Component in version 1.2.0
+ * Component in version 1.3.0
  */
 @XmlRootElement(name = "component", namespace = "http://www.osgi.org/xmlns/scr/v1.3.0")
 public class Component13 extends Component {

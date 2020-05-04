@@ -41,7 +41,7 @@ public class DefPlaceholderRenderer extends BasePlaceholderRenderer<FillLayoutPa
 			if (contentWidget == null) {
 				getWidget().getChildren().clear();
 			} else {
-				getWidget().getChildren().setAll((Node) contentWidget.getWidgetNode());
+				getWidget().getChildren().setAll((Node) contentWidget.getStaticLayoutNode());
 			}
 		}
 
@@ -53,8 +53,18 @@ public class DefPlaceholderRenderer extends BasePlaceholderRenderer<FillLayoutPa
 		@Override
 		protected FillLayoutPane createWidget() {
 			FillLayoutPane pane = new FillLayoutPane();
+//			pane.getChildren().addListener(this::collectChanges);
 			return pane;
 		}
 
+//		private void collectChanges(Change<? extends Node> c) {
+//			while( c.next() ) {
+//				System.err.println("ADDED: " + c.getAddedSubList());
+//				System.err.println("REMOVED: " + c.getRemoved());
+//				if( ! c.getRemoved().isEmpty() ) {
+//					Thread.dumpStack();
+//				}
+//			}
+//		}
 	}
 }

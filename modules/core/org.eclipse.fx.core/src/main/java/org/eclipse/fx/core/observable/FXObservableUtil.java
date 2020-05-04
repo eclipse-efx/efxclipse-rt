@@ -67,6 +67,30 @@ public class FXObservableUtil {
 	}
 
 	/**
+	 * Subscribe to invalidation events triggered by an {@link Observable} and
+	 * run the {@link Runnable}
+	 *
+	 * @param o
+	 *            the observable
+	 * @param r
+	 *            the runnable to execute
+	 * @param runImmediately
+	 *            run the Runnable immediately, if true
+	 * @return subscription used to unsubscribe
+	 * @see Observable#addListener(InvalidationListener)
+	 * @see #onInvalidate(Observable, InvalidationListener)
+	 */
+	public static Subscription onInvalidate(Observable o, Runnable r, boolean runImmediately) {
+		try {
+			return onInvalidate(o, r);
+		} finally {
+			if (runImmediately) {
+				r.run();
+			}
+		}
+	}
+
+	/**
 	 * Subscribe to the value change of an {@link ObservableValue}
 	 * 
 	 * @param <T>
@@ -98,7 +122,28 @@ public class FXObservableUtil {
 		o.addListener(listener);
 		return () -> o.removeListener(listener);
 	}
-	
+
+	/**
+	 * Subscribe to the value change of an {@link ObservableValue}
+	 *
+	 * @param o
+	 *            the observable
+	 * @param c
+	 *            the Consumer to be executed on value change
+	 * @param consumeImmediately
+	 *            run the Consumer immediately with the property's current value, if true
+	 * @return subscription used to unsubscribe
+	 */
+	public static <T> Subscription onChange(ObservableValue<T> o, Consumer<T> c, boolean consumeImmediately) {
+		try {
+			return onChange(o, c);
+		} finally {
+			if (consumeImmediately) {
+				c.accept(o.getValue());
+			}
+		}
+	}
+
 	/**
 	 * Subscribe to the value change of an {@link ObservableValue}
 	 *
@@ -223,6 +268,30 @@ public class FXObservableUtil {
 		}
 
 		/**
+		 * Subscribe to invalidation events triggered by an {@link Observable} and
+		 * run the {@link Runnable}
+		 *
+		 * @param o
+		 *            the observable
+		 * @param r
+		 *            the runnable to execute
+		 * @param runImmediately
+		 *            run the Runnable immediately, if true
+		 * @return subscription used to unsubscribe
+		 * @see Observable#addListener(InvalidationListener)
+		 * @see #onInvalidate(Observable, InvalidationListener)
+		 */
+		public Subscription onInvalidate(Observable o, Runnable r, boolean runImmediately) {
+			try {
+				return onInvalidate(o, r);
+			} finally {
+				if (runImmediately) {
+					r.run();
+				}
+			}
+		}
+
+		/**
 		 * Subscribe to the value change of an {@link ObservableValue}
 		 * 
 		 * @param <T>
@@ -252,7 +321,28 @@ public class FXObservableUtil {
 		public <T> Subscription onChange(ObservableValue<T> o, Consumer<? super T> l) {
 			return onChange(o, (ob, ol, ne) -> l.accept(ne));
 		}
-		
+
+		/**
+		 * Subscribe to the value change of an {@link ObservableValue}
+		 *
+		 * @param o
+		 *            the observable
+		 * @param c
+		 *            the Consumer to be executed on value change
+		 * @param consumeImmediately
+		 *            run the Consumer immediately with the property's current value, if true
+		 * @return subscription used to unsubscribe
+		 */
+		public <T> Subscription onChange(ObservableValue<T> o, Consumer<T> c, boolean consumeImmediately) {
+			try {
+				return onChange(o, c);
+			} finally {
+				if (consumeImmediately) {
+					c.accept(o.getValue());
+				}
+			}
+		}
+
 		/**
 		 * Subscribe to the value change of an {@link ObservableValue}
 		 *

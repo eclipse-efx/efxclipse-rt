@@ -10,14 +10,14 @@ Require-Bundle: org.eclipse.fx.osgi.util,
  org.eclipse.fx.ui.databinding,
  org.eclipse.fx.ui.di,
  org.eclipse.equinox.app,
- org.eclipse.fx.ui.preferences;bundle-version="3.6.0",
+ org.eclipse.fx.ui.preferences;bundle-version="3.7.0",
  org.eclipse.e4.core.contexts,
  org.eclipse.e4.core.di;bundle-version="1.6.100"
 Import-Package: javax.annotation,
  javax.inject;version="1.0.0",
  org.eclipse.core.runtime.preferences,
- org.eclipse.fx.core;version="3.6.0",
- org.eclipse.fx.core.command;version="3.6.0",
+ org.eclipse.fx.core;version="3.7.0",
+ org.eclipse.fx.core.command;version="3.7.0",
  org.osgi.service.component.annotations;version="1.2.0",
  org.osgi.service.prefs;version="1.1.1"
 Service-Component: OSGI-INF/org.eclipse.fx.ui.preferences.app.pages.PreferencePageProvider_1.xml

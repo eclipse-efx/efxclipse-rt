@@ -154,10 +154,10 @@ public class JavaFXCompatUtil {
 	public static void setCaretPosition(Text t, int value) {
 		if (SystemUtils.getMajorFXVersion() > 8) {
 			try {
-				Method m = Text.class.getDeclaredMethod("setPosition", int.class); //$NON-NLS-1$
+				Method m = Text.class.getDeclaredMethod("setCaretPosition", int.class); //$NON-NLS-1$
 				m.invoke(t, Integer.valueOf(value));
 			} catch (Throwable e) {
-				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#setPosition()", e); //$NON-NLS-1$
+				LoggerCreator.createLogger(JavaFXCompatUtil.class).error("Unable to call Text#setCaretPosition()", e); //$NON-NLS-1$
 				throw new RuntimeException(e);
 			}
 		} else {

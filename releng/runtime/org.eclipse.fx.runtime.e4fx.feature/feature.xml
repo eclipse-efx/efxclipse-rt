@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.runtime.e4fx.feature"
       label="e(fx)clipse - minimal e4 application framework feature"
-      version="3.6.0.qualifier"
+      version="3.7.0.qualifier"
       provider-name="Eclipse.org">
 
    <description url="http://www.example.com/description">
@@ -536,13 +536,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.eclipse.equinox.registry"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.util"
          download-size="0"
          install-size="0"
          version="0.0.0"

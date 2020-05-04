@@ -288,7 +288,7 @@ public interface Logger {
 	 */
 	public default void logf(@NonNull String wrapperClass, @NonNull Level level, @NonNull String pattern,
 			@NonNull Throwable t, Object... args) {
-		logf(level, pattern, t);
+		logf(level, pattern, t, args);
 	}
 
 	/**

@@ -16,8 +16,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -47,11 +49,11 @@ import org.eclipse.e4.ui.internal.workbench.ExceptionHandler;
 import org.eclipse.e4.ui.internal.workbench.ModelServiceImpl;
 import org.eclipse.e4.ui.internal.workbench.PlaceholderResolver;
 import org.eclipse.e4.ui.internal.workbench.ReflectionContributionFactory;
-import org.eclipse.e4.ui.internal.workbench.ResourceHandler;
 import org.eclipse.e4.ui.internal.workbench.SelectionAggregator;
 import org.eclipse.e4.ui.internal.workbench.SelectionServiceImpl;
 import org.eclipse.e4.ui.model.application.MAddon;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.impl.BasicPackageImpl;
@@ -72,10 +74,12 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.fx.core.SystemUtils;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.app.ApplicationContext;
 import org.eclipse.fx.core.app.ApplicationLocation;
 import org.eclipse.fx.core.app.ExitStatus;
+import org.eclipse.fx.core.geom.Bounds;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.restart.LifecycleRV;
@@ -98,6 +102,35 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings("restriction")
 public abstract class AbstractE4Application {
 	/**
+	 * Informations about the screen
+	 */
+	public static final class ScreenStruct {
+		final boolean primary;
+		final int x;
+		final int y;
+		final int width;
+		final int height;
+
+		/**
+		 * Create new screen
+		 * 
+		 * @param primary <code>true</code> if the primary screen
+		 * @param x       the x value of the screen
+		 * @param y       the y value of the screen
+		 * @param width   the width
+		 * @param height  the height
+		 */
+		public ScreenStruct(boolean primary, int x, int y, int width, int height) {
+			super();
+			this.primary = primary;
+			this.x = x;
+			this.y = y;
+			this.width = width;
+			this.height = height;
+		}
+	}
+
+	/**
 	 * Context-Key name for the theme-id slot
 	 */
 	public static final String THEME_ID = "cssTheme"; //$NON-NLS-1$
@@ -111,16 +144,21 @@ public abstract class AbstractE4Application {
 	 */
 	protected static final String EXIT_CODE = "e4.osgi.exit.code"; //$NON-NLS-1$
 
+	private static final String SCREEN_SETUP = "efx.screensetup"; //$NON-NLS-1$
+	
+	private static final String RESTORE_SIZE = "efx.restore-size"; //$NON-NLS-1$
+
 	Object lcManager;
 	private IModelResourceHandler handler;
 
 	private static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(AbstractE4Application.class);
+	private MApplication applicationModel;
+	private EModelService modelService;
 
 	/**
 	 * Create a databinding realm
 	 *
-	 * @param context
-	 *            the context
+	 * @param context the context
 	 * @return the realm
 	 */
 	protected abstract @NonNull Realm createRealm(@NonNull IEclipseContext context);
@@ -128,8 +166,7 @@ public abstract class AbstractE4Application {
 	/**
 	 * Create the utility to handle resources
 	 *
-	 * @param context
-	 *            the context
+	 * @param context the context
 	 * @return the instance
 	 */
 	protected abstract @NonNull IResourceUtilities<?> createResourceUtility(@NonNull IEclipseContext context);
@@ -137,17 +174,31 @@ public abstract class AbstractE4Application {
 	/**
 	 * Get the uri of the presentation engine
 	 *
-	 * @param context
-	 *            the context
+	 * @param context the context
 	 * @return the uri
 	 */
 	protected abstract @NonNull String getDefaultPresentationEngineURI(@NonNull IEclipseContext context);
 
 	/**
+	 * @return the screen setup
+	 */
+	@SuppressWarnings("static-method")
+	protected List<ScreenStruct> getScreensetup() {
+		return Collections.emptyList();
+	}
+
+	/**
+	 * @return the application model
+	 * @since 3.6.0
+	 */
+	protected final Optional<MApplication> getApplicationModel() {
+		return Optional.ofNullable(this.applicationModel);
+	}
+
+	/**
 	 * Extract an application arguments
 	 *
-	 * @param applicationContext
-	 *            the application context
+	 * @param applicationContext the application context
 	 * @return arguments
 	 */
 	protected static String[] getApplicationArguments(ApplicationContext applicationContext) {
@@ -157,26 +208,26 @@ public abstract class AbstractE4Application {
 	/**
 	 * Create the workbench instance
 	 *
-	 * @param applicationContext
-	 *            the OSGi application context
-	 * @param appContext
-	 *            the application context
+	 * @param applicationContext the OSGi application context
+	 * @param appContext         the application context
 	 * @return the workbench instance
 	 */
 	@SuppressWarnings("null")
 	@Nullable
 	public E4Workbench createE4Workbench(ApplicationContext applicationContext, final IEclipseContext appContext) {
 		ContextInjectionFactory.setDefault(appContext);
+		
+		this.modelService = appContext.get(EModelService.class);
 
 		appContext.set(Realm.class, createRealm(appContext));
 		appContext.set(ApplicationContext.class, applicationContext);
 		appContext.set(EModelStylingService.class, new EModelStylingService() {
 			private static final String PREFIX = "efx_styleclass:"; //$NON-NLS-1$
+
 			@Override
 			public void addStyles(MUIElement element, String... tags) {
-				List<String> toAdd = Stream.of(tags).map(t -> PREFIX + t)
-					.filter(t -> !element.getTags().contains(t))
-					.collect(Collectors.toList());
+				List<String> toAdd = Stream.of(tags).map(t -> PREFIX + t).filter(t -> !element.getTags().contains(t))
+						.collect(Collectors.toList());
 				element.getTags().addAll(toAdd);
 			}
 
@@ -193,8 +244,7 @@ public abstract class AbstractE4Application {
 
 			@Override
 			public List<String> getStylesFromTags(List<String> tags) {
-				return tags.stream().filter((t) -> t.startsWith(PREFIX))
-						.map(t -> t.substring(PREFIX.length()))
+				return tags.stream().filter((t) -> t.startsWith(PREFIX)).map(t -> t.substring(PREFIX.length()))
 						.collect(Collectors.toList());
 			}
 		});
@@ -202,15 +252,16 @@ public abstract class AbstractE4Application {
 
 		// Check if DS is running
 		if (!appContext.containsKey("org.eclipse.e4.ui.workbench.modeling.EModelService")) { //$NON-NLS-1$
-			throw new IllegalStateException("Core services not available. Please make sure that a declarative service implementation (such as the bundle 'org.eclipse.equinox.ds') is available!"); //$NON-NLS-1$
+			throw new IllegalStateException(
+					"Core services not available. Please make sure that a declarative service implementation (such as the bundle 'org.eclipse.equinox.ds') is available!"); //$NON-NLS-1$
 		}
 
-
-		StartupProgressTrackerService startupProgressTrackerService = appContext.get(StartupProgressTrackerService.class);
-		if( startupProgressTrackerService != null ) {
+		StartupProgressTrackerService startupProgressTrackerService = appContext
+				.get(StartupProgressTrackerService.class);
+		if (startupProgressTrackerService != null) {
 			try {
 				ContextInjectionFactory.inject(startupProgressTrackerService, appContext);
-			} catch( Throwable t ) {
+			} catch (Throwable t) {
 				LOGGER.error("Could not fully initialize the startup tracker", t); //$NON-NLS-1$
 			}
 
@@ -235,7 +286,7 @@ public abstract class AbstractE4Application {
 			}
 		}
 
-		if( startupProgressTrackerService != null ) {
+		if (startupProgressTrackerService != null) {
 			startupProgressTrackerService.stateReached(DefaultProgressState.POST_CONTEXT_LF_FINISHED);
 		}
 
@@ -263,14 +314,16 @@ public abstract class AbstractE4Application {
 
 		}
 
-		// Create the app model and its context
-		MApplication appModel = loadApplicationModel(applicationContext, appContext);
-		appModel.setContext(appContext);
+		this.applicationModel = loadApplicationModel(applicationContext, appContext);
+		this.applicationModel.setContext(appContext);
+		
+		ThreadSynchronize threadSync = appContext.get(ThreadSynchronize.class);
+		threadSync.syncExec( () -> handleOffscreenWindows(appContext) );
 
 		// Set the app's context after adding itself
-		Util.setup(appModel, appContext);
+		Util.setup(this.applicationModel, appContext);
 
-		initializeServices(appModel);
+		initializeServices(this.applicationModel);
 
 		// let the life cycle manager add to the model
 		if (this.lcManager != null) {
@@ -280,7 +333,7 @@ public abstract class AbstractE4Application {
 
 		// Create the addons
 		IEclipseContext addonStaticContext = EclipseContextFactory.create();
-		for (MAddon addon : appModel.getAddons()) {
+		for (MAddon addon : this.applicationModel.getAddons()) {
 			addonStaticContext.set(MAddon.class, addon);
 			Object obj = factory.create(addon.getContributionURI(), appContext, addonStaticContext);
 			addon.setObject(obj);
@@ -293,7 +346,8 @@ public abstract class AbstractE4Application {
 
 		String themeId = getArgValue(THEME_ID, applicationContext, false);
 		appContext.set(THEME_ID, themeId);
-		appContext.set(E4Workbench.RENDERER_FACTORY_URI, getArgValue(E4Workbench.RENDERER_FACTORY_URI, applicationContext, false));
+		appContext.set(E4Workbench.RENDERER_FACTORY_URI,
+				getArgValue(E4Workbench.RENDERER_FACTORY_URI, applicationContext, false));
 		// This is a default arg, if missing we use the default rendering engine
 		String presentationURI = getArgValue(IWorkbench.PRESENTATION_URI_ARG, applicationContext, false);
 		if (presentationURI == null) {
@@ -305,12 +359,74 @@ public abstract class AbstractE4Application {
 
 		// Instantiate the Workbench (which is responsible for 'running' the UI
 		// (if any)...
-		E4Workbench workbench = new E4Workbench(appModel, appContext);
+		E4Workbench workbench = new E4Workbench(this.applicationModel, appContext);
 
 		// Workbench dependendent services
 		appContext.set(RestartService.class, ContextInjectionFactory.make(RestartServiceImpl.class, appContext));
 
 		return workbench;
+	}
+	
+	private void handleOffscreenWindows(IEclipseContext appContext) {
+		EModelService service = appContext.get(EModelService.class);
+		List<MWindow> windows = service.findElements(this.applicationModel, null, MWindow.class, Collections.emptyList());
+		
+		List<ScreenStruct> screens = getScreensetup();
+		List<Bounds> bounds = screens.stream()
+			.map( s -> new Bounds(s.x, s.y, s.width, s.height))
+			.collect(Collectors.toList());
+		
+		for( MWindow w : windows ) {
+			String restoreSize = w.getPersistedState().get(RESTORE_SIZE);
+			Bounds b = new Bounds(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+			if( bounds.stream().noneMatch( v -> v.intersects(b))) {
+				// Move 50 because eg on OS-X there might be the menubar in the top 
+				int x = 50;
+				int y = 50;
+				int width = 800;
+				int height = 600;
+				if( restoreSize != null && ! screens.isEmpty() ) {
+					ScreenStruct screen = screens.stream()
+						.filter(s -> s.primary)
+						.findFirst()
+						.orElse( screens.get(0));
+					x = screen.x;
+					y = screen.y;
+				} else {
+					if( restoreSize != null ) {
+						try {
+							String[] parts = restoreSize.split(" "); //$NON-NLS-1$
+							if( parts.length == 4 ) {
+								x = Integer.parseInt(parts[0]);
+								y = Integer.parseInt(parts[1]);
+								width = Integer.parseInt(parts[2]);
+								height = Integer.parseInt(parts[3]);
+							}
+						} catch (Exception e) {
+							LOGGER.errorf("Unable to parse restore size %s",e, restoreSize); //$NON-NLS-1$
+						}
+					}
+				}
+				
+				w.setX(x);
+				w.setY(y);
+				
+				if( SystemUtils.isWindows() ) {
+					if( w.getHeight() < 50 ) {
+						w.setWidth(width);
+						w.setHeight(height);
+					}
+				}
+			}
+			
+			if( restoreSize == null ) {
+				w.getPersistedState().put(RESTORE_SIZE, String.format("%s %s %s %s", //$NON-NLS-1$
+						Integer.valueOf(w.getX()), 
+						Integer.valueOf(w.getY()), 
+						Integer.valueOf(w.getWidth()), 
+						Integer.valueOf(w.getHeight()))); 
+			}
+		}
 	}
 
 	private LifecycleRV invokePostContextCreate(IEclipseContext appContext) {
@@ -318,18 +434,20 @@ public abstract class AbstractE4Application {
 		Object rv = uiSynchronize.syncExec(new Callable<Object>() {
 			@Override
 			public Object call() throws Exception {
-				return ContextInjectionFactory.invoke(AbstractE4Application.this.lcManager, PostContextCreate.class, appContext, Boolean.TRUE);
+				return ContextInjectionFactory.invoke(AbstractE4Application.this.lcManager, PostContextCreate.class,
+						appContext, Boolean.TRUE);
 			}
 		}, null);
 
 		if (rv == null) {
 			return LifecycleRV.CONTINUE;
 		} else if (rv instanceof Boolean) {
-			return ((Boolean)rv).booleanValue() ? LifecycleRV.CONTINUE : LifecycleRV.SHUTDOWN;
+			return ((Boolean) rv).booleanValue() ? LifecycleRV.CONTINUE : LifecycleRV.SHUTDOWN;
 		} else if (rv instanceof LifecycleRV) {
-			return (LifecycleRV)rv;
+			return (LifecycleRV) rv;
 		} else {
-			LOGGER.warning("Unrecognised return value type from @PostContextCreate. The expected types are Boolean or LifecycleRV."); //$NON-NLS-1$
+			LOGGER.warning(
+					"Unrecognised return value type from @PostContextCreate. The expected types are Boolean or LifecycleRV."); //$NON-NLS-1$
 		}
 		return LifecycleRV.CONTINUE;
 	}
@@ -339,9 +457,19 @@ public abstract class AbstractE4Application {
 	 */
 	public void saveModel() {
 		try {
+			if( this.modelService != null ) {
+				this.modelService.findElements(this.applicationModel, null, MElementContainer.class, null, EModelService.ANYWHERE).forEach(AbstractE4Application::sanitizeContainer);
+			}
 			this.handler.save();
 		} catch (IOException e) {
 			LOGGER.error("Unable to persist the model", e); //$NON-NLS-1$
+		}
+	}
+	
+	private static void sanitizeContainer(MElementContainer<MUIElement> container) {
+		if( container.getSelectedElement() != null && ! container.getSelectedElement().isToBeRendered() ) {
+			MUIElement selectedElement = container.getChildren().stream().filter(MUIElement::isToBeRendered).findFirst().orElse(null);
+			container.setSelectedElement(selectedElement);
 		}
 	}
 
@@ -356,8 +484,7 @@ public abstract class AbstractE4Application {
 	/**
 	 * Called before the lifecycle handler is created
 	 *
-	 * @param appContext
-	 *            the application context
+	 * @param appContext the application context
 	 */
 	protected void preLifecycle(IEclipseContext appContext) {
 		// Nothing by default
@@ -366,8 +493,7 @@ public abstract class AbstractE4Application {
 	/**
 	 * Called before the workbench is created
 	 *
-	 * @param appContext
-	 *            the context
+	 * @param appContext the context
 	 */
 	protected void preCreateWorkbench(IEclipseContext appContext) {
 		// Nothing by default
@@ -430,7 +556,8 @@ public abstract class AbstractE4Application {
 		return theApp;
 	}
 
-	private static String getArgValue(String argName, ApplicationContext applicationContext, boolean singledCmdArgValue, IEclipseContext eclipseContext) {
+	private static String getArgValue(String argName, ApplicationContext applicationContext, boolean singledCmdArgValue,
+			IEclipseContext eclipseContext) {
 		Object value = eclipseContext.get(argName);
 		if (value != null) {
 			return value.toString();
@@ -450,7 +577,7 @@ public abstract class AbstractE4Application {
 		appContext.set(IWorkbench.APPLICATION_CONTEXT_KEY, appContext);
 		IExtensionRegistry registry = RegistryFactory.getRegistry();
 		ExceptionHandler exceptionHandler = new ExceptionHandler();
-		ReflectionContributionFactory contributionFactory = new ReflectionContributionFactory(registry);
+		ReflectionContributionFactory contributionFactory = new ReflectionContributionFactory();
 		appContext.set(IContributionFactory.class.getName(), contributionFactory);
 		appContext.set(IExtensionRegistry.class.getName(), registry);
 		appContext.set(IExceptionHandler.class.getName(), exceptionHandler);
@@ -458,22 +585,24 @@ public abstract class AbstractE4Application {
 
 		// No default log provider available
 		if (appContext.get(ILoggerProvider.class) == null) {
-			serviceContext.set(ILoggerProvider.class, ContextInjectionFactory.make(LoggerProviderImpl.class, serviceContext));
+			serviceContext.set(ILoggerProvider.class,
+					ContextInjectionFactory.make(LoggerProviderImpl.class, serviceContext));
 		}
 
-		appContext.set(Logger.class.getName(), serviceContext.get(ILoggerProvider.class).getClassLogger(E4Workbench.class));
+		appContext.set(Logger.class.getName(),
+				serviceContext.get(ILoggerProvider.class).getClassLogger(E4Workbench.class));
 
 		appContext.set(EModelService.class, new ModelServiceImpl(appContext));
 		appContext.set(EPlaceholderResolver.class, new PlaceholderResolver());
-		
+
 		TranslationService bundleTranslationProvider = TranslationProviderFactory.bundleTranslationService(appContext);
 		appContext.set(TranslationService.class, bundleTranslationProvider);
 
 		appContext.set(Adapter.class.getName(), ContextInjectionFactory.make(EclipseAdapter.class, appContext));
 
 		appContext.set(IServiceConstants.ACTIVE_PART, new ActivePartLookupFunction());
-		appContext.set(IServiceConstants.ACTIVE_SHELL, new ActiveChildLookupFunction(IServiceConstants.ACTIVE_SHELL, E4Workbench.LOCAL_ACTIVE_SHELL));
-		
+		appContext.set(IServiceConstants.ACTIVE_SHELL,
+				new ActiveChildLookupFunction(IServiceConstants.ACTIVE_SHELL, E4Workbench.LOCAL_ACTIVE_SHELL));
 
 		return appContext;
 	}
@@ -481,8 +610,7 @@ public abstract class AbstractE4Application {
 	/**
 	 * Initialize the services
 	 *
-	 * @param appModel
-	 *            the application model
+	 * @param appModel the application model
 	 */
 	protected void initializeServices(MApplication appModel) {
 		IEclipseContext appContext = appModel.getContext();
@@ -511,8 +639,7 @@ public abstract class AbstractE4Application {
 	/**
 	 * Initialize the application services
 	 *
-	 * @param appContext
-	 *            the application context
+	 * @param appContext the application context
 	 */
 	@SuppressWarnings("static-method")
 	protected void initializeApplicationServices(IEclipseContext appContext) {
@@ -545,8 +672,7 @@ public abstract class AbstractE4Application {
 	/**
 	 * Initialize the window services
 	 *
-	 * @param childWindow
-	 *            the window
+	 * @param childWindow the window
 	 */
 	protected void initializeWindowServices(MWindow childWindow) {
 		IEclipseContext windowContext = childWindow.getContext();
@@ -567,14 +693,14 @@ public abstract class AbstractE4Application {
 	/**
 	 * Initialize the window context
 	 *
-	 * @param windowContext
-	 *            the window context
+	 * @param windowContext the window context
 	 */
 	@SuppressWarnings("static-method")
 	protected void initWindowContext(IEclipseContext windowContext) {
 		if (windowContext == null)
 			return;
-		SelectionAggregator selectionAggregator = ContextInjectionFactory.make(SelectionAggregator.class, windowContext);
+		SelectionAggregator selectionAggregator = ContextInjectionFactory.make(SelectionAggregator.class,
+				windowContext);
 		windowContext.set(SelectionAggregator.class, selectionAggregator);
 	}
 
@@ -586,15 +712,13 @@ public abstract class AbstractE4Application {
 	 * <li>The System-Properties</li>
 	 * </ul>
 	 *
-	 * @param argName
-	 *            the argument name
-	 * @param applicationContext
-	 *            the application context
-	 * @param singledCmdArgValue
-	 *            <code>true</code> if the argument is single valued
+	 * @param argName            the argument name
+	 * @param applicationContext the application context
+	 * @param singledCmdArgValue <code>true</code> if the argument is single valued
 	 * @return the value or <code>null</code>
 	 */
-	protected static @Nullable String getArgValue(String argName, ApplicationContext applicationContext, boolean singledCmdArgValue) {
+	protected static @Nullable String getArgValue(String argName, ApplicationContext applicationContext,
+			boolean singledCmdArgValue) {
 		// Is it in the arg list ?
 		if (argName == null || argName.length() == 0)
 			return null;
@@ -612,21 +736,20 @@ public abstract class AbstractE4Application {
 			}
 		}
 
-		final String brandingProperty = (String)applicationContext.getApplicationProperty(argName);
+		final String brandingProperty = (String) applicationContext.getApplicationProperty(argName);
 		return brandingProperty == null ? System.getProperty(argName) : brandingProperty;
 	}
 
 	/**
 	 * Check the instance location
 	 *
-	 * @param instanceLocation
-	 *            the location to check
-	 * @param context
-	 *            the context
+	 * @param instanceLocation the location to check
+	 * @param context          the context
 	 * @return <code>true</code> if the location is fine
 	 */
 	@SuppressWarnings("static-method")
-	public boolean checkInstanceLocation(@Nullable ApplicationLocation instanceLocation, @NonNull IEclipseContext context) {
+	public boolean checkInstanceLocation(@Nullable ApplicationLocation instanceLocation,
+			@NonNull IEclipseContext context) {
 		// Eclipse has been run with -data @none or -data @noDefault options so
 		// we don't need to validate the location
 		if (instanceLocation == null && Boolean.FALSE.equals(context.get(IWorkbench.PERSIST_STATE))) {
@@ -644,44 +767,44 @@ public abstract class AbstractE4Application {
 
 		// -data "/valid/path", workspace already set
 //		if (instanceLocation.isSet()) {
-			// make sure the meta data version is compatible (or the user has
-			// chosen to overwrite it).
-			if (!checkValidWorkspace(instanceLocation.getURL())) {
-				return false;
-			}
-
-			// at this point its valid, so try to lock it and update the
-			// metadata version information if successful
-			try {
-				if (instanceLocation.lock()) {
-					writeWorkspaceVersion(instanceLocation);
-					return true;
-				}
-
-				// we failed to create the directory.
-				// Two possibilities:
-				// 1. directory is already in use
-				// 2. directory could not be created
-				File workspaceDirectory = new File(instanceLocation.getURL().getFile());
-				if (workspaceDirectory.exists()) {
-					// MessageDialog
-					// .openError(
-					// shell,
-					// WorkbenchSWTMessages.IDEApplication_workspaceCannotLockTitle,
-					// WorkbenchSWTMessages.IDEApplication_workspaceCannotLockMessage);
-				} else {
-					// MessageDialog
-					// .openError(
-					// shell,
-					// WorkbenchSWTMessages.IDEApplication_workspaceCannotBeSetTitle,
-					// WorkbenchSWTMessages.IDEApplication_workspaceCannotBeSetMessage);
-				}
-			} catch (IOException e) {
-				LOGGER.error("Could not create instance location", e); //$NON-NLS-1$
-				// MessageDialog.openError(shell,
-				// WorkbenchSWTMessages.InternalError, e.getMessage());
-			}
+		// make sure the meta data version is compatible (or the user has
+		// chosen to overwrite it).
+		if (!checkValidWorkspace(instanceLocation.getURL())) {
 			return false;
+		}
+
+		// at this point its valid, so try to lock it and update the
+		// metadata version information if successful
+		try {
+			if (instanceLocation.lock()) {
+				writeWorkspaceVersion(instanceLocation);
+				return true;
+			}
+
+			// we failed to create the directory.
+			// Two possibilities:
+			// 1. directory is already in use
+			// 2. directory could not be created
+			File workspaceDirectory = new File(instanceLocation.getURL().getFile());
+			if (workspaceDirectory.exists()) {
+				// MessageDialog
+				// .openError(
+				// shell,
+				// WorkbenchSWTMessages.IDEApplication_workspaceCannotLockTitle,
+				// WorkbenchSWTMessages.IDEApplication_workspaceCannotLockMessage);
+			} else {
+				// MessageDialog
+				// .openError(
+				// shell,
+				// WorkbenchSWTMessages.IDEApplication_workspaceCannotBeSetTitle,
+				// WorkbenchSWTMessages.IDEApplication_workspaceCannotBeSetMessage);
+			}
+		} catch (IOException e) {
+			LOGGER.error("Could not create instance location", e); //$NON-NLS-1$
+			// MessageDialog.openError(shell,
+			// WorkbenchSWTMessages.InternalError, e.getMessage());
+		}
+		return false;
 //		}
 //
 //		return false;

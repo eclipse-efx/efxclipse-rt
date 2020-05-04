@@ -235,6 +235,10 @@ public class PartRenderingEngine implements IPresentationEngine {
 		}
 
 		if (element instanceof MContext && ((MContext) element).getContext() == null) {
+			if( parentContext == null ) {
+				this.logger.infof("Unable to render %s because no parent-context has been provided.", new IllegalStateException(), element); //$NON-NLS-1$
+				return null;
+			}
 			createContext((MContext) element, parentContext);
 		}
 
@@ -335,7 +339,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	public void removeGui(MUIElement element) {
 		MUIElement container = (element.getCurSharedRef() != null) ? element.getCurSharedRef()
 				: (MUIElement) ((EObject) element).eContainer();
-
+		
 		if (container != null || element instanceof MWindow) {
 			ElementRenderer<MUIElement, Object> parentRenderer = (ElementRenderer<MUIElement, Object>) (container == null
 					? null : getRendererFor(container));
@@ -423,12 +427,30 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 				element.setRenderer(null);
 			} else {
+				if (!(element instanceof MWindow) && parentRenderer != null && container != null) {
+					try {
+						parentRenderer.hideChild(container, element);
+					} catch (Throwable t) {
+						this.logger.error(t.getMessage(), t);
+					}
+				}
+				
 				ElementRenderer<@NonNull MUIElement, Object> r = getRenderer(element);
 				// Renderer might be NULL eg for MDynamicMenuContribution
 				if( r != null ) {
 					r.destroyRenderingContext(element);	
 				}
 			}
+			
+			if( container instanceof MElementContainer<?> ) {
+				checkSelection((MElementContainer<MUIElement>) container);
+			}
+		}
+	}
+	
+	private static void checkSelection(MElementContainer<MUIElement> container) {
+		if( container.getSelectedElement() != null && container.getChildren().stream().noneMatch(MUIElement::isToBeRendered) ) {
+			container.setSelectedElement(null);
 		}
 	}
 

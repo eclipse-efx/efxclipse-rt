@@ -19,6 +19,7 @@ import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultP
 import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 /**
@@ -53,13 +54,15 @@ public class E4MainThreadApplication extends E4Application {
 			});
 			updateStartupState(DefaultProgressState.JAVAFX_INITIALIZED_LAUNCHER_THREAD);
 			PlatformImpl.startup(() -> {
-				try {
-					JFXRealm.createDefault();
-					DefaultJFXApp.setProductApplicationName();
-					jfxStart(getApplicationContext(), null, null);
-				} catch( Throwable t ) {
-					t.printStackTrace();
-				}
+				Platform.runLater( () -> {
+					try {
+						JFXRealm.createDefault();
+						DefaultJFXApp.setProductApplicationName();
+						jfxStart(getApplicationContext(), null, null);
+					} catch( Throwable t ) {
+						t.printStackTrace();
+					}
+				});
 			});
 			SHUTDOWN_LATCH.await();
 		} else {

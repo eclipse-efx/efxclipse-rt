@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -30,6 +31,7 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.core.bindings.FXBindings;
+import org.eclipse.fx.ui.controls.Util;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.fx.EMFUri;
@@ -380,7 +382,17 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		@Override
 		public void addItems(List<@NonNull WStackItem<Object, Node>> items) {
-			getWidget().getTabs().addAll(extractTabs(items));
+			List<Tab> extractTabs = extractTabs(items);
+			List<Node> nodes = extractTabs.stream()
+				.map(Tab::getContent)
+				.filter(Objects::nonNull)
+				.collect(Collectors.toList());
+			try {
+				nodes.forEach(Util::disableStyle);
+				getWidget().getTabs().addAll(extractTabs);
+			} finally {
+				nodes.forEach(Util::restoreStyle);
+			}
 		}
 
 		@Override
@@ -388,12 +400,22 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			if( index >= getWidget().getTabs().size() ) {
 				addItems(items);
 			} else {
-				getWidget().getTabs().addAll(index, extractTabs(items));
+				List<Tab> extractTabs = extractTabs(items);
+				List<Node> nodes = extractTabs.stream()
+						.map(Tab::getContent)
+						.filter(Objects::nonNull)
+						.collect(Collectors.toList());
+				try {
+					nodes.forEach(Util::disableStyle);
+					getWidget().getTabs().addAll(index, extractTabs);
+				} finally {
+					nodes.forEach(Util::restoreStyle);
+				}
 			}
 		}
 
 		private static final List<Tab> extractTabs(List<WStackItem<Object, Node>> items) {
-			List<Tab> tabs = new ArrayList<Tab>(items.size());
+			List<Tab> tabs = new ArrayList<>(items.size());
 			for (WStackItem<Object, Node> t : items) {
 				tabs.add((Tab) t.getNativeItem());
 			}
@@ -515,7 +537,8 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		void handleSelection() {
 			if (this.initCallback != null) {
-				this.tab.setContent(this.initCallback.call(this));
+				Node node = this.initCallback.call(this);
+				Util.attachNode(node, this.tab::setContent);
 				this.initCallback = null;
 			}
 

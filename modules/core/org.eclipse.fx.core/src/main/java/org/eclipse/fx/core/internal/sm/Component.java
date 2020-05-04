@@ -11,9 +11,13 @@
 package org.eclipse.fx.core.internal.sm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.namespace.QName;
 
 /**
  * DS Component Model
@@ -25,6 +29,7 @@ public abstract class Component {
 	private List<Reference> reference = new ArrayList<>();
 	private List<Property> property = new ArrayList<>();
 	private List<Properties> properties = new ArrayList<>();
+	private Map<QName, String> otherAttributes = new HashMap<>();
 
 	/**
 	 * @return the implementation model
@@ -127,5 +132,14 @@ public abstract class Component {
 	 */
 	public void setProperties(List<Properties> properties) {
 		this.properties = properties;
+	}
+	
+	@XmlAnyAttribute
+    public Map<QName, String> getOtherAttributes() {
+		return this.otherAttributes;
+	}
+	
+	public void setOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
 	}
 }

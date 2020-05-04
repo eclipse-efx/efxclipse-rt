@@ -1,0 +1,9 @@
+.tree-cell:overviewsearchresult {
+	-fx-font-weight: bold ;
+	-fx-text-fill: blue ;
+}
+
+.tree-table-cell:outlinesearchresult {
+	-fx-font-weight: bold ;
+	-fx-text-fill: blue ;
+}

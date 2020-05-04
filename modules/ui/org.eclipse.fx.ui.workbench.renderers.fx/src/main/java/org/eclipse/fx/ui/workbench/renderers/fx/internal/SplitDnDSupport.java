@@ -57,6 +57,8 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	@NonNull
 	private ModelService efxModelService;
 
+	private int splitPadding = 20;
+
 	/**
 	 * Create new instance
 	 *
@@ -95,7 +97,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	 * Handle exiting of the drag
 	 *
 	 * @param e
-	 * 			the event
+	 *            the event
 	 */
 	@SuppressWarnings("static-method")
 	public void handleDragExit(MouseDragEvent e) {
@@ -252,7 +254,13 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 				e.consume();
 			} else if (m instanceof MPart && isSplit(e)) {
 				e.consume();
-				if ((MUIElement) m.getParent() instanceof MPartStack) {
+				MPart part = (MPart) m;
+				// If parent is NULL it is a shared part
+				if( m.getParent() == null && part.getCurSharedRef() != null && (MUIElement)part.getCurSharedRef().getParent() instanceof MPartStack ) {
+					DropData d = new DropData(screenX(e), screenY(e), part.getCurSharedRef(), draggedElement, getSplitType(e));
+					dropDroppedCallback.call(d);
+					setDropComplete(e, true);
+				} else if ((MUIElement) m.getParent() instanceof MPartStack) {
 					DropData d = new DropData(screenX(e), screenY(e), this.widget.getDomElement(), draggedElement, getSplitType(e));
 					dropDroppedCallback.call(d);
 					setDropComplete(e, true);
@@ -329,29 +337,48 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		}
 	}
 
+	/**
+	 * Returns the padding considered when detecting a split and determining the
+	 * split type.
+	 * 
+	 * @return padding considered when detecting split and split type
+	 */
+	public int getSplitPadding() {
+		return this.splitPadding;
+	}
+
+	/**
+	 * Sets the padding considered when detecting a split and determining the
+	 * split type.
+	 * 
+	 * @param splitPadding
+	 *            padding in pixels
+	 */
+	public void setSplitPadding(int splitPadding) {
+		this.splitPadding = splitPadding;
+	}
+
 	private SplitAreas calculateSplitAreas() {
 		Bounds bounds = ((Node) this.widget.getStaticLayoutNode()).getBoundsInLocal();
 
-		double hSplitWidth = (bounds.getWidth() - SPLIT_PADDING * 2) / 5;
-		double hSplitHeight = bounds.getHeight() - SPLIT_PADDING * 2;
+		double hSplitWidth = (bounds.getWidth() - getSplitPadding() * 2) / 5;
+		double hSplitHeight = bounds.getHeight() - getSplitPadding() * 2;
 
-		double vSplitWidth = bounds.getWidth() - SPLIT_PADDING * 2;
-		double vSplitHeight = (bounds.getHeight() - SPLIT_PADDING * 2) / 2;
+		double vSplitWidth = bounds.getWidth() - getSplitPadding() * 2;
+		double vSplitHeight = (bounds.getHeight() - getSplitPadding() * 2) / 2;
 
-		Bounds leftSplit = new BoundingBox(SPLIT_PADDING, SPLIT_PADDING, hSplitWidth, hSplitHeight);
-		Bounds rightSplit = new BoundingBox(bounds.getWidth() - SPLIT_PADDING - hSplitWidth, SPLIT_PADDING, hSplitWidth, hSplitHeight);
+		Bounds leftSplit = new BoundingBox(getSplitPadding(), getSplitPadding(), hSplitWidth, hSplitHeight);
+		Bounds rightSplit = new BoundingBox(bounds.getWidth() - getSplitPadding() - hSplitWidth, getSplitPadding(), hSplitWidth, hSplitHeight);
 
-		Bounds topSplit = new BoundingBox(SPLIT_PADDING, SPLIT_PADDING, vSplitWidth, vSplitHeight);
-		Bounds bottomSplit = new BoundingBox(SPLIT_PADDING, SPLIT_PADDING + vSplitHeight, vSplitWidth, vSplitHeight);
+		Bounds topSplit = new BoundingBox(getSplitPadding(), getSplitPadding(), vSplitWidth, vSplitHeight);
+		Bounds bottomSplit = new BoundingBox(getSplitPadding(), getSplitPadding() + vSplitHeight, vSplitWidth, vSplitHeight);
 
 		return new SplitAreas(leftSplit, rightSplit, topSplit, bottomSplit);
 	}
 
-	private static int SPLIT_PADDING = 20;
-
 	private boolean isSplit(Event e) {
 		Bounds boundsInLocal = ((Node) this.widget.getStaticLayoutNode()).getBoundsInLocal();
-		boundsInLocal = new BoundingBox(boundsInLocal.getMinX() + SPLIT_PADDING, boundsInLocal.getMinY() + SPLIT_PADDING, boundsInLocal.getWidth() - SPLIT_PADDING * 2, boundsInLocal.getHeight() - SPLIT_PADDING * 2);
+		boundsInLocal = new BoundingBox(boundsInLocal.getMinX() + getSplitPadding(), boundsInLocal.getMinY() + getSplitPadding(), boundsInLocal.getWidth() - getSplitPadding() * 2, boundsInLocal.getHeight() - getSplitPadding() * 2);
 		return boundsInLocal.contains(x(e), y(e));
 	}
 

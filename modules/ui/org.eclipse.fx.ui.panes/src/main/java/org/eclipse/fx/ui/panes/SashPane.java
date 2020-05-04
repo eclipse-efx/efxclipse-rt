@@ -23,7 +23,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
@@ -320,6 +319,10 @@ public class SashPane extends Region {
 	}
 
 	private void handleDragSash(MouseEvent e) {
+		if( this.draggedSash == null || this.c1 == null || this.c2 == null ) {
+			return;
+		}
+		
 		e.consume();
 		Rectangle rectangle = new Rectangle(getWidth(), getHeight(), getInsets());
 
@@ -361,6 +364,15 @@ public class SashPane extends Region {
 			double delta = e.getScreenY() - this.start;
 			long newSize_1 = (long) (this.resize_1 + delta);
 			long newSize_2 = (long) (this.resize_2 - delta);
+			if (newSize_1 < DRAG_MINIMUM) {
+				newSize_2 = (long) this.resize_total - DRAG_MINIMUM;
+				newSize_1 = DRAG_MINIMUM;
+			}
+
+			if (newSize_2 < DRAG_MINIMUM) {
+				newSize_1 = (long) this.resize_total - DRAG_MINIMUM;
+				newSize_2 = DRAG_MINIMUM;
+			}
 
 			Object data1 = this.c1.getProperties().get(LAYOUT_KEY);
 			if (data1 == null || !(data1 instanceof SashFormData)) {
@@ -418,6 +430,11 @@ public class SashPane extends Region {
 		Sash sash = new Sash();
 		sash.setOnMousePressed(this::handlePressedSash);
 		sash.setOnMouseDragged(this::handleDragSash);
+		sash.setOnMouseReleased( evt -> {
+			this.draggedSash = null;
+			this.c1 = null;
+			this.c2 = null;
+		});
 		getChildren().add(sash);
 		return sash;
 	}
@@ -497,6 +514,11 @@ public class SashPane extends Region {
 		return ratios;
 	}
 	
+	/**
+	 * @return property with the current weights
+	 * @see #getWeights()
+	 * @see #setWeights(int[])
+	 */
 	public ObjectProperty<int[]> weightsProperty() {
 		if( this.weights == null ) {
 			this.weights = new SimpleObjectProperty<>(this, "weights"); //$NON-NLS-1$
