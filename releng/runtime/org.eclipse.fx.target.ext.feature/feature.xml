@@ -1536,6 +1536,22 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.ecf.provider.filetransfer.httpclient45.win32"
+         os="win32"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ecf.provider.filetransfer.httpclient45.win32.source"
+         os="win32"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.ecf.provider.filetransfer.source"
          download-size="0"
          install-size="0"
@@ -1931,7 +1947,37 @@
          unpack="false"/>
 
    <plugin
+         id="org.apache.httpcomponents.httpclient"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.apache.httpcomponents.httpclient.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.httpcomponents.httpclient.win"
+         os="win32"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.httpcomponents.httpclient.win.source"
+         os="win32"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.httpcomponents.httpcore"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1971,5 +2017,22 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+   <plugin
+         id="com.sun.jna"
+         os="win32"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.sun.jna.platform"
+         os="win32"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 
 </feature>
