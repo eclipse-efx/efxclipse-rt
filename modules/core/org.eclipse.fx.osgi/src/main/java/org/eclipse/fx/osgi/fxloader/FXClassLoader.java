@@ -342,9 +342,11 @@ public class FXClassLoader extends ClassLoaderHook {
 					|| (b.getState() & Bundle.ACTIVE) == Bundle.ACTIVE)) { 
 				if( b.getHeaders().get("Java-Module-AddOpens") != null ) { //$NON-NLS-1$
 					opens.addAll(toOpenExports(b.getHeaders().get("Java-Module-AddOpens"),b)); //$NON-NLS-1$
-				} else if( b.getHeaders().get("Java-Module-AddExports") != null ) { //$NON-NLS-1$
+				}
+				if( b.getHeaders().get("Java-Module-AddExports") != null ) { //$NON-NLS-1$
 					exports.addAll(toOpenExports(b.getHeaders().get("Java-Module-AddExports"),b)); //$NON-NLS-1$
-				} else if( b.getHeaders().get("Java-Module-AddReads") != null ) { //$NON-NLS-1$
+				}
+				if( b.getHeaders().get("Java-Module-AddReads") != null ) { //$NON-NLS-1$
 					reads.addAll(toReads(b.getHeaders().get("Java-Module-AddReads"),b)); //$NON-NLS-1$
 				}
 			}
