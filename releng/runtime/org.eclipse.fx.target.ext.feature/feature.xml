@@ -2027,6 +2027,13 @@
          unpack="false"/>
 
    <plugin
+         id="com.sun.jna.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="com.sun.jna.platform"
          os="win32"
          download-size="0"
@@ -2034,5 +2041,11 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="com.sun.jna.platform.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
