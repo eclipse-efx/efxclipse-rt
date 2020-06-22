@@ -60,5 +60,5 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.ui.workbench.fx.internal.UIS
  OSGI-INF/services/org.eclipse.fx.ui.workbench.fx.E4ApplicationComponent.xml,
  OSGI-INF/services/org.eclipse.fx.ui.workbench.fx.internal.MenuServiceCF.xml
 Bundle-Vendor: Eclipse.org
-Java-Module-AddExports: javafx.graphics/com.sun.javafx.application=.,javafx.graphics/com.sun.glass.ui=.
+Java-Module-AddExports: javafx.graphics/com.sun.javafx.application=.,javafx.graphics/com.sun.glass.ui=.,javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
 
