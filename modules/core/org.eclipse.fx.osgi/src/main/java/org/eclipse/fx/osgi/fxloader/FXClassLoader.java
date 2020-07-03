@@ -338,17 +338,33 @@ public class FXClassLoader extends ClassLoaderHook {
 		
 		Bundle[] bundles = context.getBundles();
 		for (Bundle b : bundles) {
+			if( FXClassloaderConfigurator.DEBUG ) {
+				System.err.println("FXClassLoader#collectModifications - Analyzing " + b);
+			}
 			if (((b.getState() & Bundle.RESOLVED) == Bundle.RESOLVED
 					|| (b.getState() & Bundle.STARTING) == Bundle.STARTING
 					|| (b.getState() & Bundle.ACTIVE) == Bundle.ACTIVE)) {
 				if( b.getHeaders().get("Java-Module-AddOpens") != null ) { //$NON-NLS-1$
+					if( FXClassloaderConfigurator.DEBUG ) {
+						System.err.println("FXClassLoader#collectModifications - Opens Header found " + b.getHeaders().get("Java-Module-AddOpens"));
+					}
 					opens.addAll(toOpenExports(b.getHeaders().get("Java-Module-AddOpens"),b)); //$NON-NLS-1$
 				}
 				if( b.getHeaders().get("Java-Module-AddExports") != null ) { //$NON-NLS-1$
+					if( FXClassloaderConfigurator.DEBUG ) {
+						System.err.println("FXClassLoader#collectModifications - Exports Header found " + b.getHeaders().get("Java-Module-AddExports"));
+					}
 					exports.addAll(toOpenExports(b.getHeaders().get("Java-Module-AddExports"),b)); //$NON-NLS-1$
 				}
 				if( b.getHeaders().get("Java-Module-AddReads") != null ) { //$NON-NLS-1$
+					if( FXClassloaderConfigurator.DEBUG ) {
+						System.err.println("FXClassLoader#collectModifications - Reads Header found " + b.getHeaders().get("Java-Module-AddReads"));
+					}
 					reads.addAll(toReads(b.getHeaders().get("Java-Module-AddReads"),b)); //$NON-NLS-1$
+				}
+			} else {
+				if( FXClassloaderConfigurator.DEBUG ) {
+					System.err.println("Skipped Bundle: " + b);	
 				}
 			}
 		}
@@ -368,6 +384,13 @@ public class FXClassLoader extends ClassLoaderHook {
 		if( addOpens != null ) {
 			opens.addAll(toOpenExports(addOpens, null));
 		}
+		
+		if( FXClassloaderConfigurator.DEBUG ) {
+			System.err.println("FXClassLoader#collectModifications - Reads: " + reads);
+			System.err.println("FXClassLoader#collectModifications - Exports: " + exports);
+			System.err.println("FXClassLoader#collectModifications - Opens: " + opens);
+		}
+		
 		
 		return new JavaModuleLayerModification(context.getBundles(),reads, exports, opens);
 	}
@@ -468,7 +491,7 @@ public class FXClassLoader extends ClassLoaderHook {
 		
 		if( FXClassloaderConfigurator.DEBUG ) {
 			for( FXProviderBundle b : bundles ) {
-				System.err.println( "FXClassLoader#defaultModuleLayerBootstrap" +  b.module + " => " + b.path); //$NON-NLS-1$ //$NON-NLS-2$
+				System.err.println( "FXClassLoader#defaultModuleLayerBootstrap - " +  b.module + " => " + b.path); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 
