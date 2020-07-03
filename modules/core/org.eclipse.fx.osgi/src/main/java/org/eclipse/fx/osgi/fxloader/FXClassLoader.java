@@ -339,7 +339,8 @@ public class FXClassLoader extends ClassLoaderHook {
 		Bundle[] bundles = context.getBundles();
 		for (Bundle b : bundles) {
 			if (((b.getState() & Bundle.RESOLVED) == Bundle.RESOLVED
-					|| (b.getState() & Bundle.ACTIVE) == Bundle.ACTIVE)) { 
+					|| (b.getState() & Bundle.STARTING) == Bundle.STARTING
+					|| (b.getState() & Bundle.ACTIVE) == Bundle.ACTIVE)) {
 				if( b.getHeaders().get("Java-Module-AddOpens") != null ) { //$NON-NLS-1$
 					opens.addAll(toOpenExports(b.getHeaders().get("Java-Module-AddOpens"),b)); //$NON-NLS-1$
 				}
@@ -582,6 +583,7 @@ public class FXClassLoader extends ClassLoaderHook {
 		}
 		for (Bundle b : context.getBundles()) {
 			if (((b.getState() & Bundle.RESOLVED) == Bundle.RESOLVED
+					|| (b.getState() & Bundle.STARTING) == Bundle.STARTING
 					|| (b.getState() & Bundle.ACTIVE) == Bundle.ACTIVE) && b.getHeaders().get("Java-Module") != null) { //$NON-NLS-1$
 				String name = b.getHeaders().get("Java-Module"); //$NON-NLS-1$
 				if( FXClassloaderConfigurator.DEBUG ) {
