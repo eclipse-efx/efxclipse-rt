@@ -29,6 +29,7 @@ import javafx.css.StyleableDoubleProperty;
 import javafx.css.StyleableObjectProperty;
 import javafx.css.StyleablePropertyFactory;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.Side;
 import javafx.scene.Node;
@@ -205,6 +206,15 @@ public class BoxShadow2 extends Region {
 
         setContent(content);
     }
+    
+    @Override
+    public Orientation getContentBias() {
+        if (getContent() != null) {
+            return getContent().getContentBias();
+        } else {
+            return null;
+        }
+    }    
 
     @Override
     protected double computeMinWidth(double height) {
