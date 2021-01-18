@@ -133,6 +133,11 @@
 			<layout>p2</layout>
 			<url>${efx_shared_runtime}</url>
 		</repository>
+		<repository>
+			<id>orbit </id>
+			<layout>p2</layout>
+			<url>https://download.eclipse.org/tools/orbit/downloads/drops/R20200831200620/repository</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
