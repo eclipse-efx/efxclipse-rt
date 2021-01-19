@@ -209,18 +209,6 @@ public class FXClassLoader extends ClassLoaderHook {
 					if( ! modules.isEmpty() ) {
 						this.j11Classloader = layer.findLoader(modules.iterator().next().getName());
 						this.j11ModulePackages = modules.stream().flatMap( m -> m.getPackages().stream()).collect(Collectors.toSet());
-
-						if( getSWTClassloader(this.frameworkContext) != null ) {
-							if (FXClassloaderConfigurator.DEBUG) {
-								System.err.println("FXClassLoader#findClassJavaFX11 - We run inside SWT don't let the platform quit automatically" ); //$NON-NLS-1$
-							}
-							try {
-								this.j11Classloader.loadClass("javafx.application.Platform") //$NON-NLS-1$
-										.getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE);//$NON-NLS-1$
-							} catch (Throwable e) {
-								e.printStackTrace();
-							}
-						}
 					} else {
 						return null;
 					}
@@ -232,6 +220,18 @@ public class FXClassLoader extends ClassLoaderHook {
 
 		if (FXClassloaderConfigurator.DEBUG) {
 			System.err.println("FXClassLoader#findClassJavaFX11 - Using classloader " + this.j11Classloader); //$NON-NLS-1$
+		}
+		
+		if (name.startsWith("javafx.embed.swt")) { //$NON-NLS-1$
+			try {
+				if (FXClassloaderConfigurator.DEBUG) {
+					System.err.println("FXClassLoader#findClassJavaFX11 - We are using SWT FXCanvas - don't let the platform quit automatically" ); //$NON-NLS-1$
+				}
+				this.j11Classloader.loadClass("javafx.application.Platform") //$NON-NLS-1$
+						.getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE);//$NON-NLS-1$
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
 		}
 
 		int lastIndexOf = name.lastIndexOf('.');
