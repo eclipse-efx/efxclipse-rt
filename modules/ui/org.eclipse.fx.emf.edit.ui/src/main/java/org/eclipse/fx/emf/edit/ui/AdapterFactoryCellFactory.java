@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.emf.edit.ui;
 
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,6 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemFontProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
-import org.eclipse.fx.core.ReflectionUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -306,7 +306,7 @@ public abstract class AdapterFactoryCellFactory {
 					|| cell instanceof CheckBoxTreeTableCell<?, ?> 
 					|| cell instanceof CheckBoxListCell<?> 
 					|| cell instanceof CheckBoxTableCell<?, ?>) {
-				Object value = ReflectionUtil.getFieldValue(cell, "checkBox"); //$NON-NLS-1$
+				Object value = getFieldValue(cell, "checkBox"); //$NON-NLS-1$
 				((CheckBox)value).setGraphic(graphic);
 			} else {
 				cell.setGraphic(graphic);
@@ -315,6 +315,34 @@ public abstract class AdapterFactoryCellFactory {
 			cell.setText(null);
 			resetPropertyState(cell, cell.graphicProperty(), null);
 		}
+	}
+	
+	private static Object getFieldValue(Object object, String name) {
+		try {
+			Field field = getField(object.getClass(), name);
+			if (!field.isAccessible()) {
+				field.setAccessible(true);
+			}
+			return field.get(object);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			throw new RuntimeException("Could not read field value: " + object.getClass().getSimpleName() + "." + name, e); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
+	
+	private static Field getField(Class<?> clazz, String name) throws NoSuchFieldException {
+		Class<?> searchClass = clazz;
+		Field field = null;
+		while (field == null && searchClass != null) {
+			try {
+				field = searchClass.getDeclaredField(name);
+			} catch (NoSuchFieldException e) {
+				searchClass = searchClass.getSuperclass();
+			}
+		}
+		if (field == null) {
+			throw new NoSuchFieldException(clazz.getSimpleName() + "." + name); //$NON-NLS-1$
+		}
+		return field;
 	}
 
 	static void applyTableItemProviderStyle(@Nullable Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
