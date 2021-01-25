@@ -11,3 +11,4 @@ Export-Package: org.eclipse.fx.emf.edit.ui;version="3.7.0",
 Bundle-Vendor: Eclipse.org
 Import-Package: org.eclipse.fx.core;version="3.7.0",
  org.eclipse.fx.ui.controls.tree;version="3.7.0"
+Java-Module-AddOpens: javafx.controls/javafx.scene.control.cell=.
