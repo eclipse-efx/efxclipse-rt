@@ -166,6 +166,10 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		@Nullable
 		M m = this.widget.getDomElement();
 
+		if (!DndTabPaneFactory.hasDnDContent(e)) {
+			return;
+		}
+
 		String content = DndTabPaneFactory.getDnDContent(e);
 		if (content == null) {
 			return;
@@ -182,10 +186,6 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		}
 
 		if (this.widget.getDropDroppedCallback() != null) {
-			if (!DndTabPaneFactory.hasDnDContent(e)) {
-				return;
-			}
-
 			if (m instanceof MGenericTile<?>) {
 				// Tiles are not split
 				e.consume();
@@ -220,6 +220,10 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		@Nullable
 		M m = this.widget.getDomElement();
 
+		if (!DndTabPaneFactory.hasDnDContent(e)) {
+			return;
+		}
+
 		String content = DndTabPaneFactory.getDnDContent(e);
 
 		if (content == null) {
@@ -238,10 +242,6 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		@Nullable
 		WCallback<@NonNull DropData, @Nullable Void> dropDroppedCallback = this.widget.getDropDroppedCallback();
 		if (dropDroppedCallback != null) {
-			if (!DndTabPaneFactory.hasDnDContent(e)) {
-				return;
-			}
-
 			String objectId = DndTabPaneFactory.getDnDContent(e);
 
 			MUIElement draggedElement = findElement(objectId);
