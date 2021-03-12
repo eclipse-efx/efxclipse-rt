@@ -194,9 +194,9 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 
 		if (element.getSelectedElement() != null) {
 			handleSelectedElement(element, null, element.getSelectedElement());
-		} else if (!element.getChildren().isEmpty()) {
+		} else if (!stack.getItems().isEmpty()) {
 			// TODO Should this be done through the part service????
-			element.setSelectedElement(element.getChildren().get(0));
+			element.setSelectedElement(stack.getItems().get(0).getDomElement());
 		}
 	}
 
