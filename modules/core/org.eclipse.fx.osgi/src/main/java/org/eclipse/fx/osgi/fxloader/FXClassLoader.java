@@ -77,7 +77,7 @@ public class FXClassLoader extends ClassLoaderHook {
 	private static Boolean IS_JAVA_8;
 	private static Map<String, ServiceTracker<Object, URLConverter>> urlTrackers = new HashMap<>();
 	private Set<String> j11ModulePackages;
-	private boolean reentrance;
+	private ThreadLocal<Boolean> reentrance = ThreadLocal.withInitial(() -> false);
 
 	static boolean isJDK8() {
 		if (IS_JAVA_8 != null) {
@@ -106,14 +106,14 @@ public class FXClassLoader extends ClassLoaderHook {
 
 	@SuppressWarnings("resource")
 	@Override
-	public synchronized Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
-		if( this.reentrance ) {
+	public Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
+		if( this.reentrance.get() ) {
 			if (FXClassloaderConfigurator.DEBUG) {
 				System.err.println("FXClassLoader#postFindClass - Loop detected returning null");
 			}
 			return null;
 		}
-		this.reentrance = true;
+		this.reentrance.set(true);
 		try {
 			// this is pre java 9
 			if (isJDK8()) {
@@ -175,7 +175,7 @@ public class FXClassLoader extends ClassLoaderHook {
 
 			return super.postFindClass(name, moduleClassLoader);
 		} finally {
-			this.reentrance = false;
+			this.reentrance.set(false);
 		}
 
 	}
@@ -221,7 +221,7 @@ public class FXClassLoader extends ClassLoaderHook {
 		if (FXClassloaderConfigurator.DEBUG) {
 			System.err.println("FXClassLoader#findClassJavaFX11 - Using classloader " + this.j11Classloader); //$NON-NLS-1$
 		}
-		
+
 		if (name.startsWith("javafx.embed.swt")) { //$NON-NLS-1$
 			try {
 				if (FXClassloaderConfigurator.DEBUG) {
