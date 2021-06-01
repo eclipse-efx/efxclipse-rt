@@ -13,6 +13,7 @@
  *     Lars Vogel (Lars.Vogel@gmail.com) - Bug 331690
  *     Dirk Fauth (dirk.fauth@googlemail.com) - Bug 459285
  *     Eugen Neufeld (eneufeld@eclipsesource.com) - Bug 432466, Bug 455568
+ *     Martin Blühweis (martin.bluehweis@bestsolution.at) - Logging
  ******************************************************************************/
 
 package org.eclipse.fx.ui.workbench.renderers.base.addons;
@@ -33,7 +34,6 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MArea;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
-import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimmedWindow;
@@ -44,6 +44,8 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.fx.core.log.Log;
+import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.services.PartialRestoreMinMaxService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.PartialRestoreMinMaxService.TrimStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMinMaxableWidget;
@@ -86,6 +88,10 @@ public class MinMaxAddonWithPartialRestore {
 	private boolean ignoreTagChanges = false;
 
 	final MAddon minMaxAddon;
+
+	@Inject
+	@Log
+	private Logger logger;
 	
 	@Inject
 	MinMaxAddonWithPartialRestore(IEventBroker eventBroker, 
@@ -720,7 +726,7 @@ public class MinMaxAddonWithPartialRestore {
 					&& !element.getTags().contains(MINIMIZED)) {
 				elementsToMinimize.add(element);
 			} else {
-				System.err.println("Skipping: " + element);
+				logger.debugf("Skipping: %s", element);
 			}
 		}
 		return elementsToMinimize;
