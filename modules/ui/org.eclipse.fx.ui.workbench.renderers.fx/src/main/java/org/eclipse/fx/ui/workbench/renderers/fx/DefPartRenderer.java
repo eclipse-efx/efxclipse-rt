@@ -96,16 +96,18 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 	}
 
 	static java.util.Optional<Node> getFirstFocusableNode(Parent parent) {
-		for (Node node : parent.getChildrenUnmodifiable()) {
-			if (node instanceof Parent) {
-				java.util.Optional<Node> opt = getFirstFocusableNode((Parent) node);
-				if (opt.isPresent()) {
-					return opt;
+		if (parent.isVisible()) {
+			for (Node node : parent.getChildrenUnmodifiable()) {
+				if (node instanceof Parent) {
+					java.util.Optional<Node> opt = getFirstFocusableNode((Parent) node);
+					if (opt.isPresent()) {
+						return opt;
+					}
 				}
-			}
 
-			if (node.isFocusTraversable()) {
-				return java.util.Optional.of(node);
+				if (node.isFocusTraversable() && node.isVisible()) {
+					return java.util.Optional.of(node);
+				}
 			}
 		}
 		return java.util.Optional.empty();
