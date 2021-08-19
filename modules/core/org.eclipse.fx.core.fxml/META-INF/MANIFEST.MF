@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Fxml
 Bundle-SymbolicName: org.eclipse.fx.core.fxml
-Bundle-Version: 3.7.0.qualifier
+Bundle-Version: 3.7.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.jdt.annotation;bundle-version="2.0.0";resolution:=optional
 Export-Package: org.eclipse.fx.core.fxml;version="3.7.0"
