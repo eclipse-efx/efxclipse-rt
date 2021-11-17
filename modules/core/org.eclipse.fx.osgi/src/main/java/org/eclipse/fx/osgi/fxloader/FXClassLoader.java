@@ -175,7 +175,7 @@ public class FXClassLoader extends ClassLoaderHook {
 
 			return super.postFindClass(name, moduleClassLoader);
 		} finally {
-			this.reentrance.set(false);
+			this.reentrance.remove();
 		}
 
 	}
