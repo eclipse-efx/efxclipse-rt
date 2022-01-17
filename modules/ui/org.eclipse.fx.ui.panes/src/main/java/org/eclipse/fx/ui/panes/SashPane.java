@@ -323,8 +323,34 @@ public class SashPane extends Region {
 				}
 			}
 		} else {
-			
+			layoutWithFixedChildComplex(_x, _y, _w, _h);
 		}
+	}
+	
+	private void layoutWithFixedChildComplex(int _x, int _y, int _w, int _h) {
+		int x = _x;
+		int y = _y;
+		int w = _w;
+		int h = _h;
+		
+		List<Node> children = getManagedChildren().stream().filter(Node::isVisible).collect(Collectors.toList());
+		
+		long[] ratios = new long[children.size()];
+		long total = 0;
+		for (int i = 0; i < children.size(); i++) {
+			Object data = children.get(i).getProperties().get(LAYOUT_KEY);
+			if (data != null && data instanceof SashFormData) {
+				ratios[i] = ((SashFormData) data).weight;
+			} else {
+				data = new SashFormData();
+				children.get(i).getProperties().put(LAYOUT_KEY, data);
+				((SashFormData) data).weight = ratios[i] = ((200 << 16) + 999) / 1000;
+
+			}
+			total += ratios[i];
+		}
+		
+		
 	}
 	
 	private void layoutSimple(int _x, int _y, int _w, int _h) {
@@ -381,10 +407,6 @@ public class SashPane extends Region {
 				y += getSashWidth();
 				height = (int) (ratios[i] * (h - this.sashes.length * getSashWidth()) / total);
 				c.resizeRelocate(x, y, w, height);
-				// System.err.println(((SashChild)children.get(i)).getChildren().get(0) + " ===> " + w + "/" + height);
-				if( c.fixedSize.get() != null ) {
-					System.err.println(c.minHeight(w));
-				}
 				y += height;
 			}
 			if (children.size() > 1) {
@@ -416,6 +438,18 @@ public class SashPane extends Region {
 		}
 		
 		e.consume();
+		
+		if( hasFixedChild() ) {
+			// We only have to handle drag if there are more than 2 children
+			if( getChildren().size() > 2 ) {
+				System.err.println("Not yet supported dragging sash"); //$NON-NLS-1$
+			}
+		} else {
+			handleDragSashSimple(e);
+		}
+	}
+	
+	private void handleDragSashSimple(MouseEvent e) {
 		Rectangle rectangle = new Rectangle(getWidth(), getHeight(), getInsets());
 
 		if (this.horizontal.get()) {
