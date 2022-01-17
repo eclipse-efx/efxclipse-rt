@@ -226,8 +226,8 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 
 				if (keyCode != null) {
 					getWidget().setAccelerator(
-							new KeyCodeCombination(keyCode, k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCommandModifier() ? ModifierValue.DOWN
-									: ModifierValue.ANY, ModifierValue.ANY));
+							new KeyCodeCombination(keyCode, k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.UP, k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.UP, k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.UP, k.hasCommandModifier() ? ModifierValue.DOWN
+									: ModifierValue.UP, ModifierValue.UP));
 				} else {
 					String message = NLS.bind("No JavaFX KeyBinding found [keyCode={0}, character={1}]", Integer.valueOf(k.getKeyCode()), Character.valueOf((char) k.getKeyCode())); //$NON-NLS-1$
 					this.logger.warning(message);
