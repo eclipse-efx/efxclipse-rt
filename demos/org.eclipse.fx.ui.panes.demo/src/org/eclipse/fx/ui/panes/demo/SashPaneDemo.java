@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
@@ -28,6 +29,7 @@ public class SashPaneDemo extends Application {
 		TabPane root = new TabPane();
 		root.getTabs().add(createSimpleStartVertical());
 		root.getTabs().add(createSimpleEndVertical());
+		root.getTabs().add(createComplex3());
 
 		Scene s = new Scene(root, 800, 600);
 		primaryStage.setScene(s);
@@ -64,10 +66,12 @@ public class SashPaneDemo extends Application {
 		SashPane pane = new SashPane();
 		VBox.setVgrow(pane, Priority.ALWAYS);
 		pane.setHorizontal(false);
-		pane.getItems().add(new StackPane(new Label("Top")));
+		pane.getItems().add(new StackPane(new Label("Top 1")));
+		pane.getItems().add(new StackPane(new Label("Top 2")));
 		TitledPane titlePane = createGroupNode();
 		pane.getItems().add(titlePane);
-		pane.getItems().add(new StackPane(new Label("Bottom")));
+		pane.getItems().add(new StackPane(new Label("Bottom 1")));
+		pane.getItems().add(new StackPane(new Label("Bottom 2")));
 
 		StackPane root = new StackPane(pane);
 		
@@ -79,12 +83,15 @@ public class SashPaneDemo extends Application {
 		content.setPadding(new Insets(30));
 //		content.setPrefHeight(1000);
 //		content.setMaxHeight(1000);
-		TitledPane pane = new SashTitlePane("Sample", content);
+		ScrollPane scrollPane = new ScrollPane(content);
+		scrollPane.setFitToWidth(true);
+		scrollPane.setFitToHeight(true); 
+		TitledPane pane = new SashTitledPane("Sample", scrollPane);
 		return pane;
 	}
 	
-	class SashTitlePane extends TitledPane implements FixedSashItem {
-		public SashTitlePane(String title, Node content) {
+	class SashTitledPane extends TitledPane implements FixedSashItem {
+		public SashTitledPane(String title, Node content) {
 			super(title, content);
 		}
 		
