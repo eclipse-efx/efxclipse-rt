@@ -30,6 +30,7 @@ public class SashPaneDemo extends Application {
 		root.getTabs().add(createSimpleStartVertical());
 		root.getTabs().add(createSimpleEndVertical());
 		root.getTabs().add(createComplex3());
+		root.getTabs().add(createComplex4());
 
 		Scene s = new Scene(root, 800, 600);
 		primaryStage.setScene(s);
@@ -75,9 +76,26 @@ public class SashPaneDemo extends Application {
 
 		StackPane root = new StackPane(pane);
 		
-		return new Tab("Simple - Start - Vertical", root);
+		return new Tab("Complex - Center - Vertical", root);
 	}
 
+	private Tab createComplex4() {
+		SashPane pane = new SashPane();
+		VBox.setVgrow(pane, Priority.ALWAYS);
+		pane.setHorizontal(false);
+		pane.getItems().add(createGroupNode());
+		pane.getItems().add(createGroupNode());
+		pane.getItems().add(new StackPane(new Label("Top 1")));
+		pane.getItems().add(new StackPane(new Label("Top 2")));
+		pane.getItems().add(new StackPane(new Label("Bottom 1")));
+		pane.getItems().add(new StackPane(new Label("Bottom 2")));
+
+		StackPane root = new StackPane(pane);
+		
+		return new Tab("Complex - Start - Vertical", root);
+	}
+
+	
 	private TitledPane createGroupNode() {
 		VBox content = new VBox(new Label("Content"));
 		content.setPadding(new Insets(30));
@@ -87,6 +105,7 @@ public class SashPaneDemo extends Application {
 		scrollPane.setFitToWidth(true);
 		scrollPane.setFitToHeight(true); 
 		TitledPane pane = new SashTitledPane("Sample", scrollPane);
+		pane.setAnimated(false);
 		return pane;
 	}
 	
