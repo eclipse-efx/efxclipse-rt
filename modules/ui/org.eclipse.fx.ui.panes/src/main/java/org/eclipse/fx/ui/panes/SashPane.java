@@ -611,6 +611,12 @@ public class SashPane extends Region {
 				newSize_1 = (long) this.resize_total - minChildHeight2;
 				newSize_2 = minChildHeight2;
 			}
+			
+			long remainder = (long)this.resize_total - newSize_1 - newSize_2;
+			
+			if( remainder != 0 ) {
+				newSize_1 += remainder;
+			}
 
 			Object data1 = this.c1.getProperties().get(LAYOUT_KEY);
 			if (data1 == null || !(data1 instanceof SashFormData)) {
@@ -675,7 +681,7 @@ public class SashPane extends Region {
 				this.c2 = null;
 			}
 			
-//			System.err.println( this.c1 + "/" + this.c2);
+			this.resize_total = this.resize_1 + this.resize_2;		
 		} else {
 			this.c1 = visibleNodes.get(sashIndex);
 			Bounds b = this.c1.getLayoutBounds();
