@@ -896,7 +896,7 @@ public class SashPane extends Region {
 			AnchorPane.setTopAnchor(c, Double.valueOf(0.0));
 			AnchorPane.setLeftAnchor(c, Double.valueOf(0.0));
 			AnchorPane.setRightAnchor(c, Double.valueOf(0.0));
-			setStyle("-fx-border-width: 1; -fx-border-style: solid; -fx-border-color: black");
+//			setStyle("-fx-border-width: 1; -fx-border-style: solid; -fx-border-color: black");
 		}
 
 		@Override
