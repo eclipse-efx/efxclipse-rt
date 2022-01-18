@@ -68,8 +68,8 @@ public class SashPaneDemo extends Application {
 		pane.setHorizontal(false);
 		pane.getItems().add(new StackPane(new Label("Top 1")));
 		pane.getItems().add(new StackPane(new Label("Top 2")));
-		TitledPane titlePane = createGroupNode();
-		pane.getItems().add(titlePane);
+		pane.getItems().add(createGroupNode());
+		pane.getItems().add(createGroupNode());
 		pane.getItems().add(new StackPane(new Label("Bottom 1")));
 		pane.getItems().add(new StackPane(new Label("Bottom 2")));
 
