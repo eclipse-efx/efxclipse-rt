@@ -265,14 +265,14 @@ public class SashPane extends Region {
 		if( ! hasFixedChild() ) {
 			layoutSimple(x,y,w,h);
 		} else {
-			layoutWithFixedChild(x,y,w,h);
+			layoutWithFixedChild(x,y,w,h,force);
 		}
 
 		this.clientArea = b;
 		syncWeightProperty();
 	}
 	
-	private void layoutWithFixedChild(int _x, int _y, int _w, int _h) {
+	private void layoutWithFixedChild(int _x, int _y, int _w, int _h, boolean force) {
 		int x = _x;
 		int y = _y;
 		int w = _w;
@@ -323,11 +323,11 @@ public class SashPane extends Region {
 				}
 			}
 		} else {
-			layoutWithFixedChildComplex(_x, _y, _w, _h);
+			layoutWithFixedChildComplex(_x, _y, _w, _h, force);
 		}
 	}
 	
-	private void layoutWithFixedChildComplex(int _x, int _y, int _w, int _h) {
+	private void layoutWithFixedChildComplex(int _x, int _y, int _w, int _h, boolean force) {
 		int x = _x;
 		int y = _y;
 		int w = _w;
