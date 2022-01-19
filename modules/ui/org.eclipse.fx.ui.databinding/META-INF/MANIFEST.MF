@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Databinding
 Bundle-SymbolicName: org.eclipse.fx.ui.databinding
-Bundle-Version: 3.7.1.qualifier
+Bundle-Version: 3.8.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.databinding.observable;bundle-version="1.4.1",
  org.eclipse.core.databinding.property,
