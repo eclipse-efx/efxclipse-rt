@@ -194,6 +194,7 @@ public class SashPane extends Region {
 	
 	private boolean hasFixedChild() {
 		return getManagedChildren().stream()
+			.filter(Node::isVisible)
 			.map(SashChild.class::cast)
 			.filter(SashChild::isFixed)
 			.findAny().isPresent();
