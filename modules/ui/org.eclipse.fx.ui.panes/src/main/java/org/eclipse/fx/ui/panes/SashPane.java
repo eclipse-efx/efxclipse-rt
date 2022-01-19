@@ -279,12 +279,17 @@ public class SashPane extends Region {
 		int w = _w;
 		int h = _h;
 		
+		List<SashChild> children = getManagedChildren().stream()
+				.filter(Node::isVisible)
+				.map(SashChild.class::cast)
+				.collect(Collectors.toList());
+		
 		// check if it a simple UC where we only have 2 children and one is fixed
-		if( getManagedChildren().size() == 2 ) {
-			Node startNode = getManagedChildren().get(0);
-			Node endNode = getManagedChildren().get(1);
+		if( children.size() == 2 ) {
+			Node startNode = children.get(0);
+			Node endNode = children.get(1);
 			
-			if( ((SashChild)getManagedChildren().get(0)).isFixed() ) {
+			if( ((SashChild)children.get(0)).isFixed() ) {
 				if (this.horizontal.get()) {
 					double minWidth = startNode.minWidth(h);
 					
