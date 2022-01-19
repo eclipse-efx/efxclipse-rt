@@ -40,6 +40,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -164,6 +165,8 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		@Optional
 		LightweightDialogTransitionService dialogTransitionService;
 
+		private TitledPane titledPane;
+
 		@Inject
 		public PartImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPart domElement) {
 			this.domElement = domElement;
@@ -195,6 +198,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 			return p;
 		}
 
+		@SuppressWarnings({ "null", "boxing" })
 		@Override
 		public AnchorPane getWidgetNode() {
 			if (this.contentArea == null) {
@@ -261,6 +265,22 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					n = scroll;
 				}
 				
+				if( this.domElement.getTags().contains(WPart.WITH_COLLAPSIBLE_CONTENT) ) {
+					BorderPane content = new BorderPane(n);
+					content.setPadding(Insets.EMPTY);
+					this.titledPane = new TitledPane("",content); //$NON-NLS-1$
+					this.titledPane.expandedProperty().addListener((ob,ol,ne) -> {
+						this.domElement.getPersistedState().put("efxSashFixed", !ne+""); //$NON-NLS-1$ //$NON-NLS-2$
+					});
+					
+					if( Boolean.parseBoolean(this.domElement.getPersistedState().getOrDefault("efxSashFixed","false")) ) { //$NON-NLS-1$ //$NON-NLS-2$
+						this.titledPane.setExpanded(false);
+					}
+					this.titledPane.getStyleClass().add("efx-expandable-title-pane"); //$NON-NLS-1$
+					this.titledPane.setMaxHeight(Double.MAX_VALUE);
+					n = this.titledPane;
+				}
+				
 				this.dataArea.setCenter(n);
 			}
 			return this.contentArea;
@@ -271,42 +291,47 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				// Ensure that everything is initialized!!!
 				getStaticLayoutNode();
 
-				this.toolbarGroup = new StackPane();
-				MPart element = getDomElement();
-				if (element != null && element.getTags().contains(RendererConstants.TOOL_BAR_FULL_SPAN_TAG)) {
-					final BorderPane p = new BorderPane();
-					p.setCenter(this.toolbarGroup);
-					p.getStyleClass().add(RendererConstants.CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
-					if (element.getTags().contains(RendererConstants.TOOLBAR_MENU_FLOAT_TAG)) {
-						AnchorPane.setLeftAnchor(p, Double.valueOf(0.0));
-						AnchorPane.setRightAnchor(p, Double.valueOf(0.0));
-						AnchorPane.setTopAnchor(p, Double.valueOf(0.0));
-						this.contentArea.getChildren().add(p);
-						p.setVisible(false);
-						this.dataArea.setTop(this.expandGroup);
-						this.expandGroup.setVisible(true);
-						p.setOnMousePressed(new EventHandler<MouseEvent>() {
-							@Override
-							public void handle(MouseEvent event) {
-								p.setVisible(false);
+				if( this.titledPane != null ) {
+					this.toolbarGroup = new StackPane();
+					((BorderPane)this.titledPane.getContent()).setTop(this.toolbarGroup);
+				} else {
+					this.toolbarGroup = new StackPane();
+					MPart element = getDomElement();
+					if (element != null && element.getTags().contains(RendererConstants.TOOL_BAR_FULL_SPAN_TAG)) {
+						final BorderPane p = new BorderPane();
+						p.setCenter(this.toolbarGroup);
+						p.getStyleClass().add(RendererConstants.CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
+						if (element.getTags().contains(RendererConstants.TOOLBAR_MENU_FLOAT_TAG)) {
+							AnchorPane.setLeftAnchor(p, Double.valueOf(0.0));
+							AnchorPane.setRightAnchor(p, Double.valueOf(0.0));
+							AnchorPane.setTopAnchor(p, Double.valueOf(0.0));
+							this.contentArea.getChildren().add(p);
+							p.setVisible(false);
+							this.dataArea.setTop(this.expandGroup);
+							this.expandGroup.setVisible(true);
+							p.setOnMousePressed(new EventHandler<MouseEvent>() {
+								@Override
+								public void handle(MouseEvent event) {
+									p.setVisible(false);
+								}
+							});
+						} else {
+							if (element.getTags().contains(RendererConstants.TOOLBAR_MENU_BOTTOM_TAG)) {
+								this.dataArea.setBottom(p);
+							} else {
+								this.dataArea.setTop(p);
 							}
-						});
+						}
 					} else {
-						if (element.getTags().contains(RendererConstants.TOOLBAR_MENU_BOTTOM_TAG)) {
+						BorderPane p = new BorderPane();
+						p.setRight(this.toolbarGroup);
+						p.getStyleClass().add(RendererConstants.CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
+						if (element != null && element.getTags().contains(RendererConstants.TOOLBAR_MENU_BOTTOM_TAG)) {
 							this.dataArea.setBottom(p);
 						} else {
 							this.dataArea.setTop(p);
 						}
-					}
-				} else {
-					BorderPane p = new BorderPane();
-					p.setRight(this.toolbarGroup);
-					p.getStyleClass().add(RendererConstants.CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
-					if (element != null && element.getTags().contains(RendererConstants.TOOLBAR_MENU_BOTTOM_TAG)) {
-						this.dataArea.setBottom(p);
-					} else {
-						this.dataArea.setTop(p);
-					}
+					}					
 				}
 			}
 		}
@@ -374,6 +399,9 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 			if( this.titleLabel != null ) {
 				this.titleLabel.setText(label);
 			}
+			if( this.titledPane != null ) {
+				this.titledPane.setText(label);
+			}
 		}
 
 		@SuppressWarnings("null")
@@ -387,7 +415,13 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				} else {
 					this.titleLabel.setGraphic(null);
 				}
-
+			}
+			if( this.titledPane != null ) {
+				if( iconURI != null ) {
+					this.titledPane.setGraphic(this.graphicsLoader.getGraphicsNode(URI.create(iconURI)));
+				} else {
+					this.titledPane.setGraphic(null);
+				}
 			}
 		}
 

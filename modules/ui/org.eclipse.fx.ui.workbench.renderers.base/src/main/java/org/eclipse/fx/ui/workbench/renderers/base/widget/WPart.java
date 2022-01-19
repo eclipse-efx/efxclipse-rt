@@ -30,6 +30,13 @@ public interface WPart<N, T, M> extends WLayoutedWidget<MPart>, WDialogHost {
 	 * @since 2.2.0
 	 */
 	public static final String SHOW_TOP_TRIM_AREA_TAG = "showTopTrimArea"; //$NON-NLS-1$
+	
+	/**
+	 * Wrap the content so that it can be collapsed
+	 * 
+	 * @since 3.8.0
+	 */
+	public static final String WITH_COLLAPSIBLE_CONTENT = "fx_withCollapsibleContent"; //$NON-NLS-1$
 
 	/**
 	 * Set a toolbar
