@@ -459,18 +459,18 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@SuppressWarnings("null")
 	void handleEvent(Event event) {
-		// System.err.println("EVENT: " + this + " ===> " + event);
 		Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
 		if (!(changedObj instanceof MUIElement)) {
 			return;
 		}
 
 		Object newValue = event.getProperty(UIEvents.EventTags.NEW_VALUE);
+		Object oldValue = event.getProperty(UIEvents.EventTags.OLD_VALUE);
 		String attributeName = event.getProperty(UIEvents.EventTags.ATTNAME).toString();
 
 		// for now only process set and tag events
 		// TODO Should we skip none attribute changes???
-		if (!UIEvents.isSET(event) && !UIEvents.ApplicationElement.TAGS.equals(attributeName)) {
+		if (!UIEvents.isSET(event) && !UIEvents.ApplicationElement.TAGS.equals(attributeName) && !UIEvents.ApplicationElement.PERSISTEDSTATE.equals(attributeName)) {
 			return;
 		}
 
@@ -499,11 +499,18 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 					IEclipseContext ctx = (IEclipseContext) e.getTransientData().get(RENDERING_CONTEXT_KEY);
 					if (ctx != null) {
-						if (attributeName.equals(UIEvents.ApplicationElement.PERSISTEDSTATE) && newValue instanceof Entry) {
-							@SuppressWarnings("unchecked")
-							Entry<String, String> entry = (Entry<String, String>) newValue;
-							ctx.set(attributeName + "_" //$NON-NLS-1$
-									+ entry.getKey(), entry.getValue());
+						if (attributeName.equals(UIEvents.ApplicationElement.PERSISTEDSTATE)) {
+							if( (UIEvents.isADD(event) || UIEvents.isSET(event)) && newValue instanceof Entry ) {
+								@SuppressWarnings("unchecked")
+								Entry<String, String> entry = (Entry<String, String>) newValue;
+								ctx.set(attributeName + "_" //$NON-NLS-1$
+										+ entry.getKey(), entry.getValue());	
+							} else if( UIEvents.isREMOVE(event) && oldValue instanceof Entry ) {
+								@SuppressWarnings("unchecked")
+								Entry<String, String> entry = (Entry<String, String>) oldValue;
+								ctx.remove(attributeName + "_" //$NON-NLS-1$
+										+ entry.getKey());
+							}
 						} else if (attributeName.equals(UIEvents.ApplicationElement.TAGS)) {
 							ctx.set(ApplicationElement.TAGS, new ArrayList<>(e.getTags()));
 						} else {
