@@ -444,7 +444,7 @@ public class FXClassLoader extends ClassLoaderHook {
 		@SuppressWarnings("deprecation")
 		URL[] urls = Stream.of(paths).map( Path::toFile).map( f -> {
 			try {
-				return f.toURL();
+				return f.toURI().toURL();
 			} catch(Throwable t) {
 				return null;
 			}
