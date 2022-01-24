@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.jdt.annotation.NonNull;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -367,7 +368,7 @@ public class SashPane extends Region {
 			}
 		}
 		
-		if( horizontal.get() ) {
+		if( this.horizontal.get() ) {
 			w -= children.stream().filter(SashChild::isFixed).mapToDouble( s -> computeFixedWidth(s, _h)).sum();
 			
 			double sashSize = getSashWidth();
@@ -412,6 +413,12 @@ public class SashPane extends Region {
 					sashChild.resizeRelocate(x, y, w, targetHeight);
 					y += targetHeight;
 				} else {
+					
+					double minHeight = sashChild.minHeight(w);
+					if( minHeight > ratioHeight ) {
+						ratioHeight = (int)minHeight;
+					}
+					
 					sashChild.resizeRelocate(x, y, w, ratioHeight);
 					y += ratioHeight;
 				}
@@ -468,9 +475,6 @@ public class SashPane extends Region {
 			total += ratios[i];
 		}
 
-//		int spread = 0;
-//		boolean adjust = false;
-
 		// int sashwidth = 10; //TODO sashes.length > 0 ? sashForm.SASH_WIDTH +
 		// sashes [0].getBorderWidth() * 2 : sashForm.SASH_WIDTH;
 		if (this.horizontal.get()) {
@@ -496,14 +500,10 @@ public class SashPane extends Region {
 		} else {
 			Node node = children.get(0);
 			int height = (int) (ratios[0] * (h - this.sashes.length * getSashWidth()) / total);
-			int delta = (int)node.minHeight(w) - height;
+			int minHeight = (int)node.minHeight(w);
 			
-//			System.err.println("======> " + w + " =>" + delta);
-			
-			if( delta > 0 ) {
-//				adjust = true;
-//				spread += delta;  
-				height += delta;
+			if( minHeight > height ) {
+				height = minHeight;
 			}
 			
 			node.resizeRelocate(x, y, w, height);
@@ -512,26 +512,11 @@ public class SashPane extends Region {
 			for (int i = 1; i < children.size() - 1; i++) {
 				node = children.get(i);
 				height = (int) (ratios[i] * (h - this.sashes.length * getSashWidth()) / total);
-				delta = (int)node.minHeight(w) - height;
+				minHeight = (int)node.minHeight(w);
 				
-				if( delta > 0 ) {
-//					adjust = true;
-//					spread += delta; 
-					height += delta;
+				if( minHeight > height ) {
+					height = minHeight;
 				} 
-//				else {
-//					if( spread > 0 ) {
-//						System.err.println("SPREAD: " + spread);
-//						if( spread < Math.abs(delta) ) {
-//							System.err.println("ADJUST IT");
-//							spread = 0;
-//							height -= spread;
-//						} else {
-//							spread = spread - Math.abs(delta);
-//							height -= Math.abs(delta);
-//						}
-//					}
-//				}
 				
 				this.sashes[i - 1].resizeRelocate(x, y, w, getSashWidth());
 				y += getSashWidth();
@@ -547,12 +532,6 @@ public class SashPane extends Region {
 				height = h - y;
 				node.resizeRelocate(x, y, w, height);
 			}
-			
-//			if( adjust ) {
-//				for( Node n : children ) {
-//					updateLayoutData(n, (int)n.getLayoutBounds().getHeight(), h);
-//				}
-//			}
 		}
 	}
 	
@@ -1023,7 +1002,9 @@ public class SashPane extends Region {
 				this.fixedSize.addListener( (ob,ol,ne) -> {
 					Parent parent = getParent();
 					if( parent != null ) {
-						((SashPane) parent).layoutChildren(true);
+						Platform.runLater( () -> {
+							((SashPane) parent).layoutChildren(true);
+						});
 					}
 				});
 			}
@@ -1033,7 +1014,7 @@ public class SashPane extends Region {
 			visibleProperty().addListener((ob, ol, ne) -> {
 				Parent parent = getParent();
 				if( parent != null ) {
-					((SashPane) parent).layoutChildren(true);	
+					((SashPane) parent).layoutChildren(true);
 				}
 			});
 			AnchorPane.setBottomAnchor(c, Double.valueOf(0.0));
