@@ -115,7 +115,13 @@ public class SashPane extends Region {
 		return getClassCssMetaData();
 	}
 	
+	/**
+	 * Optional interface implemented by Items so that I are layouted with their fixed size
+	 */
 	public interface FixedSashItem {
+		/**
+		 * @return property controlling if the item is fixed
+		 */
 		public ObservableBooleanValue fixed();
 	}
 
@@ -462,47 +468,99 @@ public class SashPane extends Region {
 			total += ratios[i];
 		}
 
+//		int spread = 0;
+//		boolean adjust = false;
 
 		// int sashwidth = 10; //TODO sashes.length > 0 ? sashForm.SASH_WIDTH +
 		// sashes [0].getBorderWidth() * 2 : sashForm.SASH_WIDTH;
 		if (this.horizontal.get()) {
 			int width = (int) (ratios[0] * (w - this.sashes.length * getSashWidth()) / total);
-			children.get(0).resizeRelocate(x, y, width, h);
+			Node node = children.get(0);
+			node.resizeRelocate(x, y, width, h);
 			x += width;
 			for (int i = 1; i < children.size() - 1; i++) {
+				node = children.get(i);
 				this.sashes[i - 1].resizeRelocate(x, y, getSashWidth(), h);
 				x += getSashWidth();
 				width = (int) (ratios[i] * (w - this.sashes.length * getSashWidth()) / total);
-				children.get(i).resizeRelocate(x, y, width, h);
+				node.resizeRelocate(x, y, width, h);
 				x += width;
 			}
 			if (children.size() > 1) {
+				node = children.get(children.size() - 1);
 				this.sashes[this.sashes.length - 1].resizeRelocate(x, y, getSashWidth(), h);
 				x += getSashWidth();
 				width = w - x;
-				children.get(children.size() - 1).resizeRelocate(x, y, width, h);
+				node.resizeRelocate(x, y, width, h);
 			}
 		} else {
+			Node node = children.get(0);
 			int height = (int) (ratios[0] * (h - this.sashes.length * getSashWidth()) / total);
-			children.get(0).resizeRelocate(x, y, w, height);
+			int delta = (int)node.minHeight(w) - height;
+			
+//			System.err.println("======> " + w + " =>" + delta);
+			
+			if( delta > 0 ) {
+//				adjust = true;
+//				spread += delta;  
+				height += delta;
+			}
+			
+			node.resizeRelocate(x, y, w, height);
+			
 			y += height;
 			for (int i = 1; i < children.size() - 1; i++) {
-				SashChild c = (SashChild) children.get(i);
+				node = children.get(i);
+				height = (int) (ratios[i] * (h - this.sashes.length * getSashWidth()) / total);
+				delta = (int)node.minHeight(w) - height;
+				
+				if( delta > 0 ) {
+//					adjust = true;
+//					spread += delta; 
+					height += delta;
+				} 
+//				else {
+//					if( spread > 0 ) {
+//						System.err.println("SPREAD: " + spread);
+//						if( spread < Math.abs(delta) ) {
+//							System.err.println("ADJUST IT");
+//							spread = 0;
+//							height -= spread;
+//						} else {
+//							spread = spread - Math.abs(delta);
+//							height -= Math.abs(delta);
+//						}
+//					}
+//				}
 				
 				this.sashes[i - 1].resizeRelocate(x, y, w, getSashWidth());
 				y += getSashWidth();
-				height = (int) (ratios[i] * (h - this.sashes.length * getSashWidth()) / total);
-				c.resizeRelocate(x, y, w, height);
+				
+				node.resizeRelocate(x, y, w, height);
 				y += height;
 			}
+			
 			if (children.size() > 1) {
+				node = children.get(children.size() - 1);
 				this.sashes[this.sashes.length - 1].resizeRelocate(x, y, w, getSashWidth());
 				y += getSashWidth();
 				height = h - y;
-				children.get(children.size() - 1).resizeRelocate(x, y, w, height);
+				node.resizeRelocate(x, y, w, height);
 			}
+			
+//			if( adjust ) {
+//				for( Node n : children ) {
+//					updateLayoutData(n, (int)n.getLayoutBounds().getHeight(), h);
+//				}
+//			}
 		}
 	}
+	
+//	private void updateLayoutData(Node n, int size, int available) {
+//		Object data = n.getProperties().get(LAYOUT_KEY);
+//		((SashFormData) data).weight = (((long) size << 16) + available - 1) / available;
+//		
+//	}
 	
 	private void syncWeightProperty() {
 		if( this.weights != null ) {
