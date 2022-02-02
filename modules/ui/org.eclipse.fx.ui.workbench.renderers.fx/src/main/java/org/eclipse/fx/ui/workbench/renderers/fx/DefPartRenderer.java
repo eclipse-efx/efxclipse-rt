@@ -267,7 +267,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				
 				if( this.domElement.getTags().contains(WPart.WITH_COLLAPSIBLE_CONTENT) ) {
 					BorderPane content = new BorderPane(n);
-					content.setPadding(Insets.EMPTY);
+					content.setStyle("-fx-padding: 0px;"); //$NON-NLS-1$
 					this.titledPane = new TitledPane("",content); //$NON-NLS-1$
 					this.titledPane.expandedProperty().addListener((ob,ol,ne) -> {
 						this.domElement.getPersistedState().put("efxSashFixed", !ne+""); //$NON-NLS-1$ //$NON-NLS-2$
