@@ -266,7 +266,8 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				}
 				
 				if( this.domElement.getTags().contains(WPart.WITH_COLLAPSIBLE_CONTENT) ) {
-					BorderPane content = new BorderPane(n);
+					SortedBorderPane content = new SortedBorderPane();
+					content.setCenter(n);
 					content.setStyle("-fx-padding: 0px;"); //$NON-NLS-1$
 					this.titledPane = new TitledPane("",content); //$NON-NLS-1$
 					this.titledPane.expandedProperty().addListener((ob,ol,ne) -> {
