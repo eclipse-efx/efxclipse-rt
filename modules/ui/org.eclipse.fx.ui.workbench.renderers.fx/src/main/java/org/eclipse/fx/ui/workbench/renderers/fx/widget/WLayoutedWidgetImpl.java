@@ -271,6 +271,11 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 		public ObservableBooleanValue fixed() {
 			return this.fixed;
 		}
-
+		
+		// Force children to not exceed the stack
+		@Override
+		protected void layoutChildren() {
+			getManagedChildren().forEach( c -> c.resizeRelocate(0, 0, getWidth(), getHeight()));
+		}
 	}
 }
