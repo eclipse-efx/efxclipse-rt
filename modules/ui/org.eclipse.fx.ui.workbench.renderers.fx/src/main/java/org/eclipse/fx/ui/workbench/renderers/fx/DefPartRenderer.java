@@ -272,10 +272,12 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					this.titledPane = new TitledPane("",content); //$NON-NLS-1$
 					this.titledPane.expandedProperty().addListener((ob,ol,ne) -> {
 						this.domElement.getPersistedState().put("efxCollapsed", !ne+""); //$NON-NLS-1$ //$NON-NLS-2$
+						this.domElement.getPersistedState().put("efxSashFixed", !ne+"");  //$NON-NLS-1$//$NON-NLS-2$
 					});
 					
 					if( Boolean.parseBoolean(this.domElement.getPersistedState().getOrDefault("efxCollapsed","false")) ) { //$NON-NLS-1$ //$NON-NLS-2$
 						this.titledPane.setExpanded(false);
+						this.domElement.getPersistedState().put("efxSashFixed", "true");  //$NON-NLS-1$//$NON-NLS-2$
 					}
 					this.titledPane.getStyleClass().add("efx-expandable-title-pane"); //$NON-NLS-1$
 					this.titledPane.setMaxHeight(Double.MAX_VALUE);
