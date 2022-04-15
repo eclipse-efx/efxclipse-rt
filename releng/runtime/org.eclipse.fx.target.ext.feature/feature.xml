@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.target.ext.feature"
       label="Target Feature with all non-efxclipse bundles"
-      version="3.8.0.qualifier">
+      version="3.9.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -25,7 +25,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.ecf.filetransfer.httpclient45.feature"
+         id="org.eclipse.ecf.filetransfer.httpclient5.feature"
          version="0.0.0"/>
 
    <includes
@@ -431,20 +431,6 @@
 
    <plugin
          id="org.eclipse.equinox.console.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.ds"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.ds.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1074,20 +1060,6 @@
          unpack="false"/>
 
    <plugin
-         id="com.ibm.icu.base"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.ibm.icu.base.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.core.resources"
          download-size="0"
          install-size="0"
@@ -1222,20 +1194,6 @@
 
    <plugin
          id="org.eclipse.core.databinding.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jetty.continuation"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jetty.continuation.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1522,21 +1480,21 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ecf.provider.filetransfer.httpclient45"
+         id="org.eclipse.ecf.provider.filetransfer.httpclient5"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ecf.provider.filetransfer.httpclient45.source"
+         id="org.eclipse.ecf.provider.filetransfer.httpclient5.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ecf.provider.filetransfer.httpclient45.win32"
+         id="org.eclipse.ecf.provider.filetransfer.httpclient5.win32"
          os="win32"
          download-size="0"
          install-size="0"
@@ -1544,7 +1502,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ecf.provider.filetransfer.httpclient45.win32.source"
+         id="org.eclipse.ecf.provider.filetransfer.httpclient5.win32.source"
          os="win32"
          download-size="0"
          install-size="0"
@@ -1883,7 +1841,7 @@
          fragment="true"/>
 
    <plugin
-         id="org.eclipse.equinox.security.linux.x86_64"
+         id="org.eclipse.equinox.security.linux"
          os="linux"
          ws="gtk"
          arch="x86_64"
@@ -1905,7 +1863,7 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.equinox.security.linux.x86_64.source"
+         id="org.eclipse.equinox.security.linux.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -1947,21 +1905,21 @@
          unpack="false"/>
 
    <plugin
-         id="org.apache.httpcomponents.httpclient"
+         id="org.apache.httpcomponents.client5.httpclient5"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.apache.httpcomponents.httpclient.source"
+         id="org.apache.httpcomponents.client5.httpclient5.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.apache.httpcomponents.httpclient.win"
+         id="org.apache.httpcomponents.client5.httpclient5-win"
          os="win32"
          download-size="0"
          install-size="0"
@@ -1969,7 +1927,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.apache.httpcomponents.httpclient.win.source"
+         id="org.apache.httpcomponents.client5.httpclient5-win.source"
          os="win32"
          download-size="0"
          install-size="0"
@@ -1977,14 +1935,28 @@
          unpack="false"/>
 
    <plugin
-         id="org.apache.httpcomponents.httpcore"
+         id="org.apache.httpcomponents.core5.httpcore5"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.apache.httpcomponents.httpcore.source"
+         id="org.apache.httpcomponents.core5.httpcore5.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.httpcomponents.core5.httpcore5-h2"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.httpcomponents.core5.httpcore5-h2.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

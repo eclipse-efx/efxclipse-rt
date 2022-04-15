@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Basic editor APIs for JavaFX
 Bundle-SymbolicName: org.eclipse.fx.code.editor.fx
-Bundle-Version: 3.8.0.qualifier
+Bundle-Version: 3.9.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: com.google.common.collect;version="15.0.0",
  javax.annotation,

@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.fx.core.feature_3.8.0.qualifier.jar" id="org.eclipse.fx.core.feature" version="3.8.0.qualifier">
+   <feature url="features/org.eclipse.fx.core.feature_3.9.0.qualifier.jar" id="org.eclipse.fx.core.feature" version="3.9.0.qualifier">
       <category name="fxruntime"/>
    </feature>
-   <feature url="features/org.eclipse.fx.target.feature_3.8.0.qualifier.jar" id="org.eclipse.fx.target.feature" version="3.8.0.qualifier">
+   <feature url="features/org.eclipse.fx.target.feature_3.9.0.qualifier.jar" id="org.eclipse.fx.target.feature" version="3.9.0.qualifier">
       <category name="fxtarget"/>
    </feature>
-   <feature url="features/org.eclipse.fx.target.rcp.feature_3.8.0.qualifier.jar" id="org.eclipse.fx.target.rcp.feature" version="3.8.0.qualifier">
+   <feature url="features/org.eclipse.fx.target.rcp.feature_3.9.0.qualifier.jar" id="org.eclipse.fx.target.rcp.feature" version="3.9.0.qualifier">
       <category name="fxtarget"/>
    </feature>
-   <feature url="features/org.eclipse.fx.runtime.feature_3.8.0.qualifier.jar" id="org.eclipse.fx.runtime.feature" version="3.8.0.qualifier">
+   <feature url="features/org.eclipse.fx.runtime.feature_3.9.0.qualifier.jar" id="org.eclipse.fx.runtime.feature" version="3.9.0.qualifier">
       <category name="fxruntime"/>
    </feature>
-   <feature url="features/org.eclipse.fx.target.rcp4.feature_3.8.0.qualifier.jar" id="org.eclipse.fx.target.rcp4.feature" version="3.8.0.qualifier">
+   <feature url="features/org.eclipse.fx.target.rcp4.feature_3.9.0.qualifier.jar" id="org.eclipse.fx.target.rcp4.feature" version="3.9.0.qualifier">
       <category name="fxtarget"/>
    </feature>
-   <feature url="features/org.eclipse.fx.runtime.min.feature_3.8.0.qualifier.jar" id="org.eclipse.fx.runtime.min.feature" version="3.8.0.qualifier">
+   <feature url="features/org.eclipse.fx.runtime.min.feature_3.9.0.qualifier.jar" id="org.eclipse.fx.runtime.min.feature" version="3.9.0.qualifier">
       <category name="fxtarget"/>
    </feature>
-   <feature url="features/org.eclipse.fx.code.target.feature_3.8.0.qualifier.jar" id="org.eclipse.fx.code.target.feature" version="3.8.0.qualifier">
+   <feature url="features/org.eclipse.fx.code.target.feature_3.9.0.qualifier.jar" id="org.eclipse.fx.code.target.feature" version="3.9.0.qualifier">
       <category name="fxtarget"/>
    </feature>
-   <feature url="features/org.eclipse.fx.slf4j.target.feature_3.8.0.qualifier.jar" id="org.eclipse.fx.slf4j.target.feature" version="3.8.0.qualifier">
+   <feature url="features/org.eclipse.fx.slf4j.target.feature_3.9.0.qualifier.jar" id="org.eclipse.fx.slf4j.target.feature" version="3.9.0.qualifier">
       <category name="fxtarget"/>
    </feature>
-   <feature url="features/org.eclipse.fx.nl.feature_3.8.0.qualifier.jar" id="org.eclipse.fx.nl.feature" version="3.8.0.qualifier">
+   <feature url="features/org.eclipse.fx.nl.feature_3.9.0.qualifier.jar" id="org.eclipse.fx.nl.feature" version="3.9.0.qualifier">
       <category name="fxtarget"/>
    </feature>
    <category-def name="fxruntime" label="FX Runtime"/>

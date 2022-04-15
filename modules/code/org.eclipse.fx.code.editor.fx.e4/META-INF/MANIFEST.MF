@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Integration the JavaFX code editor into Eclipse 4
 Bundle-SymbolicName: org.eclipse.fx.code.editor.fx.e4
-Bundle-Version: 3.8.0.qualifier
+Bundle-Version: 3.9.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.4.0",

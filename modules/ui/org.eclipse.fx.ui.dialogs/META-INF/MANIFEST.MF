@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Dialogs
 Bundle-SymbolicName: org.eclipse.fx.ui.dialogs
-Bundle-Version: 3.8.0.qualifier
+Bundle-Version: 3.9.0.qualifier
 Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.fx.ui.dialogs;version="3.7.0"
