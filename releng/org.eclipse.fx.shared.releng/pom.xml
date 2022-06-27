@@ -42,9 +42,9 @@
 
 	<repositories>
 		<repository>
-			<id>2022-03</id>
+			<id>2022-06</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/eclipse/updates/4.23/R-4.23-202203080310</url>
+			<url>https://download.eclipse.org/eclipse/updates/4.24/R-4.24-202206070700</url>
 		</repository>
 		<repository>
 			<id>efxclipse</id>
