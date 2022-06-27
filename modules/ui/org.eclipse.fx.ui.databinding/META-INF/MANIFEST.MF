@@ -9,9 +9,9 @@ Require-Bundle: org.eclipse.core.databinding.observable;bundle-version="1.4.1",
  org.eclipse.core.databinding,
  org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
  org.eclipse.equinox.common;bundle-version="3.6.1"
-Export-Package: org.eclipse.fx.ui.databinding;version="3.7.0",
- org.eclipse.fx.ui.databinding.converters;version="3.7.0"
+Export-Package: org.eclipse.fx.ui.databinding;version="3.9.0",
+ org.eclipse.fx.ui.databinding.converters;version="3.9.0"
 Bundle-Vendor: Eclipse.org
-Import-Package: org.eclipse.fx.core;version="3.7.0",
- org.eclipse.fx.core.databinding;version="3.7.0",
- org.eclipse.fx.ui.controls.form;version="3.7.0"
+Import-Package: org.eclipse.fx.core;version="3.9.0",
+ org.eclipse.fx.core.databinding;version="3.9.0",
+ org.eclipse.fx.ui.controls.form;version="3.9.0"

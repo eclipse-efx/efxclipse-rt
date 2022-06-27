@@ -4,12 +4,12 @@ Bundle-Name: Contrib
 Bundle-SymbolicName: org.eclipse.fx.code.editor.langs.contrib
 Bundle-Version: 3.9.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Import-Package: org.eclipse.fx.code.editor;version="3.7.0",
- org.eclipse.fx.code.editor.configuration;version="3.7.0",
- org.eclipse.fx.code.editor.configuration.text;version="3.7.0",
- org.eclipse.fx.code.editor.services;version="3.7.0",
- org.eclipse.fx.core;version="3.7.0",
- org.eclipse.fx.core.log;version="3.7.0",
+Import-Package: org.eclipse.fx.code.editor;version="3.9.0",
+ org.eclipse.fx.code.editor.configuration;version="3.9.0",
+ org.eclipse.fx.code.editor.configuration.text;version="3.9.0",
+ org.eclipse.fx.code.editor.services;version="3.9.0",
+ org.eclipse.fx.core;version="3.9.0",
+ org.eclipse.fx.core.log;version="3.9.0",
  org.osgi.service.component.annotations;version="1.2.0";resolution:=optional
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.langs.contrib.LangsConfigurationModelProvider.xml
 Bundle-ActivationPolicy: lazy

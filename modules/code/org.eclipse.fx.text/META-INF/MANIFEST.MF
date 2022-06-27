@@ -4,9 +4,9 @@ Bundle-Name: Basic Text extension
 Bundle-SymbolicName: org.eclipse.fx.text
 Bundle-Version: 3.9.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Export-Package: org.eclipse.fx.text.hover;version="3.7.0",
- org.eclipse.fx.text.navigation;version="3.7.0",
- org.eclipse.fx.text.rules;version="3.7.0";x-internal:=true
+Export-Package: org.eclipse.fx.text.hover;version="3.9.0",
+ org.eclipse.fx.text.navigation;version="3.9.0",
+ org.eclipse.fx.text.rules;version="3.9.0";x-internal:=true
 Require-Bundle: org.eclipse.text;bundle-version="3.5.300",
  org.eclipse.equinox.common;bundle-version="3.6.200"
 Bundle-Vendor: Eclipse.org
