@@ -48,14 +48,14 @@
 		</repository>
 		<repository>
 			<id>efxclipse</id>
-			<url>http://maven.bestsolution.at/efxclipse-releases/</url>
+			<url>https://maven.bestsolution.at/efxclipse-releases/</url>
 		</repository>
 	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
 			<id>tycho</id>
-			<url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
+			<url>https://repository.sonatype.org/content/groups/sonatype-public-grid</url>
 			<releases>
         		<enabled>true</enabled>
       		</releases>
@@ -65,7 +65,7 @@
 		</pluginRepository>
 		<pluginRepository>
       		<id>sonatype</id>
-      		<url>http://oss.sonatype.org/content/repositories/releases/</url>
+      		<url>https://oss.sonatype.org/content/repositories/releases/</url>
       		<releases>
         		<enabled>true</enabled>
       		</releases>
