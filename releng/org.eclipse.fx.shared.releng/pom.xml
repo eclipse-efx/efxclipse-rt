@@ -15,8 +15,8 @@
 	<packaging>pom</packaging>
 	<properties>
 		<!-- KEEP VERSION 0.22.0 other one will fail on hudson -->
-		<tycho-version>2.7.4</tycho-version>
-		<tycho-extras.version>2.7.4</tycho-extras.version>
+		<tycho-version>2.7.3</tycho-version>
+		<tycho-extras.version>2.7.3</tycho-extras.version>
 		<cbi-plugins.version>1.3.2</cbi-plugins.version>
 		<junit-version>4.8.1</junit-version>
 		<mockito-version>1.8.4</mockito-version>
