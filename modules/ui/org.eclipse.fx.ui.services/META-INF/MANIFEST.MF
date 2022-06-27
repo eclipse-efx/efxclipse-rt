@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.fx.ui.services
 Bundle-Version: 3.9.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.eclipse.fx.ui.services;version="3.7.0",
  org.eclipse.fx.ui.services.commands;version="3.7.0",
  org.eclipse.fx.ui.services.dialog;version="3.7.0",
@@ -24,10 +24,10 @@ Import-Package: javax.inject;version="1.0.0",
  org.osgi.framework.wiring;version="1.2.0",
  org.osgi.service.component.annotations;version="1.2.0"
 Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional
-Service-Component: OSGI-INF/services/org.eclipse.fx.ui.services.resources.impl.FontIconNodeProvider.xml,
- OSGI-INF/services/org.eclipse.fx.ui.services.resources.impl.DefaultImageProvider.xml,
- OSGI-INF/services/org.eclipse.fx.ui.services.resources.impl.FXMLGraphicsNodeProvider.xml,
- OSGI-INF/services/org.eclipse.fx.ui.services.startup.internal.DefaultStartupProgressTrackerService.xml,
- OSGI-INF/services/org.eclipse.fx.ui.services.sync.internal.UISynchronizeImpl.xml,
- OSGI-INF/services/org.eclipse.fx.ui.services.resources.impl.GraphicNodeNodeProvider.xml
 Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/services/org.eclipse.fx.ui.services.resources.impl.DefaultImageProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.ui.services.resources.impl.FXMLGraphicsNodeProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.ui.services.resources.impl.FontIconNodeProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.ui.services.resources.impl.GraphicNodeNodeProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.ui.services.startup.internal.DefaultStartupProgressTrackerService.xml,
+ OSGI-INF/services/org.eclipse.fx.ui.services.sync.internal.UISynchronizeImpl.xml

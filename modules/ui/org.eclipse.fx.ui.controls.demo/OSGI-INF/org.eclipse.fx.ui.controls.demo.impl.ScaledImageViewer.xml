@@ -3,6 +3,6 @@
    <service>
       <provide interface="org.eclipse.fx.ui.controls.demo.ControlDemo"/>
    </service>
-   <reference bind="setThreadSynchronize" cardinality="1..1" interface="org.eclipse.fx.core.ThreadSynchronize" name="ThreadSynchronize" policy="static" unbind="unsetThreadSynchronize"/>
+   <reference bind="setThreadSynchronize" interface="org.eclipse.fx.core.ThreadSynchronize" name="ThreadSynchronize" unbind="unsetThreadSynchronize"/>
    <implementation class="org.eclipse.fx.ui.controls.demo.impl.ScaledImageViewer"/>
 </scr:component>

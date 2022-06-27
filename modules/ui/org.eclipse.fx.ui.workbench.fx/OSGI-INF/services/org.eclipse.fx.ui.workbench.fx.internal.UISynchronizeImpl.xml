@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.ui.workbench.fx.internal.UISynchronizeImpl">
-   <implementation class="org.eclipse.fx.ui.workbench.fx.internal.UISynchronizeImpl"/>
    <service>
       <provide interface="org.eclipse.e4.ui.di.UISynchronize"/>
    </service>
-   <reference bind="setThreadSynchronize" cardinality="1..1" interface="org.eclipse.fx.core.ThreadSynchronize" name="ThreadSynchronize" policy="dynamic" policy-option="greedy" unbind="unsetThreadSynchronize"/>
+   <reference bind="setThreadSynchronize" interface="org.eclipse.fx.core.ThreadSynchronize" name="ThreadSynchronize" policy="dynamic" policy-option="greedy" unbind="unsetThreadSynchronize"/>
+   <implementation class="org.eclipse.fx.ui.workbench.fx.internal.UISynchronizeImpl"/>
 </scr:component>

@@ -55,4 +55,22 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize {
 	public void asyncExec(Runnable runnable) {
 		this.threadSynchronize.asyncExec(runnable);
 	}
+	
+	@Override
+	protected boolean isUIThread(Thread thread) {
+		System.err.println("Unsupported API");
+		return false;
+	}
+	
+	@Override
+	protected boolean dispatchEvents() {
+		System.err.println("Unsupported API");
+		return false;
+	}
+	
+	@Override
+	protected void showBusyWhile(Runnable runnable) {
+		System.err.println("Unsupported API");
+		runnable.run();
+	}
 }

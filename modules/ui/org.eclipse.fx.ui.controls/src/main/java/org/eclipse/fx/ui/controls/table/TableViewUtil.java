@@ -101,8 +101,12 @@ public class TableViewUtil {
 		Map<String, TableColumn<S, ?>> idToNodeMap = view.getColumns().stream().filter(c -> columnKeyProvider.apply(c) != null).collect(Collectors.toMap(columnKeyProvider, c -> c));
 		Map<TableColumn<S, ?>, String> nodeToIdMap = idToNodeMap.entrySet().stream().collect(Collectors.toMap(Entry::getValue, Entry::getKey));
 
-		@SuppressWarnings({ "unchecked", "null" })
-		final @NonNull List<String> savedOrder = m.get(COLUMN_ORDER_KEY, List.class, Collections.emptyList());
+		@SuppressWarnings("unchecked")
+		final List<String> savedOrder = m.get(COLUMN_ORDER_KEY, List.class, Collections.emptyList());
+		
+		if( savedOrder == null ) {
+			throw new IllegalStateException();
+		}
 
 		view.getColumns().addListener((ListChangeListener<TableColumn<S, ?>>) change -> {
 			change.reset();

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: XML Stream Jre
+Bundle-SymbolicName: javax.xml.stream.jre
+Bundle-Version: 1.0.1.qualifier
+Automatic-Module-Name: javax.xml.stream.jre
+Require-Bundle: system.bundle
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: javax.xml.stream;version="1.0.1", 
+ javax.xml.stream.events;version="1.0.1",
+ javax.xml.stream.util;version="1.0.1"

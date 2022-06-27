@@ -4,5 +4,5 @@ Bundle-Name: Demo
 Bundle-SymbolicName: org.eclipse.fx.ui.panes.demo
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: org.eclipse.fx.ui.panes.demo
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.eclipse.fx.ui.panes;bundle-version="3.7.1"

@@ -26,6 +26,7 @@ import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.observable.FXObservableUtil;
 import org.eclipse.fx.core.observable.FXObservableUtil.Instance;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.TreeTableColumn;
@@ -101,8 +102,12 @@ public class TreeTableViewUtil {
 		Map<String, TreeTableColumn<S, ?>> idToNodeMap = view.getColumns().stream().filter(c -> columnKeyProvider.apply(c) != null).collect(Collectors.toMap(columnKeyProvider, c -> c));
 		Map<TreeTableColumn<S, ?>, String> nodeToIdMap = idToNodeMap.entrySet().stream().collect(Collectors.toMap(Entry::getValue, Entry::getKey));
 
-		@SuppressWarnings({ "unchecked", "null" })
-		final @NonNull List<String> savedOrder = m.get(COLUMN_ORDER_KEY, List.class, Collections.emptyList());
+		@SuppressWarnings("unchecked")
+		final @Nullable List<String> savedOrder = m.get(COLUMN_ORDER_KEY, List.class, Collections.emptyList());
+		
+		if( savedOrder == null ) {
+			throw new IllegalStateException();
+		}
 
 		view.getColumns().addListener((ListChangeListener<TreeTableColumn<S, ?>>) change -> {
 			change.reset();

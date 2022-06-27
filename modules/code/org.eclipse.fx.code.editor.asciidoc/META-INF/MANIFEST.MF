@@ -3,5 +3,5 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Asciidoc
 Bundle-SymbolicName: org.eclipse.fx.code.editor.asciidoc
 Bundle-Version: 3.9.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.eclipse.fx.code.editor.asciidoc;version="3.7.0"

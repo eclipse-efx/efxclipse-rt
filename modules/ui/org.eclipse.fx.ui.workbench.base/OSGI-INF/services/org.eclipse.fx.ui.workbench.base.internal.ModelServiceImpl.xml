@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.ui.workbench.base.internal.ModelServiceImpl">
-   <implementation class="org.eclipse.fx.ui.workbench.base.internal.ModelServiceImpl"/>
    <service>
       <provide interface="org.eclipse.fx.ui.workbench.services.ModelService"/>
       <provide interface="org.eclipse.fx.core.TypeTypeProviderService"/>
    </service>
+   <implementation class="org.eclipse.fx.ui.workbench.base.internal.ModelServiceImpl"/>
 </scr:component>

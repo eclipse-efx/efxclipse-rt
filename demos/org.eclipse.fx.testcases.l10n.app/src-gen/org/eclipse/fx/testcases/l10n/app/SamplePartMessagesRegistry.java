@@ -23,6 +23,24 @@ public class SamplePartMessagesRegistry extends org.eclipse.fx.core.text.Abstrac
 		super.updateMessages(messages);
 	}
 
+	public java.util.function.Supplier<String> getSupplierByKey(String key, Object... values) {
+		switch(key) {
+		case "SimpleText":
+		return this::SimpleText;
+		case "SimpleDateText":
+		return SimpleDateText_supplier((java.util.Date) values[0]);
+		case "SimpleNumberText":
+		return SimpleNumberText_supplier((Number) values[0]);
+		case "CustFormatText":
+		return CustFormatText_supplier((Number) values[0]);
+		case "ReferenceText":
+		return this::ReferenceText;
+		case "ReferenceDyn":
+		return ReferenceDyn_supplier((Object) values[0]);
+		}
+		throw new IllegalArgumentException("Key '"+key+"' is unknown");
+	}
+
 	public String SimpleText() {
 		return getMessages().SimpleText;
 	}
@@ -92,5 +110,6 @@ public class SamplePartMessagesRegistry extends org.eclipse.fx.core.text.Abstrac
 	public java.util.function.Supplier<String> ReferenceDyn_supplier(Object val) {
 		return () -> ReferenceDyn(val);
 	}
+
 
 }

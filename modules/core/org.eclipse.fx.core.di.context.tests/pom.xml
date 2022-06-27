@@ -44,11 +44,6 @@
       					<extraRequirements>
            					<requirement>
 								<type>eclipse-plugin</type>
-								<id>org.eclipse.equinox.ds</id>
-								<versionRange>1.4.400</versionRange>
-							</requirement>
-           					<requirement>
-								<type>eclipse-plugin</type>
 								<id>org.eclipse.fx.core.di.context</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>

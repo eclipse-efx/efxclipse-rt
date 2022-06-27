@@ -142,56 +142,56 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
    </license>
 
    <plugin
-         id="org.slf4j.impl.log4j12"
+         id="org.slf4j.binding.log4j12"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.slf4j.impl.log4j12.source"
+         id="org.slf4j.binding.log4j12.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.slf4j.log4j"
+         id="org.slf4j.apis.log4j"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.slf4j.log4j.source"
+         id="org.slf4j.apis.log4j.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.slf4j.jcl"
+         id="org.slf4j.apis.jcl"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.slf4j.jcl.source"
+         id="org.slf4j.apis.jcl.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.slf4j.jul"
+         id="org.slf4j.bridge.jul"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.slf4j.jul.source"
+         id="org.slf4j.bridge.jul.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -42,6 +42,8 @@ import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotationPresenter;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
@@ -581,14 +583,18 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	 *            the position
 	 * @return the point
 	 */
-	public Point2D getCaretLocation(int caretPosition, LineLocation locationHint) {
+	public @Nullable Point2D getCaretLocation(int caretPosition, LineLocation locationHint) {
 		if (caretPosition < 0) {
 			return null;
 		}
 
 		Optional<Point2D> location = this.content.getLocationInScene(caretPosition, locationHint);
 
-		return location.map(l -> this.rootContainer.sceneToLocal(l)).map(l -> new Point2D(l.getX(), l.getY() + this.content.getLineHeight())).orElse(null);
+		Optional<@NonNull Point2D> map = location.map(l -> this.rootContainer.sceneToLocal(l)).map(l -> new Point2D(l.getX(), l.getY() + this.content.getLineHeight()));
+		if( map.isPresent() ) {
+			return map.get();
+		}
+		return null;
 	}
 
 

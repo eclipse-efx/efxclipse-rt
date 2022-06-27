@@ -46,14 +46,14 @@ public class LazyStackPane extends StackPane {
 		this.checkSupplier = checkSupplier;
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	protected void impl_processCSS(WritableValue<Boolean> unused) {
-		if (this.checkSupplier.test(CheckType.CSS)) {
-			super.impl_processCSS(unused);
-		}
-
-	}
+//FIXME see how to port to JavaFX 11+
+//	@SuppressWarnings("deprecation")
+//	protected void impl_processCSS(WritableValue<Boolean> unused) {
+//		if (this.checkSupplier.test(CheckType.CSS)) {
+//			super.impl_processCSS(unused);
+//		}
+//
+//	}
 
 	@Override
 	protected void layoutChildren() {

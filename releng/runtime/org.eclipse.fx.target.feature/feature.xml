@@ -859,20 +859,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.equinox.ds"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.ds.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.equinox.event"
          download-size="0"
          install-size="0"
@@ -1468,7 +1454,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="javax.servlet"
+         id="jakarta.servlet"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1489,21 +1475,21 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="javax.servlet.source"
+         id="jakarta.servlet.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="com.ibm.icu.base"
+         id="jakarta.servlet-api"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
-   <plugin
-         id="com.ibm.icu.base.source"
+	<plugin
+         id="jakarta.servlet-api.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1644,20 +1630,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.eclipse.core.databinding.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jetty.continuation"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jetty.continuation.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1937,14 +1909,14 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ecf.provider.filetransfer.httpclient45"
+         id="org.eclipse.ecf.provider.filetransfer.httpclient5"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ecf.provider.filetransfer.httpclient45.source"
+         id="org.eclipse.ecf.provider.filetransfer.httpclient5.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -2017,20 +1989,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.apache.commons.codec.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.commons.httpclient"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.commons.httpclient.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -2133,7 +2091,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+<!--
    <plugin
          id="org.eclipse.fx.formats.svg"
          download-size="0"
@@ -2147,7 +2105,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+-->
    <plugin
          id="org.eclipse.fx.core.log4j"
          download-size="0"
@@ -2358,6 +2316,20 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
+         id="javax.xml.stream.jre"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.xml.stream.jre.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.core.net"
          download-size="0"
          install-size="0"
@@ -2434,21 +2406,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          version="0.0.0"/>
 
    <plugin
-         id="com.google.inject.multibindings"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="com.google.inject.multibindings.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.osgi.compatibility.state.source"
          download-size="0"
          install-size="0"
@@ -2463,14 +2420,14 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.apache.httpcomponents.httpclient.source"
+         id="org.apache.httpcomponents.client5.httpclient5.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.apache.httpcomponents.httpcore.source"
+         id="org.apache.httpcomponents.core5.httpcore5.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -2533,4 +2490,102 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="com.sun.xml.bind"
+         download-size="0"
+         install-size="0"
+         version="2.3.3.v20201118-1818"
+         unpack="false"/>
+
+   <plugin
+         id="jakarta.xml.bind"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.function"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.function.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.measurement"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.measurement.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.position"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.position.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.promise"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.promise.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.pushstream"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.pushstream.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.xml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.xml.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+  
 </feature>

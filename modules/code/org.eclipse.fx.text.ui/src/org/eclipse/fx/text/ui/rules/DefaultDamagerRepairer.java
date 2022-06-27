@@ -11,12 +11,12 @@
 package org.eclipse.fx.text.ui.rules;
 
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.fx.text.ui.TextAttribute;
 import org.eclipse.fx.text.ui.TextPresentation;
 import org.eclipse.fx.text.ui.presentation.IPresentationDamager;
 import org.eclipse.fx.text.ui.presentation.IPresentationRepairer;
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
-import org.eclipse.jface.text.Assert;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;

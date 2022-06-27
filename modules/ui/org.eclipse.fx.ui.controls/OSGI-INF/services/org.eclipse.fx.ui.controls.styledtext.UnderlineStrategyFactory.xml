@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.ui.controls.styledtext.UnderlineStrategyFactory">
-   <implementation class="org.eclipse.fx.ui.controls.styledtext.UnderlineStrategyFactory"/>
    <service>
       <provide interface="org.eclipse.fx.ui.controls.styledtext.DecorationStrategyFactory"/>
    </service>
+   <implementation class="org.eclipse.fx.ui.controls.styledtext.UnderlineStrategyFactory"/>
 </scr:component>

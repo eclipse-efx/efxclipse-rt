@@ -34,24 +34,24 @@
 	<repositories>
 		<repository>
 			<!-- Important changing this requires to publish the platform bundles to maven -->
-			<id>2022-03</id>
+			<id>2022-06</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/eclipse/updates/4.23/R-4.23-202203080310</url>
+			<url>https://download.eclipse.org/eclipse/updates/4.24/R-4.24-202206070700</url>
 		</repository>
 		<repository>
 			<id>orbit</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository</url>
+			<url>https://download.eclipse.org/tools/orbit/downloads/drops/R20220531185310/repository</url>
 		</repository>
 		<repository>
 			<id>xtext</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.26.0</url>
+			<url>https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.27.0</url>
 		</repository>
 		<repository>
 			<id>mwe</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/modeling/emft/mwe/updates/releases/2.12.2</url>
+			<url>https://download.eclipse.org/modeling/emft/mwe/updates/releases/2.13.0</url>
 		</repository>
 		<repository>
 			<id>xpand</id>
@@ -61,7 +61,7 @@
 		<repository>
 			<id>emf</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/modeling/emf/emf/builds/release/2.29</url>
+			<url>https://download.eclipse.org/modeling/emf/emf/builds/release/2.30</url>
 		</repository>
 		<repository>
 			<id>m2e</id>
@@ -97,23 +97,6 @@
 
 		<!-- build plugins -->
 		<plugins>
-			<plugin>
-				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>xtend-maven-plugin</artifactId>
-				<version>2.16.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<!-- optionally you can configure a different target folder -->
-						<configuration>
-							<outputDirectory>${basedir}/xtend-gen</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
@@ -299,30 +282,5 @@
 			</build>
 		</profile>
 	</profiles>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit-version}</version>
-				<scope>test</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>${mockito-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
 
 </project>

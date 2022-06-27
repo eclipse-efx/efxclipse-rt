@@ -83,8 +83,13 @@ public class ScalingImageViewer extends Region {
 		this.imageView = new ImageView();
 		this.imageView.setManaged(false);
 
-		ObjectBinding<Image> dimImg = FXBindings.bindStream(this.image).map(MultiDimensionImage::imageProperty).collect(FXCollectors.toBinding());
-		ObjectBinding<Number> ratioBinding = FXBindings.bindStream(this.image).map(MultiDimensionImage::ratioProperty).collect(FXCollectors.toBinding());
+		ObjectBinding<Image> dimImg = FXBindings.bindStream(this.image).map( m -> {
+			return m == null ? null : m.imageProperty();
+		}).collect(FXCollectors.toBinding());
+		ObjectBinding<Number> ratioBinding = FXBindings.bindStream(this.image)
+				.map( m -> {
+					return m == null ? null : m.ratioProperty();
+				}).collect(FXCollectors.toBinding());
 		ratioBinding.addListener( (ob,ol,ne) -> {
 			requestLayout();
 			layout();

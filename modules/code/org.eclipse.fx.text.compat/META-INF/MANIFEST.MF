@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Compat
 Bundle-SymbolicName: org.eclipse.fx.text.compat
 Bundle-Version: 3.9.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.eclipse.equinox.common;bundle-version="3.6.1",
  org.eclipse.text;bundle-version="3.5.400"
 Export-Package: org.eclipse.jface.text.rules;version="2.3.0";x-internal:=true

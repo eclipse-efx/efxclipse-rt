@@ -993,7 +993,7 @@
          id="javax.activation"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.2.2.v20201119-1642"
          unpack="false"/>
 
    <plugin
@@ -1032,7 +1032,7 @@
          unpack="false"/>
 
    <plugin
-         id="javax.servlet"
+         id="jakarta.servlet"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1053,7 +1053,21 @@
          unpack="false"/>
 
    <plugin
-         id="javax.servlet.source"
+         id="jakarta.servlet.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="jakarta.servlet-api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+	<plugin
+         id="jakarta.servlet-api.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1141,6 +1155,13 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.aopalliance"
+         download-size="0"
+         install-size="0"
+         version="1.0.0.v20220404-1927"
          unpack="false"/>
 
    <plugin
@@ -1580,7 +1601,7 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+<!--
    <plugin
          id="org.apache.commons.httpclient"
          download-size="0"
@@ -1594,7 +1615,7 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+-->
    <plugin
          id="org.apache.commons.lang"
          download-size="0"
@@ -1869,21 +1890,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="com.google.inject.multibindings"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="com.google.inject.multibindings.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.osgi.compatibility.state"
          download-size="0"
          install-size="0"
@@ -2024,7 +2030,98 @@
          id="com.sun.xml.bind"
          download-size="0"
          install-size="0"
+         version="2.3.3.v20201118-1818"
+         unpack="false"/>
+
+   <plugin
+         id="jakarta.xml.bind"
+         download-size="0"
+         install-size="0"
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.osgi.util.function"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.function.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.measurement"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.measurement.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.position"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.position.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.promise"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.promise.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.pushstream"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.pushstream.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.xml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.osgi.util.xml.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+  
 </feature>

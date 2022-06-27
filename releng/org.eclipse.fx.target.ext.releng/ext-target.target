@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target name="efx-local">
+	<locations>
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+			<repository location="file:/Users/tomschindl/git/efxclipse-rt/releng/org.eclipse.fx.core.shared.updatesite/target/site/"/>
+			<unit id="org.eclipse.fx.runtime.min.feature.feature.group" version="3.9.0.202204151017"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+			<repository location="file:/Users/tomschindl/git/efxclipse-rt/releng/org.eclipse.fx.target.ext.updatesite/target/repository/"/>
+			<unit id="org.eclipse.fx.target.ext.feature.feature.group" version="3.9.0.202206270733"/>
+		</location>
+	</locations>
+</target>

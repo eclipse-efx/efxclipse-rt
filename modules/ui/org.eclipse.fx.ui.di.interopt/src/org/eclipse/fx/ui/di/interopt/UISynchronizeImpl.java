@@ -183,5 +183,4 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 		}
 		return null;
 	}
-
 }

@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.fx.text.ui.ITextInputListener;
 import org.eclipse.fx.text.ui.ITextListener;
 import org.eclipse.fx.text.ui.ITextViewer;
@@ -22,7 +23,6 @@ import org.eclipse.fx.text.ui.ITextViewerExtension5;
 import org.eclipse.fx.text.ui.TextEvent;
 import org.eclipse.fx.text.ui.TextPresentation;
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
-import org.eclipse.jface.text.Assert;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.DefaultPositionUpdater;
