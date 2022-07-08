@@ -21,6 +21,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -33,6 +34,7 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.ui.internal.workbench.CommandLineOptionModelProcessor;
 import org.eclipse.e4.ui.internal.workbench.E4Workbench;
+import org.eclipse.e4.ui.internal.workbench.E4XMIResource;
 import org.eclipse.e4.ui.internal.workbench.ModelAssembler;
 import org.eclipse.e4.ui.internal.workbench.URIHelper;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -201,10 +203,12 @@ public class EFX_ResourceHandler implements IModelResourceHandler {
 		MApplication appElement = (MApplication) this.resource.getContents().get(0);
 
 		this.context.set(MApplication.class, appElement);
-		ModelAssembler contribProcessor = ContextInjectionFactory.make(ModelAssembler.class,
-				this.context);
-		contribProcessor.processModel(initialModel);
-
+		ModelAssembler mac = this.context.get(ModelAssembler.class);
+		if (mac != null) {
+			ContextInjectionFactory.invoke(mac, PostConstruct.class, context);
+			mac.processModel(initialModel);
+		}
+		
 		if (REQUIRE_TOP_LEVEL_WINDOW && !hasTopLevelWindows(this.resource) && this.logger != null) {
 			this.logger.error(new Exception(), // log a stack trace to help debug the
 											// corruption
@@ -223,8 +227,11 @@ public class EFX_ResourceHandler implements IModelResourceHandler {
 
 	@Override
 	public void save() throws IOException {
-		if (this.saveAndRestore)
+		if (this.saveAndRestore) {
+			Map<String, Object> options = new HashMap<>();
+			options.put(E4XMIResource.OPTION_FILTER_PERSIST_STATE, Boolean.TRUE);
 			this.resource.save(null);
+		}
 	}
 
 	/**
