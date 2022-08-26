@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2018 EclipseSource Munich GmbH and others.
+ * Copyright (c) 2015, 2019 EclipseSource Munich GmbH and others.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
