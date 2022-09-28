@@ -464,7 +464,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			this.stage.setOnCloseRequest(this::handleOnCloseRequest);
 			this.stage.setOnShown(e -> {
-				this.eventBroker.send(TOPIC_WINDOW_SHOWN, this.stage);
+				// The window is not visible on screen when the onShow-Event is delivered
+				Platform.runLater( () -> {
+					this.eventBroker.send(TOPIC_WINDOW_SHOWN, this.stage);
+				});
 			});
 
 			this.stage.focusedProperty().addListener(this::handledFocus);
