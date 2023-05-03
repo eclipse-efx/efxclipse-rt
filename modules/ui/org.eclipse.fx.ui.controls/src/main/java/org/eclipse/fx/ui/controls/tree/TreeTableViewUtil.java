@@ -351,7 +351,7 @@ public class TreeTableViewUtil {
 		return properties.length == 0 || Arrays.asList(properties).contains(property);
 	}
 
-	private static String getColumnOrderKey(TableView<?> view) {
+	private static String getColumnOrderKey(TreeTableView<?> view) {
 		if (view.getId() != null) {
 			return view.getId() + "_" + COLUMN_ORDER_KEY;
 		}
