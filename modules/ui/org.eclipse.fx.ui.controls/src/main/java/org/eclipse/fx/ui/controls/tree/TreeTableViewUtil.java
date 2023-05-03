@@ -105,7 +105,7 @@ public class TreeTableViewUtil {
 		Map<TreeTableColumn<S, ?>, String> nodeToIdMap = idToNodeMap.entrySet().stream().collect(Collectors.toMap(Entry::getValue, Entry::getKey));
 
 		@SuppressWarnings("unchecked")
-		final @Nullable List<String> savedOrder = m.get(COLUMN_ORDER_KEY, List.class, Collections.emptyList());
+		final @Nullable List<String> savedOrder = m.get(getColumnOrderKey(view), List.class, Collections.emptyList());
 		
 		if( savedOrder == null ) {
 			throw new IllegalStateException();
@@ -143,7 +143,7 @@ public class TreeTableViewUtil {
 		if (isPropertySet(properties, TreeTableView_Properties.COLUMN_ORDER)) {
 			List<String> currentOrder = view.getColumns().stream().map(columnKeyProvider).collect(Collectors.toList());
 			@SuppressWarnings("unchecked")
-			List<String> restoredOrder = m.get(COLUMN_ORDER_KEY, List.class, currentOrder);
+			List<String> restoredOrder = m.get(getColumnOrderKey(view), List.class, currentOrder);
 			if (!currentOrder.equals(restoredOrder)) {
 				// Unable to restore if the column count matches
 				if (restoredOrder != null && currentOrder.size() == restoredOrder.size()) {
@@ -316,7 +316,7 @@ public class TreeTableViewUtil {
 						});
 					}
 					if (c.wasPermutated() || c.wasAdded() && c.wasRemoved()) {
-						m.put(COLUMN_ORDER_KEY, view.getColumns().stream().map(columnKeyProvider).collect(Collectors.toList()), ObjectSerializer.JAXB_SERIALIZER);
+						m.put(getColumnOrderKey(view), view.getColumns().stream().map(columnKeyProvider).collect(Collectors.toList()), ObjectSerializer.JAXB_SERIALIZER);
 					}
 				}
 			});
@@ -349,5 +349,12 @@ public class TreeTableViewUtil {
 
 	private static boolean isPropertySet(TreeTableView_Properties[] properties, TreeTableView_Properties property) {
 		return properties.length == 0 || Arrays.asList(properties).contains(property);
+	}
+
+	private static String getColumnOrderKey(TableView<?> view) {
+		if (view.getId() != null) {
+			return view.getId() + "_" + COLUMN_ORDER_KEY;
+		}
+		return COLUMN_ORDER_KEY;
 	}
 }
