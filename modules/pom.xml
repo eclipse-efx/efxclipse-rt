@@ -22,7 +22,7 @@
 		<dep-org.eclipse.core.databinding.observable>1.6.100</dep-org.eclipse.core.databinding.observable>
 		<dep-org.eclipse.core.databinding.property>1.6.100</dep-org.eclipse.core.databinding.property>
 		<dep-org.eclipse.core.databinding>1.6.100</dep-org.eclipse.core.databinding>
-		<dep-junit>4.12</dep-junit>
+		<dep-junit>4.13.1</dep-junit>
 		<dep-org.eclipse.e4.core.contexts>1.6.0</dep-org.eclipse.e4.core.contexts>
 		<dep-org.eclipse.e4.core.services>2.0.100</dep-org.eclipse.e4.core.services>
 		<dep-org.eclipse.equinox.preferences>3.7.0</dep-org.eclipse.equinox.preferences>
