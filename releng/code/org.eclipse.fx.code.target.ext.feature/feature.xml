@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.code.target.ext.feature"
       label="Feature"
-      version="3.7.0.qualifier">
+      version="3.8.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]

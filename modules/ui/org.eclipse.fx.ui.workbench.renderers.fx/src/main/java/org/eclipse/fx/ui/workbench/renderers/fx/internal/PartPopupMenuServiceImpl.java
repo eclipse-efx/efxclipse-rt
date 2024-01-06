@@ -61,7 +61,11 @@ public class PartPopupMenuServiceImpl implements EMenuService {
 		}
 
 		IPresentationEngine engine = part.getContext().get(IPresentationEngine.class);
-		return (ContextMenu) ((WPopupMenu<ContextMenu>) engine.createGui(menu)).getWidget();
+		WPopupMenu<ContextMenu> guiElement = ((WPopupMenu<ContextMenu>) engine.createGui(menu));
+		if (guiElement != null) {
+			return (ContextMenu) guiElement.getWidget();
+		} 
+		return null;
 	}
 
 }

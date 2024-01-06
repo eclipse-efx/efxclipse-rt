@@ -23,6 +23,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
@@ -36,7 +37,9 @@ import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
@@ -111,6 +114,10 @@ public class SashPane extends Region {
 	public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
 		return getClassCssMetaData();
 	}
+	
+	public interface FixedSashItem {
+		public ObservableBooleanValue fixed();
+	}
 
 	private ObservableList<Node> items = FXCollections.observableArrayList();
 
@@ -184,6 +191,14 @@ public class SashPane extends Region {
 	protected void layoutChildren() {
 		layoutChildren(false);
 	}
+	
+	private boolean hasFixedChild() {
+		return getManagedChildren().stream()
+			.filter(Node::isVisible)
+			.map(SashChild.class::cast)
+			.filter(SashChild::isFixed)
+			.findAny().isPresent();
+	}
 
 	void layoutChildren(boolean force) {
 		int x = (int) Math.ceil(getPadding().getLeft());
@@ -192,10 +207,12 @@ public class SashPane extends Region {
 				- (int) Math.ceil(getPadding().getRight());
 		int h = (int) Math.floor(getHeight()) - (int) Math.ceil(getPadding().getTop())
 				- (int) Math.ceil(getPadding().getBottom());
-
+		
+		boolean hasFixedChild = hasFixedChild();
+		
 		Bounds b = new BoundingBox(x, y, w, h);
 
-		if (!force && this.clientArea != null && this.clientArea.equals(b)) {
+		if (!force && this.clientArea != null && this.clientArea.equals(b) && ! hasFixedChild ) {
 			return;
 		}
 
@@ -221,22 +238,6 @@ public class SashPane extends Region {
 		}
 		
 		// TODO Adjust sash numbers
-
-		long[] ratios = new long[children.size()];
-		long total = 0;
-		for (int i = 0; i < children.size(); i++) {
-			Object data = children.get(i).getProperties().get(LAYOUT_KEY);
-			if (data != null && data instanceof SashFormData) {
-				ratios[i] = ((SashFormData) data).weight;
-			} else {
-				data = new SashFormData();
-				children.get(i).getProperties().put(LAYOUT_KEY, data);
-				((SashFormData) data).weight = ratios[i] = ((200 << 16) + 999) / 1000;
-
-			}
-			total += ratios[i];
-		}
-
 		if (this.sashes.length < children.size() - 1) {
 			Sash[] newSashes = new Sash[children.size() - 1];
 			System.arraycopy(this.sashes, 0, newSashes, 0, this.sashes.length);
@@ -262,6 +263,206 @@ public class SashPane extends Region {
 			}
 		}
 
+		if( ! hasFixedChild() ) {
+			layoutSimple(x,y,w,h);
+		} else {
+			layoutWithFixedChild(x,y,w,h,force);
+		}
+
+		this.clientArea = b;
+		syncWeightProperty();
+	}
+	
+	private void layoutWithFixedChild(int _x, int _y, int _w, int _h, boolean force) {
+		int x = _x;
+		int y = _y;
+		int w = _w;
+		int h = _h;
+		
+		List<SashChild> children = getManagedChildren().stream()
+				.filter(Node::isVisible)
+				.map(SashChild.class::cast)
+				.collect(Collectors.toList());
+		
+		// check if it a simple UC where we only have 2 children and one is fixed
+		if( children.size() == 2 ) {
+			Node startNode = children.get(0);
+			Node endNode = children.get(1);
+			
+			if( ((SashChild)children.get(0)).isFixed() ) {
+				if (this.horizontal.get()) {
+					double minWidth = startNode.minWidth(h);
+					
+					startNode.resizeRelocate(x, y, w, minWidth);
+					x += minWidth;
+					this.sashes[0].resizeRelocate(x, y, getSashWidth(), h);
+					x += getSashWidth();
+					endNode.resizeRelocate(x, y, w - x, h);
+				} else {
+					double minHeight = startNode.minHeight(w);
+					
+					startNode.resizeRelocate(x, y, w, minHeight);
+					y += minHeight;
+					this.sashes[0].resizeRelocate(x, y, w, getSashWidth());
+					y += getSashWidth();
+					endNode.resizeRelocate(x, y, w, h - y);
+				}				
+			} else {
+				if (this.horizontal.get()) {
+					double minWidth = endNode.minWidth(h);
+					double sashWidth = getSashWidth();
+					
+					startNode.resizeRelocate(x, y, w - minWidth - sashWidth, h);
+					x += w - minWidth - sashWidth;
+					this.sashes[0].resizeRelocate(x, y, sashWidth, h);
+					x += sashWidth;
+					endNode.resizeRelocate(x, y, minWidth, h);
+				} else {
+					double minHeight = endNode.minHeight(w);
+					double sashHeight = getSashWidth();
+					
+					startNode.resizeRelocate(x, y, w, h - minHeight - sashHeight);
+					y += h - minHeight - sashHeight;
+					this.sashes[0].resizeRelocate(x, y, w, sashHeight);
+					y += sashHeight;
+					endNode.resizeRelocate(x, y, w, minHeight);
+				}
+			}
+		} else {
+			layoutWithFixedChildComplex(_x, _y, _w, _h, force);
+		}
+	}
+	
+	private void layoutWithFixedChildComplex(int _x, int _y, int _w, int _h, boolean force) {
+		int x = _x;
+		int y = _y;
+		int w = _w;
+		int h = _h;
+		
+		List<SashChild> children = getManagedChildren().stream()
+				.filter(Node::isVisible)
+				.map(SashChild.class::cast)
+				.collect(Collectors.toList());
+		
+		long[] ratios = new long[children.size()];
+		long total = 0;
+		for (int i = 0; i < children.size(); i++) {
+			if( ! children.get(i).isFixed() ) {
+				Object data = children.get(i).getProperties().get(LAYOUT_KEY);
+				if (data != null && data instanceof SashFormData) {
+					ratios[i] = ((SashFormData) data).weight;
+				} else {
+					data = new SashFormData();
+					children.get(i).getProperties().put(LAYOUT_KEY, data);
+					((SashFormData) data).weight = ratios[i] = ((200 << 16) + 999) / 1000;
+
+				}
+				total += ratios[i];	
+			}
+		}
+		
+		if( horizontal.get() ) {
+			w -= children.stream().filter(SashChild::isFixed).mapToDouble( s -> computeFixedWidth(s, _h)).sum();
+			
+			double sashSize = getSashWidth();
+
+			for( int i = 0; i < children.size(); i++ ) {
+				SashChild sashChild = children.get(i);
+				int ratioWidth = (int) (ratios[i] * (h - this.sashes.length * sashSize) / total);
+				
+				if( i > 0 ) {
+					this.sashes[i - 1].resizeRelocate(x, y, sashSize, h);
+					x += sashSize;
+				}
+				
+				if( sashChild.isFixed() ) {
+					int targetWidth = (int) computeFixedWidth(sashChild, h);
+					
+					sashChild.resizeRelocate(x, y, targetWidth, h);
+					x += targetWidth;
+				} else {
+					sashChild.resizeRelocate(x, y, ratioWidth, h);
+					x += ratioWidth;
+				}
+			}			
+
+		} else {
+			h -= children.stream().filter(SashChild::isFixed).mapToDouble( s -> computeFixedHeight(s, _w)).sum();
+			
+			double sashSize = getSashWidth();
+			
+			for( int i = 0; i < children.size(); i++ ) {
+				SashChild sashChild = children.get(i);
+				int ratioHeight = (int) (ratios[i] * (h - this.sashes.length * sashSize) / total);
+				
+				if( i > 0 ) {
+					this.sashes[i - 1].resizeRelocate(x, y, w, sashSize);
+					y += sashSize;
+				}
+				
+				if( sashChild.isFixed() ) {
+					int targetHeight = (int) computeFixedHeight(sashChild, w);
+					
+					sashChild.resizeRelocate(x, y, w, targetHeight);
+					y += targetHeight;
+				} else {
+					sashChild.resizeRelocate(x, y, w, ratioHeight);
+					y += ratioHeight;
+				}
+			}			
+		}
+	}
+	
+	private static double computeFixedHeight(SashChild child, int width) {
+		return child.minHeight(width);
+	}
+	
+	private static double computeFixedWidth(SashChild child, int height) {
+		return child.minWidth(height);
+	}
+	
+	private static int findPrevUnfixed(List<SashChild> children, int index) {
+		for( int i = index - 1; i >= 0; i-- ) {
+			if( ! children.get(i).isFixed() ) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	private static int findNextUnfixed(List<SashChild> children, int index) {
+		for( int i = index + 1; i < children.size(); i++ ) {
+			if( ! children.get(i).isFixed() ) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	private void layoutSimple(int _x, int _y, int _w, int _h) {
+		int x = _x;
+		int y = _y;
+		int w = _w;
+		int h = _h;
+		
+		List<Node> children = getManagedChildren().stream().filter(Node::isVisible).collect(Collectors.toList());
+		
+		long[] ratios = new long[children.size()];
+		long total = 0;
+		for (int i = 0; i < children.size(); i++) {
+			Object data = children.get(i).getProperties().get(LAYOUT_KEY);
+			if (data != null && data instanceof SashFormData) {
+				ratios[i] = ((SashFormData) data).weight;
+			} else {
+				data = new SashFormData();
+				children.get(i).getProperties().put(LAYOUT_KEY, data);
+				((SashFormData) data).weight = ratios[i] = ((200 << 16) + 999) / 1000;
+
+			}
+			total += ratios[i];
+		}
+
+
 		// int sashwidth = 10; //TODO sashes.length > 0 ? sashForm.SASH_WIDTH +
 		// sashes [0].getBorderWidth() * 2 : sashForm.SASH_WIDTH;
 		if (this.horizontal.get()) {
@@ -286,10 +487,12 @@ public class SashPane extends Region {
 			children.get(0).resizeRelocate(x, y, w, height);
 			y += height;
 			for (int i = 1; i < children.size() - 1; i++) {
+				SashChild c = (SashChild) children.get(i);
+				
 				this.sashes[i - 1].resizeRelocate(x, y, w, getSashWidth());
 				y += getSashWidth();
 				height = (int) (ratios[i] * (h - this.sashes.length * getSashWidth()) / total);
-				children.get(i).resizeRelocate(x, y, w, height);
+				c.resizeRelocate(x, y, w, height);
 				y += height;
 			}
 			if (children.size() > 1) {
@@ -299,9 +502,6 @@ public class SashPane extends Region {
 				children.get(children.size() - 1).resizeRelocate(x, y, w, height);
 			}
 		}
-
-		this.clientArea = b;
-		syncWeightProperty();
 	}
 	
 	private void syncWeightProperty() {
@@ -324,6 +524,117 @@ public class SashPane extends Region {
 		}
 		
 		e.consume();
+		
+		if( hasFixedChild() ) {
+			// We only have to handle drag if there are more than 2 children
+			if( getChildren().size() > 2 ) {
+				handleDragFixed(e);
+			}
+		} else {
+			handleDragSashSimple(e);
+		}
+		syncWeightProperty();
+		requestLayout();
+	}
+	
+	private void handleDragFixed(MouseEvent e) {
+		List<SashChild> children = getManagedChildren().stream()
+				.filter(Node::isVisible)
+				.map(SashChild.class::cast)
+				.collect(Collectors.toList());
+		
+		if (this.horizontal.get()) {
+			double w = children.stream().filter(SashChild::isFixed).mapToDouble( s -> computeFixedHeight(s, (int)getWidth())).sum();
+			Rectangle rectangle = new Rectangle(getWidth() - w, getHeight(), getInsets());
+			
+			double delta = e.getScreenX() - this.start;
+
+			long newSize_1 = (long) (this.resize_1 + delta);
+			long newSize_2 = (long) (this.resize_2 - delta);
+
+			long minChildWidth1 = minChildWidth(this.c1, getHeight());
+			long minChildWidth2 = minChildWidth(this.c2, getHeight());
+			
+			if (newSize_1 < minChildWidth1) {
+				newSize_2 = (long) this.resize_total - minChildWidth1;
+				newSize_1 = minChildWidth1;
+			}
+
+			if (newSize_2 < minChildWidth2) {
+				newSize_1 = (long) this.resize_total - minChildWidth2;
+				newSize_2 = minChildWidth2;
+			}
+
+			Object data1 = this.c1.getProperties().get(LAYOUT_KEY);
+			if (data1 == null || !(data1 instanceof SashFormData)) {
+				data1 = new SashFormData();
+				this.c1.getProperties().put(LAYOUT_KEY, data1);
+			}
+			Object data2 = this.c2.getProperties().get(LAYOUT_KEY);
+			if (data2 == null || !(data2 instanceof SashFormData)) {
+				data2 = new SashFormData();
+				this.c2.getProperties().put(LAYOUT_KEY, data2);
+			}
+
+			((SashFormData) data1).weight = (((long) newSize_1 << 16) + rectangle.width - 1) / rectangle.width;
+			((SashFormData) data2).weight = (((long) newSize_2 << 16) + rectangle.width - 1) / rectangle.width;
+
+			this.c1.resize(newSize_1, rectangle.height);
+			this.c2.resizeRelocate(this.c1.getLayoutX() + newSize_1 + getSashWidth(), this.c2.getLayoutY(), newSize_2,
+					rectangle.height);
+			this.draggedSash.relocate(this.c1.getLayoutX() + newSize_1, this.draggedSash.getLayoutY());
+		} else {
+			double h = children.stream().filter(SashChild::isFixed).mapToDouble( s -> computeFixedHeight(s, (int)getWidth())).sum();
+			Rectangle rectangle = new Rectangle(getWidth(), getHeight() - h, getInsets());
+			
+			double delta = e.getScreenY() - this.start;
+			long newSize_1 = (long) (this.resize_1 + delta);
+			long newSize_2 = (long) (this.resize_2 - delta);
+
+			long minChildHeight1 = minChildHeight(this.c1, getWidth());
+			long minChildHeight2 = minChildHeight(this.c2, getWidth());
+			
+			if (newSize_1 < minChildHeight1) {
+				newSize_2 = (long) this.resize_total - minChildHeight1;
+				newSize_1 = minChildHeight1;
+			}
+
+			if (newSize_2 < minChildHeight2) {
+				newSize_1 = (long) this.resize_total - minChildHeight2;
+				newSize_2 = minChildHeight2;
+			}
+
+			Object data1 = this.c1.getProperties().get(LAYOUT_KEY);
+			if (data1 == null || !(data1 instanceof SashFormData)) {
+				data1 = new SashFormData();
+				this.c1.getProperties().put(LAYOUT_KEY, data1);
+			}
+			Object data2 = this.c2.getProperties().get(LAYOUT_KEY);
+			if (data2 == null || !(data2 instanceof SashFormData)) {
+				data2 = new SashFormData();
+				this.c2.getProperties().put(LAYOUT_KEY, data2);
+			}
+
+			((SashFormData) data1).weight = (((long) newSize_1 << 16) + rectangle.height - 1) / rectangle.height;
+			((SashFormData) data2).weight = (((long) newSize_2 << 16) + rectangle.height - 1) / rectangle.height;
+
+			this.c1.resize(rectangle.width, newSize_1);
+			this.c2.resizeRelocate(this.c2.getLayoutX(), this.c1.getLayoutY() + newSize_1 + getSashWidth(),
+					rectangle.width, newSize_2);
+			this.draggedSash.relocate(this.draggedSash.getLayoutX(), this.c1.getLayoutY() + newSize_1);			
+		}
+
+	}
+	
+	private static long minChildWidth(Node child, double height) {
+		return Math.max((long)child.minWidth(height), DRAG_MINIMUM);
+	}
+	
+	private static long minChildHeight(Node child, double width) {
+		return Math.max((long)child.minHeight(width), DRAG_MINIMUM);
+	}
+	
+	private void handleDragSashSimple(MouseEvent e) {
 		Rectangle rectangle = new Rectangle(getWidth(), getHeight(), getInsets());
 
 		if (this.horizontal.get()) {
@@ -332,14 +643,17 @@ public class SashPane extends Region {
 			long newSize_1 = (long) (this.resize_1 + delta);
 			long newSize_2 = (long) (this.resize_2 - delta);
 
-			if (newSize_1 < DRAG_MINIMUM) {
-				newSize_2 = (long) this.resize_total - DRAG_MINIMUM;
-				newSize_1 = DRAG_MINIMUM;
+			long minChildWidth1 = minChildWidth(this.c1, getHeight());
+			long minChildWidth2 = minChildWidth(this.c2, getHeight());
+			
+			if (newSize_1 < minChildWidth1) {
+				newSize_2 = (long) this.resize_total - minChildWidth1;
+				newSize_1 = minChildWidth1;
 			}
 
-			if (newSize_2 < DRAG_MINIMUM) {
-				newSize_1 = (long) this.resize_total - DRAG_MINIMUM;
-				newSize_2 = DRAG_MINIMUM;
+			if (newSize_2 < minChildWidth2) {
+				newSize_1 = (long) this.resize_total - minChildWidth2;
+				newSize_2 = minChildWidth2;
 			}
 
 			Object data1 = this.c1.getProperties().get(LAYOUT_KEY);
@@ -364,14 +678,24 @@ public class SashPane extends Region {
 			double delta = e.getScreenY() - this.start;
 			long newSize_1 = (long) (this.resize_1 + delta);
 			long newSize_2 = (long) (this.resize_2 - delta);
-			if (newSize_1 < DRAG_MINIMUM) {
-				newSize_2 = (long) this.resize_total - DRAG_MINIMUM;
-				newSize_1 = DRAG_MINIMUM;
+			
+			long minChildHeight1 = minChildHeight(this.c1, getWidth());
+			long minChildHeight2 = minChildHeight(this.c2, getWidth());
+			
+			if (newSize_1 < minChildHeight1) {
+				newSize_2 = (long) this.resize_total - minChildHeight1;
+				newSize_1 = minChildHeight1;
 			}
 
-			if (newSize_2 < DRAG_MINIMUM) {
-				newSize_1 = (long) this.resize_total - DRAG_MINIMUM;
-				newSize_2 = DRAG_MINIMUM;
+			if (newSize_2 < minChildHeight2) {
+				newSize_1 = (long) this.resize_total - minChildHeight2;
+				newSize_2 = minChildHeight2;
+			}
+			
+			long remainder = (long)this.resize_total - newSize_1 - newSize_2;
+			
+			if( remainder != 0 ) {
+				newSize_1 += remainder;
 			}
 
 			Object data1 = this.c1.getProperties().get(LAYOUT_KEY);
@@ -393,12 +717,11 @@ public class SashPane extends Region {
 					rectangle.width, newSize_2);
 			this.draggedSash.relocate(this.draggedSash.getLayoutX(), this.c1.getLayoutY() + newSize_1);
 		}
-		syncWeightProperty();
-		requestLayout();
 	}
 
 	private void handlePressedSash(MouseEvent e) {
 		e.consume();
+		
 		Sash sash = (Sash) e.getSource();
 
 		int sashIndex = -1;
@@ -414,16 +737,41 @@ public class SashPane extends Region {
 		this.start = this.horizontal.get() ? e.getScreenX() : e.getScreenY();
 		this.draggedSash = sash;
 
-		List<Node> visibleNodes = getManagedChildren().stream().filter(Node::isVisible).collect(Collectors.toList());
+		List<SashChild> visibleNodes = getManagedChildren().stream()
+				.filter(Node::isVisible)
+				.map(SashChild.class::cast)
+				.collect(Collectors.toList());
 
-		this.c1 = visibleNodes.get(sashIndex);
-		Bounds b = this.c1.getLayoutBounds();
-		this.resize_1 = this.horizontal.get() ? b.getWidth() : b.getHeight();
+		if( hasFixedChild() &&  (visibleNodes.get(sashIndex).isFixed() || visibleNodes.get(sashIndex+1).isFixed()) ) {
+			int idx = visibleNodes.get(sashIndex).isFixed() ? findPrevUnfixed(visibleNodes, sashIndex) : sashIndex;
+			if( idx != -1 ) {
+				this.c1 = visibleNodes.get(idx);
+				Bounds b = this.c1.getLayoutBounds();
+				this.resize_1 = this.horizontal.get() ? b.getWidth() : b.getHeight();
+			} else {
+				this.c1 = null;
+			}
+			
+			idx = findNextUnfixed(visibleNodes, sashIndex);
+			if( idx != -1 ) {
+				this.c2 = visibleNodes.get(idx);
+				Bounds b = this.c2.getLayoutBounds();
+				this.resize_2 = this.horizontal.get() ? b.getWidth() : b.getHeight();
+			} else {
+				this.c2 = null;
+			}
+			
+			this.resize_total = this.resize_1 + this.resize_2;		
+		} else {
+			this.c1 = visibleNodes.get(sashIndex);
+			Bounds b = this.c1.getLayoutBounds();
+			this.resize_1 = this.horizontal.get() ? b.getWidth() : b.getHeight();
 
-		this.c2 = visibleNodes.get(sashIndex + 1);
-		b = this.c2.getLayoutBounds();
-		this.resize_2 = this.horizontal.get() ? b.getWidth() : b.getHeight();
-		this.resize_total = this.resize_1 + this.resize_2;
+			this.c2 = visibleNodes.get(sashIndex + 1);
+			b = this.c2.getLayoutBounds();
+			this.resize_2 = this.horizontal.get() ? b.getWidth() : b.getHeight();
+			this.resize_total = this.resize_1 + this.resize_2;			
+		}
 	}
 
 	private Sash createSash() {
@@ -607,16 +955,34 @@ public class SashPane extends Region {
 		}
 	}
 
-	static class SashChild extends StackPane {
+	static class SashChild extends AnchorPane {
+		ObjectProperty<Boolean> fixedSize = new SimpleObjectProperty<>();
 		private javafx.scene.shape.Rectangle r = new javafx.scene.shape.Rectangle();
 
 		public SashChild(Node c) {
+			if( c instanceof FixedSashItem ) {
+				this.fixedSize.bind(((FixedSashItem)c).fixed());
+				this.fixedSize.addListener( (ob,ol,ne) -> {
+					Parent parent = getParent();
+					if( parent != null ) {
+						((SashPane) parent).layoutChildren(true);
+					}
+				});
+			}
 			getChildren().add(c);
 			setClip(this.r);
 			visibleProperty().bind(c.visibleProperty());
 			visibleProperty().addListener((ob, ol, ne) -> {
-				((SashPane) getParent()).layoutChildren(true);
+				Parent parent = getParent();
+				if( parent != null ) {
+					((SashPane) parent).layoutChildren(true);	
+				}
 			});
+			AnchorPane.setBottomAnchor(c, Double.valueOf(0.0));
+			AnchorPane.setTopAnchor(c, Double.valueOf(0.0));
+			AnchorPane.setLeftAnchor(c, Double.valueOf(0.0));
+			AnchorPane.setRightAnchor(c, Double.valueOf(0.0));
+//			setStyle("-fx-border-width: 1; -fx-border-style: solid; -fx-border-color: black");
 		}
 
 		@Override
@@ -628,6 +994,11 @@ public class SashPane extends Region {
 
 		public void dispose() {
 			visibleProperty().unbind();
+			this.fixedSize.unbind();
+		}
+		
+		public boolean isFixed() {
+			return Boolean.TRUE.equals(this.fixedSize.get());
 		}
 	}
 

@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.workbench.renderers.fx.widget;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,6 +26,7 @@ import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.controls.dnd.EFXDragEvent;
 import org.eclipse.fx.ui.panes.LazyStackPane;
+import org.eclipse.fx.ui.panes.SashPane.FixedSashItem;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
@@ -35,6 +37,9 @@ import org.eclipse.fx.ui.workbench.services.ModelService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseDragEvent;
@@ -55,6 +60,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	private Node staticLayoutGroup;
 	private double weight = 10;
 	private WCallback<@NonNull DropData, @Nullable Void> dropCallback;
+	private boolean isFixed;
 
 	public static final boolean OPTIMIZED_STACK_LAYOUT = Boolean.getBoolean("efxclipse.experimental.optstack"); //$NON-NLS-1$
 
@@ -125,15 +131,16 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	 *            the static group we attach the DnD to
 	 */
 	protected void initDnd(Pane staticLayoutGroup) {
-		SplitDnDSupport<M> dndSupport = new SplitDnDSupport<>(this.efxModelService,this.modelService,this.constraintService, this.feedbackService, this);
+		SplitDnDSupport<M> dndSupport = new SplitDnDSupport<>(this.efxModelService, this.modelService, this.constraintService, this.feedbackService, this);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_OVER, dndSupport::handleDragOver);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_EXITED, dndSupport::handleDragExit);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);
 
 		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_OVER, dndSupport::handleDragOver);
-//		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_EXITED, dndSupport::handleDragExit);
+		// staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_EXITED,
+		// dndSupport::handleDragExit);
 		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);
-		if( DnDSupport.DETACHABLE_DRAG ) {
+		if (DnDSupport.DETACHABLE_DRAG) {
 			staticLayoutGroup.addEventHandler(MouseDragEvent.MOUSE_DRAG_EXITED, dndSupport::handleDragExit);
 		}
 	}
@@ -149,14 +156,14 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	}
 
 	private boolean stateCheck(LazyStackPane.CheckType type) {
-		if( ! OPTIMIZED_STACK_LAYOUT ) {
+		if (!OPTIMIZED_STACK_LAYOUT) {
 			return true;
 		}
 
-		if( getDomElement() instanceof MPart ) {
+		if (getDomElement() instanceof MPart) {
 			MPart p = (MPart) getDomElement();
-			if( p != null && ((MUIElement)p.getParent()) instanceof MPartStack ) {
-				if( p.getParent().getSelectedElement() == p ) {
+			if (p != null && ((MUIElement) p.getParent()) instanceof MPartStack) {
+				if (p.getParent().getSelectedElement() == p) {
 					return true;
 				} else {
 					return false;
@@ -176,7 +183,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	 */
 	@NonNull
 	protected Pane createStaticPane() {
-		return new LazyStackPane(this::stateCheck);
+		return new InternalFixableLazyStackPane(this::stateCheck, this.isFixed);
 	}
 
 	@Override
@@ -234,13 +241,41 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 		this.weight = 10;
 	}
 	
+	@Inject
+	void setFixed(@Optional @Named("persistedState_efxSashFixed") String value) {
+		this.isFixed = value != null && Boolean.parseBoolean(value);
+		if( this.staticLayoutGroup != null && this.staticLayoutGroup instanceof InternalFixableLazyStackPane ) {
+			((InternalFixableLazyStackPane)this.staticLayoutGroup).fixed.set(this.isFixed);
+		}
+	}
+
 	@Override
 	public void setHidden(boolean hidden) {
 		getStaticLayoutNode().setVisible(!hidden);
 	}
-	
+
 	@Override
 	public boolean isHidden() {
-		return ! getStaticLayoutNode().isVisible();
+		return !getStaticLayoutNode().isVisible();
+	}
+
+	static class InternalFixableLazyStackPane extends LazyStackPane implements FixedSashItem {
+		public BooleanProperty fixed = new SimpleBooleanProperty(this, "fixed", false); //$NON-NLS-1$
+
+		public InternalFixableLazyStackPane(Predicate<CheckType> checkSupplier, boolean fixed) {
+			super(checkSupplier);
+			this.fixed.set(fixed);
+		}
+
+		@Override
+		public ObservableBooleanValue fixed() {
+			return this.fixed;
+		}
+		
+		// Force children to not exceed the stack
+		@Override
+		protected void layoutChildren() {
+			getManagedChildren().forEach( c -> c.resizeRelocate(0, 0, getWidth(), getHeight()));
+		}
 	}
 }
