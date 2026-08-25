@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.jdt.annotation.NonNull;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -117,7 +118,13 @@ public class SashPane extends Region {
 		return getClassCssMetaData();
 	}
 	
+	/**
+	 * Optional interface implemented by Items so that I are layouted with their fixed size
+	 */
 	public interface FixedSashItem {
+		/**
+		 * @return property controlling if the item is fixed
+		 */
 		public ObservableBooleanValue fixed();
 	}
 
@@ -363,7 +370,7 @@ public class SashPane extends Region {
 			}
 		}
 		
-		if( horizontal.get() ) {
+		if( this.horizontal.get() ) {
 			w -= children.stream().filter(SashChild::isFixed).mapToDouble( s -> computeFixedWidth(s, _h)).sum();
 			
 			double sashSize = getSashWidth();
@@ -408,6 +415,12 @@ public class SashPane extends Region {
 					sashChild.resizeRelocate(x, y, w, targetHeight);
 					y += targetHeight;
 				} else {
+					
+					double minHeight = sashChild.minHeight(w);
+					if( minHeight > ratioHeight ) {
+						ratioHeight = (int)minHeight;
+					}
+					
 					sashChild.resizeRelocate(x, y, w, ratioHeight);
 					y += ratioHeight;
 				}
@@ -464,47 +477,71 @@ public class SashPane extends Region {
 			total += ratios[i];
 		}
 
-
 		// int sashwidth = 10; //TODO sashes.length > 0 ? sashForm.SASH_WIDTH +
 		// sashes [0].getBorderWidth() * 2 : sashForm.SASH_WIDTH;
 		if (this.horizontal.get()) {
 			int width = (int) (ratios[0] * (w - this.sashes.length * getSashWidth()) / total);
-			children.get(0).resizeRelocate(x, y, width, h);
+			Node node = children.get(0);
+			node.resizeRelocate(x, y, width, h);
 			x += width;
 			for (int i = 1; i < children.size() - 1; i++) {
+				node = children.get(i);
 				this.sashes[i - 1].resizeRelocate(x, y, getSashWidth(), h);
 				x += getSashWidth();
 				width = (int) (ratios[i] * (w - this.sashes.length * getSashWidth()) / total);
-				children.get(i).resizeRelocate(x, y, width, h);
+				node.resizeRelocate(x, y, width, h);
 				x += width;
 			}
 			if (children.size() > 1) {
+				node = children.get(children.size() - 1);
 				this.sashes[this.sashes.length - 1].resizeRelocate(x, y, getSashWidth(), h);
 				x += getSashWidth();
 				width = w - x;
-				children.get(children.size() - 1).resizeRelocate(x, y, width, h);
+				node.resizeRelocate(x, y, width, h);
 			}
 		} else {
+			Node node = children.get(0);
 			int height = (int) (ratios[0] * (h - this.sashes.length * getSashWidth()) / total);
-			children.get(0).resizeRelocate(x, y, w, height);
+			int minHeight = (int)node.minHeight(w);
+			
+			if( minHeight > height ) {
+				height = minHeight;
+			}
+			
+			node.resizeRelocate(x, y, w, height);
+			
 			y += height;
 			for (int i = 1; i < children.size() - 1; i++) {
-				SashChild c = (SashChild) children.get(i);
+				node = children.get(i);
+				height = (int) (ratios[i] * (h - this.sashes.length * getSashWidth()) / total);
+				minHeight = (int)node.minHeight(w);
+				
+				if( minHeight > height ) {
+					height = minHeight;
+				} 
 				
 				this.sashes[i - 1].resizeRelocate(x, y, w, getSashWidth());
 				y += getSashWidth();
-				height = (int) (ratios[i] * (h - this.sashes.length * getSashWidth()) / total);
-				c.resizeRelocate(x, y, w, height);
+				
+				node.resizeRelocate(x, y, w, height);
 				y += height;
 			}
+			
 			if (children.size() > 1) {
+				node = children.get(children.size() - 1);
 				this.sashes[this.sashes.length - 1].resizeRelocate(x, y, w, getSashWidth());
 				y += getSashWidth();
 				height = h - y;
-				children.get(children.size() - 1).resizeRelocate(x, y, w, height);
+				node.resizeRelocate(x, y, w, height);
 			}
 		}
 	}
+	
+//	private void updateLayoutData(Node n, int size, int available) {
+//		Object data = n.getProperties().get(LAYOUT_KEY);
+//		((SashFormData) data).weight = (((long) size << 16) + available - 1) / available;
+//		
+//	}
 	
 	private void syncWeightProperty() {
 		if( this.weights != null ) {
@@ -967,7 +1004,9 @@ public class SashPane extends Region {
 				this.fixedSize.addListener( (ob,ol,ne) -> {
 					Parent parent = getParent();
 					if( parent != null ) {
-						((SashPane) parent).layoutChildren(true);
+						Platform.runLater( () -> {
+							((SashPane) parent).layoutChildren(true);
+						});
 					}
 				});
 			}
@@ -977,7 +1016,7 @@ public class SashPane extends Region {
 			visibleProperty().addListener((ob, ol, ne) -> {
 				Parent parent = getParent();
 				if( parent != null ) {
-					((SashPane) parent).layoutChildren(true);	
+					((SashPane) parent).layoutChildren(true);
 				}
 			});
 			AnchorPane.setBottomAnchor(c, Double.valueOf(0.0));
