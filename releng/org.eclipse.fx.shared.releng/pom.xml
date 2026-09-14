@@ -155,24 +155,24 @@
 				            <extraClasspathElement>
 								<groupId>org.openjfx</groupId>
 								<artifactId>javafx-base</artifactId>
-								<version>21.0.6</version>
+								<version>25.0.4</version>
 				            </extraClasspathElement>
 				            <extraClasspathElement>
 								<groupId>org.openjfx</groupId>
 								<artifactId>javafx-controls</artifactId>
-								<version>21.0.6</version>
+								<version>25.0.4</version>
 								<classifier>linux</classifier>
 				            </extraClasspathElement>
 				            <extraClasspathElement>
 								<groupId>org.openjfx</groupId>
 								<artifactId>javafx-graphics</artifactId>
-								<version>21.0.6</version>
+								<version>25.0.4</version>
 								<classifier>linux</classifier>
 				            </extraClasspathElement>
 				            <extraClasspathElement>
 				            	<groupId>at.bestsolution.openjfx</groupId>
 								<artifactId>javafx-swt</artifactId>
-								<version>21.0.6</version>
+								<version>25.0.4</version>
 				            </extraClasspathElement>
         				</extraClasspathElements>
 					</configuration>
