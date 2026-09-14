@@ -41,14 +41,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.ecf.core.ssl.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ecf.filetransfer.ssl.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.ecf.core.feature"
          version="0.0.0"/>
 
@@ -433,10 +425,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.osgi.util.source"
-         version="0.0.0"/>
-
-   <plugin
          id="org.eclipse.e4.core.commands"
          version="0.0.0"/>
 
@@ -446,10 +434,6 @@
 
    <plugin
          id="org.eclipse.e4.core.contexts"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.e4.core.contexts.source"
          version="0.0.0"/>
 
    <plugin
@@ -911,23 +895,7 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.ecf.provider.filetransfer.ssl"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.ecf.provider.filetransfer.ssl.source"
-         version="0.0.0"/>
-
-   <plugin
          id="org.eclipse.ecf.source"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.ecf.ssl"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.ecf.ssl.source"
          version="0.0.0"/>
 
    <plugin
@@ -1035,11 +1003,11 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.apache.commons.jxpath"
+         id="org.apache.commons.commons-jxpath"
          version="0.0.0"/>
 
    <plugin
-         id="org.apache.commons.jxpath.source"
+         id="org.apache.commons.commons-jxpath.source"
          version="0.0.0"/>
 
    <plugin

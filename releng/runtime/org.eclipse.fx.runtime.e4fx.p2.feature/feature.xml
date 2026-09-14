@@ -163,11 +163,7 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.ecf.core.ssl.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ecf.filetransfer.ssl.feature"
+         id="org.eclipse.ecf.filetransfer.httpclientjava.feature"
          version="0.0.0"/>
 
    <includes

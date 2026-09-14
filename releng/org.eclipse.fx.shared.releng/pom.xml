@@ -49,9 +49,9 @@
 
 	<repositories>
 		<repository>
-			<id>2024-12</id>
+			<id>2026-09</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/eclipse/updates/4.34/R-4.34-202411201800</url>
+			<url>https://download.eclipse.org/releases/2026-09/202609091000</url>
 		</repository>
 		<repository>
 			<id>efxclipse</id>

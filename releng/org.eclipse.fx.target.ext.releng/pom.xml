@@ -42,14 +42,19 @@
 	<repositories>
 		<repository>
 			<!-- Important changing this requires to publish the platform bundles to maven -->
-			<id>2024-12</id>
+			<id>2026-09</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/eclipse/updates/4.34/R-4.34-202411201800</url>
+			<url>https://download.eclipse.org/releases/2026-09/202609091000</url>
 		</repository>
 		<repository>
 			<id>orbit</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.34.0</url>
+			<url>https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.41.0</url>
+		</repository>
+		<repository>
+			<id>ecf</id>
+			<layout>p2</layout>
+			<url>https://download.eclipse.org/rt/ecf/3.16.8/site.p2/3.16.8.v20260415-2025/</url>
 		</repository>
 		<repository>
 			<id>xtext</id>
@@ -59,7 +64,7 @@
 		<repository>
 			<id>mwe</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/modeling/emft/mwe/updates/releases/2.20.0</url>
+			<url>https://download.eclipse.org/modeling/emft/mwe/updates/releases/2.27.0</url>
 		</repository>
 		<repository>
 			<id>xpand</id>
@@ -69,12 +74,12 @@
 		<repository>
 			<id>emf</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/modeling/emf/emf/builds/release/2.40.0</url>
+			<url>https://download.eclipse.org/modeling/emf/emf/builds/release/2.47.0</url>
 		</repository>
 		<repository>
 			<id>m2e</id>
 			<layout>p2</layout>
-			<url>https://download.eclipse.org/technology/m2e/releases/2.7.0</url>
+			<url>https://download.eclipse.org/technology/m2e/releases/2.12.0</url>
 		</repository>
 	</repositories>
 
