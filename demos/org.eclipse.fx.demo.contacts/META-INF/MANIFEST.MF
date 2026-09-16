@@ -6,7 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: org.eclipse.fx.demo.contacts,
  org.eclipse.fx.demo.contacts.impl,
  org.eclipse.fx.demo.contacts.util

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Tests
 Bundle-SymbolicName: org.eclipse.fx.core.tests
 Bundle-Version: 3.11.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Import-Package: org.eclipse.fx.core.bindings,
  org.eclipse.fx.core.property
 Require-Bundle: org.junit;bundle-version="4.12.0",

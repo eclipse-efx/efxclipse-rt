@@ -4,6 +4,6 @@ Bundle-Name: EMF Edit UI for JavaFX Tests
 Bundle-SymbolicName: org.eclipse.fx.emf.edit.ui.tests
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: org.eclipse.fx.emf.edit.ui;bundle-version="0.1.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: org.junit;bundle-version="4.13.0",
  org.mockito.mockito-core;bundle-version="5.14.2"

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Views
 Bundle-SymbolicName: org.eclipse.fx.sample.singlesource.views
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: org.eclipse.swt,
  org.eclipse.jface;bundle-version="3.10.0"
 Export-Package: org.eclipse.fx.sample.singlesource.views

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: My Sample App Jemmy UI Tests
 Bundle-SymbolicName: org.eclipse.fx.testcases.dnd.app.jemmy
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: org.junit,
  at.bestsolution.efxclipse.jemmy
 Import-Package: jakarta.inject,

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Fx
 Bundle-SymbolicName: org.eclipse.fx.sample.e4swt.fx
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Import-Package: javafx.animation;version="2.2.0",
  javafx.application;version="2.2.0",
  javafx.beans;version="2.2.0",

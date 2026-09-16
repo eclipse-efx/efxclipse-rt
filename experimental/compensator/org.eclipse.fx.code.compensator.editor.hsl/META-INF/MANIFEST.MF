@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Hsl
 Bundle-SymbolicName: org.eclipse.fx.code.compensator.editor.hsl
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: org.eclipse.fx.code.compensator.editor;bundle-version="1.0.0",
  org.eclipse.fx.text;bundle-version="1.0.0",
  org.eclipse.text,

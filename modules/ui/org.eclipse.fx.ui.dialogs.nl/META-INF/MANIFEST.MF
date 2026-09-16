@@ -4,4 +4,4 @@ Bundle-Name: NL Support
 Bundle-SymbolicName: org.eclipse.fx.ui.dialogs.nl;singleton:=true
 Bundle-Version: 3.11.0.qualifier
 Fragment-Host: org.eclipse.fx.ui.dialogs
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25

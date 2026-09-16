@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.fx.ui.services
 Bundle-Version: 3.11.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: org.eclipse.fx.ui.services;version="3.9.0",
  org.eclipse.fx.ui.services.commands;version="3.9.0",
  org.eclipse.fx.ui.services.dialog;version="3.9.0",

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Fx
 Bundle-SymbolicName: org.eclipse.fx.runtime.fswt.fx
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: org.eclipse.fx.runtime.fswt,
  org.eclipse.fx.runtime.swt;bundle-version="1.0.0"
 Service-Component: OSGI-INF/services/fxswt.xml

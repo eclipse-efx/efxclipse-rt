@@ -3,5 +3,5 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Compat
 Bundle-SymbolicName: org.eclipse.swt
 Bundle-Version: 3.200.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: org.eclipse.fx.runtime.swt;bundle-version="1.0.0";visibility:=reexport

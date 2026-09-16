@@ -6,6 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.fx.demo.fxgraph.osgi.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.fx.osgi.util
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor

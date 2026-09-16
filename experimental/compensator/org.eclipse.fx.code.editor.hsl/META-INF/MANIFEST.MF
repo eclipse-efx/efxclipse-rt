@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Hsl
 Bundle-SymbolicName: org.eclipse.fx.code.editor.hsl
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Import-Package: jakarta.inject,
  org.eclipse.e4.core.di.annotations,
  org.osgi.service.component.annotations;version="1.2.0"

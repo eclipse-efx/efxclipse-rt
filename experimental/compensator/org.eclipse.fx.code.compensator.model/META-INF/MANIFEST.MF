@@ -6,7 +6,7 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: org.eclipse.fx.code.compensator.model.workbench,
  org.eclipse.fx.code.compensator.model.workbench.impl,
  org.eclipse.fx.code.compensator.model.workbench.util

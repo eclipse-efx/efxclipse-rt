@@ -8,6 +8,6 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.fx.xtext.statemachine,
  org.eclipse.xtext.ide;visibility:=reexport
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: org.eclipse.fx.xtext.statemachine.ide.contentassist.antlr,
  org.eclipse.fx.xtext.statemachine.ide.contentassist.antlr.internal

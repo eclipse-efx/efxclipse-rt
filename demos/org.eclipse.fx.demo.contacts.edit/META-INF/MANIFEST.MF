@@ -7,7 +7,7 @@ Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.fx.demo.contacts.provider.ContactsEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: org.eclipse.fx.demo.contacts.provider
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.fx.demo.contacts;visibility:=reexport,

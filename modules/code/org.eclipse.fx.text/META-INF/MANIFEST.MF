@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Basic Text extension
 Bundle-SymbolicName: org.eclipse.fx.text
 Bundle-Version: 3.11.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: org.eclipse.fx.text.hover;version="3.9.0",
  org.eclipse.fx.text.navigation;version="3.9.0",
  org.eclipse.fx.text.rules;version="3.9.0";x-internal:=true

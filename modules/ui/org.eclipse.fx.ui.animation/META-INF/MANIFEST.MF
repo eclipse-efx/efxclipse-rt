@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Animationutils
 Bundle-SymbolicName: org.eclipse.fx.ui.animation;singleton:=true
 Bundle-Version: 3.11.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-Vendor: Eclipse.org
 Export-Package: org.eclipse.fx.ui.animation;version="3.9.0",
  org.eclipse.fx.ui.animation.morph;version="3.9.0",

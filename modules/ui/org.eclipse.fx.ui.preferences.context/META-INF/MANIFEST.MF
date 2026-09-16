@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Context
 Bundle-SymbolicName: org.eclipse.fx.ui.preferences.context
 Bundle-Version: 3.11.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Import-Package: jakarta.inject,
  org.eclipse.fx.core;version="3.9.0",
  org.eclipse.fx.ui.preferences;version="3.9.0",

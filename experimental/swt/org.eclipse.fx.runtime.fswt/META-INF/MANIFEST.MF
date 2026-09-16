@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Fswt
 Bundle-SymbolicName: org.eclipse.fx.runtime.fswt
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Import-Package: org.eclipse.swt,
  org.eclipse.swt.widgets,
  org.osgi.framework;version="1.8.0"

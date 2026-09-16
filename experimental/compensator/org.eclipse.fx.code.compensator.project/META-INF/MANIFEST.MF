@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="1.1.0.v2014051
  org.eclipse.fx.code.compensator.editor,
  org.eclipse.e4.core.services,
  org.eclipse.fx.ui.dialogs
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Service-Component: OSGI-INF/services/projectsetupcf.xml,OSGI-INF/services/projectextractorcf.xml,OSGI-INF/services/projectstylesheet.xml,
  OSGI-INF/services/projectinstancecf.xml
 Import-Package: jakarta.inject

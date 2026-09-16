@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Github
 Bundle-SymbolicName: org.eclipse.fx.code.compensator.project.bt.github
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: org.eclipse.fx.code.compensator.project,
  org.eclipse.egit.github.core;bundle-version="3.6.0",
  com.google.gson;bundle-version="2.1.0",

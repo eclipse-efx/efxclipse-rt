@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Datasource
 Bundle-SymbolicName: org.eclipse.fx.jap.datasource
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: org.eclipse.fx.jap.datasource
 Require-Bundle: org.eclipse.core.databinding;bundle-version="1.4.1",
  org.eclipse.core.databinding.property;bundle-version="1.4.200",

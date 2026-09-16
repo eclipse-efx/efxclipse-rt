@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Swt
 Bundle-SymbolicName: org.eclipse.fx.runtime.swt
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: org.eclipse.swt,
  org.eclipse.swt.accessibility,
  org.eclipse.swt.browser,

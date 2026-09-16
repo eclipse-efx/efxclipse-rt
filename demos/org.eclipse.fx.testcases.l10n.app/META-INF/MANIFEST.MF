@@ -25,4 +25,4 @@ Require-Bundle: org.eclipse.fx.ui.workbench.fx,
 Import-Package: jakarta.annotation,
  jakarta.inject,
  org.apache.commons.lang.text;version="2.6.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25

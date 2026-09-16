@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Java
 Bundle-SymbolicName: org.eclipse.fx.code.compensator.editor.java
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: org.eclipse.text;bundle-version="3.5.300",
  org.eclipse.fx.text;bundle-version="1.0.0",
  org.eclipse.equinox.common;bundle-version="3.6.200",

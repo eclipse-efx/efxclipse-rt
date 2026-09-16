@@ -21,7 +21,7 @@ Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="0.10.1",
  org.eclipse.fx.ui.animation,
  org.eclipse.fx.ui.di,
  org.eclipse.fx.ui.services
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Import-Package: jakarta.annotation,
  jakarta.inject,
  org.osgi.framework;version="1.3.0"
