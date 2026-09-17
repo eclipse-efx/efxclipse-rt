@@ -13,6 +13,6 @@
  -->
 
 <site>
-   <feature url="features/org.eclipse.fx.core.shared.feature_3.11.0.qualifier.jar" id="org.eclipse.fx.core.shared.feature" version="3.11.0.qualifier"/>
-   <feature url="features/org.eclipse.fx.runtime.min.feature_3.11.0.qualifier.jar" id="org.eclipse.fx.runtime.min.feature" version="3.11.0.qualifier"/>
+   <feature url="features/org.eclipse.fx.core.shared.feature_3.12.0.qualifier.jar" id="org.eclipse.fx.core.shared.feature" version="3.12.0.qualifier"/>
+   <feature url="features/org.eclipse.fx.runtime.min.feature_3.12.0.qualifier.jar" id="org.eclipse.fx.runtime.min.feature" version="3.12.0.qualifier"/>
 </site>

@@ -13,7 +13,7 @@
  -->
 
 <site>
-   <feature url="features/org.eclipse.fx.target.ext.feature_3.11.0.qualifier.jar" id="org.eclipse.fx.target.ext.feature" version="3.11.0.qualifier"/>
-   <feature url="features/org.eclipse.fx.code.target.ext.feature_3.11.0.qualifier.jar" id="org.eclipse.fx.code.target.ext.feature" version="3.11.0.qualifier"/>
-   <feature url="features/org.eclipse.fx.slf4j.target.feature_3.11.0.qualifier.jar" id="org.eclipse.fx.slf4j.target.feature" version="3.11.0.qualifier"/>
+   <feature url="features/org.eclipse.fx.target.ext.feature_3.12.0.qualifier.jar" id="org.eclipse.fx.target.ext.feature" version="3.12.0.qualifier"/>
+   <feature url="features/org.eclipse.fx.code.target.ext.feature_3.12.0.qualifier.jar" id="org.eclipse.fx.code.target.ext.feature" version="3.12.0.qualifier"/>
+   <feature url="features/org.eclipse.fx.slf4j.target.feature_3.12.0.qualifier.jar" id="org.eclipse.fx.slf4j.target.feature" version="3.12.0.qualifier"/>
 </site>
