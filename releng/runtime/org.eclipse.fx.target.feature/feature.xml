@@ -1091,6 +1091,33 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          version="0.0.0"/>
 
    <plugin
+         id="org.eclipse.core.filesystem.linux.x86_64"
+         os="linux"
+         arch="x86_64"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.core.filesystem.linux.x86_64.source"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.core.filesystem.linux.aarch64"
+         os="linux"
+         arch="aarch64"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.core.filesystem.linux.ppc64le"
+         os="linux"
+         arch="ppc64le"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.core.filesystem.macosx"
+         os="macosx"
+         version="0.0.0"/>
+
+   <plugin
          id="org.apache.felix.gogo.command"
          version="0.0.0"/>
 
@@ -1382,6 +1409,13 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          version="0.0.0"/>
 
    <plugin
+         id="org.eclipse.equinox.launcher.cocoa.macosx.aarch64"
+         os="macosx"
+         ws="cocoa"
+         arch="aarch64"
+         version="0.0.0"/>
+
+   <plugin
          id="org.eclipse.equinox.launcher.gtk.linux.x86_64"
          os="linux"
          ws="gtk"
@@ -1389,10 +1423,38 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          version="0.0.0"/>
 
    <plugin
+         id="org.eclipse.equinox.launcher.gtk.linux.aarch64"
+         os="linux"
+         ws="gtk"
+         arch="aarch64"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.equinox.launcher.gtk.linux.ppc64le"
+         os="linux"
+         ws="gtk"
+         arch="ppc64le"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.equinox.launcher.gtk.linux.riscv64"
+         os="linux"
+         ws="gtk"
+         arch="riscv64"
+         version="0.0.0"/>
+
+   <plugin
          id="org.eclipse.equinox.launcher.win32.win32.x86_64"
          os="win32"
          ws="win32"
          arch="x86_64"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.equinox.launcher.win32.win32.aarch64"
+         os="win32"
+         ws="win32"
+         arch="aarch64"
          version="0.0.0"/>
 
    <plugin
@@ -1410,11 +1472,22 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          version="0.0.0"/>
 
    <plugin
+         id="org.eclipse.equinox.security.linux"
+         os="linux"
+         ws="gtk"
+         arch="x86_64"
+         version="0.0.0"/>
+
+   <plugin
          id="org.eclipse.equinox.security.macosx.source"
          version="0.0.0"/>
 
    <plugin
          id="org.eclipse.equinox.security.win32.source"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.equinox.security.linux.source"
          version="0.0.0"/>
 
    <plugin
