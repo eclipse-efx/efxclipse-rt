@@ -42,6 +42,7 @@ import java.util.stream.Stream;
 import org.eclipse.fx.osgi.fxloader.jpms.AddOpenExports;
 import org.eclipse.fx.osgi.fxloader.jpms.AddReads;
 import org.eclipse.fx.osgi.fxloader.jpms.ConfigurationWrapper;
+import org.eclipse.fx.osgi.fxloader.jpms.FXProviderBundle;
 import org.eclipse.fx.osgi.fxloader.jpms.JavaModuleLayerModification;
 import org.eclipse.fx.osgi.fxloader.jpms.ModuleFinderWrapper;
 import org.eclipse.fx.osgi.fxloader.jpms.ModuleLayerWrapper;
@@ -440,8 +441,13 @@ public class FXClassLoader extends ClassLoaderHook {
 			System.err.println("FXClassLoader#advancedModuleLayerBoostrap - Using advanced layer creation to apply patches"); //$NON-NLS-1$
 		}
 
-		Path[] paths = bundles.stream().map(p -> p.path).toArray(i -> new Path[i]);
-		Set<String> modules = bundles.stream().map(p -> p.module).collect(Collectors.toSet());
+		ModuleLayerWrapper bootLayer = ModuleLayerWrapper.boot();
+		ConfigurationWrapper configuration = bootLayer.configuration();
+
+		List<FXProviderBundle> bundlesFiltered = configuration.filterBundles(bundles);
+
+		Path[] paths = bundlesFiltered.stream().map(p -> p.path()).toArray(i -> new Path[i]);
+		Set<String> modules = bundlesFiltered.stream().map(p -> p.module()).collect(Collectors.toSet());
 
 		@SuppressWarnings("deprecation")
 		URL[] urls = Stream.of(paths).map( Path::toFile).map( f -> {
@@ -453,8 +459,8 @@ public class FXClassLoader extends ClassLoaderHook {
 		} ).toArray( i -> new URL[i]);
 
 		if( FXClassloaderConfigurator.DEBUG ) {
-			for( FXProviderBundle b : bundles ) {
-				System.err.println( "FXClassLoader#advancedModuleLayerBoostrap - " + b.module + " => " + b.path); //$NON-NLS-1$ //$NON-NLS-2$
+			for( FXProviderBundle b : bundlesFiltered ) {
+				System.err.println( "FXClassLoader#advancedModuleLayerBoostrap - " + b.module() + " => " + b.path()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 
@@ -477,8 +483,6 @@ public class FXClassLoader extends ClassLoaderHook {
 
 		ModuleFinderWrapper fxModuleFinder = ModuleFinderWrapper.of(paths);
 		ModuleFinderWrapper empty = ModuleFinderWrapper.of();
-		ModuleLayerWrapper bootLayer = ModuleLayerWrapper.boot();
-		ConfigurationWrapper configuration = bootLayer.configuration();
 		ConfigurationWrapper newConfiguration = configuration.resolve(fxModuleFinder, empty, modules);
 		Function<String, ClassLoader> clComputer = s -> c;
 		ControllerWrapper moduleLayerController = ModuleLayerWrapper.defineModules(newConfiguration, Arrays.asList(bootLayer), clComputer);
@@ -488,18 +492,21 @@ public class FXClassLoader extends ClassLoaderHook {
 	}
 
 	private static ModuleLayerWrapper defaultModuleLayerBootstrap(ClassLoader parentClassloader, List<FXProviderBundle> bundles) throws Throwable {
-		Path[] paths = bundles.stream().map(p -> p.path).toArray(i -> new Path[i]);
-		Set<String> modules = bundles.stream().map(p -> p.module).collect(Collectors.toSet());
+		ModuleLayerWrapper boot = ModuleLayerWrapper.boot();
+		ConfigurationWrapper configuration = boot.configuration();
+
+		List<FXProviderBundle> bundlesFiltered = configuration.filterBundles(bundles);
+
+		Path[] paths = bundlesFiltered.stream().map(p -> p.path()).toArray(i -> new Path[i]);
+		Set<String> modules = bundlesFiltered.stream().map(p -> p.module()).collect(Collectors.toSet());
 
 		if( FXClassloaderConfigurator.DEBUG ) {
-			for( FXProviderBundle b : bundles ) {
-				System.err.println( "FXClassLoader#defaultModuleLayerBootstrap - " +  b.module + " => " + b.path); //$NON-NLS-1$ //$NON-NLS-2$
+			for( FXProviderBundle b : bundlesFiltered ) {
+				System.err.println( "FXClassLoader#defaultModuleLayerBootstrap - " +  b.module() + " => " + b.path()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 
 		ModuleFinderWrapper finder = ModuleFinderWrapper.of(paths);
-		ModuleLayerWrapper boot = ModuleLayerWrapper.boot();
-		ConfigurationWrapper configuration = boot.configuration();
 		ModuleFinderWrapper of = ModuleFinderWrapper.of();
 		ConfigurationWrapper cf = configuration.resolve(finder, of, modules);
 		ModuleLayerWrapper layer = boot.defineModulesWithOneLoader(cf, parentClassloader);
@@ -650,21 +657,6 @@ public class FXClassLoader extends ClassLoaderHook {
 		}
 
 		return paths;
-	}
-
-	static class FXProviderBundle {
-		final String module;
-		final Path path;
-
-		public FXProviderBundle(String module, Path path) {
-			this.module = module;
-			this.path = path;
-		}
-
-		@Override
-		public String toString() {
-			return "FXProviderBundle [module=" + this.module + ", path=" + this.path + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
 	}
 
 	private static URLClassLoader createJREBundledClassloader(ClassLoader parent, boolean swtAvailable) {
